@@ -1,0 +1,101 @@
+/*
+ * Shared by /demo/soup/ and /demo/landmarks/: class selectors only, so the
+ * two pages — identical except for their element names — must render the
+ * same. That identical rendering is the demo.
+ */
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: system-ui, sans-serif;
+	background: #fbfaf7;
+	color: #1a1822;
+	max-inline-size: 46rem;
+	margin-inline: auto;
+	padding-block: 2rem 4rem;
+	padding-inline: 1.5rem;
+	line-height: 1.55;
+}
+
+.site-header {
+	margin-block-end: 2rem;
+	padding-block-end: 1.25rem;
+	border-block-end: 3px solid #6b3fa0;
+}
+
+.site-name {
+	font-size: 2rem;
+	font-weight: 800;
+	line-height: 1.1;
+}
+
+.tagline {
+	color: #585463;
+	margin-block-start: 0.25rem;
+}
+
+.menu {
+	display: flex;
+	gap: 1.25rem;
+	margin-block-start: 1rem;
+}
+
+.menu a {
+	color: #6b3fa0;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.menu a:hover,
+.menu a:focus-visible {
+	text-decoration: underline;
+}
+
+.layout {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	gap: 2rem;
+}
+
+.post-title {
+	font-size: 1.5rem;
+	font-weight: 700;
+	margin-block-end: 0.25rem;
+}
+
+.byline {
+	color: #585463;
+	font-size: 0.9rem;
+	margin-block-end: 1rem;
+}
+
+.para {
+	margin-block-end: 1rem;
+}
+
+.pick {
+	background: #f3eee9;
+	border-inline-start: 4px solid #6b3fa0;
+	border-radius: 0.5rem;
+	padding-block: 1rem;
+	padding-inline: 1.25rem;
+	align-self: start;
+}
+
+.pick-title {
+	font-size: 1.05rem;
+	font-weight: 700;
+	margin-block-end: 0.5rem;
+}
+
+.site-footer {
+	margin-block-start: 3rem;
+	padding-block-start: 1rem;
+	border-block-start: 1px solid #d9d4cd;
+	color: #585463;
+	font-size: 0.9rem;
+}

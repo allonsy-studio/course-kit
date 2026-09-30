@@ -1,0 +1,107 @@
+<ul role="list" webc:root="override" webc:if="items">
+    <li webc:for="item of items">
+        <a :href="item.page.url" webc:if="item.page.url" aria-labelledby="slugify(item.data.name)"></a>
+        <slot :@item="item">
+            <eyebrow @text="item.data.code"></eyebrow>
+            <h3 @text="item.data.name" :id="slugify(item.data.name)"></h3>
+            <p @text="item.data.description" webc:if="item.data.description"></p>
+        </slot>
+    </li>
+</ul>
+
+<style webc:scoped>
+    :host {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: calc(var(--content-space) * 1.5);
+
+        > li {
+            font-size: 1em;
+            position: relative;
+            background-color: var(--bg-light);
+            border: var(--thick-border-width) solid transparent;
+            border-radius: var(--standard-border-radius);
+            padding-block: calc(var(--content-space) * 1.5);
+            padding-inline: calc(var(--content-space) * 1);
+
+            a {
+                display: block;
+                position: absolute;
+                pointer-events: all;
+                inset: calc(-1 * var(--thick-border-width));
+                z-index: 1;
+                text-decoration: none;
+                color: inherit;
+                background-color: transparent;
+                border: none;
+                padding: 0;
+            }
+
+            &::before {
+                content: "";
+                position: absolute;
+                inset: calc(-1 * var(--thick-border-width));
+                border-radius: inherit;
+                padding: var(--thick-border-width);
+                background: linear-gradient(to bottom right, var(--gradient-stack));
+                background-size: 200% 200%;
+                -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                -webkit-mask-composite: xor;
+                mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+                pointer-events: none;
+            }
+
+            &:has(a) {
+                @media (prefers-reduced-motion: reduce) {
+                    &:is(:hover, :focus, :focus-within) {
+                        background-color: light-dark(color-mix(in sRGB, var(--static-paper) 90%, transparent), hsl(228deg 16% 22%));
+                    }
+
+                    &:is(:hover,:focus,:focus-within)::before {
+                        background-position: 0% 0%;
+                    }
+
+                }
+
+                @media not (prefers-reduced-motion: reduce) {
+                    &:is(:hover,:focus,:focus-within)::before {
+                        animation: gradient-drift 2s ease-in-out infinite alternate;
+                    }
+                }
+            }
+
+            @media print {
+                background-color: transparent;
+                border-color: var(--ui-light);
+
+                &::before {
+                    display: none;
+                }
+            }
+        }
+
+        h3 {
+            margin-block: 1rem;
+        }
+
+        p {
+            text-decoration: none;
+
+            &:last-child {
+                margin-block-end: 0;
+            }
+        }
+    }
+
+    @keyframes gradient-drift {
+        from {
+            background-position: 0% 0%;
+        }
+
+        to {
+            background-position: 100% 100%;
+        }
+    }
+</style>

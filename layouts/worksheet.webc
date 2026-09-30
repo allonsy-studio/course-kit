@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html :lang="site.language ?? 'en-US'">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="color-scheme" content="light dark">
+
+	<title @text="[$data.title, site.title].filter(Boolean).join(' | ')"></title>
+	<meta name="description" :content="$data.description ?? site?.description">
+	<meta name="author" :content="site?.author">
+	<meta name="generator" :content="eleventy?.generator">
+	<meta name="robots" content="noindex, nofollow"
+		webc:if="$data.indexed == false || $data.draft == true || $data.instructorOnly == true">
+
+	<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+	<template webc:nokeep @raw="bundleFile('js', 'content/scripts/theme-restore.js', $data, 'head')"></template>
+	<script webc:keep @raw="getBundle('js', 'head')"></script>
+
+	<template webc:nokeep @raw="bundleFile('css', 'content/styles/base.css', $data, 'site')"></template>
+	<style webc:keep @raw="getBundle('css', 'site')"></style>
+	<style webc:keep @raw="getBundle('css')"></style>
+</head>
+
+<body :data-accent="$data.accent" :style="$data.accentStyle">
+	<main id="main-content" tabindex="-1" @raw="content"></main>
+
+	<script>
+		// Print every disclosure expanded, then restore the reader's own state
+		// (tracked per element — bundle scripts share one module scope).
+		window.addEventListener("beforeprint", () => {
+			for (const details of document.querySelectorAll("details:not([open])")) {
+				details.open = true;
+				details.dataset.printOpened = "";
+			}
+		});
+		window.addEventListener("afterprint", () => {
+			for (const details of document.querySelectorAll("details[data-print-opened]")) {
+				details.open = false;
+				delete details.dataset.printOpened;
+			}
+		});
+	</script>
+
+	<template webc:nokeep @raw="bundleFile('js', 'content/scripts/practice.js', $data)"></template>
+	<script type="module" webc:keep @raw="getBundle('js')"></script>
+</body>
+
+</html>

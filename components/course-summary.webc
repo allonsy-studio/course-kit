@@ -1,0 +1,114 @@
+<article class="content-column wide" webc:root="override" webc:if="c">
+	<header class="course-header">
+		<eyebrow class="print-only" @text="$data.term.label"></eyebrow>
+		<h1 class="print-only"><span @text="c.code"></span>: <span @text="c.name"></span></h1>
+		<p class="lede" @text="c.description"></p>
+		<p webc:if="c.prerequisites?.length">
+			<strong>Prerequisites:</strong>
+			<span @text="c.prerequisites.join(', ')"></span><span webc:if="c.prerequisiteNote">, <span @text="c.prerequisiteNote"></span></span>
+		</p>
+	</header>
+
+	<section id="approach" aria-labelledby="approach-heading" webc:if="c.approach">
+		<h2 id="approach-heading">How this section is taught</h2>
+		<p @text="c.approach"></p>
+	</section>
+
+	<instructor></instructor>
+
+	<syllabus :@c="c"></syllabus>
+
+	<section id="schedule" aria-labelledby="schedule-heading">
+		<h2 id="schedule-heading">Schedule &amp; class resources</h2>
+		<p>
+			<span>This is a proposed outline of topics and is subject to change. Any changes will be announced in class.</span>
+			<span>Each week lists what to read before its first meeting and the resources posted after class.</span>
+			<span webc:if="c?.grading?.homework">All assignments will be posted in Brightspace.</span>
+			<span webc:if="c?.grading?.project">The final project is due at this section's last class meeting, <span @text="lastMeeting($data.lessons)"></span>; its milestones and rubric are on <a href="/projects/final/">the project page</a>.</span>
+			<span webc:if="c?.grading?.final && !$data.schedule?.finalExam">The final exam falls in the College's exam period (<span @text="$data.term.finalExamsDisplay"></span>); the exact date and time will be announced in class.</span>
+			<span webc:if="c?.grading?.final && $data.schedule?.finalExam">This section's final exam is <span @text="examSlot($data.schedule.finalExam)"></span> — see the <a href="#coursework">Coursework</a> section.</span>
+		</p>
+		<div class="print-only">
+			<p>
+				This document omits the week-by-week schedule, which may be adjusted
+				during the term<span webc:if="$data.site?.url">; the live schedule is published at
+				<span @text="`${$data.site.url}${$data.page.url}#schedule`"></span></span>.
+				<span webc:if="c?.grading?.project">The final project is due at the last class meeting, <span @text="lastMeeting($data.lessons)"></span>.</span>
+			</p>
+		</div>
+		<schedule-weeks :@weeks="scheduleWeeks($data.lessons, $data.schedule?.weeks, $data.collections.deck, $data.demos)"></schedule-weeks>
+	</section>
+</article>
+
+<style webc:scoped>
+	/* The wide column, laid out as a grid so the catalog copy and the
+	   teaching approach sit beside the instructor panel; the syllabus and
+	   the schedule then take the full width. Nothing is wrapped, so
+	   print.css's id and class hooks are untouched; print falls back to a
+	   plain block flow. */
+	:host {
+		display: grid;
+		grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+		column-gap: calc(var(--section-space) * 1.5);
+		row-gap: var(--content-space);
+		align-items: start;
+
+		@media screen and (width <= 900px) {
+			grid-template-columns: minmax(0, 1fr);
+		}
+
+		@media print {
+			display: block;
+		}
+	}
+
+	:host > .course-header {
+		grid-column: 1;
+		margin-block-end: 0;
+	}
+
+	:host > #approach {
+		grid-column: 1;
+	}
+
+	:host > #instructor {
+		grid-column: 2;
+		grid-row: 1 / span 2;
+		box-sizing: border-box;
+		padding: calc(var(--content-space) * 1.2);
+		background-color: var(--bg-light);
+		border: var(--thin-border-width) solid var(--ui-light);
+		border-radius: var(--standard-border-radius);
+
+		@media screen and (width <= 900px) {
+			grid-column: 1;
+			grid-row: auto;
+		}
+
+		@media print {
+			padding: 0;
+			background: none;
+			border: none;
+		}
+	}
+
+	:host > #syllabus,
+	:host > #schedule {
+		grid-column: 1 / -1;
+	}
+
+	:host > #schedule {
+		margin-block-start: var(--section-space);
+	}
+
+	@media screen {
+		:host > .course-header .lede,
+		:host > #approach p {
+			max-inline-size: 70ch;
+		}
+
+		:host > #schedule > p {
+			max-inline-size: 90ch;
+		}
+	}
+</style>

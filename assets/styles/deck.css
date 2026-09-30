@@ -1,0 +1,783 @@
+/* A projected surface, not a page: loaded alone by _layouts/deck.webc, no
+base.css/masthead. The class names below are the deck dialect's vocabulary
+(see "Slide decks" in AGENTS.md). */
+
+@import "font.css";
+  @layer reset, base, layout, slide, chrome, print;
+
+/* Registered so the box height resolves once, on .slide-body, and reaches
+   descendants as a length rather than as container units. */
+@property --slide-h {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0;
+}
+
+  @layer reset {
+  /* Zero-specificity and in the lowest layer, so anything can override it. */
+  :where(*, *::before, *::after) { box-sizing: border-box; }
+
+  :where(body, h1, h2, h3, p, ul, ol, li, figure, table, dl, dd) {
+    margin: 0;
+    padding: 0;
+  }
+
+  :where(ul, ol) { list-style: none; }
+
+  :where(img, svg) {
+    max-inline-size: 100%;
+    block-size: auto;
+  }
+  }
+
+  @layer base {
+  :root {
+  /* --accent-ui fills, --accent-text type (darkened — see "Accent" in
+     AGENTS.md). These literals are also hardcoded in base.css; see
+     "Self-contained decks" in AGENTS.md for why. */
+  --accent-ui: #C92C6B;
+  --accent-text: light-dark(hsl(336deg 68% 40%), hsl(336deg 72% 72%));
+
+  --bg: light-dark(#FBF9F3, #14131a);
+  --bg-raised: light-dark(#fff, #1e1d26);
+  --ink: light-dark(#33394E, #f2f0f6);
+  --ink-muted: light-dark(#414C75, #a8a4b4);
+  --rule: light-dark(#EFEBDF, #33313e);
+  --warn: light-dark(#8a3500, #ffb37a);
+  --warn-bg: light-dark(#fff2e6, #3a2314);
+  --ok: light-dark(#1c6135, #7fd8a0);
+  --bad: light-dark(#a3261a, #ff9d8f);
+
+  --font-sans: "Instrument Sans", "Instrument Sans Fallback", ui-sans-serif, system-ui, "Segoe UI", roboto, "Helvetica Neue", arial, sans-serif;
+  --font-mono: "PT Mono", ui-monospace, "SF Mono", "Cascadia Mono", menlo, consolas, monospace;
+
+  --pad: min(4.5rem, 4cqi, calc(4cqb * 16 / 9));
+  --progress: 0;
+
+  color-scheme: light dark;
+  }
+
+  :root,
+  [data-accent="magenta"] {
+  --accent-ui: #C92C6B;
+  --accent-text: light-dark(hsl(336deg 68% 40%), hsl(336deg 72% 72%));
+  }
+
+  [data-accent="cyan"] {
+  --accent-ui: #7BD1E6;
+  --accent-text: light-dark(hsl(193deg 58% 31%), hsl(192deg 68% 72%));
+  }
+
+  [data-accent="orange"] {
+  --accent-ui: #FF9A56;
+  --accent-text: light-dark(hsl(22deg 82% 37%), hsl(28deg 100% 72%));
+  }
+
+  [data-accent="yellow"] {
+  --accent-ui: light-dark(#FFD36C, #FFC233);
+  --accent-text: light-dark(hsl(38deg 88% 32%), hsl(45deg 100% 64%));
+  }
+
+  [data-accent="purple"] {
+  --accent-ui: light-dark(#6B3FA0, #B9A3E3);
+  --accent-text: light-dark(hsl(267deg 43% 40%), hsl(267deg 60% 78%));
+  }
+
+  /* Defined on body, not :root: see "CSS" under "Gotchas" in AGENTS.md.
+     Light mode takes the text-tone family — the bright values are
+     pastels tuned for dark grounds. */
+  body {
+  --accent: light-dark(var(--accent-text), var(--accent-ui));
+  --accent-soft: color-mix(in oklab, var(--accent) 14%, light-dark(white, black));
+  --accent-line: color-mix(in oklab, var(--accent) 40%, light-dark(white, black));
+
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 2.3vi, 2.15rem);
+  line-height: 1.4;
+  text-wrap: pretty;
+  -webkit-font-smoothing: antialiased;
+  }
+
+  :where(a) {
+    color: inherit;
+    text-underline-offset: 0.18em;
+    text-decoration-thickness: from-font;
+  }
+
+  :where(a, button, [tabindex]):focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+  }
+
+  :where(strong) { font-weight: 650; }
+
+  :where(code, kbd, samp) {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+  }
+  }
+
+  @layer layout {
+  .deck {
+  container-type: size;
+  container-name: deck;
+  block-size: 100dvb;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar { display: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+  scroll-behavior: auto;
+  }
+  }
+
+  .slide {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  block-size: 100dvb;
+  inline-size: 100%;
+    display: grid;
+    place-content: center;
+  }
+
+  /* A 16:9 box centred at the largest size that fits: a screen of another
+     shape gets empty bars, never a taller slide. Everything is sized from the
+     box with no minimums, so a small screen shrinks the slide. No block
+     padding and `safe center` push overflow off the bottom only;
+     `min-block-size: 0` stops the box growing to fit its content. */
+  .slide-body {
+    --slide-h: min(100cqb, calc(100cqi * 9 / 16));
+    inline-size: min(100cqi, calc(100cqb * 16 / 9));
+    aspect-ratio: 16 / 9;
+    min-block-size: 0;
+    display: grid;
+    align-content: safe center;
+    gap: min(1.6rem, 1.6cqb, calc(1.6cqi * 9 / 16));
+    padding: 0 calc(var(--pad) * 1.15) calc(var(--pad) * 0.4);
+    font-size: min(2.15rem, 2.3cqi, calc(2.3cqb * 16 / 9));
+    container-type: inline-size;
+  }
+  }
+
+  @layer slide {
+  .eyebrow {
+  font-size: 0.62em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 650;
+  color: var(--accent-text);
+  }
+
+  /* deck.css stands alone — no base.css, so the site's `.separators` (which
+  supplies this same layout) isn't loaded here either. */
+  .separators {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8em;
+
+  > *:not(:last-child)::after {
+    content: "⏺";
+    padding-inline-start: 0.8em;
+    font-size: 50%;
+    vertical-align: middle;
+  }
+  }
+
+  .slide {
+  :where(h1) {
+    font-size: min(6.4cqi, 5.2rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+    text-wrap: balance;
+  }
+
+  :where(h2) {
+    font-size: min(4.4cqi, 3.8rem);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    font-weight: 680;
+    text-wrap: balance;
+  }
+
+  :where(h3) {
+    font-size: min(1.8cqi, 1.45rem);
+    font-weight: 650;
+    letter-spacing: -0.005em;
+  }
+
+  /* Inline SVG figures take color from classes, never a hex; see "Figures"
+     in CLAUDE.md for the fill/stroke vocabulary. */
+  :where(svg) {
+    inline-size: 100%;
+    block-size: auto;
+
+    text {
+      fill: var(--ink);
+      font-family: var(--font-sans);
+    }
+
+    .mono { font-family: var(--font-mono); }
+
+    .accent { fill: var(--accent-text); }
+
+    .muted { fill: var(--ink-muted); }
+
+    .bad { fill: var(--bad); }
+
+    .ok { fill: var(--ok); }
+
+    .tint {
+      fill: var(--accent-soft);
+      stroke: none;
+    }
+
+    .stroke {
+      fill: none;
+      stroke: var(--ink);
+    }
+
+    .stroke-accent {
+      fill: none;
+      stroke: var(--accent-text);
+    }
+
+    .stroke-muted {
+      fill: none;
+      stroke: var(--ink-muted);
+    }
+
+    .stroke-bad {
+      fill: none;
+      stroke: var(--bad);
+    }
+  }
+
+  &[data-kind="title"] {
+    .slide-body { align-content: safe center; }
+
+    .rule {
+      inline-size: min(9rem, 30cqi);
+      block-size: 6px;
+      background: var(--accent);
+      border-radius: 3px;
+    }
+  }
+
+  /* A section divider and a checkpoint (stop, everyone runs it) get the same
+     tinted full-bleed treatment — one opens a stretch, the other closes it. */
+  &:is([data-kind="section"], [data-kind="checkpoint"]) {
+    background: var(--accent-soft);
+
+    h2 {
+      font-size: min(5.6cqi, 4.4rem);
+    }
+  }
+  }
+
+  .lede {
+    font-size: 1.08em;
+    color: var(--ink-muted);
+    max-inline-size: 44ch;
+  }
+
+  .tight { max-inline-size: 52ch; }
+
+  .bullets, .steps, :where(table, pre) { max-inline-size: 60ch; }
+
+  .cols :is(.bullets, .steps, table, pre) { max-inline-size: none; }
+
+  /* Markers are absolutely positioned rather than grid items: a grid list item
+  would promote every inline <strong>/<code> in the text into its own cell. */
+  .bullets {
+  display: grid;
+  gap: 0.6em;
+  font-size: 1.02em;
+
+  > li {
+    position: relative;
+    padding-inline-start: 1.5em;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset-inline-start: 0.3em;
+      inset-block-start: 0.56em;
+      inline-size: 0.42em;
+      block-size: 0.42em;
+      border-radius: 50%;
+      background: var(--accent-text);
+    }
+  }
+  }
+
+  /* `::: plain` wraps the list, so the class lands on the div, not the ul. */
+  .bullets.plain > li,
+  .plain > .bullets > li,
+  .card .bullets > li {
+  padding-inline-start: 0;
+
+  &::before { content: none; }
+  }
+
+  /* Numbered from the list-item counter rather than a counter of its own, so a
+     list authored as `5.` — a second column continuing the first — starts at
+     five instead of silently restarting at one. */
+  .steps {
+  display: grid;
+  gap: 0.7em;
+
+  > li {
+    position: relative;
+    padding-inline-start: 2.2em;
+    min-block-size: 1.5em;
+
+    &::before {
+      content: counter(list-item);
+      position: absolute;
+      inset-inline-start: 0;
+      inset-block-start: 0.12em;
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+      font-size: 0.72em;
+      color: var(--bg);
+      background: var(--accent-text);
+      inline-size: 1.9em;
+      block-size: 1.9em;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+    }
+  }
+  }
+
+  .cols {
+  display: grid;
+  gap: min(2.4cqi, 2.2rem);
+
+  > * { min-inline-size: 0; }
+  }
+
+  /* Never stacked: a slide is a fixed-shape box, so columns scale with it. */
+  .cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  /* An explicit column, for a grid cell that holds more than one block — two
+     adjacent numbered lists, say, which markdown would otherwise run together
+     into a single list of eight. */
+  .col {
+    display: grid;
+    gap: 0.6em;
+    align-content: start;
+  }
+
+  .card {
+  background: var(--bg-raised);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: min(1.8cqi, 1.5rem);
+  display: grid;
+  gap: 0.4em;
+  align-content: start;
+  font-size: 0.86em;
+
+  .cols-3 & { font-size: 0.78em; }
+
+  h3 { color: var(--accent-text); }
+
+  /* A pair of cards contrasting what works with what doesn't. */
+  &.bad {
+    border-color: var(--bad);
+
+    h3 { color: var(--bad); }
+  }
+
+  &.good {
+    border-color: color-mix(in oklab, var(--ok) 55%, var(--rule));
+
+    h3 { color: var(--ok); }
+  }
+
+  /* Code in a card is already boxed by the card. */
+  pre {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-size: 1.05em;
+  }
+
+  .answer { padding: 0.5em 0.8em; }
+  }
+
+  .callout {
+  background: var(--accent-soft);
+  border-inline-start: 5px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+  padding: min(1.8cqi, 1.4rem) min(2.2cqi, 1.8rem);
+  font-size: 1.02em;
+
+  &.warn {
+    background: var(--warn-bg);
+    border-inline-start-color: var(--warn);
+    color: var(--warn);
+
+    /* Inside the warning tone everything takes the warning colour, including
+       the pieces that would otherwise be accent-coloured. */
+    :is(strong, .eyebrow, h1, h2, h3) { color: inherit; }
+  }
+  }
+
+  /* `::: answer` — hidden but space-reserved, so revealing never reflows
+     the slide. Revealed by deck.js; print shows every answer. */
+  .answer {
+  background: var(--accent-soft);
+  border-inline-start: 5px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+  padding: min(1.4cqi, 1.1rem) min(2cqi, 1.5rem);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 180ms ease-out;
+
+  &.is-revealed {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) { transition: none; }
+  }
+
+  .big-stat {
+    font-size: min(8cqi, 6rem);
+    font-weight: 720;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    color: var(--accent-text);
+  }
+
+  :where(table) {
+  border-collapse: collapse;
+  inline-size: 100%;
+  font-size: 0.94em;
+
+  :where(caption) {
+    text-align: start;
+    color: var(--ink-muted);
+    font-size: 0.8em;
+    padding-block-end: 0.5em;
+  }
+
+  :where(th, td) {
+    text-align: start;
+    padding: 0.5em 0.7em;
+    border-block-end: 1px solid var(--rule);
+    vertical-align: baseline;
+
+    &.num {
+      text-align: end;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+  }
+
+  :where(thead th) {
+    font-size: 0.72em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    font-weight: 650;
+  }
+
+  :where(tbody tr:last-child) :is(td, th) { border-block-end: none; }
+
+  tr.total :is(td, th) {
+    border-block-start: 2px solid var(--accent-line);
+    font-weight: 680;
+  }
+  }
+
+  /* Prism-highlighted fenced code, three tones only (muted/accent/green) —
+     all a projected slide can carry from the back of the room. */
+  :where(pre) {
+  background: var(--bg-raised);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: min(1.8cqi, 1.5rem);
+  overflow-x: auto;
+  font-size: min(1.55cqi, 1.15rem);
+  line-height: 1.55;
+  tab-size: 4;
+
+  :is(.c, .token.comment, .token.prolog, .token.doctype, .token.cdata) {
+    color: var(--ink-muted);
+    font-style: italic;
+  }
+
+  :is(.k, .token.keyword, .token.tag, .token.selector, .token.builtin, .token.important, .token.atrule) {
+    color: var(--accent-text);
+    font-weight: 650;
+  }
+
+  :is(.s, .token.string, .token.char, .token.attr-value, .token.regex, .token.number, .token.boolean) { color: var(--ok); }
+
+  :is(.token.punctuation, .token.operator) { color: var(--ink-muted); }
+
+  .token.attr-name { font-style: italic; }
+  }
+
+  /* Raster figures: the block cap leaves room for a heading and a line of
+     prose. */
+  .slide img {
+    max-inline-size: 100%;
+    max-block-size: calc(var(--slide-h) * 0.5);
+    inline-size: auto;
+    block-size: auto;
+  }
+
+  /* `::: big` (code-along slides — the code is the slide) gets
+     projector-sized type; `pre.big` is the same for a hand-written block. */
+  .big pre, pre.big {
+    font-size: min(2.6cqi, 2.1rem);
+    line-height: 1.5;
+  }
+
+  .big.short pre, pre.big.short { font-size: min(3.4cqi, 2.9rem); }
+
+  /* Inline SVG figures take color from classes, never a hex; see "Figures"
+     in AGENTS.md for the fill/stroke vocabulary. */
+  .slide svg {
+    inline-size: 100%;
+    block-size: auto;
+  }
+
+  .slide svg text {
+    fill: var(--ink);
+    font-family: var(--font-sans);
+  }
+
+  .slide svg .mono { font-family: var(--font-mono); }
+
+  .slide svg .accent { fill: var(--accent-text); }
+
+  .slide svg .muted { fill: var(--ink-muted); }
+
+  .slide svg .bad { fill: var(--bad); }
+
+  .slide svg .ok { fill: var(--ok); }
+
+  .slide svg .tint {
+    fill: var(--accent-soft);
+    stroke: none;
+  }
+
+  .slide svg .stroke {
+    fill: none;
+    stroke: var(--ink);
+  }
+
+  .slide svg .stroke-accent {
+    fill: none;
+    stroke: var(--accent-text);
+  }
+
+  .slide svg .stroke-muted {
+    fill: none;
+    stroke: var(--ink-muted);
+  }
+
+  .slide svg .stroke-bad {
+    fill: none;
+    stroke: var(--bad);
+  }
+
+  .kbdrow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    align-items: center;
+  }
+
+  :where(kbd) {
+  background: var(--bg-raised);
+  border: 1px solid var(--rule);
+  border-block-end-width: 2px;
+  border-radius: 6px;
+  padding: 0.15em 0.45em;
+  font-size: 0.85em;
+  }
+}
+
+@layer chrome {
+  .topbar {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline: 0;
+    block-size: 5px;
+    background: var(--rule);
+    z-index: 10;
+
+    &::after {
+      content: "";
+      display: block;
+      block-size: 100%;
+      inline-size: calc(var(--progress) * 100%);
+      background: var(--accent);
+      transition: inline-size 180ms ease-out;
+
+      @media (prefers-reduced-motion: reduce) { transition: none; }
+    }
+  }
+
+  .hud {
+    position: fixed;
+    inset-block-end: 0.75rem;
+    inset-inline-end: 0.9rem;
+    z-index: 10;
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    font-size: clamp(0.7rem, 1.1cqi, 0.95rem);
+    color: var(--ink-muted);
+
+    button {
+      font: inherit;
+      color: inherit;
+      background: var(--bg-raised);
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      min-block-size: 28px;
+      min-inline-size: 28px;
+      padding: 0.2em 0.6em;
+      cursor: pointer;
+
+      &:hover:not(:disabled) {
+        border-color: var(--accent-text);
+        color: var(--accent-text);
+      }
+
+      @media (pointer: coarse) { min-block-size: 44px; min-inline-size: 44px; }
+    }
+
+    [data-count] {
+      font-variant-numeric: tabular-nums;
+      padding-inline: 0.4em;
+    }
+  }
+
+  /* Android's landscape lock (deck.js) un-matches this query on its own;
+     on iOS the hint is the whole strategy. */
+  .rotate-hint { display: none; }
+
+  @media (orientation: portrait) and (width < 700px) {
+    .rotate-hint {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: grid;
+      place-content: center;
+      justify-items: center;
+      gap: 1rem;
+      background: var(--bg);
+      padding: 2rem;
+      text-align: center;
+      font-size: 1rem;
+      color: var(--ink-muted);
+
+      svg {
+        .stroke { stroke: var(--ink); }
+
+        .stroke-accent { stroke: var(--accent-text); }
+
+        :is(.stroke, .stroke-accent) { fill: none; }
+      }
+    }
+  }
+
+  .skip {
+    position: absolute;
+    inset-block-start: -100vb;
+
+    &:focus {
+      inset-block-start: 0.5rem;
+      inset-inline-start: 0.5rem;
+      z-index: 20;
+      background: var(--bg-raised);
+      padding: 0.5em 1em;
+      border-radius: 8px;
+    }
+  }
+}
+
+@layer print {
+  /* Landscape, one slide per page, no notes in either flavor; the
+     instructor handout is the notes sheet. See "Slide decks" in AGENTS.md. */
+  @page { size: 297mm 167mm; margin: 12mm; }
+
+  @media print {
+    :root { color-scheme: light; }
+
+    body {
+      font-size: 13pt;
+      background: white;
+    }
+
+    .deck {
+      block-size: auto;
+      overflow: visible;
+      scroll-snap-type: none;
+      container-type: normal;
+    }
+
+    .slide {
+      block-size: auto;
+      break-after: page;
+      display: block;
+      border-block-end: 1px solid #ccc;
+      margin-block-end: 1rem;
+    }
+
+    .slide-body {
+      --slide-h: 100dvb;
+      block-size: auto;
+      display: block;
+      inline-size: auto;
+      aspect-ratio: auto;
+      font-size: inherit;
+      padding: 0 0 1rem;
+      container-type: normal;
+
+      > * + * { margin-block-start: 0.6rem; }
+    }
+
+    .cols {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .slide {
+      h1 { font-size: 28pt; }
+
+      h2 { font-size: 20pt; }
+    }
+
+    .hud, .topbar, .rotate-hint { display: none; }
+
+
+    .card, pre { break-inside: avoid; }
+
+    .answer {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "@allons-y/course-kit",
+  "version": "0.1.0-alpha.0",
+  "description": "Shared layouts, components, styles and build helpers for Eleventy course sites.",
+  "license": "MPL-2.0",
+  "author": "Cassondra Roberts <castastrophe@users.noreply.github.com> (https://allons-y.studio)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allonsy-studio/course-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/allonsy-studio/course-kit/issues"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "lib",
+    "layouts",
+    "components",
+    "assets",
+    "glue"
+  ],
+  "scripts": {
+    "test": "node --test"
+  },
+  "peerDependencies": {
+    "@11ty/eleventy": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

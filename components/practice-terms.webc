@@ -1,0 +1,87 @@
+<template webc:nokeep>
+	<p class="drag-hint" webc:if="hint" @text="hint"></p>
+	<ul class="term-bank">
+		<li webc:for="entry of terms">
+			<button type="button" class="term" :popovertarget="entry.id" @text="entry.term"></button>
+			<div class="term-def" :id="entry.id" popover>
+				<p class="term-name" @text="entry.term"></p>
+				<p @text="entry.definition"></p>
+				<a webc:if="entry.source" :href="entry.source.href"
+					@text="`${sourceprefix ?? ''}${entry.source.label}`"></a>
+			</div>
+		</li>
+	</ul>
+</template>
+
+<style webc:scoped>
+	:host {
+		.drag-hint {
+			color: var(--text-light);
+			font-size: 0.9em;
+			margin-block: 0 0.6em;
+		}
+
+		.term-bank {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.4em;
+			list-style: none;
+			margin-block: var(--content-space);
+			padding-inline-start: 0;
+
+			li {
+				font-size: 0.85em;
+			}
+		}
+
+		button {
+			background: var(--bg-light);
+			border: var(--thin-border-width) solid transparent;
+			border-radius: var(--pill-border-radius);
+			color: inherit;
+			cursor: pointer;
+			font: inherit;
+			padding: 0.25em 0.8em;
+
+			&:is(:hover, :focus-visible) {
+				border-color: var(--section-ui);
+			}
+		}
+
+		[popover] {
+			background: var(--bg-overlay);
+			border: var(--thin-border-width) solid var(--ui-light);
+			border-radius: var(--standard-border-radius);
+			box-shadow: var(--box-shadow);
+			color: var(--text);
+			inline-size: min(32rem, calc(100vw - 2 * var(--container-space)));
+			padding: 0.8em 1em;
+
+			p {
+				margin-block: 0 0.5em;
+			}
+
+			.term-name {
+				font-weight: var(--font-weight--semi-bold);
+			}
+
+			a {
+				font-size: 0.9em;
+			}
+		}
+
+		/* A popover opened by a popovertarget button takes that button as its
+		   implicit anchor, so no anchor-name is needed — position-area alone
+		   pins the definition under its own term. Engines without anchor
+		   positioning skip this block and keep the UA's centred popover, which
+		   still works. Week 2's lesson, applied to the page that teaches it. */
+		@supports (position-area: block-end) {
+			[popover]:popover-open {
+				margin: 0.4em 0 0;
+				position: absolute;
+				position-area: block-end span-inline-end;
+				position-try-fallbacks: block-start span-inline-end, block-end span-inline-start, block-start span-inline-start;
+			}
+		}
+	}
+</style>

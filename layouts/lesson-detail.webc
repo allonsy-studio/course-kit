@@ -1,0 +1,108 @@
+---
+layout: "base"
+title: "Instructor lesson plan"
+---
+
+
+<article class="lesson-plan content-column">
+	<header class="stacked">
+		<nav class="lesson-nav" aria-label="Lesson navigation">
+			<a href="/lessons/">All lessons</a>
+			<a :href="$data.pagination.href.previous" webc:if="$data.pagination.href.previous">Previous day</a>
+			<a :href="$data.pagination.href.next" webc:if="$data.pagination.href.next">Next day</a>
+		</nav>
+		<eyebrow @text="$data.title"></eyebrow>
+		<h1 class="lesson-heading">Week <span @text="$data.lesson.week"></span>, Day <span @text="$data.lesson.day"></span></h1>
+		<p class="lesson-when separators">
+			<span @text="$data.lesson.display"></span>
+			<span @text="timeOfDay($data.lesson.time)"></span>
+			<span webc:if="$data.lesson.meeting">Class meeting #<span @text="$data.lesson.meeting"></span> of the term</span>
+		</p>
+	</header>
+
+	<callout webc:if="$data.lesson.noClass">
+		<p>No class on <span @text="$data.lesson.noClass"></span>. Use this day to prep the next lesson or catch up on grading.</p>
+	</callout>
+
+	<template webc:nokeep webc:if="!$data.lesson.noClass">
+		<p class="focus"><strong>Focus:</strong> <span @text="$data.lesson.focus"></span></p>
+		<callout :type="'warn'" webc:if="$data.lesson.substitution">
+			<p>This meeting runs a <strong @text="$data.lesson.substitution"></strong> schedule (college-wide) — plan the substituted day's session, not this weekday's usual rhythm.</p>
+		</callout>
+		<callout :type="'warn'" webc:if="$data.lesson.testWeek">
+			<p>A test is scheduled this week — confirm day, reserve class time, and remind students at least one meeting ahead.</p>
+		</callout>
+
+		<section aria-labelledby="topics-heading">
+			<h2 id="topics-heading">This week's topics</h2>
+			<ul>
+				<li webc:for="topic of $data.lesson.topics" @raw="topic"></li>
+			</ul>
+		</section>
+
+		<section aria-labelledby="before-heading">
+			<h2 id="before-heading">Before class</h2>
+			<ul class="checklist" role="list">
+				<li webc:if="$data.lesson.readings?.length">Review the week's readings (see materials below)</li>
+				<li>Prepare/update slides and live-demo code</li>
+				<li webc:for="deck of decksFor($data.collections.deck, $data.lesson.week, $data.lesson.day)">Print or open the <a :href="deck.notesUrl">speaker notes sheet</a></li>
+				<li>Stage starter files or lab handout if needed</li>
+				<li>Check Brightspace for student questions or submissions</li>
+			</ul>
+		</section>
+
+		<section aria-labelledby="outline-heading">
+			<h2 id="outline-heading">Lesson outline (<span @text="$data.lesson.minutes"></span> minutes)</h2>
+			<table>
+				<thead>
+					<tr><th scope="col">Time</th><th scope="col">Segment</th></tr>
+				</thead>
+				<tbody>
+					<tr webc:for="row of $data.lesson.outline">
+						<td @text="`${row.minutes} min`"></td>
+						<td @text="row.segment"></td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+
+		<section aria-labelledby="materials-heading">
+			<h2 id="materials-heading">Materials &amp; links</h2>
+			<h3 webc:if="decksFor($data.collections.deck, $data.lesson.week, $data.lesson.day).length">Slides for this meeting</h3>
+			<ul webc:if="decksFor($data.collections.deck, $data.lesson.week, $data.lesson.day).length">
+				<li webc:for="deck of decksFor($data.collections.deck, $data.lesson.week, $data.lesson.day)">
+					<a :href="deck.url" @text="deck.title"></a> — <a :href="deck.notesUrl">speaker notes</a> (printable)
+				</li>
+			</ul>
+			<h3 webc:if="$data.lessonDemos?.length">Demos from this meeting</h3>
+			<ul webc:if="$data.lessonDemos?.length">
+				<li webc:for="demo of $data.lessonDemos">
+					<a :href="`/demo/${demo.slug}/`" @text="demo.title"></a>
+					<span class="muted" webc:if="demo.description"> — <span @text="demo.description"></span></span>
+				</li>
+			</ul>
+			<h3 webc:if="$data.lesson.readings?.length">Assigned before this week</h3>
+			<ul webc:if="$data.lesson.readings?.length">
+				<li webc:for="reading of $data.lesson.readings">
+					<a :href="reading.href" @text="reading.title"></a>
+				</li>
+			</ul>
+			<h3 webc:if="$data.lesson.readings?.length && $data.lesson.resources?.length">Posted for the class</h3>
+			<p class="muted" webc:if="!$data.lesson.resources?.length">Nothing posted for this week yet.</p>
+			<ul webc:if="$data.lesson.resources?.length">
+				<li webc:for="resource of $data.lesson.resources">
+					<a :href="resource.href" @text="resource.title"></a>
+				</li>
+			</ul>
+		</section>
+
+		<section aria-labelledby="after-heading">
+			<h2 id="after-heading">After class</h2>
+			<ul class="checklist" role="list">
+				<li>Post handouts to <code>content/resources/</code> and link them in <code>_data/schedule.json</code>'s <code>resources[]</code> for the week; the slide deck publishes itself from <code>content/slides/</code>, so it only needs a link there if students should see it from the schedule</li>
+				<li>Note anything not covered and roll it into the next lesson</li>
+				<li>Post or grade lab/homework in Brightspace as needed</li>
+			</ul>
+		</section>
+	</template>
+</article>

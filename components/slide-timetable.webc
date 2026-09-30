@@ -1,0 +1,160 @@
+<table webc:root="override" class="slide-timetable" webc:if="timetable?.weeks?.length">
+    <caption class="sr-only">Every slide deck for this section, one row per week and one column per meeting day</caption>
+    <thead>
+        <tr>
+            <th scope="col">Week</th>
+            <th scope="col" webc:for="day of timetable.days" @text="day"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr webc:for="week of timetable.weeks">
+            <th scope="row">
+                <span class="week-title">Week <span @text="week.week"></span></span>
+                <span class="week-of" @text="week.dates"></span>
+            </th>
+            <td webc:for="cell of week.cells" :data-day="cell.weekday" :data-date="cell.iso">
+                <p class="empty" webc:if="cell.missing">No meeting</p>
+                <p class="empty" webc:if="cell.noClass">No class: <span @text="cell.noClass"></span></p>
+                <template webc:nokeep webc:if="!cell.missing && !cell.noClass">
+                    <p class="date" @text="cell.date"></p>
+                    <p class="deck-title" webc:if="cell.deck"><a class="arrow" :href="cell.deck.url"><span @text="cell.deck.title"></span> <span aria-hidden="true">→</span></a></p>
+                    <p class="empty" webc:if="!cell.deck">No deck</p>
+                    <p class="draft" webc:if="cell.deck?.draft">Draft, not in the student build</p>
+                    <p class="notes" webc:if="cell.deck && $data.audience.instructor"><a :href="cell.deck.notesUrl">Speaker notes</a></p>
+                </template>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<style webc:scoped>
+    /* A timetable: every week is one row of identical shape, one cell per
+       meeting weekday, so the eye can read down a column or across a row
+       and nothing leaves a hole. On narrow screens each row becomes a week
+       band with its cells stacked beneath, the weekday restored as a label. */
+    :host {
+        inline-size: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        border: var(--thin-border-width) solid var(--ui-light);
+        border-radius: var(--standard-border-radius);
+        overflow: hidden;
+        margin-block: 0;
+    }
+
+    :host :is(th, td) {
+        border: 0;
+        border-block-start: var(--thin-border-width) solid var(--ui-light);
+        padding: 0.7em 1em;
+        text-align: start;
+        vertical-align: top;
+    }
+
+    :host thead th {
+        border-block-start: 0;
+        border-block-end: var(--border-width) solid var(--section-ui);
+        background-color: var(--bg-light);
+        font-weight: var(--font-weight--semi-bold);
+    }
+
+    :host tbody th {
+        inline-size: 11em;
+        background-color: var(--bg-light);
+        font-weight: var(--font-weight);
+    }
+
+    :host tbody td + td {
+        border-inline-start: var(--thin-border-width) solid var(--ui-light);
+    }
+
+    :host .week-title {
+        display: block;
+        font-weight: var(--font-weight--semi-bold);
+    }
+
+    :host .week-of,
+    :host .date,
+    :host .empty,
+    :host .draft,
+    :host .notes {
+        color: var(--text-light);
+        font-size: max(var(--base-font-size), 0.9em);
+    }
+
+    :host .week-of {
+        display: block;
+    }
+
+    :host td p {
+        margin: 0;
+    }
+
+    :host .deck-title {
+        margin-block-start: 0.15em;
+        font-size: max(var(--base-font-size), 1.05em);
+    }
+
+    :host [data-today] {
+        background-color: color-mix(in srgb, var(--section-ui) 15%, transparent);
+        box-shadow: inset 0 var(--border-width) 0 var(--section-ui);
+    }
+
+    :host .today-flag {
+        display: block;
+        color: var(--section-text);
+        font-size: max(var(--base-font-size), 0.9em);
+    }
+
+    :host .arrow {
+        color: var(--section-text);
+        text-decoration: none;
+        font-weight: var(--font-weight--medium);
+
+        &:is(:hover, :focus-visible) {
+            text-decoration: underline;
+        }
+    }
+
+    :host .draft,
+    :host .notes {
+        margin-block-start: 0.25em;
+    }
+
+    @media screen and (width <= 640px) {
+        :host,
+        :host tbody,
+        :host tr,
+        :host th,
+        :host td {
+            display: block;
+        }
+
+        :host thead {
+            position: absolute;
+            inline-size: 1px;
+            block-size: 1px;
+            overflow: hidden;
+            clip-path: inset(50%);
+            white-space: nowrap;
+        }
+
+        :host tbody th {
+            inline-size: auto;
+            border-block-end: var(--border-width) solid var(--section-ui);
+        }
+
+        :host tbody tr + tr th {
+            border-block-start: var(--thin-border-width) solid var(--ui-light);
+        }
+
+        :host tbody td + td {
+            border-inline-start: 0;
+        }
+
+        :host td::before {
+            content: attr(data-day);
+            display: block;
+            font-weight: var(--font-weight--semi-bold);
+        }
+    }
+</style>

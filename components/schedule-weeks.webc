@@ -1,0 +1,262 @@
+<div webc:root="override" class="schedule-weeks" webc:if="weeks?.length">
+    <section class="week" webc:for="week of weeks" :id="`week-${week.week}`" :aria-labelledby="`week-${week.week}-heading`">
+        <header class="week-head">
+            <h3 :id="`week-${week.week}-heading`">Week <span @text="week.week"></span></h3>
+            <p class="week-of" @text="week.dates"></p>
+        </header>
+        <div class="week-body">
+            <ol class="meetings" role="list">
+                <li class="meeting" webc:for="meeting of week.meetings">
+                    <p class="when" :data-date="meeting.iso">
+                        <span class="weekday" @text="meeting.weekday"></span>
+                        <span class="date" @text="meeting.date"></span>
+                        <span class="note" webc:if="meeting.substitution">Runs a <span @text="meeting.substitution"></span> schedule</span>
+                    </p>
+                    <p class="no-class" webc:if="meeting.noClass">No class — <span @text="meeting.noClass"></span></p>
+                    <ul class="topics" role="list" webc:if="!meeting.noClass">
+                        <li webc:for="topic of meeting.topics" @raw="topic"></li>
+                    </ul>
+                    <p class="slides" webc:if="meeting.slides">
+                        <a class="arrow" :href="meeting.slides">Slides <span aria-hidden="true">→</span></a>
+                    </p>
+                    <div class="demos" webc:if="meeting.demos?.length">
+                        <p class="label">Demos</p>
+                        <ul role="list">
+                            <li webc:for="demo of meeting.demos"><a class="arrow" :href="demo.url"><span @text="demo.title"></span> <span aria-hidden="true">→</span></a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ol>
+            <div class="materials">
+                <div class="group" webc:if="week.readings?.length">
+                    <p class="label">Read before class</p>
+                    <ul role="list">
+                        <li webc:for="reading of week.readings">
+                            <a :href="reading.href" @text="reading.title"></a>
+                            <span class="check" webc:if="reading.check" @text="reading.check"></span>
+                        </li>
+                    </ul>
+                </div>
+                <hr webc:if="week.readings?.length">
+                <div class="group">
+                    <p class="label">Resources</p>
+                    <p class="pending" webc:if="!week.resources?.length">Nothing posted yet.</p>
+                    <ul role="list" webc:if="week.resources?.length">
+                        <li webc:for="resource of week.resources">
+                            <a :href="resource.href" @text="resource.title"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style webc:scoped>
+    /* One bordered block per week: a tinted header band, then the meetings
+       down the left and the week's reading and materials on the right. Stacks
+       to a single column on narrow screens, so nothing scrolls sideways. */
+    :host {
+        display: grid;
+        gap: var(--content-space);
+    }
+
+    .week {
+        margin: 0;
+        padding: 0;
+        border: var(--thin-border-width) solid var(--ui-light);
+        border-radius: var(--standard-border-radius);
+        overflow: hidden;
+    }
+
+    .week-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.25em 1em;
+        padding: 0.55em 1em;
+        background-color: var(--bg-light);
+        border-block-end: var(--border-width) solid var(--section-ui);
+
+        h3 {
+            margin: 0;
+            font-size: var(--font-size-4);
+        }
+    }
+
+    .week-of {
+        margin: 0;
+        color: var(--text-light);
+        font-size: max(var(--base-font-size), 0.9em);
+    }
+
+    .week-body {
+        display: grid;
+        grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+
+        @media screen and (width <= 860px) {
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+
+    .meetings {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .meeting {
+        display: grid;
+        grid-template-columns: 8.5em minmax(0, 1fr);
+        gap: 0.5em 1em;
+        padding: 0.8em 1em;
+
+        & + .meeting {
+            border-block-start: var(--thin-border-width) solid var(--ui-light);
+        }
+
+        @media screen and (width <= 520px) {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 0.25em;
+        }
+    }
+
+    .when {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+
+        @media screen and (width <= 520px) {
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 0 0.5em;
+            align-items: baseline;
+        }
+    }
+
+    .weekday {
+        font-weight: var(--font-weight--semi-bold);
+    }
+
+    .meeting:has([data-today]) {
+        background-color: color-mix(in srgb, var(--section-ui) 15%, transparent);
+        box-shadow: inset var(--border-width) 0 0 var(--section-ui);
+    }
+
+    .today-flag {
+        color: var(--section-text);
+        font-size: max(var(--base-font-size), 0.9em);
+    }
+
+    .date,
+    .note,
+    .no-class,
+    .pending,
+    .label,
+    .check {
+        color: var(--text-light);
+        font-size: max(var(--base-font-size), 0.9em);
+    }
+
+    .note {
+        font-style: italic;
+    }
+
+    .no-class {
+        margin: 0;
+    }
+
+    .topics {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li + li {
+            margin-block-start: 0.25em;
+        }
+    }
+
+    /* The meeting's own deck and demos under its topics, each on its own
+       line and always in the same order: the Slides link first, then a
+       labelled Demos region, so the lab line and the demo it builds on sit
+       together and every meeting reads the same way. */
+    .slides,
+    .demos {
+        grid-column: 2;
+        margin: 0.35em 0 0;
+        font-size: max(var(--base-font-size), 0.92em);
+
+        @media screen and (width <= 520px) {
+            grid-column: auto;
+        }
+    }
+
+    .demos {
+        margin-block-start: 0.6em;
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        li + li {
+            margin-block-start: 0.2em;
+        }
+    }
+
+    .arrow {
+        color: var(--section-text);
+        text-decoration: none;
+        font-weight: var(--font-weight--medium);
+
+        &:is(:hover, :focus-visible) {
+            text-decoration: underline;
+        }
+    }
+
+    .materials {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        padding: 0.8em 1em;
+        border-inline-start: var(--thin-border-width) solid var(--ui-light);
+
+        @media screen and (width <= 860px) {
+            border-inline-start: none;
+            border-block-start: var(--thin-border-width) solid var(--ui-light);
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        li + li {
+            margin-block-start: 0.25em;
+        }
+
+        hr {
+            inline-size: 100%;
+            margin-block: 0.8em;
+            border: 0;
+            border-block-start: var(--thin-border-width) solid var(--ui-light);
+        }
+    }
+
+    .label {
+        margin: 0 0 0.2em;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: var(--font-size-6);
+    }
+
+    .pending {
+        margin: 0;
+    }
+
+    .check {
+        display: block;
+    }
+</style>

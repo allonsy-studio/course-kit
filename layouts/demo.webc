@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html :lang="site.language ?? 'en-US'">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="robots" content="noindex, nofollow">
+    <title @text="$data.title"></title>
+
+    <template webc:nokeep webc:if="$data.stylesheet" @raw="bundleFile('css', `content${$data.stylesheet}`, $data)"></template>
+    <style webc:keep @raw="getBundle('css')"></style>
+    <script type="module" webc:keep @raw="getBundle('js')"></script>
+</head>
+
+<body @raw="content"></body>
+
+</html>

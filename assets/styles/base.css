@@ -1,0 +1,1678 @@
+@import "font.css";
+
+:root {
+    /* ---- Brand palette ----
+       These literals are also hardcoded in deck.css, which never loads this file
+       (see "Self-contained decks" in AGENTS.md) — a brand change edits both. */
+    --static-ink: #33394E;
+    --static-slate: #414C75;
+    --static-paper: #FBF9F3;
+    --static-cream: #EFEBDF;
+    --static-latte: #C2B1A6;
+
+    /* Brights */
+    --static-magenta: #C92C6B;
+    --on-brand-magenta: var(--static-paper);
+    --text-magenta: light-dark(hsl(336deg 68% 40%), hsl(336deg 72% 72%));
+
+    --static-orange: #FF9A56;
+    --text-orange: light-dark(hsl(22deg 82% 37%), hsl(28deg 100% 72%));
+
+    --static-cyan: #7BD1E6;
+    --text-cyan: light-dark(hsl(193deg 58% 31%), hsl(192deg 68% 72%));
+
+    --static-yellow: light-dark(#FFD36C, #FFC233);
+    --text-yellow: light-dark(hsl(38deg 88% 32%), hsl(45deg 100% 64%));
+
+    /* The course purple (7.38:1 on white; see week 6 day 2). The dark value
+       is a pastel tuned for dark grounds, like the other brights. */
+    --static-purple: light-dark(#6B3FA0, #B9A3E3);
+    --text-purple: light-dark(hsl(267deg 43% 40%), hsl(267deg 60% 78%));
+
+    /* ---- Feedback primitives ---- */
+    --ui-success: light-dark(hsl(155deg 55% 35%), hsl(155deg 50% 55%));
+    --on-success: var(--static-paper);
+
+    --ui-error: light-dark(hsl(0deg 65% 45%), hsl(0deg 70% 60%));
+    --on-error: var(--static-paper);
+
+    --ui-warn: light-dark(hsl(40deg 86% 50%), hsl(42deg 100% 40%));
+    --on-warn: var(--static-paper);
+
+    --ui-light: light-dark(color-mix(in oklab, var(--static-slate) 22%, #fff), hsl(228deg 14% 32%));
+    --border: var(--ui-light);
+    --on-light: var(--static-ink);
+
+    /* ---- Gradients ---- */
+    --gradient-stack: var(--static-magenta), var(--static-cyan), var(--static-yellow), var(--static-orange);
+    --gradient: linear-gradient(45deg, var(--gradient-stack));
+
+    /* Light mode is white with slate-tinted surfaces and rules: the brand's
+       paper and cream read yellow against the magenta accent, so they stay
+       reserved for on-accent text and the slide decks. */
+    --bg: light-dark(#fff, hsl(228deg 20% 12%));
+    --text: light-dark(var(--static-ink), var(--static-paper));
+
+    --bg-light: light-dark(color-mix(in oklab, var(--static-slate) 7%, #fff), hsl(228deg 18% 17%));
+    --text-light: light-dark(var(--static-slate), var(--static-latte));
+
+	--bg-accent: light-dark(color-mix(in oklab, var(--static-slate) 5%, transparent), hsl(228deg 18% 17% / 50%));
+
+    --bg-subtle: light-dark(color-mix(in oklab, var(--static-slate) 3%, transparent), hsl(228deg 18% 20% / 30%));
+
+    /* ---- The elevation ladder ---- */
+    --bg-overlay: light-dark(#fff, hsl(228deg 15% 30%));
+
+    /* ---- Typography ---- */
+    --sans-font: "Instrument Sans", "Instrument Sans Fallback", system-ui, "Helvetica Neue", helvetica, arial, sans-serif;
+    --signature-font: cursive;
+    --dense-font: "Instrument Sans", "Instrument Sans Fallback", system-ui, sans-serif;
+    --mono-font: "PT Mono", monospace;
+
+    --base-font-size: 14px;
+    --mono-font-size: max(var(--base-font-size), .8em);
+
+    --font-size-5: max(var(--base-font-size), 1rem);
+    --font-size-4: max(var(--base-font-size), calc(var(--font-size-5) * 1.25));
+    --font-size-3: max(var(--base-font-size), calc(var(--font-size-4) * 1.25));
+    --font-size-2: max(var(--base-font-size), calc(var(--font-size-3) * 1.25));
+    --font-size-1: max(var(--base-font-size), calc(var(--font-size-2) * 1.25));
+    --font-size-6: max(var(--base-font-size), calc(var(--font-size-5) / 1.25));
+    --font-size-7: max(var(--base-font-size), calc(var(--font-size-6) / 1.25));
+
+    /* ---- Font weights (Instrument Sans variable axis 400–700) ---- */
+    --font-weight--thin: 100;
+    --font-weight--extra-light: 200;
+    --font-weight--light: 300;
+    --font-weight: 400;
+
+    /* Instrument Sans covers 400–700; Yellowtail + PT Mono are single-weight 400 */
+    --font-weight--medium: 500;
+    --font-weight--semi-bold: 600;
+    --font-weight--bold: 700;
+
+    --font-weight--extra-bold: 800;
+    --font-weight--black: 900;
+
+    /* ---- Line heights ---- */
+    --font-height--dense: 1.1;
+    --font-height: 1.5; /* body copy floor; below 1.5 fails WCAG 1.4.12 spacing */
+    --font-height--spacious: 1.8;
+
+    /* ---- Spacing ---- */
+    --gutter: 4px;
+    --content-space: 1em; /* ~16px at the base type size */
+    --container-space: 16px;
+    --section-space: 32px;
+
+    /* ---- Shape ---- */
+    --hairline-border-radius: 0.1em;
+    --standard-border-radius: 0.2em;
+    --squircle-border-radius: 40px;
+    --pill-border-radius: 9999px;
+    --circle-border-radius: 50%;
+
+    --thin-border-width: 1px;
+    --border-width: 2px;
+    --thick-border-width: 4px;
+
+    /* should never be smaller than 2px for a11y */
+    --outline-width: max(var(--border-width), 2px);
+    --outline-offset: calc(var(--outline-width) * 1.8);
+
+    /* Composite shadows (color baked in) */
+    --box-shadow: 0 10px 15px -10px light-dark(hsl(0deg 0% 60% / 60%), hsl(0deg 0% 30% / 60%));
+    --box-shadow-light: 0 5px 5px -10px light-dark(hsl(0deg 0% 80% / 50%), hsl(0deg 0% 50% / 50%));
+
+    /* ---- Sizing ---- */
+    --container-max: 1200px;
+    --content-max: 80ch;
+
+    /* Defaults mapped to the brand magenta */
+    --ui: var(--static-magenta);
+    --on-ui: var(--on-brand-magenta);
+    --text-accent: var(--text-magenta);
+
+    --code: var(--text);
+    --preformatted: var(--text);
+
+    --ui--hover: color-mix(in oklch, var(--ui) 40%, transparent);
+    --ui--active: color-mix(in oklch, var(--ui) 40%, transparent);
+
+    /* Highlights (mapped to the brand yellow) */
+    --marked: var(--static-yellow);
+
+    /* ---- Section accent ---- */
+    --section-ui: var(--ui);
+    --section-text: var(--text-accent);
+
+    --link: var(--text-accent);
+    --link--hover: color-mix(in oklch, var(--link) 90%, var(--text));
+    --link--focus: color-mix(in oklch, var(--link) 90%, var(--text));
+    --link--active: color-mix(in oklch, var(--link) 90%, var(--text));
+
+    --accent-text: var(--bg);
+    --accent: var(--ui);
+
+    /* prism.js only variables; not used in custom CSS */
+    --prism-default-background: light-dark(#f6f2e8, #272b38);
+
+    @media screen and (width <= 768px) {
+        --container-space: 10px;
+        --container-max: 100%;
+    }
+}
+
+/* ---- Baseline reset (formerly simple.css) ---- */
+:where(*, *::before, *::after) {
+    box-sizing: border-box;
+}
+
+:where(textarea, select, input, progress) {
+    appearance: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    :where(img, video) {
+        opacity: 0.8;
+    }
+}
+
+/* ---- Section-derived tokens ----
+   Defined on body, not :root, so they resolve after body[data-accent]
+   remaps --section-*; see "CSS" under "Gotchas" in AGENTS.md. */
+body {
+	--link: var(--section-text);
+	--link--hover: color-mix(in oklch, var(--link) 90%, var(--text));
+	--link--focus: color-mix(in oklch, var(--link) 90%, var(--text));
+	--link--active: color-mix(in oklch, var(--link) 90%, var(--text));
+	--bg-accent: light-dark(color-mix(in oklab, var(--section-ui) 14%, transparent), color-mix(in oklab, var(--section-ui) 20%, transparent));
+}
+
+/* Kept at plain tag specificity, not :where(): `:where(section:last-child)`
+   below must keep losing to this rule's `margin-block: 0`, exactly as it
+   already does in production — moving to :where() here would tie their
+   specificity and let source order (not intent) decide which wins. */
+section {
+    border-block: none;
+    padding: 0;
+    margin-block: 0;
+}
+
+/* Kept as a separate :where()-wrapped rule, not nested as `&:last-child`
+   inside the block above: nesting a bare pseudo-class after `&` does not
+   stay at zero specificity the way wrapping the whole compound in :where()
+   does (`&` expands to `:is(:where(section))`, which is zero, but the
+   trailing `:last-child` outside that :is() still counts). */
+:where(section:last-child) {
+	margin-block-end: 80px;
+}
+
+/* Consolidate box styling; more specific rules below (like
+   `article.content-column` and base.css's own later `details {}`
+   on background-color) win by specificity now that this is zero, not just
+   by coming later in the cascade. */
+:where(aside, details, pre, progress) {
+	background-color: var(--bg-accent);
+	border: var(--border-width) solid var(--ui-light);
+	border-radius: var(--standard-border-radius);
+	margin-block-end: 1rem;
+}
+
+:where(aside) {
+	font-size: 1rem;
+	inline-size: 30%;
+	padding-inline: 15px;
+	margin-inline-start: 15px;
+	float: inline-end;
+
+	*[dir="rtl"] & {
+		float: inline-start;
+	}
+
+	@media only screen and (width <= 720px) {
+		inline-size: 100%;
+		float: none;
+		margin-inline-start: 0;
+	}
+}
+
+:where(article, fieldset, dialog) {
+	border: var(--border-width) solid var(--ui-light);
+	padding: 1rem;
+	border-radius: var(--standard-border-radius);
+	margin-block-end: 1rem;
+}
+
+:where(article, section) :where(h2, h3):first-child {
+	margin-block-start: 1rem;
+}
+
+article {
+	&.content-column {
+		border: none;
+		padding-inline: 0;
+		margin-block-end: 0;
+	}
+
+	&:last-child {
+		margin-block-end: 0;
+		padding-block-end: 0;
+	}
+}
+
+:where(h1) {
+    font-size: var(--font-size-1);
+}
+
+:where(h2) {
+    font-size: var(--font-size-2);
+}
+
+:where(h3) {
+    font-size: var(--font-size-3);
+}
+
+:where(h4) {
+    font-size: var(--font-size-4);
+}
+
+:where(h5) {
+    font-size: var(--font-size-5);
+}
+
+:where(h6) {
+    font-size: var(--font-size-6);
+}
+
+/* Kept at :is() specificity, not :where(): it must keep outranking
+   `:where(p, cite)`'s clamp() formula for a plain, unclassed paragraph,
+   exactly as it already does in production. A classed paragraph (.lede,
+   .title, …) still wins, since real classes outrank both. */
+:is(p, li) {
+    font-size: var(--font-size-5);
+}
+
+html {
+    backface-visibility: hidden;
+    font-family: var(--sans-font);
+
+    /* Nothing is sticky, so anchor targets only need breathing room. */
+    scroll-behavior: smooth;
+    scroll-padding-block-start: var(--container-space);
+
+    @media (prefers-reduced-motion: reduce) {
+        scroll-behavior: auto;
+    }
+}
+
+body {
+    --page-column: min(var(--content-max), 90%);
+
+    display: grid;
+    position: relative;
+    grid-template-columns: 1fr var(--page-column) 1fr;
+    min-block-size: 100dvh;
+    grid-template-rows: auto 1fr auto;
+    margin: 0;
+    color: var(--text);
+    background-color: var(--bg);
+    font-size: var(--font-size-5);
+    line-height: var(--font-height);
+
+    font-optical-sizing: auto;
+    overflow-x: hidden;
+    text-wrap: stable;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+	scrollbar-gutter: stable;
+	overscroll-behavior: contain;
+
+    @media print {
+        font-size: 16px;
+        padding: 0;
+    }
+
+    &:has(.content-column.wide) {
+        --page-column: min(var(--container-max), 95%);
+    }
+
+    &:has(.error-page) {
+        background-image: url("../images/topography.svg");
+        background-position: center;
+        background-repeat: repeat;
+    }
+
+    /* Every direct child sits in the centre column; the masthead spans full
+       width behind it (see masthead.webc, which keeps this dependency local
+       by name in its own comment). */
+    > * {
+        grid-column: 2;
+    }
+
+    > header {
+        grid-column: 1 / -1;
+    }
+
+    > footer {
+        margin-block-start: 4rem;
+        padding-block: 2rem 1.5rem;
+        padding-inline: 1rem;
+        color: var(--text-light);
+        font-size: 0.9rem;
+        text-align: center;
+        border-block-start: var(--border-width) solid var(--ui-light);
+    }
+}
+
+main {
+    padding-block-start: 1.5rem;
+}
+
+[id] {
+    scroll-margin-block-start: 1.5rlh;
+}
+
+::selection {
+    background: color-mix(in hsl, var(--bg-light) 80%, transparent);
+    border-radius: 0.25em;
+    color: var(--text);
+}
+
+:focus-visible {
+	outline: var(--outline-width) solid;
+	outline-color: var(--ui--active);
+	outline-offset: var(--outline-offset);
+	border-color: var(--ui--active);
+	border-radius: var(--hairline-border-radius);
+
+	@supports (corner-shape: squircle) {
+		corner-shape: squircle;
+		border-radius: var(--squircle-border-radius);
+	}
+}
+
+:where(ul).tags {
+	list-style: none;
+	padding-inline-start: 0;
+	margin-block-start: 0;
+	margin-block-end: 0;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 12em), 1fr));
+	gap: var(--gutter);
+
+	li {
+		display: inline-block;
+		margin-inline-end: 0.5em;
+		padding: 0.25em 0.5em;
+		font-size: var(--font-size-6);
+		font-weight: var(--font-weight--medium);
+	}
+}
+
+a {
+    text-decoration: none;
+    text-underline-offset: .2ex;
+    font-weight: var(--font-weight);
+    color: var(--link);
+
+    :where(p, li, dd, blockquote, figcaption) &[href]:not(.cta-link, .header-anchor, .listing-item-more) {
+        text-decoration: underline;
+        text-decoration-color: color-mix(in oklch, currentColor 45%, transparent);
+        text-decoration-thickness: 1px;
+    }
+
+    &:has(img, svg) {
+        display: flex;
+        aspect-ratio: var(--aspect-ratio, 1 / 1);
+        inline-size: var(--image-size, 250px);
+        line-height: 1;
+
+		&.circle {
+			shape-outside: circle(80px at 40% 50%) margin-box;
+			box-sizing: content-box;
+			border-radius: var(--circle-border-radius);
+		}
+    }
+
+    &:hover {
+        text-decoration: underline;
+        text-decoration-color: var(--link--hover);
+        color: var(--link--hover);
+    }
+
+    &:is(:focus, :focus-visible) {
+        text-decoration: underline;
+        text-decoration-color: var(--link--focus);
+        color: var(--link--focus);
+        outline: var(--outline-width) solid var(--ui--active);
+        outline-offset: var(--outline-offset);
+        border-radius: var(--standard-border-radius);
+
+		@supports (corner-shape: squircle) {
+			corner-shape: squircle;
+			border-radius: var(--squircle-border-radius);
+		}
+    }
+
+	&[name]:not([href]) {
+		color: inherit;
+	}
+
+    &[aria-current="page"] {
+        color: inherit;
+        font-weight: var(--font-weight--semi-bold);
+        text-decoration: underline;
+        text-decoration-color: var(--link--active);
+    }
+
+    :where(img) {
+        cursor: pointer;
+    }
+
+	@container (inline-size > 0) {
+		text-decoration: dotted underline;
+	}
+}
+
+:where(p, li, blockquote) a:not(.cta-button, .cta-link, .navigation-link, :has(img, svg)),
+.header-summary a:not(.cta-button, .cta-link, .navigation-link, :has(img, svg)) {
+    text-decoration: underline;
+    text-decoration-color: color-mix(in sRGB, currentColor 45%, transparent);
+    text-underline-offset: .2ex;
+}
+
+:where(iframe) {
+	inline-size: min(var(--video--Width, 100%), 100%);
+	block-size: auto;
+
+	&:where([src*="youtube.com"]) {
+		aspect-ratio: 16 / 9;
+	}
+}
+
+:where(svg) {
+	inline-size: 100%;
+	block-size: auto;
+	min-block-size: 2.5em;
+	fill: currentColor;
+	align-self: center;
+}
+
+:where(label) {
+    text-wrap: stable;
+    padding-block-start: var(--content-space);
+    padding-inline: 0;
+    font-weight: var(--font-weight--thin);
+    line-height: var(--font-height--spacious);
+    color: var(--text);
+
+    :is(+ [disabled], [disabled] + &) {
+        color: var(--text-light);
+    }
+
+    &:has(:where(input, textarea, select)) {
+        position: relative;
+        display: grid;
+
+        &::after {
+            position: absolute;
+            content: "";
+            pointer-events: none;
+            inset-inline-end: 0.75em;
+            inset-block-start: calc(1em * var(--font-height--spacious) + 0.2em);
+            font-weight: var(--font-weight--bold);
+        }
+
+        &:has(:is(input, textarea, select):user-valid:not(:focus-visible, :disabled, :read-only))::after {
+            content: "✓";
+            content: "✓" / "";
+            color: var(--ui-success);
+        }
+
+        &:has(:is(input, textarea, select):user-invalid:not(:focus-visible, :disabled, :read-only))::after {
+            content: "!";
+            content: "!" / "";
+            color: var(--ui-error);
+        }
+
+        &:has(+ button) {
+            margin-block-end: calc((var(--content-space) / 2) + 1cqi);
+        }
+    }
+}
+
+:where(input, textarea, select, button) {
+    font: inherit;
+    color: inherit;
+}
+
+:where(ul, ol) {
+	margin: 0;
+
+	&:not(:last-child) {
+		margin-block-end: 1.5em;
+	}
+}
+
+:where(li) {
+	margin: 0;
+
+	&:not([class]) {
+		font-size: inherit;
+		line-height: var(--font-height);
+	}
+
+	:is(b, strong) {
+		font-weight: var(--font-weight--semi-bold);
+	}
+
+	&:has(b, strong):not(:last-child) {
+		margin-block-end: 0.2em;
+	}
+}
+
+:where(dl) {
+	margin: 0;
+}
+
+:where(dt) {
+	font-family: var(--sans-font);
+	font-weight: var(--font-weight--bold);
+	font-size: 1.2em;
+	color: var(--text-light);
+
+	+ dd {
+		margin-block-end: 1em;
+	}
+}
+
+:where(dd) {
+	margin-inline-start: 0;
+}
+
+:where(nav) {
+	a {
+        color: var(--text-light);
+        white-space: nowrap;
+
+        &:hover {
+            color: var(--text);
+        }
+
+        span {
+            text-decoration: dotted underline;
+            text-decoration-color: var(--ui);
+        }
+
+        b {
+            color: var(--text-accent);
+            font-weight: var(--font-weight--bold);
+            margin-inline-end: calc(var(--content-space) * 3);
+        }
+	}
+}
+
+:is([hidden]) {
+    display: none;
+}
+
+.sr-only {
+    position: absolute;
+	inset-block-start: 1em;
+	inset-inline-start: 1em;
+
+    &:focus {
+        z-index: 100;
+        background: var(--bg-overlay);
+        color: var(--text);
+        padding: 0.5em 1em;
+        border-radius: var(--standard-border-radius);
+        box-shadow: var(--box-shadow);
+    }
+
+    &:not(:focus) {
+        clip-path: inset(50%);
+        overflow: hidden;
+        white-space: nowrap;
+        inline-size: 1px;
+        block-size: 1px;
+        border: 0;
+        padding: 0;
+        margin: -1px;
+    }
+}
+
+.print-only {
+	display: none;
+}
+
+@media print {
+	.screen-only {
+		display: none;
+	}
+
+	.print-only {
+		display: revert;
+	}
+}
+
+.field-group {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 12em), 1fr));
+	gap: calc((var(--content-space) / 2) + 1cqi);
+
+	&:has(> *:only-child) {
+		grid-template-columns: 1fr;
+	}
+}
+
+.shadow {
+	box-shadow: var(--box-shadow), var(--box-shadow-light);
+}
+
+:where(p, cite) {
+	font-size: clamp(var(--font-size-5), 1rem + 0.3cqi, 1.125rem);
+	font-weight: var(--font-weight);
+	line-height: var(--font-height);
+
+	&:is(.extra) {
+		font-size: 1.2em;
+
+		:is(b, strong) {
+			font-weight: var(--font-weight--medium);
+		}
+	}
+
+	&:is(.muted),
+	:is(.muted) {
+		color: var(--text-light);
+	}
+
+	&:is(.align-end) {
+		text-align: end;
+	}
+
+	:is(b, strong) {
+		font-weight: var(--font-weight--semi-bold);
+	}
+
+	&:is(.underline),
+	:is(.underline) {
+		font-style: normal;
+		text-decoration: underline;
+		text-decoration-color: var(--ui);
+		text-decoration-thickness: 0.2ex;
+	}
+
+	&:is(.balance),
+	:is(.balance) {
+		text-wrap: balance;
+	}
+}
+
+:where(h1, h2, h3, h4, h5, h6),
+.title,
+.headline,
+.lede {
+	font-family: var(--sans-font);
+	color: var(--text);
+	line-height: var(--font-height--dense);
+	margin-block: 0 0.4em;
+	text-wrap: balance;
+
+	&:where(:not(:has(+ *))) {
+		margin-block-end: 0;
+	}
+
+	&:is(.accent) {
+		color: var(--text-accent);
+	}
+
+	a {
+		color: inherit;
+		font-weight: inherit;
+		text-decoration: none;
+	}
+}
+
+main {
+	:where(h2:not([class])) {
+		margin-block-start: calc(var(--content-space) * 2.5);
+		text-decoration-color: var(--section-ui);
+		text-decoration-thickness: 0.2ex;
+		text-decoration-line: underline;
+	}
+
+	:where(h3:not([class])) {
+		margin-block-start: calc(var(--content-space) * 1.75);
+	}
+
+	:where(h4:not([class]), h5:not([class]), h6:not([class])) {
+		margin-block-start: calc(var(--content-space) * 1.25);
+	}
+}
+
+:where(h1, h2, h3, h4, h5, h6):has(> .header-anchor) {
+	position: relative;
+}
+
+.header-anchor {
+	position: absolute;
+	inset-inline-start: -0.85em;
+	opacity: 0;
+	color: var(--text-light);
+	text-decoration: none;
+	transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+
+	&:is(:hover, :focus-visible) {
+		color: var(--link);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		transition: none;
+	}
+}
+
+:where(h1, h2, h3, h4, h5, h6):is(:hover, :focus-within) > .header-anchor,
+.header-anchor:focus-visible {
+	opacity: 1;
+}
+
+:where(h1:not([class])) {
+	font-weight: var(--font-weight--semi-bold);
+}
+
+:where(h2:not([class])) {
+	font-weight: var(--font-weight--semi-bold);
+}
+
+:where(h3:not([class])) {
+	font-weight: var(--font-weight--medium);
+}
+
+:where(h4:not([class]), h5:not([class]), h6:not([class])) {
+	font-weight: var(--font-weight--medium);
+}
+
+.no-wrap {
+	word-break: keep-all;
+	white-space: nowrap;
+
+	@media screen and (width <= 480px) {
+		white-space: normal;
+	}
+}
+
+.title {
+	font-size: calc(var(--title--FontSize, 1em) + 0.1cqi + 0.3cqb);
+	font-weight: var(--font-weight);
+	text-transform: var(--title--TextTransform, uppercase);
+	text-shadow: 0 0 0.1em var(--on-ui);
+
+	&:is(.highlight) {
+		color: var(--accent-text);
+		z-index: 1;
+
+		inline-size: max-content;
+		max-inline-size: 100%;
+
+		background: var(--ui);
+		padding-block: 0.12em 0.22em;
+		padding-inline: 0.5em;
+
+		&.from-end {
+			transform-origin: right;
+		}
+
+		/* Subtle titles — and linked titles while hovered/focused — drop the fill
+		   for a simple underline. */
+		&.subtle,
+		&:not(.subtle):has(a:is(:hover, :focus, :focus-visible)) {
+			color: inherit;
+
+			background: none;
+			padding-block-end: 0.1em;
+			padding-inline: 0;
+			border-block-end: calc(var(--border-width) * 4) solid var(--ui);
+		}
+
+		a {
+			text-decoration-line: none;
+		}
+
+		&:not(:only-child) {
+			margin-block-end: 1em;
+		}
+	}
+}
+
+.headline {
+	font-size: max(calc(var(--headline--FontSize, 10px) + 2.5cqi + 1cqb), var(--font-size-5));
+	font-weight: var(--font-weight);
+
+	text-wrap: balance;
+
+	.band:not(.hero) &:not(.company-name) {
+		text-decoration: underline;
+		text-decoration-thickness: calc(var(--border-width) * 4);
+		text-decoration-color: var(--ui);
+	}
+
+	@media (prefers-color-scheme: dark) {
+		font-weight: var(--font-weight);
+	}
+}
+
+.lede {
+	text-wrap: balance;
+	font-family: var(--sans-font);
+	font-size: max(calc(var(--lede--FontSize, 1em) + .2cqi + .2cqb), var(--font-size-5));
+	font-weight: var(--font-weight--light);
+	line-height: var(--font-height);
+
+	@media screen and (width <= 612px) {
+		--lede--FontSize: .9em;
+	}
+
+	@media screen and (width <= 480px) {
+		--lede--FontSize: .8em;
+	}
+
+	@container box (width <= 500px) {
+		font-weight: var(--font-weight);
+	}
+
+	&.accent {
+		--lede--FontSize: 1.6em;
+		line-height: var(--font-height--dense);
+	}
+}
+
+.signature {
+	font-family: var(--signature-font);
+	font-size: 1.2em;
+	font-weight: var(--font-weight--medium);
+	line-height: var(--font-height--dense);
+
+	:is(b, strong) {
+		font-weight: var(--font-weight--bold);
+	}
+}
+
+@container style(--context: brand) {
+	.signature {
+		font-size: 2em;
+	}
+
+	.signature .dash {
+		color: var(--static-magenta);
+	}
+}
+
+.metadata {
+	font-weight: var(--font-weight--light);
+	color: var(--text-light);
+	font-size: var(--font-size-5);
+}
+
+.date {
+	font-weight: var(--font-weight--light);
+}
+
+.content {
+	font-size: var(--font-size-5);
+	max-inline-size: min(80ch, 100%);
+
+	font-optical-sizing: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	> *:not(:last-child) {
+		margin-block-end: min(1em, calc(var(--content-space) * 2));
+	}
+
+	section:has(+ section) {
+		margin-block-end: min(2em, calc(var(--content-space) * 4));
+	}
+
+	&:has(+ .content) {
+		margin-block-end: var(--content-space);
+	}
+}
+
+.stacked {
+	display: flex;
+	flex-direction: column;
+	gap: var(--content-space);
+}
+
+eyebrow + :where(h1, h2, h3, h4, h5, h6) {
+	margin-block-start: calc(var(--gutter) * 2);
+}
+
+/* ---- Reading column ---- */
+.content-column {
+	box-sizing: border-box;
+	inline-size: 100%;
+	padding-block: calc(var(--section-space) / 2) var(--section-space);
+
+	> section + section {
+		margin-block-start: var(--section-space);
+	}
+
+	> section > header {
+		margin-block: calc(var(--content-space) * 1.5) calc(var(--content-space) * 1);
+	}
+
+	> header {
+		margin-block-end: calc(var(--content-space) * 2);
+	}
+
+	p:has(+ .prompt--avoid) {
+		display: flex;
+		gap: 0.5em;
+
+		&::before {
+			content: "\2715";
+			content: "\2715" / "";
+			flex: none;
+			color: var(--ui-error);
+		}
+	}
+
+	@media print {
+		max-inline-size: 100%;
+		padding: 0;
+	}
+}
+
+/* ---- Muted text ----
+   Global counterpart to typography's paragraph-scoped `.muted`. */
+.muted {
+	color: var(--text-light);
+}
+
+/* ---- Checklist ---- */
+.checklist {
+	list-style: none;
+	margin: 0;
+	padding-inline-start: 0;
+
+	li {
+		padding-inline-start: 1.6em;
+		text-indent: -1.6em;
+
+		&::before {
+			content: "☐" / "";
+			display: inline-block;
+			inline-size: 1.6em;
+			text-indent: 0;
+			color: var(--section-text);
+		}
+	}
+
+	li + li {
+		margin-block-start: calc(var(--content-space) / 3);
+	}
+}
+
+/* ---- Meta grid ---- */
+.meta-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 14em), 1fr));
+	gap: var(--content-space);
+
+	dt {
+		font-size: var(--font-size-6);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	dd {
+		margin: 0;
+	}
+
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+}
+
+/* ---- Lesson plans (instructor) ---- */
+.lesson-nav {
+	display: flex;
+	gap: calc(var(--content-space) * 2);
+	justify-content: space-between;
+	margin-block-end: var(--section-space);
+
+	header & a {
+		margin: 0;
+	}
+
+	@media print {
+		display: none;
+	}
+}
+
+.lesson-plan {
+	.lesson-when {
+		font-size: 1.1em;
+		margin-block: 0;
+		display: flex;
+		gap: calc(var(--gutter) * 2);
+	}
+
+	.lesson-heading {
+		margin-block-end: 0;
+	}
+}
+
+.separators {
+	display: flex;
+	flex-wrap: wrap;
+	gap: calc(var(--gutter) * 2);
+
+	> *:not(:last-child)::after {
+		content: "⏺";
+		padding-inline-start: calc(var(--gutter) * 2);
+		font-size: 50%;
+		vertical-align: middle;
+	}
+}
+
+.lesson-list {
+	td {
+		font-size: max(var(--base-font-size), 0.95em);
+	}
+
+	.no-class {
+		font-style: italic;
+	}
+}
+
+:where(dialog) {
+	background-color: var(--bg);
+	max-inline-size: 40rem;
+	margin: auto;
+
+	&::backdrop {
+		background-color: rgb(0 0 0 / 50%);
+		backdrop-filter: blur(2px);
+	}
+
+	@media only screen and (width <= 720px) {
+		max-inline-size: calc(100vw - 2rem);
+	}
+}
+
+:where(details) {
+	background-color: var(--bg-subtle);
+
+	> *:not(summary) {
+		padding-inline-start: 1em;
+	}
+
+	@media print {
+		&::details-content {
+			content-visibility: visible;
+		}
+	}
+}
+
+:where(tbody tr:nth-child(even)) {
+	background-color: var(--bg-subtle);
+}
+
+/* ---- Table baseline (formerly simple.css) ---- */
+:where(table) {
+	border-collapse: collapse;
+	margin-block: 1.5rem;
+
+	> :where(caption) {
+		font-weight: var(--font-weight--bold);
+		margin-block-end: 0.5rem;
+	}
+
+	:is(th, td).center {
+		text-align: center;
+	}
+}
+
+/* ---- Lightweight table styles ---- */
+.table-light {
+	border-collapse: collapse;
+
+	th,
+	td {
+		border-inline: none;
+	}
+}
+
+figure > :where(table) {
+	inline-size: max-content;
+	margin: 0;
+}
+
+:where(td, th) {
+	border: var(--border-width) solid var(--ui-light);
+	text-align: start;
+	padding: 0.5rem;
+}
+
+:where(th) {
+	background-color: var(--bg-light);
+	font-weight: var(--font-weight--bold);
+}
+
+/* ---- Prompt figures (```prompt fences — prose to say to an assistant) ---- */
+.prompt {
+	position: relative;
+	margin-block: var(--content-space);
+	margin-inline: 0;
+	padding: 1em 1.25em;
+	background-color: var(--bg-light);
+	border: var(--thin-border-width) solid var(--ui-light);
+	border-radius: var(--standard-border-radius);
+	color: var(--text);
+
+	p {
+		margin: 0;
+		font-size: var(--font-size-5);
+
+		+ p {
+			margin-block-start: 0.75em;
+		}
+	}
+
+	&[data-copyable] {
+		padding-inline-end: 3.2em;
+	}
+
+	/* The examples to recognise and not use: same shape, dashed and muted,
+	   and prompt-copy.js gives them no copy control. */
+	&.prompt-avoid {
+		border-style: dashed;
+		background-color: transparent;
+		color: var(--text-light);
+	}
+
+	&.prompt--avoid {
+		background-color: color-mix(in sRGB, var(--ui-error) 7%, transparent);
+		border: var(--thin-border-width) dashed color-mix(in sRGB, var(--ui-error) 55%, transparent);
+		color: var(--text-light);
+
+		user-select: none;
+	}
+}
+
+.prompt-copy {
+	position: absolute;
+	inset-block-start: 0.5em;
+	inset-inline-end: 0.5em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	inline-size: 2.2em;
+	block-size: 2.2em;
+	padding: 0.4em;
+	margin-block: 0.85em 0;
+	margin-inline-start: auto;
+	background: transparent;
+	color: var(--text-light);
+	border: var(--thin-border-width) solid var(--ui-light);
+	border-radius: var(--standard-border-radius);
+	cursor: pointer;
+	font-size: max(var(--base-font-size), 0.85em);
+
+	&:is(:hover, :focus-visible) {
+		border-color: var(--ui);
+		color: var(--ui);
+		background-color: var(--bg-accent);
+	}
+
+	:where(svg) {
+		inline-size: auto;
+		min-block-size: 0;
+		fill: none;
+		stroke: currentColor;
+	}
+
+	@media print {
+		display: none;
+	}
+}
+
+/* ---- Blockquote ---- */
+blockquote {
+	margin-block: calc(var(--content-space) * 2);
+	margin-inline: 0;
+	padding: 0;
+	border: none;
+
+	color: var(--text);
+	font-size: 1.15em;
+	font-style: normal;
+	line-height: 1.45;
+	text-wrap: pretty;
+
+	&::before {
+		content: "";
+		display: block;
+		inline-size: 2.5rem;
+		block-size: 3px;
+		margin-block-end: 0.9rem;
+		background-color: var(--section-ui);
+	}
+
+	> :first-child {
+		margin-block-start: 0;
+	}
+
+	> :last-child {
+		margin-block-end: 0;
+	}
+
+	@media print {
+		&::before {
+			background-color: var(--static-ink);
+		}
+	}
+
+	&:is(.quote, :has(cite)) {
+		position: relative;
+		padding-inline-start: 2.25rem;
+
+		color: var(--text-light);
+		font-size: 1em;
+		line-height: var(--font-height--spacious);
+
+		&::before {
+			content: "\201C";
+			content: "\201C" / "";
+			position: absolute;
+			inset-inline-start: 0;
+			inset-block-start: -0.3em;
+			display: block;
+			inline-size: auto;
+			block-size: auto;
+			margin: 0;
+
+			background: none;
+			color: var(--ui);
+			font-size: 2.75rem;
+			line-height: 1;
+		}
+
+		cite {
+			display: block;
+			margin-block-start: 0.75em;
+
+			color: var(--text-light);
+			font-size: max(var(--base-font-size), 0.9em);
+			font-style: normal;
+
+			&::before {
+				content: "— ";
+			}
+		}
+	}
+}
+
+/* ---- Callout ---- */
+.callout {
+	--callout-color: var(--section-ui);
+
+	border-inline-start: var(--thick-border-width) solid var(--callout-color);
+	background-color: color-mix(in sRGB, var(--callout-color) 10%, var(--bg));
+	border-radius: var(--standard-border-radius);
+	padding: 1em 1.25em;
+
+	&:is(.success, [type="success"]) {
+		--callout-color: var(--ui-success);
+	}
+
+	&:is(.warn, [type="warn"]) {
+		--callout-color: var(--ui-warn);
+	}
+
+	&:is(.error, [type="error"]) {
+		--callout-color: var(--ui-error);
+	}
+
+	> :first-child {
+		margin-block-start: 0;
+	}
+
+	> :last-child {
+		margin-block-end: 0;
+	}
+
+	@media print {
+		background-color: transparent;
+	}
+}
+
+[data-accent="magenta"] {
+	--section-ui: var(--static-magenta);
+	--section-text: var(--text-magenta);
+}
+
+[data-accent="cyan"] {
+	--section-ui: var(--static-cyan);
+	--section-text: var(--text-cyan);
+}
+
+[data-accent="orange"] {
+	--section-ui: var(--static-orange);
+	--section-text: var(--text-orange);
+}
+
+[data-accent="yellow"] {
+	--section-ui: var(--static-yellow);
+	--section-text: var(--text-yellow);
+}
+
+[data-accent="purple"] {
+	--section-ui: var(--static-purple);
+	--section-text: var(--text-purple);
+}
+
+/* ---- Disclosure list ---- */
+.disclosures {
+	--disclosure-gutter: 1.6em;
+
+	border-block-start: var(--thin-border-width) solid var(--ui-light);
+
+	/* A reading measure inside the wide page column. */
+	p {
+		max-inline-size: 80ch;
+	}
+
+	details {
+		margin-block: 0;
+		padding: 0;
+		padding-block: 1.05em;
+
+		background: none;
+		border: none;
+		border-block-end: var(--thin-border-width) solid var(--ui-light);
+		border-radius: 0;
+
+		> :not(summary) {
+			margin-block: 0 1.15em;
+			padding-inline-start: var(--disclosure-gutter);
+		}
+
+		/* The answer belongs to the question above it, so it sits close. */
+		> :not(summary):first-of-type {
+			margin-block-start: 0;
+		}
+	}
+
+	summary {
+		display: flex;
+		align-items: baseline;
+		margin: 0;
+		padding: 0;
+
+		background: none;
+		border: none;
+		color: var(--text);
+		font-weight: var(--font-weight--semi-bold);
+		list-style: none;
+		text-wrap: pretty;
+
+		&::-webkit-details-marker {
+			display: none;
+		}
+
+		&::before {
+			content: "+";
+			content: "+" / "";
+			flex: none;
+			inline-size: var(--disclosure-gutter);
+
+			color: var(--section-text);
+			font-weight: var(--font-weight);
+		}
+
+		&:hover {
+			color: var(--link--hover);
+			cursor: pointer;
+		}
+	}
+
+	/* Open: the question tightens onto its answer, and the marker flips. */
+	details[open] > summary {
+		padding-block-end: 0.4em;
+		margin-block-end: 0.5rem;
+
+		&::before {
+			content: "\2212";
+			content: "\2212" / "";
+		}
+	}
+}
+
+/* ---- Misc baseline elements (formerly simple.css) ---- */
+:where(p, h1, h2, h3, h4, h5, h6) {
+	overflow-wrap: break-word;
+}
+
+:where(abbr)[title] {
+	cursor: help;
+	text-decoration-line: underline;
+	text-decoration-style: dotted;
+}
+
+:where(pre) {
+	padding-block: 1rem;
+	padding-inline: 1.4rem;
+	max-inline-size: 100%;
+	overflow: auto;
+}
+
+:where(kbd) {
+	font-family: var(--mono-font);
+	color: var(--preformatted);
+	border: var(--border-width) solid var(--preformatted);
+	border-block-end-width: 3px;
+	border-radius: var(--standard-border-radius);
+	padding-block: 0.1rem;
+	padding-inline: 0.4rem;
+}
+
+:where(hr) {
+	border: none;
+	block-size: var(--border-width);
+	background: var(--ui-light);
+	margin-block: 1rem;
+	margin-inline: auto;
+}
+
+:where(mark) {
+	padding-block: 2px;
+	padding-inline: 5px;
+	border-radius: var(--standard-border-radius);
+	background-color: var(--marked);
+	color: black;
+
+	a {
+		color: var(--link);
+	}
+}
+
+:where(img, video) {
+	max-inline-size: 100%;
+	block-size: auto;
+	border-radius: var(--standard-border-radius);
+}
+
+:where(figure) {
+	margin: 0;
+	display: block;
+	overflow-x: auto;
+
+	> :where(img),
+	> picture > :where(img) {
+		display: block;
+		margin-inline: auto;
+	}
+}
+
+:where(figcaption) {
+	position: sticky;
+	inset-inline-start: 0;
+	text-align: center;
+	font-size: 0.9rem;
+	color: var(--text-light);
+	margin-block: 1rem;
+}
+
+:where(sup, sub) {
+	vertical-align: baseline;
+	position: relative;
+}
+
+:where(sup) {
+	inset-block-start: -0.4em;
+}
+
+:where(sub) {
+	inset-block-start: 0.3em;
+}
+
+/* ---- Form controls (formerly simple.css) ---- */
+:where(textarea, select, input, button),
+.button {
+	font-size: inherit;
+	font-family: inherit;
+	padding: 0.5em;
+	margin-block-end: 0.5rem;
+	border-radius: var(--standard-border-radius);
+	box-shadow: none;
+	max-inline-size: 100%;
+	display: inline-block;
+}
+
+:where(button, input[type="submit"], input[type="reset"], input[type="button"]),
+.button {
+	line-height: normal;
+}
+
+:where(textarea, select, input) {
+	color: var(--text);
+	background-color: var(--bg);
+	border: var(--border-width) solid var(--ui-light);
+
+	@media only screen and (width <= 720px) {
+		inline-size: 100%;
+	}
+}
+
+:where(label) {
+	display: block;
+}
+
+:where(textarea:not([cols])) {
+	inline-size: 100%;
+}
+
+:where(select:not([multiple])) {
+	background-image: linear-gradient(45deg, transparent 49%, var(--text) 51%),
+		linear-gradient(135deg, var(--text) 51%, transparent 49%);
+	background-position: calc(100% - 15px), calc(100% - 10px);
+	background-size: 5px 5px, 5px 5px;
+	background-repeat: no-repeat;
+	padding-inline-end: 25px;
+
+	*[dir="rtl"] & {
+		background-position: 10px, 15px;
+	}
+}
+
+:where(input[type="checkbox"], input[type="radio"]) {
+	vertical-align: middle;
+	position: relative;
+	inline-size: min-content;
+
+	+ label {
+		display: inline-block;
+	}
+
+	&:checked {
+		background-color: var(--ui);
+	}
+}
+
+:where(input[type="radio"]) {
+	border-radius: var(--circle-border-radius);
+
+	&:checked::after {
+		content: " ";
+		inline-size: 0.3em;
+		block-size: 0.3em;
+		border-radius: var(--circle-border-radius);
+		position: absolute;
+		inset-block-start: 0.125em;
+		background-color: var(--bg);
+		inset-inline-start: 0.125em;
+		font-size: 1.8em;
+	}
+}
+
+:where(input[type="checkbox"]:checked::after) {
+	content: " ";
+	inline-size: 0.2em;
+	block-size: 0.4em;
+	border-radius: 0;
+	position: absolute;
+	inset-block-start: 0.04em;
+	inset-inline-start: 0.18em;
+	background-color: transparent;
+	border-inline-end: solid var(--bg) 0.08em;
+	border-block-end: solid var(--bg) 0.08em;
+	font-size: 1.8em;
+	transform: rotate(45deg);
+}
+
+:where(input[type="color"]) {
+	block-size: 2.5rem;
+	padding: 0.2rem;
+}
+
+:where(input[type="file"]) {
+	border: 0;
+}
+
+/* ---- Progress bars ---- */
+:where(progress) {
+	inline-size: 100%;
+
+	&:indeterminate {
+		background-color: var(--bg-accent);
+
+		&::-moz-progress-bar {
+			background-color: var(--bg-accent);
+		}
+	}
+
+	&::-webkit-progress-bar {
+		border-radius: var(--standard-border-radius);
+		background-color: var(--bg-accent);
+	}
+
+	&::-webkit-progress-value {
+		border-radius: var(--standard-border-radius);
+		background-color: var(--ui);
+	}
+
+	&::-moz-progress-bar {
+		border-radius: var(--standard-border-radius);
+		background-color: var(--ui);
+		transition-property: inline-size;
+		transition-duration: 0.3s;
+	}
+}
