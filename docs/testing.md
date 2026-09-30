@@ -8,7 +8,7 @@ Two layers.
 npm test
 ```
 
-Covers the helpers with throwaway directories and a stand-in Eleventy config.
+Covers the helpers, filters, markdown, worksheet preparation and PostCSS. The plugin as a whole is verified by the golden builds below; there is no fixture site.
 
 ## Golden builds against a course
 
