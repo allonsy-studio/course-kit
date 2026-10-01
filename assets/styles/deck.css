@@ -113,7 +113,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
     place-content: center;
   }
 
-  /* A 16:9 box centred at the largest size that fits: a screen of another
+  /* A 16:9 box centered at the largest size that fits: a screen of another
      shape gets empty bars, never a taller slide. Everything is sized from the
      box with no minimums, so a small screen shrinks the slide. No block
      padding and `safe center` push overflow off the bottom only;
@@ -395,8 +395,8 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
     border-inline-start-color: var(--warn);
     color: var(--warn);
 
-    /* Inside the warning tone everything takes the warning colour, including
-       the pieces that would otherwise be accent-coloured. */
+    /* Inside the warning tone everything takes the warning color, including
+       the pieces that would otherwise be accent-colored. */
     :is(strong, .eyebrow, h1, h2, h3) { color: inherit; }
   }
   }

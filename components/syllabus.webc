@@ -112,8 +112,8 @@
             max-inline-size: 70ch;
         }
 
-        /* Cards wrap as a centred flex row rather than a grid, so a short
-           last row (two cards under three) is centred instead of hugging
+        /* Cards wrap as a centered flex row rather than a grid, so a short
+           last row (two cards under three) is centered instead of hugging
            the left; each card is capped at a third of the row so the
            widths still match across rows. */
         #syllabus article:has(> #coursework) {

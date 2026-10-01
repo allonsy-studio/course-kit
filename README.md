@@ -98,6 +98,6 @@ import { componentFiles, assetPath, registerAssets, registerGlue } from "@allons
   out of the student build carry `instructorOnly: true`, because path-based
   ignores do not apply to virtual templates.
 
-See `docs/testing.md` for how a change is verified.
+See `docs/testing.md` for how a change is verified and `docs/internals.md` for the constraints the code works around.
 
 License: MPL-2.0
