@@ -49,8 +49,11 @@ generated declarations before PostCSS runs, so the standalone stylesheet and the
 copies a deck or worksheet inlines carry identical tokens. The source of truth
 is `lib/theme.js` (exported as `@allons-y/course-kit/theme`).
 
+- Renderers: `palette` and `section-presets` (base.css), `deck-palette` and
+  `accent-presets` (deck.css, in its own `--accent-*` names), and `surface`.
+  `deck.css` never loads `base.css`, so each carries its own copy.
 - **Accent** is chosen by the course's data (`accent` in `course.json`: a preset
-  name, or a colour pair), not by an option.
+  name, or a color pair), not by an option.
 - **`surface: "paper"`** keeps the brand's paper and cream for page backgrounds
   and washes table header cells in the accent. `white` (the default) is the
   base stylesheet's own look and adds nothing.
@@ -72,7 +75,7 @@ courseKit(config, {
 |---|---|
 | `layouts/` | The page layouts (`base`, `document`, `lesson`, `lesson-detail`, `deck`, `notes`, `worksheet`, `demo`). Not overridable per file; a difference between courses is a data guard in the layout. |
 | `components/` | WebC components, including the home-page set (`course-summary`, `instructor`, `syllabus`, `masthead`, `nav-links`). |
-| `assets/` | `styles/`, `scripts/` and `fonts/`, published at `/styles`, `/js` and `/fonts`. |
+| `assets/` | `styles/`, `scripts/` and `fonts/`, published at `/styles`, `/js` and `/fonts`. `base.css` styles the "today" marks `scripts/today.js` sets on table rows. |
 | `glue/` | Pagination and permalink pages with no course prose (`lesson-day`). |
 | `lib/` | The build configuration (`plugin.js`), filters, the markdown dialect, the worksheet parser, bundling, the PDF and slide-fit hooks, and the helpers below. |
 

@@ -1,9 +1,7 @@
 @import "font.css";
 
 :root {
-    /* ---- Brand palette ----
-       Generated from lib/theme.js; deck.css, which never loads this file, gets
-       the same values (see "Self-contained decks" in AGENTS.md). */
+    /* ---- Brand palette ---- */
     /* tokens:palette */
 
     /* ---- Feedback primitives ---- */
@@ -1331,13 +1329,9 @@ blockquote {
 	}
 }
 
-/* Generated from lib/theme.js. */
 /* tokens:section-presets */
 
-/* ---- Today's class ----
-   Marks set by scripts/today.js on table rows (the slide and demo indexes,
-   where a course lists meetings in a plain table). Components that lay their
-   meetings out another way style the mark themselves. */
+/* ---- Today's class ---- */
 tr[data-today] {
 	background-color: color-mix(in srgb, var(--section-ui) 15%, transparent);
 }

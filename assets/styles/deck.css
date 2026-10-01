@@ -32,9 +32,6 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
 
   @layer base {
   :root {
-  /* --accent-ui fills, --accent-text type (darkened — see "Accent" in
-     AGENTS.md). Generated from lib/theme.js, which also feeds base.css; see
-     "Self-contained decks" in AGENTS.md for why the two do not share a file. */
   /* tokens:deck-palette */
   --warn: light-dark(#8a3500, #ffb37a);
   --warn-bg: light-dark(#fff2e6, #3a2314);
