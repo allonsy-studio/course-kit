@@ -2,32 +2,9 @@
 
 :root {
     /* ---- Brand palette ----
-       These literals are also hardcoded in deck.css, which never loads this file
-       (see "Self-contained decks" in AGENTS.md) — a brand change edits both. */
-    --static-ink: #33394E;
-    --static-slate: #414C75;
-    --static-paper: #FBF9F3;
-    --static-cream: #EFEBDF;
-    --static-latte: #C2B1A6;
-
-    /* Brights */
-    --static-magenta: #C92C6B;
-    --on-brand-magenta: var(--static-paper);
-    --text-magenta: light-dark(hsl(336deg 68% 40%), hsl(336deg 72% 72%));
-
-    --static-orange: #FF9A56;
-    --text-orange: light-dark(hsl(22deg 82% 37%), hsl(28deg 100% 72%));
-
-    --static-cyan: #7BD1E6;
-    --text-cyan: light-dark(hsl(193deg 58% 31%), hsl(192deg 68% 72%));
-
-    --static-yellow: light-dark(#FFD36C, #FFC233);
-    --text-yellow: light-dark(hsl(38deg 88% 32%), hsl(45deg 100% 64%));
-
-    /* The course purple (7.38:1 on white; see week 6 day 2). The dark value
-       is a pastel tuned for dark grounds, like the other brights. */
-    --static-purple: light-dark(#6B3FA0, #B9A3E3);
-    --text-purple: light-dark(hsl(267deg 43% 40%), hsl(267deg 60% 78%));
+       Generated from lib/theme.js; deck.css, which never loads this file, gets
+       the same values (see "Self-contained decks" in AGENTS.md). */
+    /* tokens:palette */
 
     /* ---- Feedback primitives ---- */
     --ui-success: light-dark(hsl(155deg 55% 35%), hsl(155deg 50% 55%));
@@ -1354,29 +1331,28 @@ blockquote {
 	}
 }
 
-[data-accent="magenta"] {
-	--section-ui: var(--static-magenta);
-	--section-text: var(--text-magenta);
+/* Generated from lib/theme.js. */
+/* tokens:section-presets */
+
+/* ---- Today's class ----
+   Marks set by scripts/today.js on table rows (the slide and demo indexes,
+   where a course lists meetings in a plain table). Components that lay their
+   meetings out another way style the mark themselves. */
+tr[data-today] {
+	background-color: color-mix(in srgb, var(--section-ui) 15%, transparent);
 }
 
-[data-accent="cyan"] {
-	--section-ui: var(--static-cyan);
-	--section-text: var(--text-cyan);
+tr[data-today] > :is(th, td) {
+	background-color: color-mix(in srgb, var(--section-ui) 15%, transparent);
 }
 
-[data-accent="orange"] {
-	--section-ui: var(--static-orange);
-	--section-text: var(--text-orange);
+tr[data-today] > :first-child {
+	box-shadow: inset var(--thick-border-width) 0 0 var(--section-ui);
 }
 
-[data-accent="yellow"] {
-	--section-ui: var(--static-yellow);
-	--section-text: var(--text-yellow);
-}
-
-[data-accent="purple"] {
-	--section-ui: var(--static-purple);
-	--section-text: var(--text-purple);
+.today-flag {
+	display: block;
+	color: var(--section-text);
 }
 
 /* ---- Disclosure list ---- */
@@ -1676,3 +1652,5 @@ blockquote {
 		transition-duration: 0.3s;
 	}
 }
+
+/* tokens:surface */
