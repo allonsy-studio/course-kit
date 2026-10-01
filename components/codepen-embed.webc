@@ -1,0 +1,111 @@
+<figure webc:root="override" class="codepen-embed">
+	<div class="embed-header">
+		<h2 @text="heading ?? 'The code'"></h2>
+		<slot name="actions"></slot>
+	</div>
+
+	<div class="codepen"
+		:data-prefill="codepenPrefill({ title: label, description: summary, tags: ['cs230'] })"
+		:data-height="height ?? 800"
+		data-default-tab="html,result"
+		data-editable="true"
+		data-preview="true">
+		<p class="pane-label" webc:if="markup">HTML</p>
+		<pre data-lang="html" webc:if="markup" tabindex="0" aria-label="HTML source" @text="markup"></pre>
+		<p class="pane-label" webc:if="styles">CSS</p>
+		<pre data-lang="css" webc:if="styles" tabindex="0" aria-label="CSS source" @text="styles"></pre>
+		<p class="pane-label" webc:if="script">JavaScript</p>
+		<pre data-lang="js" webc:if="script" tabindex="0" aria-label="JavaScript source" @text="script"></pre>
+	</div>
+
+	<script webc:keep>
+		/* Set the editor theme before ei.js builds the iframe; see
+		   content/demo/AGENTS.md. */
+		(function () {
+			try {
+				var forced = document.documentElement.dataset.theme;
+				var dark =
+					forced === "dark" ||
+					(forced !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+				document.querySelectorAll(".codepen[data-prefill]").forEach(function (embed) {
+					embed.dataset.themeId = dark ? "dark" : "light";
+				});
+			} catch (e) {}
+		})();
+	</script>
+	<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js" webc:keep></script>
+
+	<figcaption>
+		<slot></slot>
+	</figcaption>
+</figure>
+
+<style webc:scoped>
+	:host {
+		margin: var(--content-space) 0;
+
+		iframe {
+			block-size: max(600px, 50dvh);
+		}
+	}
+
+	.embed-header {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5em var(--content-space);
+		margin-block-end: calc(var(--content-space) * 0.4);
+
+		> h2 {
+			margin: 0;
+			font-size: 1.05em;
+		}
+	}
+
+	/* Until ei.js swaps it for an iframe this element is the source itself,
+	   so it has to read as a code listing rather than broken layout. */
+	.codepen {
+		display: grid;
+		gap: var(--thin-border-width);
+		border: var(--thin-border-width) solid var(--border);
+		border-radius: var(--standard-border-radius);
+		background-color: var(--border);
+		overflow: hidden;
+	}
+
+	/* A real element, not a ::before: the labels have to survive the site's
+	   no-CSS teaching mode. */
+	.codepen .pane-label {
+		margin: 0;
+		padding: calc(var(--content-space) * .4) calc(var(--content-space) * .6);
+		background-color: var(--bg);
+		color: var(--text-light);
+		font-family: var(--dense-font);
+		font-size: var(--font-size-7);
+		letter-spacing: .06em;
+		text-transform: uppercase;
+	}
+
+	.codepen pre {
+		margin: 0;
+		max-block-size: 22em;
+		overflow: auto;
+		padding: calc(var(--content-space) * .6);
+		background-color: var(--bg);
+		font-size: 0.85em;
+		tab-size: 2;
+
+		&:focus-visible {
+			outline: var(--outline-width) solid var(--ui);
+			outline-offset: calc(var(--outline-width) * -1);
+		}
+	}
+
+	figcaption {
+		margin-block-start: calc(var(--content-space) * .5);
+		color: var(--text-light);
+		font-size: 0.9em;
+		text-wrap: pretty;
+	}
+</style>

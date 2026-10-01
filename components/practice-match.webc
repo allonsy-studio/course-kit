@@ -1,0 +1,138 @@
+<div class="matching">
+	<p class="drag-hint" webc:if="q.dragHint" @text="q.dragHint"></p>
+	<ol class="bank">
+		<li webc:for="entry of q.bank" :draggable="entry.draggable" :data-letter="entry.letter">
+			<span class="letter" @text="entry.letter"></span>
+			<span @text="entry.text"></span>
+		</li>
+	</ol>
+	<ol class="match-items">
+		<li webc:for="item of q.items" :data-drop="item.drop">
+			<label>
+				<span class="match-text" @text="item.text"></span>
+				<select :name="item.name" :data-blank="item.index">
+					<option value="">—</option>
+					<option webc:for="entry of item.bank" :value="entry.letter" @text="entry.letter"></option>
+				</select>
+			</label>
+			<span class="answer-key" hidden :data-answer="item.answer">
+				<span @text="`${$data.worksheet.copy.answer} ${item.answer}`"></span>
+				<a webc:if="item.source" :href="item.source.href" @text="item.source.label"></a>
+			</span>
+		</li>
+	</ol>
+</div>
+
+<style webc:scoped>
+	:host {
+		.drag-hint {
+			color: var(--text-light);
+			font-size: 0.9em;
+			margin-block: 0 0.6em;
+		}
+
+		.answer-key {
+			color: var(--ui-error);
+			font-size: 0.85em;
+
+			&:not([hidden]) {
+				display: block;
+			}
+
+			a {
+				color: inherit;
+			}
+		}
+
+		.letter {
+			background: var(--bg-light);
+			border-radius: var(--standard-border-radius);
+			display: inline-block;
+			font-family: var(--mono-font);
+			font-weight: var(--font-weight--semi-bold);
+			min-inline-size: 1.7em;
+			padding: 0.05em 0.35em;
+			text-align: center;
+			text-transform: uppercase;
+		}
+
+		.bank {
+			background: var(--bg-light);
+			border-radius: var(--standard-border-radius);
+			list-style: none;
+			padding: 0.6em 0.9em;
+
+			li {
+				display: flex;
+				gap: 0.6em;
+				margin-block: 0.25em;
+
+				&[draggable="true"] {
+					background: var(--bg);
+					border: var(--thin-border-width) dashed var(--ui-light);
+					border-radius: var(--standard-border-radius);
+					cursor: grab;
+					margin-block: 0;
+					padding: 0.15em 0.5em;
+
+					&:active {
+						cursor: grabbing;
+					}
+				}
+
+				&[data-dragging] {
+					opacity: 0.45;
+				}
+			}
+
+			/* With chips to drag, the bank reads better as a wrapped row of
+			   tokens than as a stacked list. */
+			&:has(li[draggable="true"]) {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5em;
+			}
+		}
+
+		.match-items {
+			padding-inline-start: 1.2em;
+
+			label {
+				align-items: center;
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.6em;
+			}
+
+			.match-text {
+				flex: 0 1 13em;
+			}
+
+			select {
+				inline-size: 5em;
+				margin-block: 0.2em;
+			}
+
+			li {
+				&[data-drop] {
+					border: var(--thin-border-width) dashed transparent;
+					border-radius: var(--standard-border-radius);
+					padding-inline: 0.4em;
+
+					&[data-over] {
+						background: var(--bg-drop-target);
+						border-color: var(--section-ui);
+					}
+				}
+
+				&[data-dropped] select {
+					border-color: var(--section-ui);
+				}
+
+				&[data-mark="wrong"] .match-text {
+					color: var(--ui-error);
+				}
+			}
+		}
+	}
+</style>

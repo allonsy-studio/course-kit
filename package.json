@@ -1,0 +1,70 @@
+{
+  "name": "@allons-y/course-kit",
+  "version": "0.1.0-alpha.0",
+  "description": "Shared layouts, components, styles and build helpers for Eleventy course sites.",
+  "license": "MPL-2.0",
+  "author": "Cassondra Roberts <castastrophe@users.noreply.github.com> (https://allons-y.studio)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allonsy-studio/course-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/allonsy-studio/course-kit/issues"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./filters": "./lib/filters.js",
+    "./markdown": "./lib/markdown.js",
+    "./worksheets": "./lib/worksheets.js",
+    "./postcss": "./lib/postcss.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "lib",
+    "layouts",
+    "components",
+    "assets",
+    "glue"
+  ],
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@11ty/eleventy-navigation": "^1.0.5",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
+    "@11ty/eleventy-plugin-webc": "^0.11.2",
+    "@allons-y/dashly": "^0.1.0-beta.0",
+    "cssnano": "^9.0.5",
+    "cssnano-preset-advanced": "^9.0.5",
+    "dotenv": "^17.4.2",
+    "eleventy-plugin-toc": "^1.1.5",
+    "esbuild": "^0.28.2",
+    "gray-matter": "^4.0.3",
+    "html-minifier-terser": "^7.2.0",
+    "htmlnano": "^3.5.1",
+    "markdown-it": "^14.3.2",
+    "markdown-it-anchor": "^10.0.0",
+    "markdown-it-footnote": "^4.0.0",
+    "postcss": "^8.5.28",
+    "postcss-import": "^17.0.0",
+    "postcss-preset-env": "^11.5.3",
+    "posthtml": "^0.16.7",
+    "prettier": "^3.9.8",
+    "prism-themes": "^1.9.0",
+    "prismjs": "^1.30.0"
+  },
+  "peerDependencies": {
+    "@11ty/eleventy": "^3.1.0",
+    "puppeteer": ">=24"
+  },
+  "peerDependenciesMeta": {
+    "puppeteer": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

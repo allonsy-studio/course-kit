@@ -1,0 +1,41 @@
+<template webc:nokeep @raw="q.figure"></template>
+
+<style webc:scoped>
+	/* The class vocabulary an authored ```svg figure draws with, so a diagram
+	   follows the theme instead of carrying its own hex values. */
+	:host {
+		svg {
+			block-size: auto;
+			display: block;
+			inline-size: 100%;
+			margin-block: var(--content-space);
+		}
+
+		.region {
+			fill: none;
+			stroke: var(--section-ui);
+			stroke-width: 2.5;
+		}
+
+		.dashed {
+			stroke: var(--text-light);
+			stroke-dasharray: 6 5;
+			stroke-width: 2;
+		}
+
+		.label {
+			fill: var(--text-light);
+			font-size: 15px;
+		}
+
+		.small {
+			font-size: 13px;
+		}
+
+		.pin {
+			fill: var(--text-accent);
+			font-size: 19px;
+			font-weight: var(--font-weight--bold);
+		}
+	}
+</style>

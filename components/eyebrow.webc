@@ -1,0 +1,13 @@
+<p webc:root="override"><slot></slot></p>
+
+<style webc:scoped="eyebrow">
+:host {
+	font-size: var(--font-size-6);
+	text-transform: uppercase;
+	text-decoration: none;
+	letter-spacing: 0.08em;
+	font-weight: var(--font-weight--semi-bold);
+	color: var(--text-light);
+	margin-block: 0;
+}
+</style>

@@ -1,0 +1,137 @@
+/* Instructor notes sheet (_layouts/notes.webc): a standalone page, black
+   on white in every theme, built to print. No base.css, no site chrome. */
+
+:root {
+	--ink: #000;
+	--paper: #fff;
+	--rule: #999;
+
+	color-scheme: light;
+}
+
+body {
+	margin: 0;
+	background: var(--paper);
+	color: var(--ink);
+	font-family: "Instrument Sans", system-ui, sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+}
+
+main {
+	max-inline-size: 50rem;
+	margin-inline: auto;
+	padding: 2rem 1rem;
+}
+
+a {
+	color: inherit;
+}
+
+code {
+	font-family: "PT Mono", monospace;
+	font-size: 0.9em;
+}
+
+.notes-sheet header {
+	margin-block-end: 1.5rem;
+
+	h1 {
+		margin-block: 0.25rem;
+		font-size: 1.75rem;
+		line-height: 1.2;
+	}
+
+	p {
+		margin: 0;
+	}
+}
+
+.meta {
+	font-size: 0.85rem;
+	font-weight: 600;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+}
+
+.notes-sheet-slides {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	> li {
+		display: grid;
+		grid-template-columns: 2.5em 1fr;
+		gap: 1rem;
+		padding-block: 0.75rem;
+		border-block-start: 1px solid var(--rule);
+		break-inside: avoid;
+	}
+
+	> li:last-child {
+		border-block-end: 1px solid var(--rule);
+	}
+
+	.slide-number {
+		font-size: 1.5rem;
+		font-weight: 700;
+		font-variant-numeric: tabular-nums;
+		line-height: 1.1;
+		text-decoration: none;
+	}
+
+	.slide-title {
+		margin: 0;
+		font-weight: 600;
+	}
+
+	.no-notes .slide-title {
+		font-weight: 400;
+	}
+
+	.notes-label {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		align-items: baseline;
+		margin-block: 0.25rem 0;
+		font-size: 0.8rem;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+	}
+
+	.timing {
+		font-variant-numeric: tabular-nums;
+		font-weight: 700;
+	}
+
+	.notes-body {
+		> * {
+			margin-block: 0.25rem 0;
+		}
+
+		ul,
+		ol {
+			padding-inline-start: 1.2em;
+		}
+	}
+}
+
+@media print {
+	@page {
+		margin: 0.5in;
+	}
+
+	body {
+		font-size: 10.5pt;
+	}
+
+	main {
+		max-inline-size: none;
+		padding: 0;
+	}
+
+	.notes-sheet-slides > li {
+		padding-block: 0.5em;
+	}
+}

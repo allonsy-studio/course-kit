@@ -1,0 +1,67 @@
+---
+layout: "base"
+---
+
+<section class="lesson-list content-column wide">
+	<eyebrow class="separators">
+		<span @text="$data.term.label"></span>
+		<span @text="$data.code"></span>
+	</eyebrow>
+	<h1>Lesson plans</h1>
+	<p>
+		One plan per class meeting (<span @text="timeOfDay($data.schedule?.meetings?.time)"></span>), generated
+		from the course schedule and the academic calendar. Holidays are shown in
+		sequence so the term reads day by day.
+	</p>
+	<p webc:if="$data.collections.deck?.length">
+		<a href="/slides/">Slide index</a> — every deck in meeting order. Speaker
+		notes are on a separate printable sheet per deck, linked as "Notes" below.
+	</p>
+
+	<table class="table-light" webc:if="$data.term.instructorDates?.length">
+		<thead>
+			<tr>
+				<th scope="col">Instructor deadlines</th>
+				<th scope="col">Due date</th>
+			</tr>
+		</thead>
+		<tr webc:for="item of $data.term.instructorDates">
+			<td @text="item.label"></td>
+			<td @text="item.display"></td>
+		</tr>
+	</table>
+
+	<table>
+		<caption class="sr-only">Every class meeting of the term, in order</caption>
+		<thead>
+			<tr>
+				<th scope="col">Date</th>
+				<th scope="col">Links</th>
+				<th scope="col">Topics</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr webc:for="lesson of $data.lessons">
+				<td>
+					<span @text="lesson.display"></span>
+					<span class="muted" webc:if="lesson.substitution"><br/>(runs a <span @text="lesson.substitution"></span> schedule)</span>
+				</td>
+				<td webc:if="lesson.noClass" colspan="2" class="muted no-class">No class — <span @text="lesson.noClass"></span></td>
+				<template webc:else webc:nokeep>
+					<td>
+						<a :href="`/lessons/week-${lesson.week}/day-${lesson.day}/`">Lesson&nbsp;plan</a>
+						<span webc:nokeep webc:for="deck of ($data.collections.deck ?? []).filter((d) => d.data.week === lesson.week && d.data.day === lesson.day)">
+							<br/><a :href="deck.url">Slides</a>
+							<br/><a :href="`/lessons/week-${deck.data.week}/day-${deck.data.day}/notes/`">Notes</a>
+						</span>
+					</td>
+					<td>
+						<span webc:for="(topic, index) of lesson.topics" webc:nokeep>
+							<span @raw="topic"></span><br/>
+						</span>
+					</td>
+				</template>
+			</tr>
+		</tbody>
+	</table>
+</section>

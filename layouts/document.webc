@@ -1,0 +1,5 @@
+---
+layout: "base"
+---
+<article class="content-column" @raw="content"></article>
+<script type="module" src="/js/prompt-copy.js" webc:keep></script>

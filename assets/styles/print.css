@@ -1,0 +1,424 @@
+/* Syllabus print/PDF styles, loaded only on the home page via
+   `printStylesheet`; see "Syllabus and the PDF" in AGENTS.md. Odd layouts
+   are Chromium print-fragmentation workarounds. */
+
+@media print {
+	@page {
+		size: letter;
+		margin: 0;
+	}
+
+	/* Grayscale — neutralize every token. */
+	:root {
+		--text: #000;
+		--text-light: #3d3d3d;
+		--text-accent: #000;
+		--link: #000;
+		--link--hover: #000;
+		--ui: #000;
+		--accent: #000;
+		--bg-accent: transparent;
+		--border: #999;
+		--bg: #fff;
+		--bg-light: #fff;
+		--marked: transparent;
+		--ui-warn: #000;
+		--ui-error: #000;
+		--ui-success: #000;
+		--border-light: #bbb;
+		color-scheme: light;
+	}
+
+	#to-content,
+	body > header,
+	body > footer,
+	#schedule > .schedule-weeks,
+	#schedule > p,
+	#approach,
+	#documents,
+	#syllabus-heading {
+		display: none;
+	}
+
+	body {
+		display: block;
+		margin: 0;
+		padding: 0;
+		max-inline-size: none;
+		color: var(--text);
+		font-size: 8.5pt;
+		line-height: 1.25;
+	}
+
+	main {
+		padding: 0;
+		max-inline-size: none;
+	}
+
+	p {
+		font-size: inherit;
+		margin-block: 0 3pt;
+	}
+
+	li:not([class]) {
+		font-size: inherit;
+		line-height: 1.25;
+	}
+
+	ul,
+	ol {
+		margin-block: 0 3pt;
+		padding-inline-start: 12pt;
+	}
+
+	li {
+		margin-block: 0 1pt;
+	}
+
+	/* screen styles enlarge strong labels inside list items */
+	li :is(b, strong) {
+		font-size: inherit;
+		font-weight: 600;
+	}
+
+	a {
+		color: var(--link);
+		text-decoration: none;
+	}
+
+	h2,
+	h3,
+	h4,
+	strong,
+	summary {
+		text-decoration: none;
+	}
+
+	main a[href^="http"]::after,
+	main a[href^="/"]::after {
+		content: " (" attr(href) ")";
+		font-size: 90%;
+		font-weight: 400;
+		color: var(--text-light);
+		overflow-wrap: anywhere;
+	}
+
+	h1 {
+		font-size: 15pt;
+		font-weight: 700;
+		line-height: 1.1;
+		margin-block: 0 2pt;
+	}
+
+	h2 {
+		font-size: 9pt;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		margin-block: 8pt 3pt;
+		padding-block-end: 1.5pt;
+		border-block-end: 0.75pt solid var(--text);
+	}
+
+	h3 {
+		font-size: 8.5pt;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		margin-block: 5pt 1pt;
+	}
+
+	h4 {
+		font-size: 8.5pt;
+		margin-block: 3pt 0;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4 {
+		/* eslint-disable-next-line css/use-baseline -- fragmentation control for print, no runtime fallback needed */
+		break-after: avoid;
+	}
+
+	li,
+	#instructor,
+	.print-only,
+	details {
+		break-inside: avoid;
+	}
+
+	p,
+	li {
+		/* eslint-disable-next-line css/use-baseline -- fragmentation control for print, no runtime fallback needed */
+		orphans: 3;
+
+		/* eslint-disable-next-line css/use-baseline -- fragmentation control for print, no runtime fallback needed */
+		widows: 3;
+	}
+
+	/* ---- Document frame (base zeroes .content-column print padding) ---- */
+	.content-column > section + section {
+		margin-block-start: 6pt;
+	}
+
+	section:last-child {
+		margin-block-end: 0;
+	}
+
+	/* ---- Masthead: term, title, catalog copy, prerequisites ---- */
+	.course-header {
+		border-block-end: 1.25pt solid var(--text);
+		padding-block-end: 4pt;
+		margin-block-end: 6pt;
+	}
+
+	.course-header > p:first-child {
+		font-size: 7.5pt;
+		letter-spacing: 0.12em;
+		color: var(--text);
+		margin-block: 0 1pt;
+	}
+
+	.lede {
+		font-size: 8.5pt;
+		font-weight: 400;
+		line-height: 1.25;
+		margin-block: 1pt 2pt;
+	}
+
+	.course-header > p:last-child {
+		margin-block: 0;
+	}
+
+	/* ---- Instructor: collapse the fact grid to one run-in line ---- */
+	#instructor {
+		font-size: 8.5pt;
+	}
+
+	#instructor h2 {
+		display: inline;
+		font-size: inherit;
+		border: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	#instructor h2::after {
+		content: ": ";
+	}
+
+	#instructor dl,
+	#instructor dl > div,
+	#instructor dt,
+	#instructor dd,
+	#instructor dd ul,
+	#instructor dd li,
+	#instructor p {
+		display: inline;
+		font-size: inherit;
+		margin: 0;
+		padding: 0;
+	}
+
+	#instructor dl > div + div::before {
+		content: " · ";
+	}
+
+	#instructor dl > div:first-of-type dt {
+		display: none;
+	}
+
+	#instructor dt {
+		font-weight: 600;
+		text-transform: none;
+		letter-spacing: 0;
+	}
+
+	#instructor dt::after {
+		content: ": ";
+	}
+
+	#instructor dd li + li::before {
+		content: "; ";
+	}
+
+	#instructor p.muted {
+		font-size: 7.5pt;
+		color: var(--text-light);
+	}
+
+	/* ---- Syllabus body ---- */
+	#syllabus > article {
+		margin-block: 0 5pt;
+		padding-block-end: 0;
+	}
+
+	#syllabus ul {
+		columns: 2;
+		column-gap: 16pt;
+		font-size: 8pt;
+	}
+
+	#syllabus ol {
+		font-size: 8pt;
+	}
+
+	/* "Additional outcomes" reads as a sub-note of Learning outcomes */
+	#additional-outcomes {
+		font-size: 8pt;
+		font-style: italic;
+		font-weight: 600;
+		text-transform: none;
+		letter-spacing: 0;
+		margin-block: 2pt 1pt;
+	}
+
+	/* ---- Coursework: two-column grid, run-in category titles ---- */
+	#syllabus article:has(> #coursework) {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 2pt 14pt;
+	}
+
+	#coursework {
+		grid-column: 1 / -1;
+	}
+
+	#coursework ~ div {
+		font-size: 8pt;
+		break-inside: avoid;
+	}
+
+	#coursework ~ div h4 {
+		display: inline;
+		font-size: inherit;
+	}
+
+	#coursework ~ div h4::after {
+		content: " — ";
+	}
+
+	#coursework ~ div h4 + p {
+		display: inline;
+	}
+
+	#coursework ~ div p {
+		margin-block-end: 1pt;
+	}
+
+	#syllabus .callout {
+		break-inside: avoid;
+		border: none;
+		border-inline-start: 1.5pt solid var(--text);
+		border-radius: 0;
+		background: none;
+		padding-block: 1pt;
+		padding-inline: 5pt;
+		margin-block: 2pt;
+		font-size: inherit;
+	}
+
+	/* ---- Grading: weighting and scale side by side ---- */
+	#syllabus article:has(> #grading) {
+		break-inside: avoid;
+	}
+
+	#syllabus article:has(> #grading) > div {
+		display: block;
+	}
+
+	#syllabus article:has(> #grading) table {
+		display: inline-table;
+		inline-size: 47%;
+		vertical-align: top;
+		margin-inline-end: 2%;
+	}
+
+	table {
+		font-size: 7.5pt;
+		margin-block: 0;
+		border-collapse: collapse;
+	}
+
+	#syllabus table caption {
+		caption-side: top;
+		text-align: start;
+		font-weight: 600;
+		font-size: 8pt;
+		padding-block-end: 1pt;
+		margin-block: 0;
+	}
+
+	th,
+	td {
+		background: none;
+		border: none;
+		padding-block: 0.75pt;
+		padding-inline: 0 8pt;
+		text-align: start;
+	}
+
+	thead th {
+		border-block-end: 0.75pt solid var(--text);
+	}
+
+	tbody td {
+		border-block-end: 0.25pt solid var(--border-light);
+	}
+
+	tbody tr:last-child td {
+		border-block-end: none;
+	}
+
+	/* ---- Key dates ---- */
+	#syllabus article:has(> #key-dates) {
+		break-inside: avoid;
+	}
+
+	#syllabus article:has(> #key-dates) ul {
+		columns: 3;
+		column-gap: 14pt;
+		font-size: 7.5pt;
+	}
+
+	/* ---- Schedule pointer + fixed dates ---- */
+	#schedule .print-only {
+		font-size: 8pt;
+	}
+
+	.print-only ul {
+		columns: 2;
+		column-gap: 16pt;
+	}
+
+	/* ---- Policies: stacked fine print (each disclosure avoids breaking;
+	   the section as a whole may span pages) ---- */
+	details {
+		margin: 0 0 3pt;
+		padding: 0;
+		border: none;
+		background: none;
+		font-size: 7.5pt;
+	}
+
+	summary {
+		display: block;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		font-weight: 700;
+		font-size: inherit;
+	}
+
+	details p {
+		font-size: inherit;
+		line-height: 1.2;
+		margin-block: 0.5pt 0;
+	}
+
+	/* Paper is the measure: drop the on-screen 80ch reading cap. */
+	.disclosures p {
+		max-inline-size: none;
+	}
+}

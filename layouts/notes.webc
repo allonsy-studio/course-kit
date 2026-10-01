@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html :lang="site.language ?? 'en-US'">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="color-scheme" content="light">
+
+	<title @text="[$data.title, site.title].filter(Boolean).join(' | ')"></title>
+	<meta name="robots" content="noindex, nofollow">
+
+	<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+	<link rel="stylesheet" webc:keep href="/styles/font.css">
+	<link rel="stylesheet" webc:keep href="/styles/notes.css">
+</head>
+
+<body>
+	<main>
+		<template webc:nokeep @raw="content"></template>
+	</main>
+</body>
+
+</html>
