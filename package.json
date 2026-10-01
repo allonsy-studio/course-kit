@@ -14,6 +14,7 @@
   "type": "module",
   "exports": {
     ".": "./index.js",
+    "./data": "./lib/data/index.js",
     "./filters": "./lib/filters.js",
     "./markdown": "./lib/markdown.js",
     "./package.json": "./package.json",

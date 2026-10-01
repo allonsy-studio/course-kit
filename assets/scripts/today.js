@@ -6,7 +6,7 @@
  * "Today" flag (or the element's `data-today-label`), so the marker never
  * relies on color alone.
  */
-const CAMPUS_TZ = "America/New_York";
+const CAMPUS_TZ = __COURSE_KIT_TIMEZONE__;
 
 /** @returns {string} today's date on campus, as `YYYY-MM-DD` */
 const today = () => new Date().toLocaleDateString("en-CA", { timeZone: CAMPUS_TZ });
