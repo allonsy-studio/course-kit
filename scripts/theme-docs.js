@@ -9,7 +9,7 @@ export function tokensDoc() {
 	const rows = TOKENS.map((token) => `| \`${token.key}\` | \`--color-${token.key}\` | ${token.role} | ${show(token.site)} | ${show(token.deck)} |`);
 	return `# Color tokens
 
-Generated from \`lib/theme.js\` by \`npm run schema\`. Do not edit by hand.
+Generated from \`lib/theme.js\` by \`yarn schema\`. Do not edit by hand.
 
 Every color in the site and the slide decks comes from one of these. Override any of them in the course's \`_data/theme.json\`; the key is the token name without \`--color-\`. A value is one color, or \`{ "light": color, "dark": color }\`.
 
