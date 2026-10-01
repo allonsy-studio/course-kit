@@ -39,8 +39,8 @@
        surface by the bottom edge, so the band needs no closing rule. */
     background: linear-gradient(
         to bottom,
-        color-mix(in sRGB, var(--section-ui) 12%, var(--bg)),
-        var(--bg)
+        color-mix(in sRGB, var(--color-accent) 12%, var(--color-page)),
+        var(--color-page)
     );
 
     @media print {
@@ -88,14 +88,14 @@
         text-wrap: balance;
 
         a {
-            color: var(--text);
+            color: var(--color-text);
             text-decoration: none;
 
             &:is(:hover, :focus-visible) .name {
                 text-decoration: underline;
                 text-decoration-thickness: 0.06em;
                 text-underline-offset: 0.12em;
-                text-decoration-color: var(--section-ui);
+                text-decoration-color: var(--color-accent);
             }
         }
 
@@ -104,14 +104,14 @@
             font-size: 0.5em;
             font-weight: var(--font-weight--semi-bold);
             letter-spacing: 0.06em;
-            color: var(--section-text);
+            color: var(--color-accent-text);
             margin-block-end: 0.2em;
         }
     }
 
     .meta {
         margin: 0;
-        color: var(--text-light);
+        color: var(--color-text-muted);
         font-size: max(var(--base-font-size), 0.95em);
     }
 
@@ -120,7 +120,7 @@
         align-items: start;
         gap: calc(var(--content-space) * 1.5);
         padding-inline-start: calc(var(--section-space) * 1.25);
-        border-inline-start: var(--thin-border-width) solid var(--ui-light);
+        border-inline-start: var(--thin-border-width) solid var(--color-border);
 
         @media screen and (width <= 768px) {
             inline-size: 100%;
@@ -128,7 +128,7 @@
             padding-inline-start: 0;
             padding-block-start: var(--content-space);
             border-inline-start: none;
-            border-block-start: var(--thin-border-width) solid var(--ui-light);
+            border-block-start: var(--thin-border-width) solid var(--color-border);
         }
     }
 }

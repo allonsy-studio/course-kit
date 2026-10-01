@@ -68,9 +68,9 @@
 	.codepen {
 		display: grid;
 		gap: var(--thin-border-width);
-		border: var(--thin-border-width) solid var(--border);
+		border: var(--thin-border-width) solid var(--color-border);
 		border-radius: var(--standard-border-radius);
-		background-color: var(--border);
+		background-color: var(--color-border);
 		overflow: hidden;
 	}
 
@@ -79,8 +79,8 @@
 	.codepen .pane-label {
 		margin: 0;
 		padding: calc(var(--content-space) * .4) calc(var(--content-space) * .6);
-		background-color: var(--bg);
-		color: var(--text-light);
+		background-color: var(--color-page);
+		color: var(--color-text-muted);
 		font-family: var(--dense-font);
 		font-size: var(--font-size-7);
 		letter-spacing: .06em;
@@ -92,19 +92,19 @@
 		max-block-size: 22em;
 		overflow: auto;
 		padding: calc(var(--content-space) * .6);
-		background-color: var(--bg);
+		background-color: var(--color-page);
 		font-size: 0.85em;
 		tab-size: 2;
 
 		&:focus-visible {
-			outline: var(--outline-width) solid var(--ui);
+			outline: var(--outline-width) solid var(--color-accent);
 			outline-offset: calc(var(--outline-width) * -1);
 		}
 	}
 
 	figcaption {
 		margin-block-start: calc(var(--content-space) * .5);
-		color: var(--text-light);
+		color: var(--color-text-muted);
 		font-size: 0.9em;
 		text-wrap: pretty;
 	}

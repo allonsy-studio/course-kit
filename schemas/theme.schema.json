@@ -1,0 +1,416 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://github.com/allonsy-studio/course-kit/schemas/theme.schema.json",
+	"title": "Course theme",
+	"description": "Color overrides for the course site and its slide decks. Every key is optional; anything left out uses the package default. See docs/tokens.md.",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"$schema": {
+			"type": "string"
+		},
+		"page": {
+			"$ref": "#/$defs/color",
+			"description": "Page background. CSS: --color-page"
+		},
+		"surface": {
+			"$ref": "#/$defs/color",
+			"description": "Raised or alternate surface: cards, table headers, code. CSS: --color-surface"
+		},
+		"surface-subtle": {
+			"$ref": "#/$defs/color",
+			"description": "Faint surface tint. CSS: --color-surface-subtle"
+		},
+		"surface-overlay": {
+			"$ref": "#/$defs/color",
+			"description": "Popovers and menus. CSS: --color-surface-overlay"
+		},
+		"surface-accent": {
+			"$ref": "#/$defs/color",
+			"description": "Accent-tinted wash. CSS: --color-surface-accent"
+		},
+		"table-header": {
+			"$ref": "#/$defs/color",
+			"description": "Table header cells. CSS: --color-table-header"
+		},
+		"surface-warning": {
+			"$ref": "#/$defs/color",
+			"description": "Warning panel background. CSS: --color-surface-warning"
+		},
+		"text": {
+			"$ref": "#/$defs/color",
+			"description": "Body text. CSS: --color-text"
+		},
+		"text-muted": {
+			"$ref": "#/$defs/color",
+			"description": "Secondary text. CSS: --color-text-muted"
+		},
+		"border": {
+			"$ref": "#/$defs/color",
+			"description": "Lines, rules and borders. CSS: --color-border"
+		},
+		"border-accent": {
+			"$ref": "#/$defs/color",
+			"description": "Accent-tinted line. CSS: --color-border-accent"
+		},
+		"accent": {
+			"$ref": "#/$defs/color",
+			"description": "Brand color: fills, buttons, rules, the masthead wash. CSS: --color-accent"
+		},
+		"accent-text": {
+			"$ref": "#/$defs/color",
+			"description": "Brand color for type, dark enough to read. CSS: --color-accent-text"
+		},
+		"accent-strong": {
+			"$ref": "#/$defs/color",
+			"description": "Brand color for decorative marks: the text tone in light mode, the fill in dark. CSS: --color-accent-strong"
+		},
+		"on-accent": {
+			"$ref": "#/$defs/color",
+			"description": "Text on a brand-color fill. CSS: --color-on-accent"
+		},
+		"accent-hover": {
+			"$ref": "#/$defs/color",
+			"description": "Brand fill, hovered. CSS: --color-accent-hover"
+		},
+		"accent-active": {
+			"$ref": "#/$defs/color",
+			"description": "Brand fill, pressed. CSS: --color-accent-active"
+		},
+		"link": {
+			"$ref": "#/$defs/color",
+			"description": "Links. CSS: --color-link"
+		},
+		"link-hover": {
+			"$ref": "#/$defs/color",
+			"description": "Links, hovered. CSS: --color-link-hover"
+		},
+		"link-focus": {
+			"$ref": "#/$defs/color",
+			"description": "Links, focused. CSS: --color-link-focus"
+		},
+		"link-active": {
+			"$ref": "#/$defs/color",
+			"description": "Links, pressed. CSS: --color-link-active"
+		},
+		"success": {
+			"$ref": "#/$defs/color",
+			"description": "Success: correct answers, confirmations. CSS: --color-success"
+		},
+		"on-success": {
+			"$ref": "#/$defs/color",
+			"description": "Text on a success fill. CSS: --color-on-success"
+		},
+		"error": {
+			"$ref": "#/$defs/color",
+			"description": "Error: wrong answers, failures. CSS: --color-error"
+		},
+		"on-error": {
+			"$ref": "#/$defs/color",
+			"description": "Text on an error fill. CSS: --color-on-error"
+		},
+		"warning": {
+			"$ref": "#/$defs/color",
+			"description": "Warnings and cautions. CSS: --color-warning"
+		},
+		"on-warning": {
+			"$ref": "#/$defs/color",
+			"description": "Text on a warning fill. CSS: --color-on-warning"
+		},
+		"highlight": {
+			"$ref": "#/$defs/color",
+			"description": "Highlighted (marked) text. CSS: --color-highlight"
+		},
+		"code": {
+			"$ref": "#/$defs/color",
+			"description": "Preformatted code text and its border. CSS: --color-code"
+		},
+		"gradient": {
+			"type": "array",
+			"minItems": 1,
+			"maxItems": 4,
+			"items": {
+				"$ref": "#/$defs/color"
+			},
+			"description": "One to four colors for decorative gradients. CSS: --color-gradient-1 to -4, joined as --gradient-stops"
+		},
+		"site": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"page": {
+					"$ref": "#/$defs/color",
+					"description": "Page background. CSS: --color-page"
+				},
+				"surface": {
+					"$ref": "#/$defs/color",
+					"description": "Raised or alternate surface: cards, table headers, code. CSS: --color-surface"
+				},
+				"surface-subtle": {
+					"$ref": "#/$defs/color",
+					"description": "Faint surface tint. CSS: --color-surface-subtle"
+				},
+				"surface-overlay": {
+					"$ref": "#/$defs/color",
+					"description": "Popovers and menus. CSS: --color-surface-overlay"
+				},
+				"surface-accent": {
+					"$ref": "#/$defs/color",
+					"description": "Accent-tinted wash. CSS: --color-surface-accent"
+				},
+				"table-header": {
+					"$ref": "#/$defs/color",
+					"description": "Table header cells. CSS: --color-table-header"
+				},
+				"surface-warning": {
+					"$ref": "#/$defs/color",
+					"description": "Warning panel background. CSS: --color-surface-warning"
+				},
+				"text": {
+					"$ref": "#/$defs/color",
+					"description": "Body text. CSS: --color-text"
+				},
+				"text-muted": {
+					"$ref": "#/$defs/color",
+					"description": "Secondary text. CSS: --color-text-muted"
+				},
+				"border": {
+					"$ref": "#/$defs/color",
+					"description": "Lines, rules and borders. CSS: --color-border"
+				},
+				"border-accent": {
+					"$ref": "#/$defs/color",
+					"description": "Accent-tinted line. CSS: --color-border-accent"
+				},
+				"accent": {
+					"$ref": "#/$defs/color",
+					"description": "Brand color: fills, buttons, rules, the masthead wash. CSS: --color-accent"
+				},
+				"accent-text": {
+					"$ref": "#/$defs/color",
+					"description": "Brand color for type, dark enough to read. CSS: --color-accent-text"
+				},
+				"accent-strong": {
+					"$ref": "#/$defs/color",
+					"description": "Brand color for decorative marks: the text tone in light mode, the fill in dark. CSS: --color-accent-strong"
+				},
+				"on-accent": {
+					"$ref": "#/$defs/color",
+					"description": "Text on a brand-color fill. CSS: --color-on-accent"
+				},
+				"accent-hover": {
+					"$ref": "#/$defs/color",
+					"description": "Brand fill, hovered. CSS: --color-accent-hover"
+				},
+				"accent-active": {
+					"$ref": "#/$defs/color",
+					"description": "Brand fill, pressed. CSS: --color-accent-active"
+				},
+				"link": {
+					"$ref": "#/$defs/color",
+					"description": "Links. CSS: --color-link"
+				},
+				"link-hover": {
+					"$ref": "#/$defs/color",
+					"description": "Links, hovered. CSS: --color-link-hover"
+				},
+				"link-focus": {
+					"$ref": "#/$defs/color",
+					"description": "Links, focused. CSS: --color-link-focus"
+				},
+				"link-active": {
+					"$ref": "#/$defs/color",
+					"description": "Links, pressed. CSS: --color-link-active"
+				},
+				"success": {
+					"$ref": "#/$defs/color",
+					"description": "Success: correct answers, confirmations. CSS: --color-success"
+				},
+				"on-success": {
+					"$ref": "#/$defs/color",
+					"description": "Text on a success fill. CSS: --color-on-success"
+				},
+				"error": {
+					"$ref": "#/$defs/color",
+					"description": "Error: wrong answers, failures. CSS: --color-error"
+				},
+				"on-error": {
+					"$ref": "#/$defs/color",
+					"description": "Text on an error fill. CSS: --color-on-error"
+				},
+				"warning": {
+					"$ref": "#/$defs/color",
+					"description": "Warnings and cautions. CSS: --color-warning"
+				},
+				"on-warning": {
+					"$ref": "#/$defs/color",
+					"description": "Text on a warning fill. CSS: --color-on-warning"
+				},
+				"highlight": {
+					"$ref": "#/$defs/color",
+					"description": "Highlighted (marked) text. CSS: --color-highlight"
+				},
+				"code": {
+					"$ref": "#/$defs/color",
+					"description": "Preformatted code text and its border. CSS: --color-code"
+				}
+			},
+			"description": "Overrides that apply to the site only, not the slide decks"
+		},
+		"deck": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"page": {
+					"$ref": "#/$defs/color",
+					"description": "Page background. CSS: --color-page"
+				},
+				"surface": {
+					"$ref": "#/$defs/color",
+					"description": "Raised or alternate surface: cards, table headers, code. CSS: --color-surface"
+				},
+				"surface-subtle": {
+					"$ref": "#/$defs/color",
+					"description": "Faint surface tint. CSS: --color-surface-subtle"
+				},
+				"surface-overlay": {
+					"$ref": "#/$defs/color",
+					"description": "Popovers and menus. CSS: --color-surface-overlay"
+				},
+				"surface-accent": {
+					"$ref": "#/$defs/color",
+					"description": "Accent-tinted wash. CSS: --color-surface-accent"
+				},
+				"table-header": {
+					"$ref": "#/$defs/color",
+					"description": "Table header cells. CSS: --color-table-header"
+				},
+				"surface-warning": {
+					"$ref": "#/$defs/color",
+					"description": "Warning panel background. CSS: --color-surface-warning"
+				},
+				"text": {
+					"$ref": "#/$defs/color",
+					"description": "Body text. CSS: --color-text"
+				},
+				"text-muted": {
+					"$ref": "#/$defs/color",
+					"description": "Secondary text. CSS: --color-text-muted"
+				},
+				"border": {
+					"$ref": "#/$defs/color",
+					"description": "Lines, rules and borders. CSS: --color-border"
+				},
+				"border-accent": {
+					"$ref": "#/$defs/color",
+					"description": "Accent-tinted line. CSS: --color-border-accent"
+				},
+				"accent": {
+					"$ref": "#/$defs/color",
+					"description": "Brand color: fills, buttons, rules, the masthead wash. CSS: --color-accent"
+				},
+				"accent-text": {
+					"$ref": "#/$defs/color",
+					"description": "Brand color for type, dark enough to read. CSS: --color-accent-text"
+				},
+				"accent-strong": {
+					"$ref": "#/$defs/color",
+					"description": "Brand color for decorative marks: the text tone in light mode, the fill in dark. CSS: --color-accent-strong"
+				},
+				"on-accent": {
+					"$ref": "#/$defs/color",
+					"description": "Text on a brand-color fill. CSS: --color-on-accent"
+				},
+				"accent-hover": {
+					"$ref": "#/$defs/color",
+					"description": "Brand fill, hovered. CSS: --color-accent-hover"
+				},
+				"accent-active": {
+					"$ref": "#/$defs/color",
+					"description": "Brand fill, pressed. CSS: --color-accent-active"
+				},
+				"link": {
+					"$ref": "#/$defs/color",
+					"description": "Links. CSS: --color-link"
+				},
+				"link-hover": {
+					"$ref": "#/$defs/color",
+					"description": "Links, hovered. CSS: --color-link-hover"
+				},
+				"link-focus": {
+					"$ref": "#/$defs/color",
+					"description": "Links, focused. CSS: --color-link-focus"
+				},
+				"link-active": {
+					"$ref": "#/$defs/color",
+					"description": "Links, pressed. CSS: --color-link-active"
+				},
+				"success": {
+					"$ref": "#/$defs/color",
+					"description": "Success: correct answers, confirmations. CSS: --color-success"
+				},
+				"on-success": {
+					"$ref": "#/$defs/color",
+					"description": "Text on a success fill. CSS: --color-on-success"
+				},
+				"error": {
+					"$ref": "#/$defs/color",
+					"description": "Error: wrong answers, failures. CSS: --color-error"
+				},
+				"on-error": {
+					"$ref": "#/$defs/color",
+					"description": "Text on an error fill. CSS: --color-on-error"
+				},
+				"warning": {
+					"$ref": "#/$defs/color",
+					"description": "Warnings and cautions. CSS: --color-warning"
+				},
+				"on-warning": {
+					"$ref": "#/$defs/color",
+					"description": "Text on a warning fill. CSS: --color-on-warning"
+				},
+				"highlight": {
+					"$ref": "#/$defs/color",
+					"description": "Highlighted (marked) text. CSS: --color-highlight"
+				},
+				"code": {
+					"$ref": "#/$defs/color",
+					"description": "Preformatted code text and its border. CSS: --color-code"
+				}
+			},
+			"description": "Overrides that apply to slide decks only"
+		}
+	},
+	"$defs": {
+		"color": {
+			"description": "A CSS color, or a pair for light and dark mode",
+			"oneOf": [
+				{
+					"type": "string",
+					"minLength": 1,
+					"pattern": "^[^;{}<>]+$"
+				},
+				{
+					"type": "object",
+					"additionalProperties": false,
+					"required": [
+						"light",
+						"dark"
+					],
+					"properties": {
+						"light": {
+							"type": "string",
+							"minLength": 1,
+							"pattern": "^[^;{}<>]+$"
+						},
+						"dark": {
+							"type": "string",
+							"minLength": 1,
+							"pattern": "^[^;{}<>]+$"
+						}
+					}
+				}
+			]
+		}
+	}
+}

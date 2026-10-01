@@ -21,13 +21,13 @@
 <style webc:scoped>
 	:host {
 		.drag-hint {
-			color: var(--text-light);
+			color: var(--color-text-muted);
 			font-size: 0.9em;
 			margin-block: 0 0.6em;
 		}
 
 		.answer-key {
-			color: var(--ui-error);
+			color: var(--color-error);
 			font-size: 0.85em;
 
 			&:not([hidden]) {
@@ -42,20 +42,20 @@
 			gap: 0.4em;
 
 			.word-bank-label {
-				color: var(--text-light);
+				color: var(--color-text-muted);
 				font-size: 0.85em;
 				letter-spacing: 0.06em;
 				text-transform: uppercase;
 			}
 
 			.word {
-				background: var(--bg-light);
+				background: var(--color-surface);
 				border-radius: var(--standard-border-radius);
 				font-family: var(--mono-font);
 				padding: 0.1em 0.5em;
 
 				&[draggable="true"] {
-					border: var(--thin-border-width) dashed var(--ui-light);
+					border: var(--thin-border-width) dashed var(--color-border);
 					cursor: grab;
 
 					&:active {
@@ -101,13 +101,13 @@
 					border-radius: var(--standard-border-radius);
 
 					&[data-over] {
-						background: var(--bg-drop-target);
-						border-color: var(--section-ui);
+						background: var(--color-drop-target);
+						border-color: var(--color-accent);
 					}
 				}
 
 				&[data-mark="wrong"] .blank-label {
-					color: var(--ui-error);
+					color: var(--color-error);
 				}
 			}
 		}

@@ -142,7 +142,7 @@
             display: flex;
             flex-direction: column;
             padding: calc(var(--content-space) * 1.1);
-            border: var(--thin-border-width) solid var(--ui-light);
+            border: var(--thin-border-width) solid var(--color-border);
             border-radius: var(--standard-border-radius);
 
             h4 {
@@ -175,8 +175,8 @@
             flex: none;
             padding: 0.1em 0.6em;
             border-radius: var(--pill-border-radius);
-            background-color: color-mix(in oklab, var(--section-ui) 24%, transparent);
-            color: var(--section-text);
+            background-color: color-mix(in oklab, var(--color-accent) 24%, transparent);
+            color: var(--color-accent-text);
             font-size: var(--font-size-6);
             font-weight: var(--font-weight--semi-bold);
             letter-spacing: 0.03em;
@@ -192,7 +192,7 @@
                 flex-wrap: wrap;
                 gap: 0 0.75em;
                 padding-block: 0.4em;
-                border-block-start: var(--thin-border-width) solid var(--ui-light);
+                border-block-start: var(--thin-border-width) solid var(--color-border);
             }
 
             li > strong {
@@ -200,7 +200,7 @@
             }
 
             li > span:last-child {
-                color: var(--text-light);
+                color: var(--color-text-muted);
             }
         }
     }

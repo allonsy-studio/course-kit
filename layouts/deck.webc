@@ -18,7 +18,7 @@
 	<style webc:keep @raw="getBundle('css')"></style>
 </head>
 
-<body :data-accent="$data.accent" :style="$data.accentStyle">
+<body>
 	<a class="skip" href="#s1">Skip to first slide</a>
 	<div class="topbar" role="presentation"></div>
 

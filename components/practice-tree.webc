@@ -17,7 +17,7 @@
 <style webc:scoped>
 	:host {
 		.answer-key {
-			color: var(--ui-error);
+			color: var(--color-error);
 			font-size: 0.85em;
 
 			&:not([hidden]) {
@@ -47,14 +47,14 @@
 			}
 
 			.node {
-				border: var(--thin-border-width) solid var(--ui-light);
+				border: var(--thin-border-width) solid var(--color-border);
 				border-radius: var(--standard-border-radius);
 				display: inline-block;
 				padding: 0.1em 0.6em;
 			}
 
 			.node-blank {
-				border-color: var(--section-ui);
+				border-color: var(--color-accent);
 				border-style: dashed;
 				padding: 0.1em 0.3em;
 
@@ -66,7 +66,7 @@
 				}
 
 				li[data-mark="wrong"] & {
-					border-color: var(--ui-error);
+					border-color: var(--color-error);
 				}
 			}
 		}

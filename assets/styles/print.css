@@ -10,22 +10,18 @@
 
 	/* Grayscale — neutralize every token. */
 	:root {
-		--text: #000;
-		--text-light: #3d3d3d;
-		--text-accent: #000;
-		--link: #000;
-		--link--hover: #000;
-		--ui: #000;
-		--accent: #000;
-		--bg-accent: transparent;
-		--border: #999;
-		--bg: #fff;
-		--bg-light: #fff;
-		--marked: transparent;
-		--ui-warn: #000;
-		--ui-error: #000;
-		--ui-success: #000;
-		--border-light: #bbb;
+		--color-text: #000;
+		--color-text-muted: #3d3d3d;
+		--color-accent-text: #000;
+		--color-link: #000;
+		--color-link-hover: #000;
+		--color-accent: #000;
+		--color-page: #fff;
+		--color-surface: #fff;
+		--color-highlight: transparent;
+		--color-warning: #000;
+		--color-error: #000;
+		--color-success: #000;
 		color-scheme: light;
 	}
 
@@ -45,7 +41,7 @@
 		margin: 0;
 		padding: 0;
 		max-inline-size: none;
-		color: var(--text);
+		color: var(--color-text);
 		font-size: 8.5pt;
 		line-height: 1.25;
 	}
@@ -82,7 +78,7 @@
 	}
 
 	a {
-		color: var(--link);
+		color: var(--color-link);
 		text-decoration: none;
 	}
 
@@ -99,7 +95,7 @@
 		content: " (" attr(href) ")";
 		font-size: 90%;
 		font-weight: 400;
-		color: var(--text-light);
+		color: var(--color-text-muted);
 		overflow-wrap: anywhere;
 	}
 
@@ -117,7 +113,7 @@
 		letter-spacing: 0.08em;
 		margin-block: 8pt 3pt;
 		padding-block-end: 1.5pt;
-		border-block-end: 0.75pt solid var(--text);
+		border-block-end: 0.75pt solid var(--color-text);
 	}
 
 	h3 {
@@ -168,7 +164,7 @@
 
 	/* ---- Masthead: term, title, catalog copy, prerequisites ---- */
 	.course-header {
-		border-block-end: 1.25pt solid var(--text);
+		border-block-end: 1.25pt solid var(--color-text);
 		padding-block-end: 4pt;
 		margin-block-end: 6pt;
 	}
@@ -176,7 +172,7 @@
 	.course-header > p:first-child {
 		font-size: 7.5pt;
 		letter-spacing: 0.12em;
-		color: var(--text);
+		color: var(--color-text);
 		margin-block: 0 1pt;
 	}
 
@@ -245,7 +241,7 @@
 
 	#instructor p.muted {
 		font-size: 7.5pt;
-		color: var(--text-light);
+		color: var(--color-text-muted);
 	}
 
 	/* ---- Syllabus body ---- */
@@ -310,7 +306,7 @@
 	#syllabus .callout {
 		break-inside: avoid;
 		border: none;
-		border-inline-start: 1.5pt solid var(--text);
+		border-inline-start: 1.5pt solid var(--color-text);
 		border-radius: 0;
 		background: none;
 		padding-block: 1pt;
@@ -360,11 +356,11 @@
 	}
 
 	thead th {
-		border-block-end: 0.75pt solid var(--text);
+		border-block-end: 0.75pt solid var(--color-text);
 	}
 
 	tbody td {
-		border-block-end: 0.25pt solid var(--border-light);
+		border-block-end: 0.25pt solid #bbb;
 	}
 
 	tbody tr:last-child td {

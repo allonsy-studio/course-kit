@@ -50,18 +50,18 @@
         font-weight: var(--font-weight--semi-bold);
 
         a {
-            color: var(--text);
+            color: var(--color-text);
             text-decoration: none;
 
             &:is(:hover, :focus-visible) {
-                color: var(--link--hover);
+                color: var(--color-link-hover);
             }
         }
     }
 
     .meta {
         margin: 0;
-        color: var(--text-light);
+        color: var(--color-text-muted);
         font-size: max(var(--base-font-size), 0.85em);
     }
 
@@ -71,7 +71,7 @@
         font-weight: var(--font-weight--semi-bold);
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        color: var(--text-light);
+        color: var(--color-text-muted);
     }
 
     ul {
@@ -105,7 +105,7 @@
         text-decoration: none;
 
         &:is(:hover, :focus-visible) {
-            color: var(--link--hover);
+            color: var(--color-link-hover);
         }
     }
 }

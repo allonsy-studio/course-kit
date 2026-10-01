@@ -45,7 +45,7 @@
     .week {
         margin: 0;
         padding: 0;
-        border: var(--thin-border-width) solid var(--ui-light);
+        border: var(--thin-border-width) solid var(--color-border);
         border-radius: var(--standard-border-radius);
         overflow: hidden;
     }
@@ -56,8 +56,8 @@
         align-items: baseline;
         gap: 0.25em 1em;
         padding: 0.55em 1em;
-        background-color: var(--bg-light);
-        border-block-end: var(--border-width) solid var(--section-ui);
+        background-color: var(--color-surface);
+        border-block-end: var(--border-width) solid var(--color-accent);
 
         .week-title {
             margin: 0;
@@ -67,7 +67,7 @@
 
     .week-of {
         margin: 0;
-        color: var(--text-light);
+        color: var(--color-text-muted);
         font-size: max(var(--base-font-size), 0.9em);
     }
 
@@ -85,7 +85,7 @@
         padding: 0.8em 1em;
 
         & + .meeting {
-            border-block-start: var(--thin-border-width) solid var(--ui-light);
+            border-block-start: var(--thin-border-width) solid var(--color-border);
         }
 
         @media screen and (width <= 520px) {
@@ -116,7 +116,7 @@
     .description,
     .repeat,
     .meta {
-        color: var(--text-light);
+        color: var(--color-text-muted);
         font-size: max(var(--base-font-size), 0.9em);
     }
 
@@ -160,17 +160,17 @@
     }
 
     .meeting:has([data-today]) {
-        background-color: color-mix(in srgb, var(--section-ui) 15%, transparent);
-        box-shadow: inset var(--border-width) 0 0 var(--section-ui);
+        background-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
+        box-shadow: inset var(--border-width) 0 0 var(--color-accent);
     }
 
     .today-flag {
-        color: var(--section-text);
+        color: var(--color-accent-text);
         font-size: max(var(--base-font-size), 0.9em);
     }
 
     .arrow {
-        color: var(--section-text);
+        color: var(--color-accent-text);
         text-decoration: none;
         font-weight: var(--font-weight--medium);
 

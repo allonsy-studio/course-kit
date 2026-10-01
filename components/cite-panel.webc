@@ -26,15 +26,15 @@
 			position: relative;
 
 			&[open] summary {
-				background: var(--section-ui);
-				color: var(--on-ui);
+				background: var(--color-accent);
+				color: var(--color-on-accent);
 			}
 		}
 
 		summary {
-			background: var(--bg-light);
+			background: var(--color-surface);
 			block-size: 1.7em;
-			border: var(--thin-border-width) solid var(--ui-light);
+			border: var(--thin-border-width) solid var(--color-border);
 			border-radius: var(--circle-border-radius);
 			cursor: pointer;
 			font-weight: var(--font-weight--bold);
@@ -50,8 +50,8 @@
 		}
 
 		.cite-body {
-			background: var(--bg-overlay);
-			border: var(--thin-border-width) solid var(--ui-light);
+			background: var(--color-surface-overlay);
+			border: var(--thin-border-width) solid var(--color-border);
 			border-radius: var(--standard-border-radius);
 			box-shadow: var(--box-shadow);
 			font-size: 0.9em;
@@ -78,7 +78,7 @@
 			}
 
 			q {
-				color: var(--text-light);
+				color: var(--color-text-muted);
 				display: block;
 				font-style: italic;
 			}

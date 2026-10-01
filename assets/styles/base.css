@@ -1,42 +1,8 @@
 @import "font.css";
 
 :root {
-    /* ---- Brand palette ---- */
-    /* tokens:palette */
-
-    /* ---- Feedback primitives ---- */
-    --ui-success: light-dark(hsl(155deg 55% 35%), hsl(155deg 50% 55%));
-    --on-success: var(--static-paper);
-
-    --ui-error: light-dark(hsl(0deg 65% 45%), hsl(0deg 70% 60%));
-    --on-error: var(--static-paper);
-
-    --ui-warn: light-dark(hsl(40deg 86% 50%), hsl(42deg 100% 40%));
-    --on-warn: var(--static-paper);
-
-    --ui-light: light-dark(color-mix(in oklab, var(--static-slate) 22%, #fff), hsl(228deg 14% 32%));
-    --border: var(--ui-light);
-    --on-light: var(--static-ink);
-
-    /* ---- Gradients ---- */
-    --gradient-stack: var(--static-magenta), var(--static-cyan), var(--static-yellow), var(--static-orange);
-    --gradient: linear-gradient(45deg, var(--gradient-stack));
-
-    /* Light mode is white with slate-tinted surfaces and rules: the brand's
-       paper and cream read yellow against the magenta accent, so they stay
-       reserved for on-accent text and the slide decks. */
-    --bg: light-dark(#fff, hsl(228deg 20% 12%));
-    --text: light-dark(var(--static-ink), var(--static-paper));
-
-    --bg-light: light-dark(color-mix(in oklab, var(--static-slate) 7%, #fff), hsl(228deg 18% 17%));
-    --text-light: light-dark(var(--static-slate), var(--static-latte));
-
-	--bg-accent: light-dark(color-mix(in oklab, var(--static-slate) 5%, transparent), hsl(228deg 18% 17% / 50%));
-
-    --bg-subtle: light-dark(color-mix(in oklab, var(--static-slate) 3%, transparent), hsl(228deg 18% 20% / 30%));
-
-    /* ---- The elevation ladder ---- */
-    --bg-overlay: light-dark(#fff, hsl(228deg 15% 30%));
+    /* ---- Colors ---- */
+    /* tokens:site */
 
     /* ---- Typography ---- */
     --sans-font: "Instrument Sans", "Instrument Sans Fallback", system-ui, "Helvetica Neue", helvetica, arial, sans-serif;
@@ -103,35 +69,6 @@
     --container-max: 1200px;
     --content-max: 80ch;
 
-    /* Defaults mapped to the brand magenta */
-    --ui: var(--static-magenta);
-    --on-ui: var(--on-brand-magenta);
-    --text-accent: var(--text-magenta);
-
-    --code: var(--text);
-    --preformatted: var(--text);
-
-    --ui--hover: color-mix(in oklch, var(--ui) 40%, transparent);
-    --ui--active: color-mix(in oklch, var(--ui) 40%, transparent);
-
-    /* Highlights (mapped to the brand yellow) */
-    --marked: var(--static-yellow);
-
-    /* ---- Section accent ---- */
-    --section-ui: var(--ui);
-    --section-text: var(--text-accent);
-
-    --link: var(--text-accent);
-    --link--hover: color-mix(in oklch, var(--link) 90%, var(--text));
-    --link--focus: color-mix(in oklch, var(--link) 90%, var(--text));
-    --link--active: color-mix(in oklch, var(--link) 90%, var(--text));
-
-    --accent-text: var(--bg);
-    --accent: var(--ui);
-
-    /* prism.js only variables; not used in custom CSS */
-    --prism-default-background: light-dark(#f6f2e8, #272b38);
-
     @media screen and (width <= 768px) {
         --container-space: 10px;
         --container-max: 100%;
@@ -151,17 +88,6 @@
     :where(img, video) {
         opacity: 0.8;
     }
-}
-
-/* ---- Section-derived tokens ----
-   Defined on body, not :root, so they resolve after body[data-accent]
-   remaps --section-*; see "CSS" under "Gotchas" in AGENTS.md. */
-body {
-	--link: var(--section-text);
-	--link--hover: color-mix(in oklch, var(--link) 90%, var(--text));
-	--link--focus: color-mix(in oklch, var(--link) 90%, var(--text));
-	--link--active: color-mix(in oklch, var(--link) 90%, var(--text));
-	--bg-accent: light-dark(color-mix(in oklab, var(--section-ui) 14%, transparent), color-mix(in oklab, var(--section-ui) 20%, transparent));
 }
 
 /* Kept at plain tag specificity, not :where(): `:where(section:last-child)`
@@ -188,8 +114,8 @@ section {
    on background-color) win by specificity now that this is zero, not just
    by coming later in the cascade. */
 :where(aside, details, pre, progress) {
-	background-color: var(--bg-accent);
-	border: var(--border-width) solid var(--ui-light);
+	background-color: var(--color-surface-accent);
+	border: var(--border-width) solid var(--color-border);
 	border-radius: var(--standard-border-radius);
 	margin-block-end: 1rem;
 }
@@ -213,7 +139,7 @@ section {
 }
 
 :where(article, fieldset, dialog) {
-	border: var(--border-width) solid var(--ui-light);
+	border: var(--border-width) solid var(--color-border);
 	padding: 1rem;
 	border-radius: var(--standard-border-radius);
 	margin-block-end: 1rem;
@@ -290,8 +216,8 @@ body {
     min-block-size: 100dvh;
     grid-template-rows: auto 1fr auto;
     margin: 0;
-    color: var(--text);
-    background-color: var(--bg);
+    color: var(--color-text);
+    background-color: var(--color-page);
     font-size: var(--font-size-5);
     line-height: var(--font-height);
 
@@ -333,10 +259,10 @@ body {
         margin-block-start: 4rem;
         padding-block: 2rem 1.5rem;
         padding-inline: 1rem;
-        color: var(--text-light);
+        color: var(--color-text-muted);
         font-size: 0.9rem;
         text-align: center;
-        border-block-start: var(--border-width) solid var(--ui-light);
+        border-block-start: var(--border-width) solid var(--color-border);
     }
 }
 
@@ -349,16 +275,16 @@ main {
 }
 
 ::selection {
-    background: color-mix(in hsl, var(--bg-light) 80%, transparent);
+    background: color-mix(in hsl, var(--color-surface) 80%, transparent);
     border-radius: 0.25em;
-    color: var(--text);
+    color: var(--color-text);
 }
 
 :focus-visible {
 	outline: var(--outline-width) solid;
-	outline-color: var(--ui--active);
+	outline-color: var(--color-accent-active);
 	outline-offset: var(--outline-offset);
-	border-color: var(--ui--active);
+	border-color: var(--color-accent-active);
 	border-radius: var(--hairline-border-radius);
 
 	@supports (corner-shape: squircle) {
@@ -389,7 +315,7 @@ a {
     text-decoration: none;
     text-underline-offset: .2ex;
     font-weight: var(--font-weight);
-    color: var(--link);
+    color: var(--color-link);
 
     :where(p, li, dd, blockquote, figcaption) &[href]:not(.cta-link, .header-anchor, .listing-item-more) {
         text-decoration: underline;
@@ -412,15 +338,15 @@ a {
 
     &:hover {
         text-decoration: underline;
-        text-decoration-color: var(--link--hover);
-        color: var(--link--hover);
+        text-decoration-color: var(--color-link-hover);
+        color: var(--color-link-hover);
     }
 
     &:is(:focus, :focus-visible) {
         text-decoration: underline;
-        text-decoration-color: var(--link--focus);
-        color: var(--link--focus);
-        outline: var(--outline-width) solid var(--ui--active);
+        text-decoration-color: var(--color-link-focus);
+        color: var(--color-link-focus);
+        outline: var(--outline-width) solid var(--color-accent-active);
         outline-offset: var(--outline-offset);
         border-radius: var(--standard-border-radius);
 
@@ -438,7 +364,7 @@ a {
         color: inherit;
         font-weight: var(--font-weight--semi-bold);
         text-decoration: underline;
-        text-decoration-color: var(--link--active);
+        text-decoration-color: var(--color-link-active);
     }
 
     :where(img) {
@@ -480,10 +406,10 @@ a {
     padding-inline: 0;
     font-weight: var(--font-weight--thin);
     line-height: var(--font-height--spacious);
-    color: var(--text);
+    color: var(--color-text);
 
     :is(+ [disabled], [disabled] + &) {
-        color: var(--text-light);
+        color: var(--color-text-muted);
     }
 
     &:has(:where(input, textarea, select)) {
@@ -502,13 +428,13 @@ a {
         &:has(:is(input, textarea, select):user-valid:not(:focus-visible, :disabled, :read-only))::after {
             content: "✓";
             content: "✓" / "";
-            color: var(--ui-success);
+            color: var(--color-success);
         }
 
         &:has(:is(input, textarea, select):user-invalid:not(:focus-visible, :disabled, :read-only))::after {
             content: "!";
             content: "!" / "";
-            color: var(--ui-error);
+            color: var(--color-error);
         }
 
         &:has(+ button) {
@@ -555,7 +481,7 @@ a {
 	font-family: var(--sans-font);
 	font-weight: var(--font-weight--bold);
 	font-size: 1.2em;
-	color: var(--text-light);
+	color: var(--color-text-muted);
 
 	+ dd {
 		margin-block-end: 1em;
@@ -568,20 +494,20 @@ a {
 
 :where(nav) {
 	a {
-        color: var(--text-light);
+        color: var(--color-text-muted);
         white-space: nowrap;
 
         &:hover {
-            color: var(--text);
+            color: var(--color-text);
         }
 
         span {
             text-decoration: dotted underline;
-            text-decoration-color: var(--ui);
+            text-decoration-color: var(--color-accent);
         }
 
         b {
-            color: var(--text-accent);
+            color: var(--color-accent-text);
             font-weight: var(--font-weight--bold);
             margin-inline-end: calc(var(--content-space) * 3);
         }
@@ -599,8 +525,8 @@ a {
 
     &:focus {
         z-index: 100;
-        background: var(--bg-overlay);
-        color: var(--text);
+        background: var(--color-surface-overlay);
+        color: var(--color-text);
         padding: 0.5em 1em;
         border-radius: var(--standard-border-radius);
         box-shadow: var(--box-shadow);
@@ -661,7 +587,7 @@ a {
 
 	&:is(.muted),
 	:is(.muted) {
-		color: var(--text-light);
+		color: var(--color-text-muted);
 	}
 
 	&:is(.align-end) {
@@ -676,7 +602,7 @@ a {
 	:is(.underline) {
 		font-style: normal;
 		text-decoration: underline;
-		text-decoration-color: var(--ui);
+		text-decoration-color: var(--color-accent);
 		text-decoration-thickness: 0.2ex;
 	}
 
@@ -691,7 +617,7 @@ a {
 .headline,
 .lede {
 	font-family: var(--sans-font);
-	color: var(--text);
+	color: var(--color-text);
 	line-height: var(--font-height--dense);
 	margin-block: 0 0.4em;
 	text-wrap: balance;
@@ -701,7 +627,7 @@ a {
 	}
 
 	&:is(.accent) {
-		color: var(--text-accent);
+		color: var(--color-accent-text);
 	}
 
 	a {
@@ -714,7 +640,7 @@ a {
 main {
 	:where(h2:not([class])) {
 		margin-block-start: calc(var(--content-space) * 2.5);
-		text-decoration-color: var(--section-ui);
+		text-decoration-color: var(--color-accent);
 		text-decoration-thickness: 0.2ex;
 		text-decoration-line: underline;
 	}
@@ -736,12 +662,12 @@ main {
 	position: absolute;
 	inset-inline-start: -0.85em;
 	opacity: 0;
-	color: var(--text-light);
+	color: var(--color-text-muted);
 	text-decoration: none;
 	transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
 
 	&:is(:hover, :focus-visible) {
-		color: var(--link);
+		color: var(--color-link);
 	}
 
 	@media (prefers-reduced-motion: reduce) {
@@ -783,16 +709,16 @@ main {
 	font-size: calc(var(--title--FontSize, 1em) + 0.1cqi + 0.3cqb);
 	font-weight: var(--font-weight);
 	text-transform: var(--title--TextTransform, uppercase);
-	text-shadow: 0 0 0.1em var(--on-ui);
+	text-shadow: 0 0 0.1em var(--color-on-accent);
 
 	&:is(.highlight) {
-		color: var(--accent-text);
+		color: var(--color-page);
 		z-index: 1;
 
 		inline-size: max-content;
 		max-inline-size: 100%;
 
-		background: var(--ui);
+		background: var(--color-accent);
 		padding-block: 0.12em 0.22em;
 		padding-inline: 0.5em;
 
@@ -809,7 +735,7 @@ main {
 			background: none;
 			padding-block-end: 0.1em;
 			padding-inline: 0;
-			border-block-end: calc(var(--border-width) * 4) solid var(--ui);
+			border-block-end: calc(var(--border-width) * 4) solid var(--color-accent);
 		}
 
 		a {
@@ -831,7 +757,7 @@ main {
 	.band:not(.hero) &:not(.company-name) {
 		text-decoration: underline;
 		text-decoration-thickness: calc(var(--border-width) * 4);
-		text-decoration-color: var(--ui);
+		text-decoration-color: var(--color-accent);
 	}
 
 	@media (prefers-color-scheme: dark) {
@@ -881,13 +807,13 @@ main {
 	}
 
 	.signature .dash {
-		color: var(--static-magenta);
+		color: var(--color-accent);
 	}
 }
 
 .metadata {
 	font-weight: var(--font-weight--light);
-	color: var(--text-light);
+	color: var(--color-text-muted);
 	font-size: var(--font-size-5);
 }
 
@@ -952,7 +878,7 @@ eyebrow + :where(h1, h2, h3, h4, h5, h6) {
 			content: "\2715";
 			content: "\2715" / "";
 			flex: none;
-			color: var(--ui-error);
+			color: var(--color-error);
 		}
 	}
 
@@ -965,7 +891,7 @@ eyebrow + :where(h1, h2, h3, h4, h5, h6) {
 /* ---- Muted text ----
    Global counterpart to typography's paragraph-scoped `.muted`. */
 .muted {
-	color: var(--text-light);
+	color: var(--color-text-muted);
 }
 
 /* ---- Checklist ---- */
@@ -983,7 +909,7 @@ eyebrow + :where(h1, h2, h3, h4, h5, h6) {
 			display: inline-block;
 			inline-size: 1.6em;
 			text-indent: 0;
-			color: var(--section-text);
+			color: var(--color-accent-text);
 		}
 	}
 
@@ -1068,7 +994,7 @@ eyebrow + :where(h1, h2, h3, h4, h5, h6) {
 }
 
 :where(dialog) {
-	background-color: var(--bg);
+	background-color: var(--color-page);
 	max-inline-size: 40rem;
 	margin: auto;
 
@@ -1083,7 +1009,7 @@ eyebrow + :where(h1, h2, h3, h4, h5, h6) {
 }
 
 :where(details) {
-	background-color: var(--bg-subtle);
+	background-color: var(--color-surface-subtle);
 
 	> *:not(summary) {
 		padding-inline-start: 1em;
@@ -1097,7 +1023,7 @@ eyebrow + :where(h1, h2, h3, h4, h5, h6) {
 }
 
 :where(tbody tr:nth-child(even)) {
-	background-color: var(--bg-subtle);
+	background-color: var(--color-surface-subtle);
 }
 
 /* ---- Table baseline (formerly simple.css) ---- */
@@ -1131,13 +1057,13 @@ figure > :where(table) {
 }
 
 :where(td, th) {
-	border: var(--border-width) solid var(--ui-light);
+	border: var(--border-width) solid var(--color-border);
 	text-align: start;
 	padding: 0.5rem;
 }
 
 :where(th) {
-	background-color: var(--bg-light);
+	background-color: var(--color-table-header);
 	font-weight: var(--font-weight--bold);
 }
 
@@ -1147,10 +1073,10 @@ figure > :where(table) {
 	margin-block: var(--content-space);
 	margin-inline: 0;
 	padding: 1em 1.25em;
-	background-color: var(--bg-light);
-	border: var(--thin-border-width) solid var(--ui-light);
+	background-color: var(--color-surface);
+	border: var(--thin-border-width) solid var(--color-border);
 	border-radius: var(--standard-border-radius);
-	color: var(--text);
+	color: var(--color-text);
 
 	p {
 		margin: 0;
@@ -1170,13 +1096,13 @@ figure > :where(table) {
 	&.prompt-avoid {
 		border-style: dashed;
 		background-color: transparent;
-		color: var(--text-light);
+		color: var(--color-text-muted);
 	}
 
 	&.prompt--avoid {
-		background-color: color-mix(in sRGB, var(--ui-error) 7%, transparent);
-		border: var(--thin-border-width) dashed color-mix(in sRGB, var(--ui-error) 55%, transparent);
-		color: var(--text-light);
+		background-color: color-mix(in sRGB, var(--color-error) 7%, transparent);
+		border: var(--thin-border-width) dashed color-mix(in sRGB, var(--color-error) 55%, transparent);
+		color: var(--color-text-muted);
 
 		user-select: none;
 	}
@@ -1195,16 +1121,16 @@ figure > :where(table) {
 	margin-block: 0.85em 0;
 	margin-inline-start: auto;
 	background: transparent;
-	color: var(--text-light);
-	border: var(--thin-border-width) solid var(--ui-light);
+	color: var(--color-text-muted);
+	border: var(--thin-border-width) solid var(--color-border);
 	border-radius: var(--standard-border-radius);
 	cursor: pointer;
 	font-size: max(var(--base-font-size), 0.85em);
 
 	&:is(:hover, :focus-visible) {
-		border-color: var(--ui);
-		color: var(--ui);
-		background-color: var(--bg-accent);
+		border-color: var(--color-accent);
+		color: var(--color-accent);
+		background-color: var(--color-surface-accent);
 	}
 
 	:where(svg) {
@@ -1226,7 +1152,7 @@ blockquote {
 	padding: 0;
 	border: none;
 
-	color: var(--text);
+	color: var(--color-text);
 	font-size: 1.15em;
 	font-style: normal;
 	line-height: 1.45;
@@ -1238,7 +1164,7 @@ blockquote {
 		inline-size: 2.5rem;
 		block-size: 3px;
 		margin-block-end: 0.9rem;
-		background-color: var(--section-ui);
+		background-color: var(--color-accent);
 	}
 
 	> :first-child {
@@ -1251,7 +1177,7 @@ blockquote {
 
 	@media print {
 		&::before {
-			background-color: var(--static-ink);
+			background-color: var(--color-text);
 		}
 	}
 
@@ -1259,7 +1185,7 @@ blockquote {
 		position: relative;
 		padding-inline-start: 2.25rem;
 
-		color: var(--text-light);
+		color: var(--color-text-muted);
 		font-size: 1em;
 		line-height: var(--font-height--spacious);
 
@@ -1275,7 +1201,7 @@ blockquote {
 			margin: 0;
 
 			background: none;
-			color: var(--ui);
+			color: var(--color-accent);
 			font-size: 2.75rem;
 			line-height: 1;
 		}
@@ -1284,7 +1210,7 @@ blockquote {
 			display: block;
 			margin-block-start: 0.75em;
 
-			color: var(--text-light);
+			color: var(--color-text-muted);
 			font-size: max(var(--base-font-size), 0.9em);
 			font-style: normal;
 
@@ -1297,23 +1223,23 @@ blockquote {
 
 /* ---- Callout ---- */
 .callout {
-	--callout-color: var(--section-ui);
+	--color-callout: var(--color-accent);
 
-	border-inline-start: var(--thick-border-width) solid var(--callout-color);
-	background-color: color-mix(in sRGB, var(--callout-color) 10%, var(--bg));
+	border-inline-start: var(--thick-border-width) solid var(--color-callout);
+	background-color: color-mix(in sRGB, var(--color-callout) 10%, var(--color-page));
 	border-radius: var(--standard-border-radius);
 	padding: 1em 1.25em;
 
 	&:is(.success, [type="success"]) {
-		--callout-color: var(--ui-success);
+		--color-callout: var(--color-success);
 	}
 
 	&:is(.warn, [type="warn"]) {
-		--callout-color: var(--ui-warn);
+		--color-callout: var(--color-warning);
 	}
 
 	&:is(.error, [type="error"]) {
-		--callout-color: var(--ui-error);
+		--color-callout: var(--color-error);
 	}
 
 	> :first-child {
@@ -1329,31 +1255,29 @@ blockquote {
 	}
 }
 
-/* tokens:section-presets */
-
 /* ---- Today's class ---- */
 tr[data-today] {
-	background-color: color-mix(in srgb, var(--section-ui) 15%, transparent);
+	background-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
 }
 
 tr[data-today] > :is(th, td) {
-	background-color: color-mix(in srgb, var(--section-ui) 15%, transparent);
+	background-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
 }
 
 tr[data-today] > :first-child {
-	box-shadow: inset var(--thick-border-width) 0 0 var(--section-ui);
+	box-shadow: inset var(--thick-border-width) 0 0 var(--color-accent);
 }
 
 .today-flag {
 	display: block;
-	color: var(--section-text);
+	color: var(--color-accent-text);
 }
 
 /* ---- Disclosure list ---- */
 .disclosures {
 	--disclosure-gutter: 1.6em;
 
-	border-block-start: var(--thin-border-width) solid var(--ui-light);
+	border-block-start: var(--thin-border-width) solid var(--color-border);
 
 	/* A reading measure inside the wide page column. */
 	p {
@@ -1367,7 +1291,7 @@ tr[data-today] > :first-child {
 
 		background: none;
 		border: none;
-		border-block-end: var(--thin-border-width) solid var(--ui-light);
+		border-block-end: var(--thin-border-width) solid var(--color-border);
 		border-radius: 0;
 
 		> :not(summary) {
@@ -1389,7 +1313,7 @@ tr[data-today] > :first-child {
 
 		background: none;
 		border: none;
-		color: var(--text);
+		color: var(--color-text);
 		font-weight: var(--font-weight--semi-bold);
 		list-style: none;
 		text-wrap: pretty;
@@ -1404,12 +1328,12 @@ tr[data-today] > :first-child {
 			flex: none;
 			inline-size: var(--disclosure-gutter);
 
-			color: var(--section-text);
+			color: var(--color-accent-text);
 			font-weight: var(--font-weight);
 		}
 
 		&:hover {
-			color: var(--link--hover);
+			color: var(--color-link-hover);
 			cursor: pointer;
 		}
 	}
@@ -1446,8 +1370,8 @@ tr[data-today] > :first-child {
 
 :where(kbd) {
 	font-family: var(--mono-font);
-	color: var(--preformatted);
-	border: var(--border-width) solid var(--preformatted);
+	color: var(--color-code);
+	border: var(--border-width) solid var(--color-code);
 	border-block-end-width: 3px;
 	border-radius: var(--standard-border-radius);
 	padding-block: 0.1rem;
@@ -1457,7 +1381,7 @@ tr[data-today] > :first-child {
 :where(hr) {
 	border: none;
 	block-size: var(--border-width);
-	background: var(--ui-light);
+	background: var(--color-border);
 	margin-block: 1rem;
 	margin-inline: auto;
 }
@@ -1466,11 +1390,11 @@ tr[data-today] > :first-child {
 	padding-block: 2px;
 	padding-inline: 5px;
 	border-radius: var(--standard-border-radius);
-	background-color: var(--marked);
+	background-color: var(--color-highlight);
 	color: black;
 
 	a {
-		color: var(--link);
+		color: var(--color-link);
 	}
 }
 
@@ -1497,7 +1421,7 @@ tr[data-today] > :first-child {
 	inset-inline-start: 0;
 	text-align: center;
 	font-size: 0.9rem;
-	color: var(--text-light);
+	color: var(--color-text-muted);
 	margin-block: 1rem;
 }
 
@@ -1533,9 +1457,9 @@ tr[data-today] > :first-child {
 }
 
 :where(textarea, select, input) {
-	color: var(--text);
-	background-color: var(--bg);
-	border: var(--border-width) solid var(--ui-light);
+	color: var(--color-text);
+	background-color: var(--color-page);
+	border: var(--border-width) solid var(--color-border);
 
 	@media only screen and (width <= 720px) {
 		inline-size: 100%;
@@ -1551,8 +1475,8 @@ tr[data-today] > :first-child {
 }
 
 :where(select:not([multiple])) {
-	background-image: linear-gradient(45deg, transparent 49%, var(--text) 51%),
-		linear-gradient(135deg, var(--text) 51%, transparent 49%);
+	background-image: linear-gradient(45deg, transparent 49%, var(--color-text) 51%),
+		linear-gradient(135deg, var(--color-text) 51%, transparent 49%);
 	background-position: calc(100% - 15px), calc(100% - 10px);
 	background-size: 5px 5px, 5px 5px;
 	background-repeat: no-repeat;
@@ -1573,7 +1497,7 @@ tr[data-today] > :first-child {
 	}
 
 	&:checked {
-		background-color: var(--ui);
+		background-color: var(--color-accent);
 	}
 }
 
@@ -1587,7 +1511,7 @@ tr[data-today] > :first-child {
 		border-radius: var(--circle-border-radius);
 		position: absolute;
 		inset-block-start: 0.125em;
-		background-color: var(--bg);
+		background-color: var(--color-page);
 		inset-inline-start: 0.125em;
 		font-size: 1.8em;
 	}
@@ -1602,8 +1526,8 @@ tr[data-today] > :first-child {
 	inset-block-start: 0.04em;
 	inset-inline-start: 0.18em;
 	background-color: transparent;
-	border-inline-end: solid var(--bg) 0.08em;
-	border-block-end: solid var(--bg) 0.08em;
+	border-inline-end: solid var(--color-page) 0.08em;
+	border-block-end: solid var(--color-page) 0.08em;
 	font-size: 1.8em;
 	transform: rotate(45deg);
 }
@@ -1622,29 +1546,28 @@ tr[data-today] > :first-child {
 	inline-size: 100%;
 
 	&:indeterminate {
-		background-color: var(--bg-accent);
+		background-color: var(--color-surface-accent);
 
 		&::-moz-progress-bar {
-			background-color: var(--bg-accent);
+			background-color: var(--color-surface-accent);
 		}
 	}
 
 	&::-webkit-progress-bar {
 		border-radius: var(--standard-border-radius);
-		background-color: var(--bg-accent);
+		background-color: var(--color-surface-accent);
 	}
 
 	&::-webkit-progress-value {
 		border-radius: var(--standard-border-radius);
-		background-color: var(--ui);
+		background-color: var(--color-accent);
 	}
 
 	&::-moz-progress-bar {
 		border-radius: var(--standard-border-radius);
-		background-color: var(--ui);
+		background-color: var(--color-accent);
 		transition-property: inline-size;
 		transition-duration: 0.3s;
 	}
 }
 
-/* tokens:surface */

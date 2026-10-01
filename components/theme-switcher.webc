@@ -34,9 +34,9 @@
         padding: 0;
         margin: 0;
 
-        color: var(--text-light);
+        color: var(--color-text-muted);
         background: transparent;
-        border: var(--thin-border-width) solid var(--ui-light);
+        border: var(--thin-border-width) solid var(--color-border);
         border-radius: var(--circle-border-radius);
         cursor: pointer;
 
@@ -46,13 +46,13 @@
         transition: color 0.2s ease-out, border-color 0.2s ease-out, background 0.2s ease-out;
 
         &:is(:hover, :focus-visible) {
-            color: var(--text);
-            border-color: var(--ui);
-            background: var(--ui--hover);
+            color: var(--color-text);
+            border-color: var(--color-accent);
+            background: var(--color-accent-hover);
         }
 
         &:focus-visible {
-            outline: var(--outline-width) solid var(--ui);
+            outline: var(--outline-width) solid var(--color-accent);
             outline-offset: var(--outline-offset);
         }
     }
@@ -81,10 +81,10 @@
         min-inline-size: 11em;
         margin: 0;
         padding: 0.25em;
-        border: var(--thin-border-width) solid var(--ui-light);
+        border: var(--thin-border-width) solid var(--color-border);
         border-radius: var(--standard-border-radius);
-        background: var(--bg-overlay);
-        color: var(--text);
+        background: var(--color-surface-overlay);
+        color: var(--color-text);
         box-shadow: var(--box-shadow);
 
         /* Keep every nested block below the plain declarations: engines
@@ -140,24 +140,24 @@
 
         font: inherit;
         text-align: start;
-        color: var(--text);
+        color: var(--color-text);
         background: transparent;
         border: none;
         border-radius: var(--standard-border-radius);
         cursor: pointer;
 
         &:is(:hover, :focus-visible) {
-            background: var(--ui--hover);
+            background: var(--color-accent-hover);
         }
 
         &:focus-visible {
-            outline: var(--outline-width) solid var(--ui);
+            outline: var(--outline-width) solid var(--color-accent);
             outline-offset: calc(-1 * var(--outline-width));
         }
 
         &[aria-pressed="true"] {
             font-weight: var(--font-weight--semi-bold);
-            color: var(--text-accent);
+            color: var(--color-accent-text);
         }
     }
 </style>

@@ -20,7 +20,7 @@
         > li {
             font-size: 1em;
             position: relative;
-            background-color: var(--bg-light);
+            background-color: var(--color-surface);
             border: var(--thick-border-width) solid transparent;
             border-radius: var(--standard-border-radius);
             padding-block: calc(var(--content-space) * 1.5);
@@ -45,7 +45,7 @@
                 inset: calc(-1 * var(--thick-border-width));
                 border-radius: inherit;
                 padding: var(--thick-border-width);
-                background: linear-gradient(to bottom right, var(--gradient-stack));
+                background: linear-gradient(to bottom right, var(--gradient-stops));
                 background-size: 200% 200%;
                 -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
                 -webkit-mask-composite: xor;
@@ -56,7 +56,7 @@
             &:has(a) {
                 @media (prefers-reduced-motion: reduce) {
                     &:is(:hover, :focus, :focus-within) {
-                        background-color: light-dark(color-mix(in sRGB, var(--static-paper) 90%, transparent), hsl(228deg 16% 22%));
+                        background-color: light-dark(color-mix(in sRGB, var(--color-page) 90%, transparent), hsl(228deg 16% 22%));
                     }
 
                     &:is(:hover,:focus,:focus-within)::before {
@@ -74,7 +74,7 @@
 
             @media print {
                 background-color: transparent;
-                border-color: var(--ui-light);
+                border-color: var(--color-border);
 
                 &::before {
                     display: none;

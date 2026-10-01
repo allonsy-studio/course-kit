@@ -19,6 +19,7 @@
     "./markdown": "./lib/markdown.js",
     "./package.json": "./package.json",
     "./postcss": "./lib/postcss.js",
+    "./schemas/*": "./schemas/*",
     "./theme": "./lib/theme.js",
     "./worksheets": "./lib/worksheets.js"
   },
@@ -28,10 +29,12 @@
     "layouts",
     "components",
     "assets",
-    "glue"
+    "glue",
+    "schemas"
   ],
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "schema": "node scripts/theme-schema.js && node scripts/theme-docs.js"
   },
   "dependencies": {
     "@11ty/eleventy-navigation": "^1.0.5",
