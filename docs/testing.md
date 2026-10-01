@@ -5,7 +5,7 @@ Two layers.
 ## Unit tests
 
 ```sh
-npm test
+yarn test
 ```
 
 Covers the helpers, filters, markdown, worksheet preparation and PostCSS. The plugin as a whole is verified by the golden builds below; there is no fixture site.
@@ -20,7 +20,7 @@ A change is sound when a real course builds byte-identically before and after.
    build is deterministic.
 2. Delete `resources/syllabus.pdf` from each snapshot; its footer carries a
    timestamp.
-3. Pack this package (`npm pack`), extract it into the course's
+3. Pack this package (`yarn pack`), extract it into the course's
    `node_modules/@allons-y/course-kit`, rebuild, and `diff -rq` against the
    snapshots.
 

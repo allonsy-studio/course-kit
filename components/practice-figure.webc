@@ -13,18 +13,18 @@
 
 		.region {
 			fill: none;
-			stroke: var(--section-ui);
+			stroke: var(--color-accent);
 			stroke-width: 2.5;
 		}
 
 		.dashed {
-			stroke: var(--text-light);
+			stroke: var(--color-text-muted);
 			stroke-dasharray: 6 5;
 			stroke-width: 2;
 		}
 
 		.label {
-			fill: var(--text-light);
+			fill: var(--color-text-muted);
 			font-size: 15px;
 		}
 
@@ -33,7 +33,7 @@
 		}
 
 		.pin {
-			fill: var(--text-accent);
+			fill: var(--color-accent-text);
 			font-size: 19px;
 			font-weight: var(--font-weight--bold);
 		}

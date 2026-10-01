@@ -32,11 +32,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
 
   @layer base {
   :root {
-  /* tokens:deck-palette */
-  --warn: light-dark(#8a3500, #ffb37a);
-  --warn-bg: light-dark(#fff2e6, #3a2314);
-  --ok: light-dark(#1c6135, #7fd8a0);
-  --bad: light-dark(#a3261a, #ff9d8f);
+  /* tokens:deck */
 
   --font-sans: "Instrument Sans", "Instrument Sans Fallback", ui-sans-serif, system-ui, "Segoe UI", roboto, "Helvetica Neue", arial, sans-serif;
   --font-mono: "PT Mono", ui-monospace, "SF Mono", "Cascadia Mono", menlo, consolas, monospace;
@@ -47,18 +43,13 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   color-scheme: light dark;
   }
 
-  /* tokens:accent-presets */
-
   /* Defined on body, not :root: see "CSS" under "Gotchas" in AGENTS.md.
      Light mode takes the text-tone family — the bright values are
      pastels tuned for dark grounds. */
   body {
-  --accent: light-dark(var(--accent-text), var(--accent-ui));
-  --accent-soft: color-mix(in oklab, var(--accent) 14%, light-dark(white, black));
-  --accent-line: color-mix(in oklab, var(--accent) 40%, light-dark(white, black));
 
-  background: var(--bg);
-  color: var(--ink);
+  background: var(--color-page);
+  color: var(--color-text);
   font-family: var(--font-sans);
   font-size: clamp(1rem, 2.3vi, 2.15rem);
   line-height: 1.4;
@@ -73,7 +64,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   }
 
   :where(a, button, [tabindex]):focus-visible {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--color-accent-strong);
   outline-offset: 3px;
   border-radius: 3px;
   }
@@ -138,7 +129,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 650;
-  color: var(--accent-text);
+  color: var(--color-accent-text);
   }
 
   /* deck.css stands alone — no base.css, so the site's `.separators` (which
@@ -186,43 +177,43 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
     block-size: auto;
 
     text {
-      fill: var(--ink);
+      fill: var(--color-text);
       font-family: var(--font-sans);
     }
 
     .mono { font-family: var(--font-mono); }
 
-    .accent { fill: var(--accent-text); }
+    .accent { fill: var(--color-accent-text); }
 
-    .muted { fill: var(--ink-muted); }
+    .muted { fill: var(--color-text-muted); }
 
-    .bad { fill: var(--bad); }
+    .bad { fill: var(--color-error); }
 
-    .ok { fill: var(--ok); }
+    .ok { fill: var(--color-success); }
 
     .tint {
-      fill: var(--accent-soft);
+      fill: var(--color-surface-accent);
       stroke: none;
     }
 
     .stroke {
       fill: none;
-      stroke: var(--ink);
+      stroke: var(--color-text);
     }
 
     .stroke-accent {
       fill: none;
-      stroke: var(--accent-text);
+      stroke: var(--color-accent-text);
     }
 
     .stroke-muted {
       fill: none;
-      stroke: var(--ink-muted);
+      stroke: var(--color-text-muted);
     }
 
     .stroke-bad {
       fill: none;
-      stroke: var(--bad);
+      stroke: var(--color-error);
     }
   }
 
@@ -232,7 +223,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
     .rule {
       inline-size: min(9rem, 30cqi);
       block-size: 6px;
-      background: var(--accent);
+      background: var(--color-accent-strong);
       border-radius: 3px;
     }
   }
@@ -240,7 +231,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   /* A section divider and a checkpoint (stop, everyone runs it) get the same
      tinted full-bleed treatment — one opens a stretch, the other closes it. */
   &:is([data-kind="section"], [data-kind="checkpoint"]) {
-    background: var(--accent-soft);
+    background: var(--color-surface-accent);
 
     h2 {
       font-size: min(5.6cqi, 4.4rem);
@@ -250,7 +241,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
 
   .lede {
     font-size: 1.08em;
-    color: var(--ink-muted);
+    color: var(--color-text-muted);
     max-inline-size: 44ch;
   }
 
@@ -279,7 +270,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
       inline-size: 0.42em;
       block-size: 0.42em;
       border-radius: 50%;
-      background: var(--accent-text);
+      background: var(--color-accent-text);
     }
   }
   }
@@ -313,8 +304,8 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
       font-variant-numeric: tabular-nums;
       font-weight: 700;
       font-size: 0.72em;
-      color: var(--bg);
-      background: var(--accent-text);
+      color: var(--color-page);
+      background: var(--color-accent-text);
       inline-size: 1.9em;
       block-size: 1.9em;
       display: grid;
@@ -346,8 +337,8 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   }
 
   .card {
-  background: var(--bg-raised);
-  border: 1px solid var(--rule);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 14px;
   padding: min(1.8cqi, 1.5rem);
   display: grid;
@@ -357,19 +348,19 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
 
   .cols-3 & { font-size: 0.78em; }
 
-  h3 { color: var(--accent-text); }
+  h3 { color: var(--color-accent-text); }
 
   /* A pair of cards contrasting what works with what doesn't. */
   &.bad {
-    border-color: var(--bad);
+    border-color: var(--color-error);
 
-    h3 { color: var(--bad); }
+    h3 { color: var(--color-error); }
   }
 
   &.good {
-    border-color: color-mix(in oklab, var(--ok) 55%, var(--rule));
+    border-color: color-mix(in oklab, var(--color-success) 55%, var(--color-border));
 
-    h3 { color: var(--ok); }
+    h3 { color: var(--color-success); }
   }
 
   /* Code in a card is already boxed by the card. */
@@ -384,16 +375,16 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   }
 
   .callout {
-  background: var(--accent-soft);
-  border-inline-start: 5px solid var(--accent);
+  background: var(--color-surface-accent);
+  border-inline-start: 5px solid var(--color-accent-strong);
   border-radius: 0 12px 12px 0;
   padding: min(1.8cqi, 1.4rem) min(2.2cqi, 1.8rem);
   font-size: 1.02em;
 
   &.warn {
-    background: var(--warn-bg);
-    border-inline-start-color: var(--warn);
-    color: var(--warn);
+    background: var(--color-surface-warning);
+    border-inline-start-color: var(--color-warning);
+    color: var(--color-warning);
 
     /* Inside the warning tone everything takes the warning color, including
        the pieces that would otherwise be accent-colored. */
@@ -404,8 +395,8 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   /* `::: answer` — hidden but space-reserved, so revealing never reflows
      the slide. Revealed by deck.js; print shows every answer. */
   .answer {
-  background: var(--accent-soft);
-  border-inline-start: 5px solid var(--accent);
+  background: var(--color-surface-accent);
+  border-inline-start: 5px solid var(--color-accent-strong);
   border-radius: 0 12px 12px 0;
   padding: min(1.4cqi, 1.1rem) min(2cqi, 1.5rem);
   visibility: hidden;
@@ -425,7 +416,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
     font-weight: 720;
     line-height: 0.95;
     letter-spacing: -0.04em;
-    color: var(--accent-text);
+    color: var(--color-accent-text);
   }
 
   :where(table) {
@@ -435,7 +426,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
 
   :where(caption) {
     text-align: start;
-    color: var(--ink-muted);
+    color: var(--color-text-muted);
     font-size: 0.8em;
     padding-block-end: 0.5em;
   }
@@ -443,7 +434,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   :where(th, td) {
     text-align: start;
     padding: 0.5em 0.7em;
-    border-block-end: 1px solid var(--rule);
+    border-block-end: 1px solid var(--color-border);
     vertical-align: baseline;
 
     &.num {
@@ -457,14 +448,14 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
     font-size: 0.72em;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--ink-muted);
+    color: var(--color-text-muted);
     font-weight: 650;
   }
 
   :where(tbody tr:last-child) :is(td, th) { border-block-end: none; }
 
   tr.total :is(td, th) {
-    border-block-start: 2px solid var(--accent-line);
+    border-block-start: 2px solid var(--color-border-accent);
     font-weight: 680;
   }
   }
@@ -472,8 +463,8 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   /* Prism-highlighted fenced code, three tones only (muted/accent/green) —
      all a projected slide can carry from the back of the room. */
   :where(pre) {
-  background: var(--bg-raised);
-  border: 1px solid var(--rule);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: min(1.8cqi, 1.5rem);
   overflow-x: auto;
@@ -482,18 +473,18 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   tab-size: 4;
 
   :is(.c, .token.comment, .token.prolog, .token.doctype, .token.cdata) {
-    color: var(--ink-muted);
+    color: var(--color-text-muted);
     font-style: italic;
   }
 
   :is(.k, .token.keyword, .token.tag, .token.selector, .token.builtin, .token.important, .token.atrule) {
-    color: var(--accent-text);
+    color: var(--color-accent-text);
     font-weight: 650;
   }
 
-  :is(.s, .token.string, .token.char, .token.attr-value, .token.regex, .token.number, .token.boolean) { color: var(--ok); }
+  :is(.s, .token.string, .token.char, .token.attr-value, .token.regex, .token.number, .token.boolean) { color: var(--color-success); }
 
-  :is(.token.punctuation, .token.operator) { color: var(--ink-muted); }
+  :is(.token.punctuation, .token.operator) { color: var(--color-text-muted); }
 
   .token.attr-name { font-style: italic; }
   }
@@ -524,43 +515,43 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   }
 
   .slide svg text {
-    fill: var(--ink);
+    fill: var(--color-text);
     font-family: var(--font-sans);
   }
 
   .slide svg .mono { font-family: var(--font-mono); }
 
-  .slide svg .accent { fill: var(--accent-text); }
+  .slide svg .accent { fill: var(--color-accent-text); }
 
-  .slide svg .muted { fill: var(--ink-muted); }
+  .slide svg .muted { fill: var(--color-text-muted); }
 
-  .slide svg .bad { fill: var(--bad); }
+  .slide svg .bad { fill: var(--color-error); }
 
-  .slide svg .ok { fill: var(--ok); }
+  .slide svg .ok { fill: var(--color-success); }
 
   .slide svg .tint {
-    fill: var(--accent-soft);
+    fill: var(--color-surface-accent);
     stroke: none;
   }
 
   .slide svg .stroke {
     fill: none;
-    stroke: var(--ink);
+    stroke: var(--color-text);
   }
 
   .slide svg .stroke-accent {
     fill: none;
-    stroke: var(--accent-text);
+    stroke: var(--color-accent-text);
   }
 
   .slide svg .stroke-muted {
     fill: none;
-    stroke: var(--ink-muted);
+    stroke: var(--color-text-muted);
   }
 
   .slide svg .stroke-bad {
     fill: none;
-    stroke: var(--bad);
+    stroke: var(--color-error);
   }
 
   .kbdrow {
@@ -571,8 +562,8 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   }
 
   :where(kbd) {
-  background: var(--bg-raised);
-  border: 1px solid var(--rule);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-block-end-width: 2px;
   border-radius: 6px;
   padding: 0.15em 0.45em;
@@ -586,7 +577,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
     inset-block-start: 0;
     inset-inline: 0;
     block-size: 5px;
-    background: var(--rule);
+    background: var(--color-border);
     z-index: 10;
 
     &::after {
@@ -594,7 +585,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
       display: block;
       block-size: 100%;
       inline-size: calc(var(--progress) * 100%);
-      background: var(--accent);
+      background: var(--color-accent-strong);
       transition: inline-size 180ms ease-out;
 
       @media (prefers-reduced-motion: reduce) { transition: none; }
@@ -610,13 +601,13 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
     gap: 0.4rem;
     align-items: center;
     font-size: clamp(0.7rem, 1.1cqi, 0.95rem);
-    color: var(--ink-muted);
+    color: var(--color-text-muted);
 
     button {
       font: inherit;
       color: inherit;
-      background: var(--bg-raised);
-      border: 1px solid var(--rule);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
       border-radius: 8px;
       min-block-size: 28px;
       min-inline-size: 28px;
@@ -624,8 +615,8 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
       cursor: pointer;
 
       &:hover:not(:disabled) {
-        border-color: var(--accent-text);
-        color: var(--accent-text);
+        border-color: var(--color-accent-text);
+        color: var(--color-accent-text);
       }
 
       @media (pointer: coarse) { min-block-size: 44px; min-inline-size: 44px; }
@@ -650,16 +641,16 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
       place-content: center;
       justify-items: center;
       gap: 1rem;
-      background: var(--bg);
+      background: var(--color-page);
       padding: 2rem;
       text-align: center;
       font-size: 1rem;
-      color: var(--ink-muted);
+      color: var(--color-text-muted);
 
       svg {
-        .stroke { stroke: var(--ink); }
+        .stroke { stroke: var(--color-text); }
 
-        .stroke-accent { stroke: var(--accent-text); }
+        .stroke-accent { stroke: var(--color-accent-text); }
 
         :is(.stroke, .stroke-accent) { fill: none; }
       }
@@ -674,7 +665,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
       inset-block-start: 0.5rem;
       inset-inline-start: 0.5rem;
       z-index: 20;
-      background: var(--bg-raised);
+      background: var(--color-surface);
       padding: 0.5em 1em;
       border-radius: 8px;
     }

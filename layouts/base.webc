@@ -40,7 +40,7 @@
     <style webc:keep @raw="getBundle('css')"></style>
 </head>
 
-<body :data-accent="$data.accent" :style="$data.accentStyle">
+<body>
     <a href="#main-content" id="to-content" class="sr-only">Skip to content</a>
 
     <masthead></masthead>

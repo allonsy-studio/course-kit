@@ -46,11 +46,11 @@
         &[aria-current="page"] {
             text-decoration: underline;
             text-underline-offset: 0.3ex;
-            text-decoration-color: var(--ui);
+            text-decoration-color: var(--color-accent);
         }
 
         &:is(:hover, :focus-visible) {
-            color: var(--link--hover);
+            color: var(--color-link-hover);
         }
 
         @media screen and (width <= 612px) {
@@ -112,7 +112,7 @@
     color: inherit;
 
     &[aria-current="page"] {
-        color: var(--section-text);
+        color: var(--color-accent-text);
     }
 }
 </style>

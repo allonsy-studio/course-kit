@@ -49,10 +49,10 @@
 <style webc:scoped>
 	:host {
 		--practice-gap: 1.5em;
-		--bg-drop-target: color-mix(in srgb, var(--section-ui) 12%, var(--bg));
+		--color-drop-target: color-mix(in srgb, var(--color-accent) 12%, var(--color-page));
 
 		.practice-section {
-			border-block-start: var(--thin-border-width) solid var(--ui-light);
+			border-block-start: var(--thin-border-width) solid var(--color-border);
 			padding-block-start: var(--content-space);
 
 			> header h2 {
@@ -61,12 +61,12 @@
 		}
 
 		.section-number {
-			color: var(--text-accent);
+			color: var(--color-accent-text);
 			font-variant-numeric: tabular-nums;
 		}
 
 		.blurb {
-			color: var(--text-light);
+			color: var(--color-text-muted);
 			margin-block-start: 0;
 		}
 
@@ -80,7 +80,7 @@
 		}
 
 		.letter {
-			background: var(--bg-light);
+			background: var(--color-surface);
 			border-radius: var(--standard-border-radius);
 			display: inline-block;
 			font-family: var(--mono-font);
@@ -92,7 +92,7 @@
 		}
 
 		.practice-foot {
-			border-block-start: var(--thin-border-width) solid var(--ui-light);
+			border-block-start: var(--thin-border-width) solid var(--color-border);
 			margin-block-start: var(--section-space);
 			padding-block-start: var(--content-space);
 		}

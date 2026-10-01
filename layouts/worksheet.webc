@@ -23,7 +23,7 @@
 	<style webc:keep @raw="getBundle('css')"></style>
 </head>
 
-<body :data-accent="$data.accent" :style="$data.accentStyle">
+<body>
 	<main id="main-content" tabindex="-1" @raw="content"></main>
 
 	<script>

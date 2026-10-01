@@ -59,16 +59,16 @@
        table. Only one thead/tbody/tfoot set survives per render. */
     :host {
         width: 100%;
-        border-block-end: var(--thin-border-width) solid var(--ui-light);
+        border-block-end: var(--thin-border-width) solid var(--color-border);
 
         :is(td, th) {
             border: none;
-            border-block-start: var(--thin-border-width) solid var(--ui-light);
+            border-block-start: var(--thin-border-width) solid var(--color-border);
             padding: 0.6em;
         }
 
         thead th {
-            background-color: var(--bg-accent);
+            background-color: var(--color-surface-accent);
             font-weight: var(--font-weight--medium);
             text-wrap: balance;
         }
@@ -87,7 +87,7 @@
 
                 .id {
                     display: block;
-                    color: var(--section-text);
+                    color: var(--color-accent-text);
                     font-size: max(var(--base-font-size), 0.85em);
                 }
             }
@@ -97,12 +97,12 @@
             border-block-start: none;
             padding-block-start: 0;
             font-weight: var(--font-weight--medium);
-            color: var(--text-light);
+            color: var(--color-text-muted);
             font-size: max(var(--base-font-size), 0.9em);
         }
 
         .due {
-            color: var(--text-light);
+            color: var(--color-text-muted);
             font-size: max(var(--base-font-size), 0.9em);
         }
 
@@ -119,7 +119,7 @@
             }
 
             :is(th, td) {
-                border-block-start: var(--border-width) solid var(--ui-light);
+                border-block-start: var(--border-width) solid var(--color-border);
             }
         }
     }

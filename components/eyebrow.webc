@@ -7,7 +7,7 @@
 	text-decoration: none;
 	letter-spacing: 0.08em;
 	font-weight: var(--font-weight--semi-bold);
-	color: var(--text-light);
+	color: var(--color-text-muted);
 	margin-block: 0;
 }
 </style>

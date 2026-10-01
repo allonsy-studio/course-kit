@@ -16,7 +16,7 @@
 <style webc:scoped>
 	:host {
 		.drag-hint {
-			color: var(--text-light);
+			color: var(--color-text-muted);
 			font-size: 0.9em;
 			margin-block: 0 0.6em;
 		}
@@ -35,7 +35,7 @@
 		}
 
 		button {
-			background: var(--bg-light);
+			background: var(--color-surface);
 			border: var(--thin-border-width) solid transparent;
 			border-radius: var(--pill-border-radius);
 			color: inherit;
@@ -44,16 +44,16 @@
 			padding: 0.25em 0.8em;
 
 			&:is(:hover, :focus-visible) {
-				border-color: var(--section-ui);
+				border-color: var(--color-accent);
 			}
 		}
 
 		[popover] {
-			background: var(--bg-overlay);
-			border: var(--thin-border-width) solid var(--ui-light);
+			background: var(--color-surface-overlay);
+			border: var(--thin-border-width) solid var(--color-border);
 			border-radius: var(--standard-border-radius);
 			box-shadow: var(--box-shadow);
-			color: var(--text);
+			color: var(--color-text);
 			inline-size: min(32rem, calc(100vw - 2 * var(--container-space)));
 			padding: 0.8em 1em;
 

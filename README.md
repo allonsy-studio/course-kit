@@ -37,10 +37,10 @@ output, includes, layouts or data directories, and this sets all of them.
 | `pdf` | read from `_data` | `{ course, term, dataDir }` for the syllabus PDF footer |
 | `components` | none | extra WebC component globs |
 | `prism` | Coldark light and dark | vendored Prism theme and plugin files to publish |
-| `theme` | `{ surface: "white" }` | `surface` is `white` or `paper`; `presets` adds accent presets to the built-in five (see Theme) |
+| `theme` | `{}` | color overrides in the shape of `_data/theme.json`, which wins over them |
 
 Subpath exports for the data files a course keeps: `/filters` (date and
-schedule filters), `/theme` (the preset table and token renderer), `/markdown` (the markdown instance, `deckNotes`,
+schedule filters), `/theme` (the token table and renderer), `/markdown` (the markdown instance, `deckNotes`,
 `SLIDE_LINE_BUDGET`), `/worksheets` (`parseWorksheet`, `prepareWorksheet`) and
 `/postcss` (the PostCSS configuration).
 
@@ -60,32 +60,11 @@ that wants to build on them. A worksheet's `.11tydata.js` is one line:
 
 ## Theme
 
-The brand palette, the accent presets and the page surface are generated, not
-written out in the stylesheets. `assets/styles/base.css` and `deck.css` carry
-`/* tokens:NAME */` markers, and the CSS template extension swaps in the
-generated declarations before PostCSS runs, so the standalone stylesheet and the
-copies a deck or worksheet inlines carry identical tokens. The source of truth
-is `lib/theme.js` (exported as `@allons-y/course-kit/theme`).
+Every color comes from a role token: `--color-page`, `--color-text`, `--color-accent`, and so on. There are no hue or brand names in the CSS. The full list, with each token's role and defaults, is in `docs/tokens.md`.
 
-- Renderers: `palette` and `section-presets` (base.css), `deck-palette` and
-  `accent-presets` (deck.css, in its own `--accent-*` names), and `surface`.
-  `deck.css` never loads `base.css`, so each carries its own copy.
-- **Accent** is chosen by the course's data (`accent` in `course.json`: a preset
-  name, or a color pair), not by an option.
-- **`surface: "paper"`** keeps the brand's paper and cream for page backgrounds
-  and washes table header cells in the accent. `white` (the default) is the
-  base stylesheet's own look and adds nothing.
-- **`presets`** adds accents. Each needs `ui` (the fill) and `text` (the
-  darkened tone for type, a `light-dark()` pair); `on` is optional.
+A course overrides any token in `_data/theme.json`. The key is the token name without `--color-`; a value is one color or a `{ "light", "dark" }` pair. Top-level keys apply to the site and the slide decks; `site` and `deck` hold overrides for one only. The schema in `schemas/theme.schema.json` gives editors completion and checks, and the build fails in plain language on a bad value.
 
-```js
-courseKit(config, {
-	theme: {
-		surface: "paper",
-		presets: { teal: { ui: "#1B998B", text: "light-dark(#0b5b52, #7fd8cc)" } },
-	},
-});
-```
+`base.css` and `deck.css` each carry one marker, `/* tokens:site */` and `/* tokens:deck */`; the CSS step writes the declarations there before PostCSS, so the standalone sheet and the copies a deck or worksheet inlines match. `theme.json` is read on every stylesheet build, so a saved change shows under `--watch`.
 
 ## What is in it
 
@@ -93,6 +72,7 @@ courseKit(config, {
 |---|---|
 | `layouts/` | The page layouts (`base`, `document`, `lesson`, `lesson-detail`, `deck`, `notes`, `worksheet`, `demo`). Not overridable per file; a difference between courses is a data guard in the layout. |
 | `components/` | WebC components, including the home-page set (`course-summary`, `instructor`, `syllabus`, `masthead`, `nav-links`). |
+| `schemas/` | `theme.schema.json` for `_data/theme.json`. |
 | `assets/` | `styles/`, `scripts/` and `fonts/`, published at `/styles`, `/js` and `/fonts`. `base.css` styles the "today" marks `scripts/today.js` sets on table rows. |
 | `glue/` | Pagination and permalink pages with no course prose (`lesson-day`). |
 | `lib/` | The build configuration (`plugin.js`), filters, the markdown dialect, the worksheet parser, bundling, the PDF and slide-fit hooks, and the helpers below. |

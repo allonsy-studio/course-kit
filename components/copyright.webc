@@ -3,6 +3,6 @@
 :host {
     display: inline-block;
     font-size: max(var(--base-font-size), 0.85em);
-    color: var(--text-light);
+    color: var(--color-text-muted);
 }
 </style>
