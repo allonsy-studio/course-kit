@@ -66,6 +66,8 @@ A course overrides any token in `_data/theme.json`. The key is the token name wi
 
 `base.css` and `deck.css` each carry one marker, `/* tokens:site */` and `/* tokens:deck */`; the CSS step writes the declarations there before PostCSS, so the standalone sheet and the copies a deck or worksheet inlines match. `theme.json` is read on every stylesheet build, so a saved change shows under `--watch`.
 
+In development, a theme panel docked on the right edge of every page edits these colors with a live preview and saves `theme.json` through the dev server. Production builds leave it out. See `docs/theme-panel.md`.
+
 ## What is in it
 
 | Path | What |
