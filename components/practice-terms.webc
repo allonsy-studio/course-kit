@@ -73,7 +73,7 @@
 		/* A popover opened by a popovertarget button takes that button as its
 		   implicit anchor, so no anchor-name is needed — position-area alone
 		   pins the definition under its own term. Engines without anchor
-		   positioning skip this block and keep the UA's centred popover, which
+		   positioning skip this block and keep the UA's centered popover, which
 		   still works. Week 2's lesson, applied to the page that teaches it. */
 		@supports (position-area: block-end) {
 			[popover]:popover-open {

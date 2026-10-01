@@ -16,9 +16,10 @@
     ".": "./index.js",
     "./filters": "./lib/filters.js",
     "./markdown": "./lib/markdown.js",
-    "./worksheets": "./lib/worksheets.js",
+    "./package.json": "./package.json",
     "./postcss": "./lib/postcss.js",
-    "./package.json": "./package.json"
+    "./theme": "./lib/theme.js",
+    "./worksheets": "./lib/worksheets.js"
   },
   "files": [
     "index.js",

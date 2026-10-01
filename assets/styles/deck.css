@@ -32,17 +32,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
 
   @layer base {
   :root {
-  /* --accent-ui fills, --accent-text type (darkened — see "Accent" in
-     AGENTS.md). These literals are also hardcoded in base.css; see
-     "Self-contained decks" in AGENTS.md for why. */
-  --accent-ui: #C92C6B;
-  --accent-text: light-dark(hsl(336deg 68% 40%), hsl(336deg 72% 72%));
-
-  --bg: light-dark(#FBF9F3, #14131a);
-  --bg-raised: light-dark(#fff, #1e1d26);
-  --ink: light-dark(#33394E, #f2f0f6);
-  --ink-muted: light-dark(#414C75, #a8a4b4);
-  --rule: light-dark(#EFEBDF, #33313e);
+  /* tokens:deck-palette */
   --warn: light-dark(#8a3500, #ffb37a);
   --warn-bg: light-dark(#fff2e6, #3a2314);
   --ok: light-dark(#1c6135, #7fd8a0);
@@ -57,31 +47,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   color-scheme: light dark;
   }
 
-  :root,
-  [data-accent="magenta"] {
-  --accent-ui: #C92C6B;
-  --accent-text: light-dark(hsl(336deg 68% 40%), hsl(336deg 72% 72%));
-  }
-
-  [data-accent="cyan"] {
-  --accent-ui: #7BD1E6;
-  --accent-text: light-dark(hsl(193deg 58% 31%), hsl(192deg 68% 72%));
-  }
-
-  [data-accent="orange"] {
-  --accent-ui: #FF9A56;
-  --accent-text: light-dark(hsl(22deg 82% 37%), hsl(28deg 100% 72%));
-  }
-
-  [data-accent="yellow"] {
-  --accent-ui: light-dark(#FFD36C, #FFC233);
-  --accent-text: light-dark(hsl(38deg 88% 32%), hsl(45deg 100% 64%));
-  }
-
-  [data-accent="purple"] {
-  --accent-ui: light-dark(#6B3FA0, #B9A3E3);
-  --accent-text: light-dark(hsl(267deg 43% 40%), hsl(267deg 60% 78%));
-  }
+  /* tokens:accent-presets */
 
   /* Defined on body, not :root: see "CSS" under "Gotchas" in AGENTS.md.
      Light mode takes the text-tone family — the bright values are
@@ -147,7 +113,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
     place-content: center;
   }
 
-  /* A 16:9 box centred at the largest size that fits: a screen of another
+  /* A 16:9 box centered at the largest size that fits: a screen of another
      shape gets empty bars, never a taller slide. Everything is sized from the
      box with no minimums, so a small screen shrinks the slide. No block
      padding and `safe center` push overflow off the bottom only;
@@ -429,8 +395,8 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
     border-inline-start-color: var(--warn);
     color: var(--warn);
 
-    /* Inside the warning tone everything takes the warning colour, including
-       the pieces that would otherwise be accent-coloured. */
+    /* Inside the warning tone everything takes the warning color, including
+       the pieces that would otherwise be accent-colored. */
     :is(strong, .eyebrow, h1, h2, h3) { color: inherit; }
   }
   }

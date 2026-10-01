@@ -30,7 +30,7 @@ Notes from doing this:
   source-map id and never match.
 - A component's WebC scope class (`.wXXXXXXXX`) is a hash of its source, so any
   edit to a component changes it on every page that uses the component. Compare
-  with those hashes normalised.
+  with those hashes normalized.
 - An override marker must survive minification. A CSS or JS comment is
   stripped in production; use a real rule or statement.
 - Edits to files inside `node_modules` do not trigger a watch rebuild. Work
