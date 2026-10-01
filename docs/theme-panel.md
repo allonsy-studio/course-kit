@@ -1,10 +1,10 @@
 # Theme panel
 
-A color editor that appears on every page while the site runs in development (`npm start`). It lets an instructor pick colors, see them on the real pages, and save them to `_data/theme.json` without opening a code editor. Production builds leave it out entirely: no script, no element, no endpoint.
+A color editor that appears on every page while the site runs in development (`yarn start`). It lets an instructor pick colors, see them on the real pages, and save them to `_data/theme.json` without opening a code editor. Production builds leave it out entirely: no script, no element, no endpoint.
 
 ## Using it
 
-1. Run `npm start` and open the site.
+1. Run `yarn start` and open the site.
 2. Select the **Theme** tab on the right edge of the window.
 3. Change a color with the swatch or by typing a value. The page updates as you go.
 4. Select **Save** to write `_data/theme.json`. The site rebuilds and reloads with the new colors.
@@ -41,5 +41,5 @@ The same file you would write by hand (see the Theme section of the README and `
 
 ## Known limits
 
-- Deleting `theme.json` by hand while `npm start` is running does not rebuild the site; Eleventy only rebuilds on changes and additions. Restart, or save an empty theme (`{}`) instead.
+- Deleting `theme.json` by hand while `yarn start` is running does not rebuild the site; Eleventy only rebuilds on changes and additions. Restart, or save an empty theme (`{}`) instead.
 - In a browser without popover support, the panel is a plain fixed element that the tab shows and hides. It still works, but can sit under page content that sets its own stacking.
