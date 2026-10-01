@@ -28,6 +28,10 @@ output, includes, layouts or data directories, and this sets all of them.
 | Option | Default | |
 |---|---|---|
 | `inputDir` / `outputDir` | `content` / `public` | |
+| `dataDir` | `_data` | the course's authored data files |
+| `institution` | `{}` | `{ name, timezone }`. The name feeds the site metadata; the time zone is what "today" is judged in (default: the build machine's) |
+| `site` | derived | `{ description, keywords, language }` |
+| `lessons` | built-in | `{ segments, defaultDays }`: the lesson outline, and the meeting days used when the schedule names none |
 | `demos.runtime` | `none` | `codepen` ignores the demo fragments; `pyscript` keeps `py-editor` blocks intact through minification and copies the `.py` files |
 | `slides.decks` | `<inputDir>/slides` | where the fit check looks for decks |
 | `pdf` | read from `_data` | `{ course, term, dataDir }` for the syllabus PDF footer |
@@ -39,6 +43,20 @@ Subpath exports for the data files a course keeps: `/filters` (date and
 schedule filters), `/theme` (the preset table and token renderer), `/markdown` (the markdown instance, `deckNotes`,
 `SLIDE_LINE_BUDGET`), `/worksheets` (`parseWorksheet`, `prepareWorksheet`) and
 `/postcss` (the PostCSS configuration).
+
+## Data
+
+The package supplies these globals from `_data/course.json`, `dates.json` and
+`schedule.json`: `term`, `lessons`, `site`, `audience`, `pdf` and `fontFaces`. A
+`_data` file or folder of the same name replaces one. Eleventy ranks config
+global data above `_data` files, so the package skips its own when it finds
+yours. Replace `term` and `lessons` together, since `lessons` is built from the
+package's term.
+
+`@allons-y/course-kit/data` exports the factories (`resolveTerm`, `buildLessons`,
+`resolveSite`, `resolveAudience`, `resolvePdf`, `readCourseData`) for a course
+that wants to build on them. A worksheet's `.11tydata.js` is one line:
+`export default worksheetData(import.meta.url);`
 
 ## Theme
 
