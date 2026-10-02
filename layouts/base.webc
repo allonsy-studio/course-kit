@@ -71,6 +71,8 @@
         <script type="module" webc:keep @raw="getBundle('js')"></script>
     </footer>
     <script type="module" src="/js/email.js" webc:keep></script>
+	<theme-panel webc:if="$data.themePanel" context="site"></theme-panel>
+	<script type="module" src="/js/theme-panel.js" webc:keep webc:if="$data.themePanel"></script>
 </body>
 
 </html>
