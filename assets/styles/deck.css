@@ -35,6 +35,13 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   /* tokens:deck */
 
   --font-sans: "Instrument Sans", "Instrument Sans Fallback", ui-sans-serif, system-ui, "Segoe UI", roboto, "Helvetica Neue", arial, sans-serif;
+  --vocab-bg: light-dark(#c6dfe6, #0f2c36);
+  --api-bg: light-dark(#2d3550, #1b2033);
+  --api-ink: #f2f0f6;
+  --api-muted: #b7bcd0;
+  --api-accent: #cdbbf0;
+
+  --font-serif: "Iowan Old Style", "Palatino Linotype", palatino, georgia, "Times New Roman", serif;
   --font-mono: "PT Mono", ui-monospace, "SF Mono", "Cascadia Mono", menlo, consolas, monospace;
 
   --pad: min(4.5rem, 4cqi, calc(4cqb * 16 / 9));
@@ -237,6 +244,139 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
       font-size: min(5.6cqi, 4.4rem);
     }
   }
+
+  /* A vocabulary slide is a dictionary entry: the word,
+     the definition beneath, and an optional example. Its own teal-blue
+     ground (the only slide kind that is not the page color or the accent wash) tells
+     the room a new word is arriving. */
+  /* An API slide is the reference card for a name you write in code: the class
+     it belongs to in the eyebrow, the name in monospace, what kind of member it
+     is and what it returns, how it is written, and what it does. A dark slate
+     ground marks it as code; concepts are `vocab` on teal. */
+  &[data-kind="api"] {
+    background: var(--api-bg);
+    color: var(--api-ink);
+
+    .slide-body { align-content: safe center; }
+
+    .eyebrow { color: var(--api-accent); }
+
+    h1 {
+      font-family: var(--font-mono);
+      font-size: min(8cqi, 6.4rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--api-ink);
+    }
+
+    .meta {
+      font-family: var(--font-mono);
+      font-size: 0.72em;
+      letter-spacing: 0.02em;
+      color: var(--api-muted);
+    }
+
+    .sig {
+      inline-size: fit-content;
+      padding: 0.45em 0.9em;
+      background: rgb(255 255 255 / 8%);
+      border-inline-start: 4px solid var(--api-accent);
+      border-radius: 0 8px 8px 0;
+      font-family: var(--font-mono);
+      font-size: 1.05em;
+    }
+
+    .slide-body > p {
+      max-inline-size: 42ch;
+      font-size: 1.25em;
+      line-height: 1.38;
+    }
+
+    .example {
+      max-inline-size: 50ch;
+      color: var(--api-muted);
+      font-style: italic;
+
+      &::before {
+        content: "e.g. ";
+        font-style: normal;
+        font-variant: small-caps;
+        letter-spacing: 0.06em;
+      }
+
+      p { display: inline; }
+    }
+
+    code {
+      background: rgb(255 255 255 / 10%);
+      color: inherit;
+    }
+
+    .sig code { background: none; }
+
+    .ref {
+      font-family: var(--font-mono);
+      font-size: 0.72em;
+
+      p { margin: 0; }
+
+      & a {
+        color: var(--api-accent);
+        text-underline-offset: 0.2em;
+      }
+
+      & a::after { content: " ↗"; }
+    }
+  }
+
+  &[data-kind="vocab"] {
+    background: var(--vocab-bg);
+
+    .slide-body { align-content: safe center; }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: min(10cqi, 8rem);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      padding-block-end: 0.15em;
+      border-block-end: 3px solid var(--color-text);
+
+      code {
+        font-family: var(--font-mono);
+        font-size: 0.78em;
+        background: none;
+      }
+    }
+
+    .slide-body > p {
+      max-inline-size: 40ch;
+      padding-inline-start: 0.9em;
+      border-inline-start: 4px solid var(--color-accent-strong);
+      font-family: var(--font-serif);
+      font-size: 1.3em;
+      line-height: 1.35;
+    }
+
+    .example {
+      max-inline-size: 44ch;
+      padding-inline-start: calc(0.9em + 4px);
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: var(--color-text-muted);
+
+      &::before {
+        content: "e.g. ";
+        font-style: normal;
+        font-variant: small-caps;
+        letter-spacing: 0.06em;
+      }
+
+      p { display: inline; }
+    }
+  }
   }
 
   .lede {
@@ -409,6 +549,30 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   }
 
   @media (prefers-reduced-motion: reduce) { transition: none; }
+  }
+
+  /* An SVG figure reveals in place: a `<g class="answer">` fades in with the
+     same keys, and anything inside it marked `.pop` lands with a short scale
+     so the eye goes to it. */
+  svg .answer .pop {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  svg .answer.is-revealed .pop {
+    animation: pop-in 380ms ease-out;
+
+    @media (prefers-reduced-motion: reduce) { animation: none; }
+  }
+
+  @keyframes pop-in {
+    from {
+      transform: scale(1.14);
+    }
+
+    to {
+      transform: scale(1);
+    }
   }
 
   .big-stat {

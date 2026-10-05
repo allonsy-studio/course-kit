@@ -43,3 +43,11 @@ test("processCSS minifies in production and keeps only _-prefixed imports inline
 		else process.env.ELEVENTY_ENV = previous;
 	}
 });
+
+test("markdown accepts vocab and api slide kinds and rejects unknown ones", () => {
+	for (const kind of ["vocab", "api"]) {
+		const html = markdown.render(`>>> slide ${kind}\n# term\n\nA definition.\n\n>>>\n`);
+		assert.ok(html.includes(`data-kind="${kind}"`));
+	}
+	assert.throws(() => markdown.render(">>> slide bogus\n# x\n>>>\n"), /bogus/);
+});

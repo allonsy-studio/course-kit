@@ -77,6 +77,7 @@ In development, a theme panel docked on the right edge of every page edits these
 | `schemas/` | `theme.schema.json` for `_data/theme.json`. |
 | `assets/` | `styles/`, `scripts/` and `fonts/`, published at `/styles`, `/js` and `/fonts`. `base.css` styles the "today" marks `scripts/today.js` sets on table rows. |
 | `glue/` | Pagination and permalink pages with no course prose (`lesson-day`). |
+| `docs/` | Notes on the build: `internals.md`, `testing.md`, `slides.md` (slide kinds and copy rules), `tokens.md`, `theme-panel.md`. |
 | `lib/` | The build configuration (`plugin.js`), filters, the markdown dialect, the worksheet parser, bundling, the PDF and slide-fit hooks, and the helpers below. |
 
 ## Helpers
