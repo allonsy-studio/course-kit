@@ -41,7 +41,7 @@ layout: "base"
 			</tr>
 		</thead>
 		<tbody>
-			<tr webc:for="lesson of $data.lessons">
+			<tr webc:for="lesson of $data.lessons" :data-date="lesson.date">
 				<td>
 					<span @text="lesson.display"></span>
 					<span class="muted" webc:if="lesson.substitution"><br/>(runs a <span @text="lesson.substitution"></span> schedule)</span>
@@ -65,3 +65,5 @@ layout: "base"
 		</tbody>
 	</table>
 </section>
+
+<script type="module" src="/js/today.js" webc:keep></script>
