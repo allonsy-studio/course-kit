@@ -97,12 +97,13 @@ const observer = new IntersectionObserver(
 	(entries) => {
 		if (performance.now() < settleAt) return;
 		for (const entry of entries) {
-			if (entry.isIntersecting && entry.intersectionRatio > 0.55) {
+			const fills = entry.intersectionRect.height > (entry.rootBounds?.height ?? Infinity) * 0.55;
+			if (entry.isIntersecting && (entry.intersectionRatio > 0.55 || fills)) {
 				setIndex(slides.indexOf(entry.target), false);
 			}
 		}
 	},
-	{ root: deck, threshold: [0.56] },
+	{ root: deck, threshold: Array.from({ length: 21 }, (_, i) => i / 20) },
 );
 slides.forEach((slide) => observer.observe(slide));
 

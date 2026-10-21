@@ -102,3 +102,12 @@ Every child node of a node: elements, text, and the whitespace between tags.
 **SVG reveals.** A `<g class="answer">` inside a figure reveals on the
 next-slide key like a `::: answer` block, and anything inside it marked `.pop`
 lands with a short scale (`svg .answer .pop` in `deck.css`).
+
+**Reading size.** A slide is a 16:9 box whose type scales with it, with two
+guards for readability. No text renders under 12px: every size that shrinks is
+`max(0.75rem, …)`, and at projection sizes the floor never engages. Below an
+840px-wide slide (`width < 840px` or `height < 473px`), the `reflow` layer in
+`deck.css` drops the box for a scrolling page at reading size: three-column
+grids stack and the HUD becomes a bottom bar. That is how a deck reads in an
+LMS frame or on a phone. HUD buttons are at least 44px for every pointer, and
+an empty table header cell renders as a plain `<td>`.

@@ -3,7 +3,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
 (see "Slide decks" in AGENTS.md). */
 
 @import "font.css";
-  @layer reset, base, layout, slide, chrome, print;
+  @layer reset, base, layout, slide, chrome, reflow, print;
 
 /* Registered so the box height resolves once, on .slide-body, and reaches
    descendants as a length rather than as container units. */
@@ -80,7 +80,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
 
   :where(code, kbd, samp) {
     font-family: var(--font-mono);
-    font-size: 0.92em;
+    font-size: max(0.75rem, 0.92em);
   }
   }
 
@@ -96,6 +96,8 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   scrollbar-width: none;
 
   &::-webkit-scrollbar { display: none; }
+
+  &:focus-visible { outline-offset: -3px; }
 
   @media (prefers-reduced-motion: reduce) {
   scroll-behavior: auto;
@@ -125,14 +127,14 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
     align-content: safe center;
     gap: min(1.6rem, 1.6cqb, calc(1.6cqi * 9 / 16));
     padding: 0 calc(var(--pad) * 1.15) calc(var(--pad) * 0.4);
-    font-size: min(2.15rem, 2.3cqi, calc(2.3cqb * 16 / 9));
+    font-size: max(0.75rem, min(2.15rem, 2.3cqi, calc(2.3cqb * 16 / 9)));
     container-type: inline-size;
   }
   }
 
   @layer slide {
   .eyebrow {
-  font-size: 0.62em;
+  font-size: max(0.75rem, 0.62em);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 650;
@@ -172,7 +174,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   }
 
   :where(h3) {
-    font-size: min(1.8cqi, 1.45rem);
+    font-size: max(0.75rem, min(1.8cqi, 1.45rem));
     font-weight: 650;
     letter-spacing: -0.005em;
   }
@@ -272,7 +274,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
 
     .meta {
       font-family: var(--font-mono);
-      font-size: 0.72em;
+      font-size: max(0.75rem, 0.72em);
       letter-spacing: 0.02em;
       color: var(--api-muted);
     }
@@ -317,7 +319,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
 
     .ref {
       font-family: var(--font-mono);
-      font-size: 0.72em;
+      font-size: max(0.75rem, 0.72em);
 
       p { margin: 0; }
 
@@ -335,6 +337,9 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
 
     .slide-body { align-content: safe center; }
 
+    /* Mixed toward the ink: the plain accent misses 4.5:1 on this ground. */
+    .eyebrow { color: color-mix(in oklab, var(--color-accent-text) 65%, var(--color-text)); }
+
     h1 {
       font-family: var(--font-serif);
       font-size: min(10cqi, 8rem);
@@ -346,7 +351,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
 
       code {
         font-family: var(--font-mono);
-        font-size: 0.78em;
+        font-size: max(0.75rem, 0.78em);
         background: none;
       }
     }
@@ -443,7 +448,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
       inset-block-start: 0.12em;
       font-variant-numeric: tabular-nums;
       font-weight: 700;
-      font-size: 0.72em;
+      font-size: max(0.75rem, 0.72em);
       color: var(--color-page);
       background: var(--color-accent-text);
       inline-size: 1.9em;
@@ -484,9 +489,9 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   display: grid;
   gap: 0.4em;
   align-content: start;
-  font-size: 0.86em;
+  font-size: max(0.75rem, 0.86em);
 
-  .cols-3 & { font-size: 0.78em; }
+  .cols-3 & { font-size: max(0.75rem, 0.78em); }
 
   h3 { color: var(--color-accent-text); }
 
@@ -586,12 +591,12 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   :where(table) {
   border-collapse: collapse;
   inline-size: 100%;
-  font-size: 0.94em;
+  font-size: max(0.75rem, 0.94em);
 
   :where(caption) {
     text-align: start;
     color: var(--color-text-muted);
-    font-size: 0.8em;
+    font-size: max(0.75rem, 0.8em);
     padding-block-end: 0.5em;
   }
 
@@ -609,7 +614,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   }
 
   :where(thead th) {
-    font-size: 0.72em;
+    font-size: max(0.75rem, 0.72em);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--color-text-muted);
@@ -632,7 +637,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   border-radius: 12px;
   padding: min(1.8cqi, 1.5rem);
   overflow-x: auto;
-  font-size: min(1.55cqi, 1.15rem);
+  font-size: max(0.75rem, min(1.55cqi, 1.15rem));
   line-height: 1.55;
   tab-size: 4;
 
@@ -731,7 +736,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   border-block-end-width: 2px;
   border-radius: 6px;
   padding: 0.15em 0.45em;
-  font-size: 0.85em;
+  font-size: max(0.75rem, 0.85em);
   }
 }
 
@@ -762,9 +767,9 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
     inset-inline-end: 0.9rem;
     z-index: 10;
     display: flex;
-    gap: 0.4rem;
+    gap: 0.5rem;
     align-items: center;
-    font-size: clamp(0.7rem, 1.1cqi, 0.95rem);
+    font-size: clamp(0.875rem, 1.1cqi, 1rem);
     color: var(--color-text-muted);
 
     button {
@@ -773,9 +778,9 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
       background: var(--color-surface);
       border: 1px solid var(--color-border);
       border-radius: 8px;
-      min-block-size: 28px;
-      min-inline-size: 28px;
-      padding: 0.2em 0.6em;
+      min-block-size: 44px;
+      min-inline-size: 44px;
+      padding: 0.2em 0.75em;
       cursor: pointer;
 
       &:hover:not(:disabled) {
@@ -783,41 +788,14 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
         color: var(--color-accent-text);
       }
 
-      @media (pointer: coarse) { min-block-size: 44px; min-inline-size: 44px; }
     }
 
+    /* Its own ground, so the count reads on the dark api and teal vocab slides too. */
     [data-count] {
       font-variant-numeric: tabular-nums;
-      padding-inline: 0.4em;
-    }
-  }
-
-  /* Android's landscape lock (deck.js) un-matches this query on its own;
-     on iOS the hint is the whole strategy. */
-  .rotate-hint { display: none; }
-
-  @media (orientation: portrait) and (width < 700px) {
-    .rotate-hint {
-      position: fixed;
-      inset: 0;
-      z-index: 20;
-      display: grid;
-      place-content: center;
-      justify-items: center;
-      gap: 1rem;
-      background: var(--color-page);
-      padding: 2rem;
-      text-align: center;
-      font-size: 1rem;
-      color: var(--color-text-muted);
-
-      svg {
-        .stroke { stroke: var(--color-text); }
-
-        .stroke-accent { stroke: var(--color-accent-text); }
-
-        :is(.stroke, .stroke-accent) { fill: none; }
-      }
+      padding: 0.2em 0.6em;
+      background: var(--color-surface);
+      border-radius: 8px;
     }
   }
 
@@ -833,6 +811,93 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
       padding: 0.5em 1em;
       border-radius: 8px;
     }
+  }
+}
+
+@layer reflow {
+  /* A frame narrower than an 840px slide (Brightspace, a phone, a split
+     window) reads the deck as a page: no 16:9 box, no snapping, type at
+     reading size. Wider screens never match, so projection is unchanged. */
+  @media screen and ((width < 840px) or (height < 473px)) {
+    :root { --pad: 1rem; }
+
+    .deck {
+      container-type: normal;
+      scroll-snap-type: none;
+    }
+
+    .slide {
+      block-size: auto;
+      display: block;
+      scroll-snap-align: none;
+      padding-block: 2rem;
+      border-block-end: 1px solid var(--color-border);
+    }
+
+    .slide-body {
+      --slide-h: 100dvb;
+      inline-size: auto;
+      max-inline-size: 46rem;
+      margin-inline: auto;
+      aspect-ratio: auto;
+      gap: 1rem;
+      padding: 0 1rem;
+      font-size: 1rem;
+      container-type: normal;
+    }
+
+    .slide {
+      :where(h1) { font-size: 2rem; }
+
+      :where(h2) { font-size: 1.6rem; }
+
+      :where(h3) { font-size: 1.1rem; }
+
+      &:is([data-kind="section"], [data-kind="checkpoint"]) h2 { font-size: 1.8rem; }
+
+      &[data-kind="vocab"] h1 { font-size: 2.5rem; }
+
+      &[data-kind="api"] h1 { font-size: 2.1rem; }
+    }
+
+    .big-stat { font-size: 3rem; }
+
+    :where(pre) {
+      padding: 0.9rem;
+      font-size: 0.875rem;
+    }
+
+    .big pre, pre.big { font-size: 1rem; }
+
+    .big.short pre, pre.big.short { font-size: 1.15rem; }
+
+    .cols { gap: 1rem; }
+
+    .cols-3 { grid-template-columns: minmax(0, 1fr); }
+
+    .card { padding: 1rem; }
+
+    .callout { padding: 0.9rem 1.1rem; }
+
+    .answer { padding: 0.7rem 1rem; }
+
+    .slide[data-kind="title"] .rule { inline-size: 6rem; }
+
+    /* A bar along the bottom instead of buttons floating over the text. */
+    .hud {
+      inset-inline: 0;
+      inset-block-end: 0;
+      justify-content: flex-end;
+      padding: 0.4rem 0.9rem;
+      background: var(--color-page);
+      border-block-start: 1px solid var(--color-border);
+    }
+
+    .deck { padding-block-end: 4rem; }
+  }
+
+  @media screen and (width < 600px) {
+    .cols-2 { grid-template-columns: minmax(0, 1fr); }
   }
 }
 
@@ -891,7 +956,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
       h2 { font-size: 20pt; }
     }
 
-    .hud, .topbar, .rotate-hint { display: none; }
+    .hud, .topbar { display: none; }
 
 
     .card, pre { break-inside: avoid; }
