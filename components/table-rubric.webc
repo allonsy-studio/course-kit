@@ -37,7 +37,7 @@
                 <span class="id" webc:if="criterion.id" @text="criterion.id"></span>
                 <span @text="criterion.title"></span>
             </th>
-            <td class="due" @text="criterion.due ? fullDate(criterion.due.slice(0, 10)) : ''"></td>
+            <td class="due" @text="criterion.due ? fullDate(criterion.due) + (criterion.dueTime ? `, ${criterion.dueTime}` : '') : ''"></td>
             <td class="num" @text="criterion.points"></td>
             <td @text="criterion.description"></td>
         </tr>

@@ -1,11 +1,12 @@
 <div webc:root="override" class="demo-weeks" webc:if="weeks?.length">
+    <today-marker></today-marker>
     <section class="week" webc:for="week of weeks" :id="`week-${week.week}`" :aria-labelledby="`week-${week.week}-heading`">
         <header class="week-head">
             <h2 class="week-title" :id="`week-${week.week}-heading`">Week <span @text="week.week"></span></h2>
             <p class="week-of" @text="week.dates"></p>
         </header>
         <ol class="meetings" role="list">
-            <li class="meeting" webc:for="meeting of week.meetings">
+            <li class="meeting" data-today-scope webc:for="meeting of week.meetings">
                 <p class="when" :data-date="meeting.iso">
                     <span class="weekday" @text="meeting.weekday"></span>
                     <span class="date" @text="meeting.date"></span>
@@ -27,6 +28,9 @@
                 <p class="slides" webc:if="meeting.slides">
                     <a class="arrow" :href="meeting.slides">Slides <span aria-hidden="true">→</span></a>
                 </p>
+                <p class="slides" webc:if="meeting.addendum">
+                    <a class="arrow" :href="meeting.addendum">Addendum <span aria-hidden="true">→</span></a>
+                </p>
             </li>
         </ol>
     </section>
@@ -38,6 +42,7 @@
        day's demos beside it, the deck link last so it sits in the same place
        on every row. Stacks to a single column on narrow screens. */
     :host {
+        --today-host: meetings;
         display: grid;
         gap: var(--content-space);
     }
@@ -157,16 +162,6 @@
         @media screen and (width <= 520px) {
             grid-column: auto;
         }
-    }
-
-    .meeting:has([data-today]) {
-        background-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
-        box-shadow: inset var(--border-width) 0 0 var(--color-accent);
-    }
-
-    .today-flag {
-        color: var(--color-accent-text);
-        font-size: max(var(--base-font-size), 0.9em);
     }
 
     .arrow {

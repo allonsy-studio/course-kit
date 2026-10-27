@@ -4,7 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 
-import { buildLessons, readCourseData, resolveAudience, resolvePdf, resolveSite, resolveTerm } from "../lib/data/index.js";
+import { buildGlossary, buildLessons, projectMilestones, readCourseData, resolveAudience, resolvePdf, resolveSite, resolveTerm } from "../lib/data/index.js";
 
 const course = { code: "CS101", name: "Intro", term: { year: 2026, season: "fall" } };
 const dates = {
@@ -72,6 +72,48 @@ test("buildLessons falls back to the default meeting days and tolerates no weeks
 	assert.deepEqual(buildLessons({ course, dates, schedule: {}, term }), []);
 });
 
+test("buildLessons reads per-meeting readings and deadlines, and places project milestones", () => {
+	const term = resolveTerm({ course, dates });
+	const week = { topics: ["Intro"], days: [{ day: 2, readings: [{ title: "Ch 1" }], due: [{ title: "Quiz", due: "2026-08-24" }] }] };
+	const project = { title: "Final", url: "/project/", rubric: { criteria: [{ id: "M1", title: "Proposal", due: "2026-08-26" }, { title: "No date" }] } };
+	const lessons = buildLessons({ course, dates, schedule: { meetings: schedule.meetings, weeks: [week] }, project, term });
+	const [first, second] = lessons;
+	assert.equal(first.meetingReadings[0].title, "Ch 1");
+	assert.equal(first.due[0].title, "Quiz");
+	assert.deepEqual(second.meetingReadings, []);
+	// The only weeks authored end on the second meeting, the last one on or before M1's date.
+	assert.deepEqual(second.due.map((item) => [item.title, item.href, item.due]), [["M1 · Proposal", "/project/", "2026-08-26"]]);
+});
+
+test("projectMilestones reads components or dated rubric criteria", () => {
+	assert.deepEqual(projectMilestones({ title: "P", components: [{ name: "Plan", date: "2026-11-02", dueTime: "9:00AM" }] }), [
+		{ title: "P: Plan", label: "Plan", due: "2026-11-02", dueTime: "9:00AM" },
+	]);
+	assert.deepEqual(projectMilestones({ rubric: { criteria: [{ id: "M1", title: "Proposal", due: "2026-10-23" }, { title: "Undated" }] } }), [
+		{ title: "M1 · Proposal", label: "M1 · Proposal", due: "2026-10-23", dueTime: undefined },
+	]);
+	assert.deepEqual(projectMilestones(undefined), []);
+});
+
+test("buildGlossary turns vocab and api slides into tagged terms", () => {
+	const slidesDir = fs.mkdtempSync(path.join(os.tmpdir(), "glossary-"));
+	const deck = [
+		"---", "title: Week 1", "---", "",
+		">>> slide vocab", "::: eyebrow", "- Vocabulary · Basics", ":::", "# variable", "", "A name for a value.", "", "::: tags", "topic: types", ":::", ">>>", "",
+	].join("\n");
+	fs.writeFileSync(path.join(slidesDir, "week-1-day-2.md"), deck);
+	const term = resolveTerm({ course, dates });
+	const lessons = buildLessons({ course, dates, schedule, term });
+	const glossary = buildGlossary({ lessons, schedule, course, slidesDir });
+	assert.equal(glossary.terms.length, 1);
+	assert.equal(glossary.terms[0].plain, "variable");
+	assert.equal(glossary.terms[0].group, "Basics");
+	assert.deepEqual(glossary.terms[0].tags.topic.map((tag) => tag.label), ["types"]);
+	assert.equal(glossary.terms[0].tags.test[0].label, "Test 1");
+	assert.equal(glossary.az[0].label, "V");
+	assert.equal(buildGlossary({ lessons, schedule, course, slidesDir: path.join(slidesDir, "missing") }), null);
+});
+
 test("resolveSite derives the address and metadata", () => {
 	const env = { CONTEXT: "production", URL: "https://cs101.example.edu/", GITHUB_REPOSITORY: "o/r" };
 	const site = resolveSite({ course, pkg: { author: "Ada Lovelace <ada@example.edu> (https://example.edu)" }, institution: { name: "Example College" }, env });
@@ -82,6 +124,7 @@ test("resolveSite derives the address and metadata", () => {
 	assert.equal(site.description, "Course content for Example College.");
 	assert.equal(site.keywords, "Example College, CS101, Intro, syllabus, course schedule, class resources");
 	assert.equal(resolveSite({ course, site: { keywords: "custom" }, env }).keywords, "custom");
+	assert.equal(resolveSite({ course, institution: { timezone: "America/Chicago" }, env }).timezone, "America/Chicago");
 });
 
 test("resolveSite falls back to the CI repo for the address", () => {

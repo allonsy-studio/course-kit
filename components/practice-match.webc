@@ -104,11 +104,15 @@
 				gap: 0.6em;
 			}
 
+			/* The situation gets the room, up to a readable line, with the
+			   select right after it; on a phone they still share a row. */
 			.match-text {
-				flex: 0 1 13em;
+				flex: 1 1 12em;
+				max-inline-size: 36em;
 			}
 
 			select {
+				flex: none;
 				inline-size: 5em;
 				margin-block: 0.2em;
 			}

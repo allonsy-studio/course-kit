@@ -6,7 +6,7 @@
 			:@label="`${$data.worksheet.copy.citeLabel} ${q.id}`"></cite-panel>
 	</div>
 
-	<pre webc:if="q.code && q.kind !== 'tree'" class="snippet"><code @text="q.code"></code></pre>
+	<pre webc:if="q.code && q.kind !== 'tree'" class="snippet"><code @raw="q.codeHtml"></code></pre>
 	<practice-figure webc:if="q.figure" :@q="q"></practice-figure>
 
 	<choice-list webc:if="q.kind === 'choice'" :@choices="q.choices"
@@ -69,7 +69,26 @@
 		}
 
 		.snippet {
+			--token-string: light-dark(hsl(155deg 60% 27%), hsl(155deg 50% 62%));
 			font-size: 0.9em;
+
+			.token:is(.comment, .prolog, .doctype, .cdata) {
+				color: var(--color-text-muted);
+				font-style: italic;
+			}
+
+			.token:is(.keyword, .builtin, .important, .atrule) {
+				color: var(--color-accent-text);
+				font-weight: var(--font-weight--semi-bold);
+			}
+
+			.token:is(.string, .char, .regex, .number, .boolean) {
+				color: var(--token-string);
+			}
+
+			.token:is(.punctuation, .operator) {
+				color: var(--color-text-muted);
+			}
 		}
 
 		.feedback {

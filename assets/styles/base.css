@@ -1255,24 +1255,6 @@ blockquote {
 	}
 }
 
-/* ---- Today's class ---- */
-tr[data-today] {
-	background-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
-}
-
-tr[data-today] > :is(th, td) {
-	background-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
-}
-
-tr[data-today] > :first-child {
-	box-shadow: inset var(--thick-border-width) 0 0 var(--color-accent);
-}
-
-.today-flag {
-	display: block;
-	color: var(--color-accent-text);
-}
-
 /* ---- Disclosure list ---- */
 .disclosures {
 	--disclosure-gutter: 1.6em;

@@ -43,7 +43,7 @@ title: "Instructor lesson plan"
 		<section aria-labelledby="before-heading">
 			<h2 id="before-heading">Before class</h2>
 			<ul class="checklist" role="list">
-				<li webc:if="$data.lesson.readings?.length">Review the week's readings (see materials below)</li>
+				<li webc:if="$data.lesson.readings?.length || $data.lesson.meetingReadings?.length">Review the readings (see materials below)</li>
 				<li>Prepare/update slides and live-demo code</li>
 				<li webc:for="deck of decksFor($data.collections.deck, $data.lesson.week, $data.lesson.day)">Print or open the <a :href="deck.notesUrl">speaker notes sheet</a></li>
 				<li>Stage starter files or lab handout if needed</li>
@@ -79,6 +79,28 @@ title: "Instructor lesson plan"
 				<li webc:for="demo of $data.lessonDemos">
 					<a :href="`/demo/${demo.slug}/`" @text="demo.title"></a>
 					<span class="muted" webc:if="demo.description"> — <span @text="demo.description"></span></span>
+				</li>
+			</ul>
+			<h3 webc:if="assignmentsDue($data.collections.assignment, $data.lesson, $data.lessons).length">Exercises due</h3>
+			<ul webc:if="assignmentsDue($data.collections.assignment, $data.lesson, $data.lessons).length">
+				<li webc:for="assignment of assignmentsDue($data.collections.assignment, $data.lesson, $data.lessons)">
+					<a :href="assignment.url" @text="assignment.title"></a> — <span @text="assignment.dueLabel"></span>
+				</li>
+			</ul>
+			<h3 webc:if="$data.lesson.meetingReadings?.length">Reading for this meeting</h3>
+			<ul webc:if="$data.lesson.meetingReadings?.length">
+				<li webc:for="reading of $data.lesson.meetingReadings">
+					<a :href="reading.href" @text="reading.title"></a>
+					<span class="muted" webc:if="reading.check"> — <span @text="reading.check"></span></span>
+					<span class="muted" webc:if="reading.due">due <span @text="dueLabel(reading)"></span></span>
+				</li>
+			</ul>
+			<h3 webc:if="$data.lesson.due?.length">Deadlines to announce</h3>
+			<ul webc:if="$data.lesson.due?.length">
+				<li webc:for="item of $data.lesson.due">
+					<a webc:if="item.href" :href="item.href" @text="item.title"></a>
+					<span webc:if="!item.href" @text="item.title"></span>
+					<span class="muted">due <span @text="dueLabel(item)"></span></span>
 				</li>
 			</ul>
 			<h3 webc:if="$data.lesson.readings?.length">Assigned before this week</h3>

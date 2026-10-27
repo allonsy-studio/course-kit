@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html :lang="site.language ?? 'en-US'">
+<html :lang="site.language ?? 'en-US'" :data-timezone="site.timezone">
 
 <head>
 	<meta charset="UTF-8">
@@ -13,7 +13,7 @@
     <meta name="author" :content="site?.author">
     <meta name="generator" :content="eleventy?.generator">
 
-	<meta name="robots" content="noindex, nofollow" webc:if="indexed == false || draft == true || instructorOnly == true">
+	<meta name="robots" content="noindex, nofollow" webc:if="indexed == false || draft == true || instructorOnly == true || $data.site.preview">
 
     <meta property="og:locale" :content="site.language">
     <meta property="og:title" :content="$data.title ?? site.title">
@@ -35,8 +35,8 @@
 
     <link rel="stylesheet" webc:keep href="/styles/base.css">
     <link rel="stylesheet" media="print" webc:keep webc:if="$data.printStylesheet" :href="$data.printStylesheet">
-    <link rel="stylesheet" webc:keep webc:if="$data.pyscript" href="https://pyscript.net/releases/2026.7.3/core.css">
-    <script type="module" webc:keep webc:if="$data.pyscript" src="https://pyscript.net/releases/2026.7.3/core.js"></script>
+    <link rel="stylesheet" webc:keep webc:if="$data.pyscript" href="/pyscript/core.css">
+    <script type="module" webc:keep webc:if="$data.pyscript" src="/pyscript/core.js"></script>
     <style webc:keep @raw="getBundle('css')"></style>
 </head>
 

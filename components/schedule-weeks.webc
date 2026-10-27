@@ -1,4 +1,5 @@
 <div webc:root="override" class="schedule-weeks" webc:if="weeks?.length">
+    <today-marker></today-marker>
     <section class="week" webc:for="week of weeks" :id="`week-${week.week}`" :aria-labelledby="`week-${week.week}-heading`">
         <header class="week-head">
             <h3 :id="`week-${week.week}-heading`">Week <span @text="week.week"></span></h3>
@@ -6,7 +7,7 @@
         </header>
         <div class="week-body">
             <ol class="meetings" role="list">
-                <li class="meeting" webc:for="meeting of week.meetings">
+                <li class="meeting" data-today-scope webc:for="meeting of week.meetings">
                     <p class="when" :data-date="meeting.iso">
                         <span class="weekday" @text="meeting.weekday"></span>
                         <span class="date" @text="meeting.date"></span>
@@ -16,8 +17,30 @@
                     <ul class="topics" role="list" webc:if="!meeting.noClass">
                         <li webc:for="topic of meeting.topics" @raw="topic"></li>
                     </ul>
+                    <div class="assigned" webc:if="!meeting.noClass && meeting.readings?.length">
+                        <p class="label">Read before class</p>
+                        <ul role="list">
+                            <li webc:for="reading of meeting.readings">
+                                <a :href="reading.href" @text="reading.title"></a>
+                                <span class="check" webc:if="reading.check || reading.dueLabel"><span webc:if="reading.check" @text="reading.check"></span><span webc:if="reading.check && reading.dueLabel">, </span><span webc:if="reading.dueLabel">due <span @text="reading.dueLabel"></span></span></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="assigned" webc:if="!meeting.noClass && meeting.due?.length">
+                        <p class="label">Due</p>
+                        <ul role="list">
+                            <li webc:for="item of meeting.due">
+                                <a webc:if="item.href" :href="item.href" @text="item.title"></a>
+                                <span webc:if="!item.href" @text="item.title"></span>
+                                <span class="check" @text="item.dueLabel"></span>
+                            </li>
+                        </ul>
+                    </div>
                     <p class="slides" webc:if="meeting.slides">
                         <a class="arrow" :href="meeting.slides">Slides <span aria-hidden="true">→</span></a>
+                    </p>
+                    <p class="slides" webc:if="meeting.addendum">
+                        <a class="arrow" :href="meeting.addendum">Addendum <span aria-hidden="true">→</span></a>
                     </p>
                     <div class="demos" webc:if="meeting.demos?.length">
                         <p class="label">Demos</p>
@@ -33,7 +56,7 @@
                     <ul role="list">
                         <li webc:for="reading of week.readings">
                             <a :href="reading.href" @text="reading.title"></a>
-                            <span class="check" webc:if="reading.check" @text="reading.check"></span>
+                            <span class="check" webc:if="reading.check || reading.dueLabel"><span webc:if="reading.check" @text="reading.check"></span><span webc:if="reading.check && reading.dueLabel">, </span><span webc:if="reading.dueLabel">due <span @text="reading.dueLabel"></span></span></span>
                         </li>
                     </ul>
                 </div>
@@ -57,6 +80,7 @@
        down the left and the week's reading and materials on the right. Stacks
        to a single column on narrow screens, so nothing scrolls sideways. */
     :host {
+        --today-host: meetings;
         display: grid;
         gap: var(--content-space);
     }
@@ -138,16 +162,6 @@
         font-weight: var(--font-weight--semi-bold);
     }
 
-    .meeting:has([data-today]) {
-        background-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
-        box-shadow: inset var(--border-width) 0 0 var(--color-accent);
-    }
-
-    .today-flag {
-        color: var(--color-accent-text);
-        font-size: max(var(--base-font-size), 0.9em);
-    }
-
     .date,
     .note,
     .no-class,
@@ -181,7 +195,8 @@
        labelled Demos region, so the lab line and the demo it builds on sit
        together and every meeting reads the same way. */
     .slides,
-    .demos {
+    .demos,
+    .assigned {
         grid-column: 2;
         margin: 0.35em 0 0;
         font-size: max(var(--base-font-size), 0.92em);
@@ -191,7 +206,8 @@
         }
     }
 
-    .demos {
+    .demos,
+    .assigned {
         margin-block-start: 0.6em;
 
         ul {

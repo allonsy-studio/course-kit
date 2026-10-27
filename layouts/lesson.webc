@@ -18,6 +18,11 @@ layout: "base"
 		notes are on a separate printable sheet per deck, linked as "Notes" below.
 	</p>
 
+	<p webc:if="$data.collections.assignment?.length">
+		<a href="/assignment/">Exercises</a> — the brief and starter for each.
+		Exercises due on a meeting are linked from its row below.
+	</p>
+
 	<table class="table-light" webc:if="$data.term.instructorDates?.length">
 		<thead>
 			<tr>
@@ -51,8 +56,11 @@ layout: "base"
 					<td>
 						<a :href="`/lessons/week-${lesson.week}/day-${lesson.day}/`">Lesson&nbsp;plan</a>
 						<span webc:nokeep webc:for="deck of ($data.collections.deck ?? []).filter((d) => d.data.week === lesson.week && d.data.day === lesson.day)">
-							<br/><a :href="deck.url">Slides</a>
-							<br/><a :href="`/lessons/week-${deck.data.week}/day-${deck.data.day}/notes/`">Notes</a>
+							<br/><a :href="deck.url" @text="deck.data.addendum ? 'Addendum' : 'Slides'"></a>
+							<br/><a :href="deckNotesUrl(deck.data.week, deck.data.day, deck.data.addendum === true)" @text="deck.data.addendum ? 'Addendum notes' : 'Notes'"></a>
+						</span>
+						<span webc:nokeep webc:for="assignment of assignmentsDue($data.collections.assignment, lesson, $data.lessons)">
+							<br/>Due: <a :href="assignment.url" @text="assignment.title"></a> (<span @text="assignment.dueLabel"></span>)
 						</span>
 					</td>
 					<td>
@@ -66,4 +74,4 @@ layout: "base"
 	</table>
 </section>
 
-<script type="module" src="/js/today.js" webc:keep></script>
+<today-marker></today-marker>

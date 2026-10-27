@@ -52,12 +52,12 @@ test("assetPath prefers the course copy, falls back to the package, else null", 
 test("registerAssets skips excluded and course-owned files", () => {
 	const input = tmp();
 	fs.mkdirSync(path.join(input, "scripts"));
-	fs.writeFileSync(path.join(input, "scripts", "today.js"), "");
+	fs.writeFileSync(path.join(input, "scripts", "email.js"), "");
 	const config = fakeConfig();
 	registerAssets(config, { inputDir: input, exclude: ["styles/semantics.css"] });
 	assert.ok("styles/base.css" in config.templates);
 	assert.ok(!("styles/semantics.css" in config.templates));
-	assert.ok(!("scripts/today.js" in config.templates));
+	assert.ok(!("scripts/email.js" in config.templates));
 	assert.ok("scripts/deck.js" in config.templates);
 	assert.equal(Object.keys(config.copies[0]).length, 3);
 });

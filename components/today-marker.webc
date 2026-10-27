@@ -1,0 +1,195 @@
+<script webc:setup>
+	/*
+	   <today-marker> marks today's class meeting and, optionally, links to it.
+
+	   Props
+	     @link   Boolean. Render the "Today" link button (`<a href="#today">`).
+	             Accepts :@link="true" or a plain truthy value (@link="true");
+	             absent, false, "false", "0", "no" and "off" render no link.
+
+	   Always, link or not, a script (below) marks the page:
+	     - every [data-date] element listing today's campus date (the site's `institution.timezone`)
+	       gets data-today, aria-current="date" and a visible "Today" flag
+	       (data-today-label overrides the text; a table row gets it in its first cell);
+	     - one element gets id="today" for the link to jump to: today's, else the next
+	       meeting, else the first (before the term) or last (after it); never a
+	       no-class day. A host puts data-today-scope on the element that should
+	       carry the id and the highlight (the schedule's .meeting), otherwise the
+	       dated element itself does. An element that already has an id gets an
+	       empty <span id="today"> inside it instead, and an existing #today wins.
+
+	   Hosts: a component that holds [data-date] elements renders
+	   <today-marker></today-marker> itself (the script and styles are bundled once
+	   per page) and declares itself with `--today-host: <name>` on its root; the
+	   styles below read it with `@container style(--today-host: <name>)`.
+	*/
+	const showLink = (value) => {
+		if (value === undefined || value === null || value === false) return false;
+		return !["false", "0", "no", "off"].includes(String(value).trim().toLowerCase());
+	};
+</script>
+<a webc:root="override" webc:if="showLink(typeof link === 'undefined' ? undefined : link)" href="#today" class="today-link">Today</a>
+
+<script>
+	/**
+	 * <today-marker>: flag today's [data-date] elements and give one of them
+	 * id="today". See the notes in this component's setup script.
+	 */
+	(() => {
+		try {
+			/** @type {string} today on campus (not the reader's zone), as YYYY-MM-DD; <html data-timezone> comes from `site.timezone` */
+			const today = new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone || undefined });
+
+			/** The node that can hold a flag or an anchor: a table row can't, its first cell can. */
+			const holder = (el) => (el instanceof HTMLTableRowElement ? el.cells[0] : el);
+
+			const dated = [...document.querySelectorAll("[data-date]")].map((el) => ({
+				el,
+				dates: (el.dataset.date ?? "").split(/\s+/).filter(Boolean).sort(),
+			}));
+
+			for (const { el, dates } of dated) {
+				if (!dates.includes(today) || el.hasAttribute("data-today")) continue;
+				el.dataset.today = "";
+				el.setAttribute("aria-current", "date");
+				const flag = document.createElement("strong");
+				flag.className = "today-flag";
+				flag.textContent = el.dataset.todayLabel ?? "Today";
+				holder(el)?.prepend(flag);
+			}
+
+			if (document.getElementById("today")) return;
+
+			/** Jump target: today's, else the next; the first before the term, the last after it. */
+			const candidates = dated
+				.filter(({ dates }) => dates.length)
+				.map((item) => ({ ...item, scope: item.el.closest("[data-today-scope]") ?? item.el }))
+				.filter(({ scope }) => !scope.matches(".no-class") && !scope.querySelector(".no-class"))
+				.map((item) => ({ ...item, when: item.dates.find((d) => d >= today) ?? item.dates.at(-1) }));
+			if (!candidates.length) return;
+
+			const upcoming = candidates.filter(({ when }) => when >= today);
+			const pool = upcoming.length ? upcoming : candidates;
+			const target = pool.reduce((best, item) =>
+				(upcoming.length ? item.when < best.when : item.when > best.when) ? item : best,
+			).scope;
+
+			if (target.id) {
+				const anchor = document.createElement("span");
+				anchor.id = "today";
+				holder(target)?.prepend(anchor);
+			} else {
+				target.id = "today";
+			}
+
+			// Opened as /page/#today before the target existed: the browser has already missed it.
+			if (location.hash === "#today") document.getElementById("today")?.scrollIntoView();
+		} catch {
+			// Never let the marker break the scripts bundled after it.
+		}
+	})();
+</script>
+
+<style>
+	/* The single source of the "today" look. Hosts own the dated elements and
+	   declare themselves with a custom property (`--today-host: <name>`, which
+	   inherits to everything inside); the @container style() rules below vary
+	   the base look per host. A custom-property style query needs Chrome and
+	   Edge 111, Safari 18 or Firefox 151; elsewhere the rule is skipped and the
+	   base look applies, which is a complete, readable highlight. */
+
+	[data-today] {
+		background-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
+		box-shadow: inset var(--border-width) 0 0 var(--color-accent);
+	}
+
+	/* A table row can't carry a shadow of its own: wash its cells, edge the first. */
+	tr[data-today] {
+		background-color: transparent;
+		box-shadow: none;
+
+		> :is(th, td) {
+			background-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
+		}
+
+		> :first-child {
+			box-shadow: inset var(--border-width) 0 0 var(--color-accent);
+		}
+	}
+
+	.today-flag {
+		display: block;
+		color: var(--color-accent-text);
+	}
+
+	/* host: a list of meetings (schedule-weeks, demo-weeks). The meeting holds
+	   the highlight, not the date line inside it. */
+	@container style(--today-host: meetings) {
+		[data-today] {
+			background-color: transparent;
+			box-shadow: none;
+		}
+
+		[data-today-scope]:has([data-today]) {
+			background-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
+			box-shadow: inset var(--border-width) 0 0 var(--color-accent);
+		}
+
+		.today-flag {
+			font-size: max(var(--base-font-size), 0.9em);
+		}
+	}
+
+	/* host: a grid of day cells (slide-timetable). The edge runs along the top. */
+	@container style(--today-host: timetable) {
+		[data-today] {
+			box-shadow: inset 0 var(--border-width) 0 var(--color-accent);
+		}
+
+		.today-flag {
+			font-size: max(var(--base-font-size), 0.9em);
+		}
+	}
+
+	/* Without color (forced colors, mono print), the flag's text still says "Today"; add an outline. */
+	@media (forced-colors: active) {
+		[data-today],
+		[data-today-scope]:has([data-today]) {
+			outline: var(--border-width) solid Highlight;
+			outline-offset: calc(var(--border-width) * -1);
+		}
+	}
+
+	/* The link button: the page's primary action, shown only once a #today exists.
+	   The :not(:has()) form outranks a host's own `a` rules; without :has() the
+	   plain rule hides it. */
+	.today-link,
+	:root:not(:has(#today)) .today-link {
+		display: none;
+	}
+
+	:root:has(#today) .today-link {
+		display: grid;
+		place-items: center;
+		min-inline-size: 2.75rem;
+		min-block-size: 2.75rem;
+		padding-inline: 1em;
+		border: var(--thin-border-width) solid var(--color-accent);
+		border-radius: var(--standard-border-radius);
+		background-color: var(--color-accent);
+		color: var(--color-on-accent);
+		font-weight: var(--font-weight--semi-bold);
+		text-decoration: none;
+
+		&:is(:hover, :focus-visible) {
+			border-color: var(--color-text);
+			text-decoration: underline;
+		}
+	}
+
+	@media print {
+		:root:has(#today) .today-link {
+			display: none;
+		}
+	}
+</style>
