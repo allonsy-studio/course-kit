@@ -215,7 +215,7 @@ The site navigation as a list of links, marking the current page.
 | Prop | Type | |
 |---|---|---|
 | `navigation` | `{ url: string, title: string }[]` | pages from `eleventyNavigation` |
-| `[context]` | `'footer' \| 'hero'` | adds the contact and open-source links in the footer |
+| `[context]` | `'footer' \| 'hero'` | adds the instructor's contact link in the footer and the hero |
 
 ### `<policies>`
 

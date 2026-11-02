@@ -82,6 +82,10 @@ test("the speaker notes and the lesson plans are built for the instructor", () =
 	assert.ok(pages["/lessons/week-1/day-1/"].includes('href="/lessons/week-1/day-1/notes/"'));
 });
 
+test("no page links to the kit author's organization", () => {
+	for (const [url, html] of Object.entries(pages)) assert.ok(!html.includes("npmjs.com/org/allons-y"), `${url} links to the allons-y npm organization`);
+});
+
 test("a page in the slides folder with no week gets no speaker-notes sheet", () => {
 	assert.ok(!("/lessons/deck-notes/" in pages), "found a stray /lessons/deck-notes/ page");
 });
