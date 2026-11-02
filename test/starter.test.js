@@ -48,7 +48,7 @@ before(async () => {
 after(() => process.chdir(cwd));
 
 test("the starter builds the pages a course needs", () => {
-	for (const url of ["/", "/schedule/", "/slides/", "/slides/week-1-day-1/"]) {
+	for (const url of ["/", "/schedule/", "/slides/", "/slides/week-1-day-1/", "/lessons/", "/lessons/week-1/day-1/", "/lessons/week-1/day-1/notes/"]) {
 		assert.ok(url in pages, `${url} was not built; got ${Object.keys(pages).join(", ")}`);
 	}
 });
@@ -75,6 +75,15 @@ test("no page leaves a component tag or a placeholder behind", () => {
 		for (const name of known) assert.ok(!new RegExp(`<${name}[\\s>]`).test(prose), `${url} still has <${name}>`);
 		for (const smell of ["undefined", "[object Object]", "NaN"]) assert.ok(!prose.includes(smell), `${url} contains "${smell}"`);
 	}
+});
+
+test("the speaker notes and the lesson plans are built for the instructor", () => {
+	assert.ok(pages["/lessons/week-1/day-1/notes/"].includes("Welcome (0:00–0:05)") || pages["/lessons/week-1/day-1/notes/"].includes("Welcome"));
+	assert.ok(pages["/lessons/week-1/day-1/"].includes('href="/lessons/week-1/day-1/notes/"'));
+});
+
+test("a page in the slides folder with no week gets no speaker-notes sheet", () => {
+	assert.ok(!("/lessons/deck-notes/" in pages), "found a stray /lessons/deck-notes/ page");
 });
 
 test("the instructor's email is encoded in the page, never written out", () => {
