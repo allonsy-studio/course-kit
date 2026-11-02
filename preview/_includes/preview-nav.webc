@@ -1,0 +1,17 @@
+<script webc:setup>
+	/**
+	 * The component list: one closed disclosure on a phone, a sidebar on a wide screen.
+	 * @prop {object[]} groups the catalog's groups
+	 */
+</script>
+<details webc:root="override" class="nav" open>
+	<summary>Components</summary>
+	<nav aria-label="Components">
+		<section webc:for="group of groups">
+			<h2 @text="group.title"></h2>
+			<ul role="list">
+				<li webc:for="component of group.components"><a :href="component.url" @text="component.tag"></a></li>
+			</ul>
+		</section>
+	</nav>
+</details>

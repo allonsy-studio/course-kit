@@ -120,10 +120,6 @@ A grading rubric as a table: criteria down, performance levels or a due date and
 | `[caption]` | `string` | a screen-reader caption |
 | `[total]` | `number` | the points the rubric adds up to, shown in the footer |
 
-### `<theme-switcher>`
-
-The color-theme buttons: light, dark, plain HTML and the system default. `theme-restore.js` applies the saved choice before first paint.
-
 ### `<today-link>`
 
 The page's Today shortcut: a button that jumps to the `#today` element `<today-marker>` picks. Hidden until there is one, and in print.
@@ -142,7 +138,7 @@ One bordered block per week: a tinted header band, then the slot.
 | `dates` | `string` | the week's date range, shown beside the heading |
 | `[level=3]` | `2 \| 3` | the heading level |
 
-Icons, each an inline SVG that takes its color from the text: `<github>`, `<google>`, `<moon>`, `<nocss>`, `<sunshine>`, `<system>`.
+Icons, each an inline SVG that takes its color from the text: `<github>`, `<google>`.
 
 ## Site sections
 

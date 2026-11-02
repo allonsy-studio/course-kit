@@ -1,11 +1,7 @@
 /*
- * The key the site's theme switcher writes, applied before first paint so a
- * page opened from a dark one never flashes white. "nocss" is a site-only mode
- * and reads here as "follow system".
- *
- * Every layout inlines this into its head through the `head` bundle bucket, so
- * the site, the decks and the worksheets cannot drift apart. Pages with no
- * Prism stylesheets simply have none to swap.
+ * The deck's saved light/dark choice, applied before first paint so a deck
+ * never flashes the wrong scheme. Only the deck layout inlines this, through
+ * the `head` bundle bucket; the site and worksheets follow the system.
  */
 try {
 	const theme = localStorage.getItem("theme");

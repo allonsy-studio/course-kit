@@ -1,0 +1,7 @@
+<script webc:setup>
+	/** A bar that says how many token overrides apply, with a Reset. Hidden when there are none. */
+</script>
+<p webc:root="override" class="overrides" data-overrides hidden>
+	<span data-overrides-count></span>
+	<button type="button" data-overrides-reset>Reset</button>
+</p>

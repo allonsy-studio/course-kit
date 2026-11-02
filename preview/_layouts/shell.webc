@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en-US">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="color-scheme" content="light dark" />
+		<meta name="robots" content="noindex, nofollow" />
+		<title @text="[title, 'Course kit preview'].filter(Boolean).join(' | ')"></title>
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<link rel="stylesheet" href="/styles/font.css" webc:keep />
+		<link rel="stylesheet" href="/styles/base.css" webc:keep />
+		<link rel="stylesheet" href="/preview-assets/shell.css" webc:keep />
+		<script src="/preview-assets/tokens.js" webc:keep></script>
+		<script type="module" src="/preview-assets/canvas.js" webc:keep></script>
+	</head>
+	<body class="preview">
+		<a class="skip" href="#main">Skip to content</a>
+		<header class="bar-top">
+			<a href="/" rel="home"><strong>Course kit</strong> preview</a>
+			<a href="/foundations/">Foundations</a>
+		</header>
+		<preview-overrides></preview-overrides>
+		<div class="app">
+			<preview-nav :@groups="$data.catalog.groups"></preview-nav>
+			<main id="main" tabindex="-1"><template webc:nokeep @raw="content"></template></main>
+		</div>
+	</body>
+</html>
