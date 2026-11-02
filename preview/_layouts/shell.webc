@@ -24,5 +24,8 @@
 			<preview-nav :@groups="$data.catalog.groups"></preview-nav>
 			<main id="main" tabindex="-1"><template webc:nokeep @raw="content"></template></main>
 		</div>
+		<footer class="credit">
+			<p>Built by <a href="https://allons-y.studio">Allons-y Studio</a>. Course kit is open source under MPL-2.0.</p>
+		</footer>
 	</body>
 </html>
