@@ -45,3 +45,22 @@ test("no story names an argument its component does not declare", () => {
 	// buildCatalog throws on an arg with no argType; reaching here means every arg matched.
 	assert.ok(catalog.frames.length >= catalog.components.length);
 });
+
+test("built under a path prefix, every link and asset stays under it", async () => {
+	const prefix = "/course-kit/preview/12/";
+	process.env.PATH_PREFIX = prefix;
+	try {
+		const eleventy = new Eleventy("preview/content", "preview/_site", { configPath: "preview/eleventy.config.js", quietMode: true });
+		const built = await eleventy.toJSON();
+		assert.ok(built.length > catalog.components.length, "the preview built");
+		for (const page of built.filter((entry) => typeof entry.url === "string" && entry.url.endsWith("/") && typeof entry.content === "string")) {
+			const html = page.content.replace(/<(script|style|pre|code)[\s\S]*?<\/\1>/g, "");
+			for (const [, url] of html.matchAll(/\s(?:href|src)="(\/[^"]*)"/g)) {
+				if (url.startsWith("//")) continue;
+				assert.ok(url.startsWith(prefix), `${page.url} links to ${url}, outside ${prefix}`);
+			}
+		}
+	} finally {
+		delete process.env.PATH_PREFIX;
+	}
+});
