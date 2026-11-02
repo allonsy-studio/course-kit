@@ -1,0 +1,117 @@
+<script webc:setup>
+	/**
+	 * The page footer: course, institution, term, copyright and the links. Reads `course`, `site` and `term`.
+	 */
+</script>
+<div webc:root="override">
+    <div class="brand">
+        <p class="course"><a href="/"><span @text="$data.course.code"></span>: <span @text="$data.course.name"></span></a></p>
+        <p class="meta separators">
+            <span @text="$data.site.institution"></span>
+            <span @text="$data.term.label"></span>
+        </p>
+        <copyright></copyright>
+    </div>
+    <div class="group">
+        <p class="label" id="footer-pages">Pages</p>
+        <nav-links column aria-labelledby="footer-pages" @context="footer" :@navigation="eleventyNavigation($data.collections.all)"></nav-links>
+    </div>
+    <nav class="group" aria-labelledby="footer-policies" webc:if="$data.policies">
+        <p class="label" id="footer-policies">Policies</p>
+        <ul role="list">
+            <li webc:for="(key, policy) in $data.policies">
+                <a :href="policy.href?.startsWith('/') ? policy.href : `/#policy-${key}`" @text="policy.title"></a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<style webc:scoped>
+/* Three groups: who and when, where to go, what the rules are. The policy
+   links point at the landing page's policy disclosures (each carries a
+   `policy-<key>` id) except where a policy has its own page on this site. */
+:host {
+    --context: footer;
+
+    text-align: start;
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) repeat(2, minmax(0, 1fr));
+    gap: var(--section-space) calc(var(--section-space) * 1.5);
+    align-items: start;
+
+    @media screen and (width <= 768px) {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--section-space);
+    }
+
+    .brand {
+        display: grid;
+        gap: calc(var(--content-space) * 0.4);
+    }
+
+    .course {
+        margin: 0;
+        max-inline-size: none;
+        font-weight: var(--font-weight--semi-bold);
+
+        a {
+            color: var(--color-text);
+            text-decoration: none;
+
+            &:is(:hover, :focus-visible) {
+                color: var(--color-link-hover);
+            }
+        }
+    }
+
+    .meta {
+        margin: 0;
+        color: var(--color-text-muted);
+        font-size: max(var(--base-font-size), 0.85em);
+    }
+
+    .label {
+        margin: 0 0 calc(var(--content-space) * 0.5);
+        font-size: var(--font-size-6);
+        font-weight: var(--font-weight--semi-bold);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: calc(var(--content-space) * 0.35);
+
+        @media screen and (width <= 768px) {
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: baseline;
+            column-gap: calc(var(--content-space) * 1.25);
+            row-gap: calc(var(--content-space) * 0.25);
+        }
+    }
+
+    li {
+        font-size: 1em;
+    }
+
+    nav.group a {
+        display: inline-block;
+        padding-block: 0.2em;
+        font-size: max(var(--base-font-size), 1em);
+        color: inherit;
+        text-decoration: none;
+
+        &:is(:hover, :focus-visible) {
+            color: var(--color-link-hover);
+        }
+    }
+}
+</style>

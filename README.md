@@ -83,11 +83,11 @@ In development, a theme panel docked on the right edge of every page edits these
 | Path | What |
 |---|---|
 | `layouts/` | The page layouts (`base`, `document`, `lesson`, `lesson-detail`, `deck`, `notes`, `worksheet`, `demo`). Not overridable per file; a difference between courses is a data guard in the layout. |
-| `components/` | WebC components, including the home-page set (`course-summary`, `instructor`, `syllabus`, `masthead`, `nav-links`). |
+| `components/` | WebC components in three folders: `ui/` (props and slots only), `practice/` (worksheet questions) and `site/` (sections that read the page's data). See `docs/components.md`. |
 | `schemas/` | `theme.schema.json` for `_data/theme.json`. |
 | `assets/` | `styles/`, `scripts/` and `fonts/`, published at `/styles`, `/js` and `/fonts`. The `today-marker` component flags today's meeting and styles it. |
 | `glue/` | Pagination and permalink pages with no course prose (`lesson-day`). |
-| `docs/` | Notes on the build: `internals.md`, `testing.md`, `slides.md` (slide kinds and copy rules), `tokens.md`, `theme-panel.md`. |
+| `docs/` | Notes on the build: `components.md`, `internals.md`, `testing.md`, `slides.md` (slide kinds and copy rules), `tokens.md`, `theme-panel.md`. |
 | `lib/` | The build configuration (`plugin.js`), filters, the markdown dialect, the worksheet parser, bundling, the PDF and slide-fit hooks, and the helpers below. |
 
 ## Helpers

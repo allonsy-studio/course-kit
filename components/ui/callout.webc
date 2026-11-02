@@ -1,0 +1,8 @@
+<script webc:setup>
+	/**
+	 * A highlighted aside. The content is the slot.
+	 */
+</script>
+<div webc:root="override" class="callout">
+    <slot></slot>
+</div>

@@ -1,8 +1,0 @@
-<span webc:nokeep>&copy;&nbsp;<span @text="$data.site.buildYear"></span> <span class="no-wrap" @text="$data.site.author"></span></span>
-<style webc:scoped>
-:host {
-    display: inline-block;
-    font-size: max(var(--base-font-size), 0.85em);
-    color: var(--color-text-muted);
-}
-</style>

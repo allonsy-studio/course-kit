@@ -1,0 +1,33 @@
+<script webc:setup>
+	/**
+	 * A titled list of links. Renders nothing when there are no items and no
+	 * `empty` text.
+	 * @prop {string} [title] the heading; left out when there are no items
+	 * @prop {{ title: string, href?: string, note?: string, extra?: { text: string, href: string, after?: string } }[]} items
+	 * @prop {string} [empty] shown, muted, when there are no items
+	 */
+</script>
+<div webc:root="override" class="link-section" webc:if="items?.length || empty">
+	<h3 webc:if="title && items?.length" @text="title"></h3>
+	<ul webc:if="items?.length">
+		<li webc:for="item of items">
+			<a webc:if="item.href" :href="item.href" @text="item.title"></a>
+			<span webc:if="!item.href" @text="item.title"></span>
+			<span class="muted" webc:if="item.note"> — <span @text="item.note"></span></span>
+			<template webc:nokeep webc:if="item.extra"> — <a :href="item.extra.href" @text="item.extra.text"></a><template webc:nokeep webc:if="item.extra.after"> <span @text="item.extra.after"></span></template></template>
+		</li>
+	</ul>
+	<p class="muted" webc:if="!items?.length" @text="empty"></p>
+</div>
+
+<style webc:scoped>
+	/* The page's spacing around a list and its heading, which a wrapper would otherwise reset:
+	   a heading loses its top margin as the first child, and a list its bottom margin as the last. */
+	:host:not(:last-child) {
+		margin-block-end: calc(var(--content-space) * 1.5);
+	}
+
+	h3 {
+		margin-block-start: calc(var(--content-space) * 1.75);
+	}
+</style>

@@ -1,0 +1,213 @@
+<script webc:setup>
+	/**
+	 * The syllabus: outcomes, grading, policies and schedule notes.
+	 * @prop {object} c the course, from `course.json`
+	 */
+</script>
+<section id="syllabus" aria-labelledby="syllabus-heading" webc:root="override">
+    <h2 id="syllabus-heading">Syllabus</h2>
+
+    <article>
+        <h3>Learning outcomes</h3>
+        <p>Upon completing this course students will be able to:</p>
+        <ul>
+            <li webc:for="outcome of c.outcomes" @text="outcome"></li>
+        </ul>
+    </article>
+
+    <article webc:if="c.additionalOutcomes?.length">
+        <h3 id="additional-outcomes">Additional outcomes in this section</h3>
+        <ul>
+            <li webc:for="outcome of c.additionalOutcomes" @text="outcome"></li>
+        </ul>
+    </article>
+
+    <article>
+        <h3>Text</h3>
+        <p webc:if="!c.textbook?.required">No text is required.</p>
+        <p webc:if="c.textbook?.required"><strong>Required:</strong> <span @text="c.textbook.required"></span></p>
+        <ol webc:if="c.textbook?.access?.length">
+            <li webc:for="step of c.textbook.access" @raw="step"></li>
+        </ol>
+    </article>
+
+    <article>
+        <h3>Technology</h3>
+        <p>Bring a laptop meeting the minimum specifications specified by Meredith College to class every day. <span webc:for="req of c.requirements ?? []" @text="req"></span> <span webc:if="$data.grading?.homework">Brightspace access is required.</span></p>
+    </article>
+
+    <article webc:if="$data.grading">
+        <h3 id="coursework">Coursework</h3>
+        <div class="course-item" webc:for="entry of Object.entries($data.grading).filter(([key]) => key !== '$schema')">
+            <h4><span @text="entry[1].title"></span> <span class="weight screen-only" webc:if="entry[1].weight" @text="entry[1].weight"></span></h4>
+            <p @text="entry[1].body"></p>
+            <template webc:nokeep webc:if="entry[0] === 'final' && $data.schedule?.finalExam">
+                <p><strong>Exam:</strong> <span @text="examSlot($data.schedule.finalExam)"></span></p>
+                <callout :type="'warn'" webc:if="$data.schedule.finalExam?.note">
+                    <p @text="$data.schedule.finalExam.note"></p>
+                </callout>
+            </template>
+            <template webc:nokeep webc:if="entry[0] === 'project' && $data.project && $data.projectStages">
+                <p>
+                    <strong>Due:</strong>
+                    <span @text="$data.projectStages.due"></span><span webc:if="$data.project.dueTime" @text="`, ${timeOfDay($data.project.dueTime)}`"></span>.
+                </p>
+                <p>Full requirements, milestone dates, and the grading rubric are on <a :href="$data.project.url">the project page</a>.</p>
+                <ul class="print-only">
+                    <li webc:for="stage of $data.projectStages.components">
+                        <strong @text="stage.name"></strong> — <span @text="`${stage.display}, ${stage.points} points`"></span>
+                    </li>
+                </ul>
+            </template>
+            <template webc:nokeep webc:if="entry[0] === 'project' && !($data.project && $data.projectStages)">
+                <p><strong>Due:</strong> at the last class meeting, <span @text="lastMeeting($data.lessons)"></span>.</p>
+                <p>Full requirements, milestone dates, and the grading rubric are on <a href="/projects/final/">the project page</a>.</p>
+            </template>
+        </div>
+    </article>
+
+    <article webc:if="$data.grading">
+        <h3 id="grading">Grading</h3>
+        <grading :@grading="$data.grading"></grading>
+    </article>
+
+    <article webc:if="$data.term.keyDates?.length">
+        <h3 id="key-dates">Key dates</h3>
+        <ul>
+            <li webc:for="item of $data.term.keyDates"><strong @text="item.label"></strong><span class="print-only"> — </span><span @text="item.display"></span></li>
+            <li webc:if="$data.schedule?.finalExam"><strong>This section's final exam</strong><span class="print-only"> — </span><span @text="examSlot($data.schedule.finalExam)"></span></li>
+        </ul>
+    </article>
+</section>
+
+<style>
+    #syllabus article {
+        border: none;
+        border-radius: 0;
+        padding: 0;
+        margin-block-end: 0;
+    }
+
+    /* Screen layout only: a single stacked column with a reading measure,
+       coursework as a card grid with the weight on each card, and key dates
+       as a stacked list. print.css keeps its own hooks (`#syllabus > article`,
+       `#coursework ~ div`, `#grading`, `#key-dates`), none of which this
+       markup changes. */
+    @media screen {
+        /* The section's row-gap is the only vertical rhythm between
+           articles: each article's first heading and last block drop their
+           own outer margins so nothing stacks on top of the gap. */
+        #syllabus {
+            display: grid;
+            row-gap: var(--section-space);
+        }
+
+        #syllabus > h2 {
+            margin-block-end: 0;
+        }
+
+        #syllabus > article > :first-child {
+            margin-block-start: 0;
+        }
+
+        #syllabus > article > :last-child {
+            margin-block-end: 0;
+        }
+
+        #syllabus > article > :where(p, ul, ol) {
+            max-inline-size: 70ch;
+        }
+
+        /* Cards wrap as a centered flex row rather than a grid, so a short
+           last row (two cards under three) is centered instead of hugging
+           the left; each card is capped at a third of the row so the
+           widths still match across rows. */
+        #syllabus article:has(> #coursework) {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--content-space);
+        }
+
+        #coursework {
+            flex: 1 0 100%;
+            margin-block-end: 0;
+        }
+
+        #coursework ~ .course-item {
+            flex: 1 1 20em;
+            max-inline-size: calc((100% - 2 * var(--content-space)) / 3);
+
+            @media (width <= 60em) {
+                max-inline-size: none;
+            }
+        }
+
+        #coursework ~ .course-item {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            padding: calc(var(--content-space) * 1.1);
+            border: var(--thin-border-width) solid var(--color-border);
+            border-radius: var(--standard-border-radius);
+
+            h4 {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: baseline;
+                justify-content: space-between;
+                gap: 0.25em 0.75em;
+                margin-block: 0 0.5em;
+            }
+
+            /* Flex items do not collapse margins, so paragraphs keep only
+               their bottom margin. */
+            > p {
+                margin-block-start: 0;
+            }
+
+            p:last-child {
+                margin-block-end: 0;
+            }
+
+            /* A callout sits at the foot of its card, so the cards in a
+               row line up. */
+            .callout {
+                margin-block: auto 0;
+            }
+        }
+
+        #coursework ~ .course-item .weight {
+            flex: none;
+            padding: 0.1em 0.6em;
+            border-radius: var(--pill-border-radius);
+            background-color: color-mix(in oklab, var(--color-accent) 24%, transparent);
+            color: var(--color-accent-text);
+            font-size: var(--font-size-6);
+            font-weight: var(--font-weight--semi-bold);
+            letter-spacing: 0.03em;
+        }
+
+        #key-dates + ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0 0.75em;
+                padding-block: 0.4em;
+                border-block-start: var(--thin-border-width) solid var(--color-border);
+            }
+
+            li > strong {
+                flex: 0 1 22em;
+            }
+
+            li > span:last-child {
+                color: var(--color-text-muted);
+            }
+        }
+    }
+</style>

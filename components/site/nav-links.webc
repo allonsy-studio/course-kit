@@ -1,0 +1,125 @@
+<script webc:setup>
+	/**
+	 * The site navigation as a list of links, marking the current page.
+	 * @prop {{ url: string, title: string }[]} navigation pages from `eleventyNavigation`
+	 * @prop {'footer' | 'hero'} [context] adds the contact and open-source links in the footer
+	 */
+</script>
+<nav webc:root="override" webc:if="navigation?.length">
+    <ul role="list">
+        <li webc:for="item of navigation">
+            <a :href="item?.url" @attributes="({ 'aria-current': item?.url === $data?.page?.url ? 'page' : undefined })" @text="item?.title"></a>
+        </li>
+        <li webc:if="$data.instructor?.contact && (context === 'footer' || context === 'hero')"><a :href="$data.instructor.contact">Contact</a></li>
+        <li webc:if="context === 'footer'"><a href="https://www.npmjs.com/org/allons-y">Open source</a></li>
+    </ul>
+</nav>
+<style webc:scoped>
+:host {
+    display: flex;
+    gap: calc(var(--container-space) * 3.5);
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        inline-size: 100%;
+        gap: calc(var(--content-space) * 1.6);
+
+        @media screen and (width <= 612px) {
+            justify-content: flex-start;
+            column-gap: calc(var(--content-space) * 0.75);
+            row-gap: calc(var(--content-space) * 0.25);
+        }
+    }
+
+    li {
+        font-size: 1em;
+    }
+
+    a {
+        /* Inline padding is left alone; the block padding lifts each link to
+           the 24px minimum target size without changing the row rhythm. */
+        display: inline-block;
+        padding-block: 0.2em;
+        font-size: max(var(--base-font-size), 0.95em);
+        color: inherit;
+        text-decoration: none;
+
+        &[aria-current="page"] {
+            text-decoration: underline;
+            text-underline-offset: 0.3ex;
+            text-decoration-color: var(--color-accent);
+        }
+
+        &:is(:hover, :focus-visible) {
+            color: var(--color-link-hover);
+        }
+
+        @media screen and (width <= 612px) {
+            font-size: max(var(--base-font-size), 0.875em);
+        }
+    }
+}
+
+/* Stacked (the footer and the 404 page): one row while the links fit, folding
+   to as many rows as it takes when they don't. No breakpoint — the content
+   decides, so the same rule holds for three links or a dozen. */
+:host([stacked]) ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: baseline;
+    column-gap: calc(var(--content-space) * 2);
+    row-gap: calc(var(--content-space) * 0.35);
+}
+
+/* Column (the hero's link stack and the footer groups): one link per line,
+   folding back into a wrapped row on narrow screens where the column would
+   otherwise push the page content down. */
+:host([column]) {
+    padding: 0;
+    line-height: inherit;
+}
+
+:host([column]) ul {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    inline-size: auto;
+    gap: calc(var(--content-space) * 0.35);
+
+    @media screen and (width <= 768px) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: baseline;
+        column-gap: calc(var(--content-space) * 1.25);
+        row-gap: calc(var(--content-space) * 0.25);
+    }
+}
+
+:host([column]) li {
+    display: block;
+}
+
+/* A stack of plain links, not pills — no border, no background. */
+:host([column]) a,
+:host([column]) a:visited {
+    margin: 0;
+    padding-inline: 0;
+    border: none;
+    border-radius: 0;
+    line-height: inherit;
+    font-size: max(var(--base-font-size), 1em);
+    color: inherit;
+
+    &[aria-current="page"] {
+        color: var(--color-accent-text);
+    }
+}
+</style>

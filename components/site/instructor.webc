@@ -1,0 +1,233 @@
+<script webc:setup>
+	/**
+	 * The instructor's details: photo, office, contact and hours. Reads `instructor`.
+	 * @prop {'card'} [variant] a compact card instead of the full section
+	 */
+</script>
+<section id="instructor" aria-labelledby="instructor-heading" webc:root="override">
+    <template webc:nokeep webc:if="variant !== 'card'">
+        <div class="who">
+            <img class="photo screen-only" webc:if="$data.instructor.photo" :src="$data.instructor.photo" :alt="$data.instructor.name" width="160" height="160">
+            <div class="facts-column">
+                <h2 id="instructor-heading">Your instructor</h2>
+                <dl class="facts">
+                    <div class="name">
+                        <dt class="sr-only">Name</dt>
+                        <dd><strong><span webc:if="!$data.instructor.profile" @text="$data.instructor.name"></span><a
+                            webc:if="$data.instructor.profile" :href="$data.instructor.profile" @text="$data.instructor.name"></a></strong></dd>
+                    </div>
+                    <div webc:if="$data.instructor.office">
+                        <dt>Office</dt>
+                        <dd @text="$data.instructor.office"></dd>
+                    </div>
+                    <div webc:if="$data.instructor.hours?.length">
+                        <dt>Office hours</dt>
+                        <dd>
+                            <ul role="list">
+                                <li webc:for="block of $data.instructor.hours" @text="block"></li>
+                            </ul>
+                        </dd>
+                    </div>
+                    <div webc:if="$data.instructor.email" :class="$data.instructor.contact ? 'print-only' : ''">
+                        <dt>Email</dt>
+                        <dd><a :data-email="$data.instructor.email"></a></dd>
+                    </div>
+                    <div webc:if="$data.instructor.contact" :class="$data.instructor.email ? 'screen-only' : ''">
+                        <dt>Message</dt>
+                        <dd><a :href="$data.instructor.contact">Send me a message</a></dd>
+                    </div>
+                    <div webc:if="$data.instructor.blog">
+                        <dt>Blog</dt>
+                        <dd><a :href="$data.instructor.blog" @text="$data.instructor.blog.replace(/^https?:\/\//, '').replace(/\/$/, '')"></a></dd>
+                    </div>
+                </dl>
+                <p class="muted note" webc:if="$data.instructor.note" @text="$data.instructor.note"></p>
+            </div>
+        </div>
+    </template>
+
+    <template webc:nokeep webc:if="variant === 'card'">
+        <div class="instructor-card">
+            <img class="photo" webc:if="$data.instructor.photo" :src="$data.instructor.photo" :alt="$data.instructor.name" width="160" height="160">
+            <p class="monogram" aria-hidden="true" webc:if="!$data.instructor.photo" @text="$data.instructor.name.split(' ').filter(Boolean).map((part) => part[0]).join('')"></p>
+            <div>
+                <h2 id="instructor-heading" class="instructor-name"><span
+                    webc:if="!$data.instructor.profile" @text="$data.instructor.name"></span><a
+                    webc:if="$data.instructor.profile" :href="$data.instructor.profile" @text="$data.instructor.name"></a></h2>
+                <p class="instructor-meta separators">
+                    <span>Instructor</span>
+                    <span webc:if="$data.instructor.office" @text="$data.instructor.office"></span>
+                    <span webc:if="$data.instructor.hours?.length" @text="$data.instructor.hours.join('; ')"></span>
+                </p>
+                <p class="instructor-contact" webc:if="$data.instructor.contact || $data.instructor.email || $data.instructor.blog">
+                    <a webc:if="$data.instructor.contact" :href="$data.instructor.contact" :class="$data.instructor.email ? 'cta screen-only' : 'cta'">Send me a message</a>
+                    <a webc:if="$data.instructor.email" :data-email="$data.instructor.email" :class="$data.instructor.contact ? 'print-only' : ''"></a>
+                    <a webc:if="$data.instructor.blog" class="cta" :href="$data.instructor.blog" @text="$data.instructor.blog.replace(/^https?:\/\//, '').replace(/\/$/, '')"></a>
+                </p>
+                <p class="muted note" @text="$data.instructor.note" webc:if="$data.instructor.note"></p>
+            </div>
+        </div>
+    </template>
+</section>
+
+<style webc:scoped>
+    /* Default variant: the headshot beside a small labelled fact list — name,
+       office, hours, email, blog, rather than a sentence, so each fact has a
+       place a student can scan to. print.css collapses the same dl to one
+       run-in line (its `#instructor dl` rules), so the markup serves both. */
+    :host .who {
+        display: flex;
+        align-items: flex-start;
+        gap: calc(var(--content-space) * 1.1);
+
+        @media print {
+            display: block;
+        }
+    }
+
+    :host .facts-column {
+        min-inline-size: 0;
+        flex: 1 1 auto;
+    }
+
+    :host .facts-column h2 {
+        margin-block: 0 0.35em;
+        font-size: var(--font-size-6);
+        font-weight: var(--font-weight--semi-bold);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+    }
+
+    :host .facts {
+        display: grid;
+        grid-template-columns: max-content minmax(0, 1fr);
+        column-gap: var(--content-space);
+        row-gap: 0.3em;
+        margin: 0;
+
+        > div {
+            display: contents;
+        }
+
+        /* `display: contents` outranks the utility classes, so restate them
+           for rows that appear on one medium only. */
+        > div.print-only {
+            display: none;
+        }
+
+        dt {
+            color: var(--color-text-muted);
+            font-size: var(--font-size-6);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            line-height: var(--font-height);
+            padding-block-start: 0.15em;
+        }
+
+        dd {
+            margin: 0;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .name dd {
+            grid-column: 1 / -1;
+            font-size: var(--font-size-4);
+            line-height: var(--font-height--dense);
+            margin-block-end: 0.35em;
+        }
+
+        @media print {
+            display: inline;
+        }
+    }
+
+    :host .note {
+        margin-block: 0.75em 0;
+        font-size: max(var(--base-font-size), 0.9em);
+    }
+
+    :host .photo {
+        flex: none;
+        inline-size: 5.5em;
+        block-size: 5.5em;
+        border-radius: var(--circle-border-radius);
+        object-fit: cover;
+        border: var(--thin-border-width) solid var(--color-border);
+    }
+
+    :host .instructor-contact {
+        margin-block: 0;
+    }
+
+    :host .instructor-card {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--content-space);
+        max-inline-size: min(60ch, 100%);
+        margin-inline: auto;
+        padding: calc(var(--content-space) * 1.2);
+
+        background-color: var(--color-surface);
+        border: var(--thin-border-width) solid var(--color-border);
+        border-radius: var(--standard-border-radius);
+    }
+
+    :host .instructor-card .photo {
+        inline-size: 4em;
+        block-size: 4em;
+    }
+
+    /* Initials rather than a photograph: it identifies the card at a glance
+       without another asset to keep current. Decorative — the name is right
+       beside it, so it stays out of the accessibility tree. */
+    :host .monogram {
+        flex: none;
+        display: grid;
+        place-items: center;
+        inline-size: 2.75em;
+        block-size: 2.75em;
+        margin: 0;
+
+        background-color: color-mix(in sRGB, var(--color-accent) 14%, transparent);
+        border-radius: 50%;
+        color: var(--color-accent-text);
+        font-weight: var(--font-weight--semi-bold);
+    }
+
+    :host .instructor-name {
+        margin-block: 0 0.15em;
+        font-size: max(var(--base-font-size), 1.15em);
+    }
+
+    :host .instructor-meta {
+        margin-block: 0 0.75em;
+        color: var(--color-text-muted);
+        font-size: max(var(--base-font-size), 0.92em);
+    }
+
+    :host .cta {
+        color: var(--color-link);
+    }
+
+    /* print.css collapses the facts to one inline run by id selector; match
+       its specificity to drop a screen-only row. */
+    @media print {
+        :host#instructor .facts > div.screen-only {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+	for (const link of document.querySelectorAll("a[data-email]")) {
+		const email = atob(link.dataset.email);
+		link.href = `mailto:${email}`;
+		link.textContent = email;
+	}
+</script>
