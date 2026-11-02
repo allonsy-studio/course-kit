@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "/schemas/project.schema.json",
+  "title": "Project",
+  "description": "A staged course project. Present only for sections that run one. Structured, cross-referenced values live here rather than in the page prose so the syllabus, the schedule and the project page cannot drift apart.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Relative path to this schema, for editor validation."
+    },
+    "title": {
+      "type": "string",
+      "description": "Display name; should match `grading.project.title`."
+    },
+    "url": {
+      "type": "string",
+      "description": "Site path of the project page; schedule deadlines derived from the milestones link here."
+    },
+    "weight": {
+      "type": "number",
+      "description": "Share of the COURSE grade, as a percentage (25 means 25%). This is not the project's own scale, and `components` do not sum to it."
+    },
+    "scale": {
+      "type": "number",
+      "description": "The project's OWN point scale. The milestones (`components`, or the rubric's milestone criteria when the rubric is the milestone list) sum to exactly this."
+    },
+    "introduced": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+      "description": "Date the project is introduced in class, ISO 8601."
+    },
+    "due": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+      "description": "Date the final submission is due, ISO 8601."
+    },
+    "dueTime": {
+      "type": "string",
+      "description": "Clock time the final submission is due, as displayed (e.g. 11:59pm)."
+    },
+    "components": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/projectComponent"
+      },
+      "description": "The dated pieces the project is marked in; their points must sum to `scale`. Omit when the rubric's milestone criteria are the pieces, so the dates live once."
+    },
+    "rubric": {
+      "type": "object",
+      "description": "Final-project grading rubric, rendered by the standalone rubric page.",
+      "properties": {
+        "total": {
+          "type": "number",
+          "description": "Total available points; should equal the sum of each criterion's best level."
+        },
+        "levels": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          },
+          "description": "Achievement-level column headings, best first (e.g. Excellent, Satisfactory, Unsatisfactory)."
+        },
+        "criteria": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/rubricCriterion"
+          }
+        }
+      },
+      "required": [
+        "total",
+        "levels",
+        "criteria"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "title",
+    "weight",
+    "scale",
+    "due",
+    "rubric"
+  ],
+  "additionalProperties": true,
+  "$defs": {
+    "projectComponent": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Display name of the piece (e.g. Plan, Check-in, Final submission, Demo)."
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+          "description": "Date the piece is due, ISO 8601 (interpreted as UTC when formatted). Rendered through the `fullDate` filter — never author a display string here."
+        },
+        "points": {
+          "type": "number",
+          "description": "Points this piece carries on the project's own scale."
+        },
+        "dueTime": {
+          "type": "string",
+          "description": "When on that date the piece is due, as students read it (e.g. 11:59PM, start of class, in class). Omit when the date is enough. Shown on the schedule beside the date."
+        }
+      },
+      "required": [
+        "name",
+        "date",
+        "points"
+      ],
+      "additionalProperties": false
+    },
+    "rubricCriterion": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/matrixCriterion"
+        },
+        {
+          "$ref": "#/$defs/milestoneCriterion"
+        }
+      ]
+    },
+    "matrixCriterion": {
+      "type": "object",
+      "description": "A row of the levels matrix: one criterion scored at each achievement level.",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "levels": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/rubricLevel"
+          },
+          "description": "One entry per achievement level, in the same order as `rubric.levels`."
+        }
+      },
+      "required": [
+        "title",
+        "levels"
+      ],
+      "additionalProperties": false
+    },
+    "milestoneCriterion": {
+      "type": "object",
+      "description": "A dated milestone with a point value, rendered as a row of the milestone table.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Short label shown above the title (e.g. M1)."
+        },
+        "title": {
+          "type": "string"
+        },
+        "due": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+          "description": "ISO date, rendered through the `fullDate` filter; never a display string."
+        },
+        "dueTime": {
+          "type": "string",
+          "description": "Clock time or phrase as students read it (e.g. 11:59PM, in class)."
+        },
+        "points": {
+          "type": "number"
+        },
+        "description": {
+          "type": "string",
+          "description": "What is graded."
+        }
+      },
+      "required": [
+        "title",
+        "points"
+      ],
+      "additionalProperties": false
+    },
+    "rubricLevel": {
+      "type": "object",
+      "properties": {
+        "points": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Points awarded at this level."
+        },
+        "description": {
+          "type": "string",
+          "description": "What work at this level looks like."
+        }
+      },
+      "required": [
+        "points",
+        "description"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,7 +1,7 @@
 <script webc:setup>
 	/**
 	 * A list of links, each with a name and an optional description.
-	 * @prop {{ url: string, name: string, description?: string }[]} items
+	 * @prop {{ url: string, name: string, description?: string }[]} items the links to list
 	 */
 </script>
 <ul role="list" webc:root="override" webc:if="items">

@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "/schemas/course.schema.json",
+  "title": "Course section",
+  "description": "Content model for the course's identity and catalog copy (_data/course.json, exposed as the `course` global). Several properties are elements Meredith College requires on every syllabus. Think before removing a property or loosening `required`. Property order here is the suggested authoring order.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Relative path to this schema, for editor validation."
+    },
+    "code": {
+      "type": "string",
+      "pattern": "^[A-Z]+[0-9]+$",
+      "description": "Catalog code in display casing (e.g. CS101) — the course number Meredith requires on the syllabus. Slugs derive by lowercasing."
+    },
+    "name": {
+      "type": "string",
+      "description": "Course name as it appears in the catalog — the course name Meredith requires on the syllabus. NOT `title`: page titles (\"CODE: Name (Term)\") are computed by the kit."
+    },
+    "status": {
+      "type": "string",
+      "examples": [
+        "upcoming",
+        "active",
+        "archived"
+      ],
+      "default": "active",
+      "description": "Lifecycle state of the section; drives listing copy."
+    },
+    "term": {
+      "type": "object",
+      "required": [
+        "year",
+        "season"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "year": {
+          "type": "integer",
+          "minimum": 2000
+        },
+        "season": {
+          "enum": [
+            "spring",
+            "summer",
+            "fall"
+          ]
+        }
+      },
+      "description": "The term this section runs in. Must name an entry in _data/dates.json (year, then season), so a new term is one edit here plus the calendar."
+    },
+    "description": {
+      "type": "string",
+      "description": "Catalog description, verbatim — Meredith requires the catalog description on the syllabus, so do not editorialize here; section-specific prose belongs in `approach`."
+    },
+    "approach": {
+      "type": "string",
+      "description": "Optional section-specific framing of how THIS section runs the course; the catalog `description` stays untouched."
+    },
+    "prerequisites": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Prerequisite course codes (display casing)."
+    },
+    "prerequisiteNote": {
+      "type": "string",
+      "description": "Qualifier appended to the prerequisite list, e.g. the grade floor: \"with a grade of C or better\"."
+    },
+    "outcomes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      },
+      "description": "The committed catalog outcomes, verbatim — the course objectives and expected learning outcomes Meredith requires, each stating what students will know and be able to do. Section extras go in `additionalOutcomes`."
+    },
+    "additionalOutcomes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Section-specific outcomes layered on top of the committed catalog set."
+    },
+    "textbook": {
+      "type": "object",
+      "description": "Required text and how to get it — the textbook/materials element Meredith requires. Omit the whole key ONLY when the course has no text: the `<syllabus>` component then renders \"No text is required.\", which is still an explicit materials statement. Never leave the key present but empty.",
+      "properties": {
+        "required": {
+          "type": "string",
+          "description": "The required text, including cost/format notes (e.g. \"free, online\")."
+        },
+        "access": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Ordered steps for getting access."
+        }
+      },
+      "required": [
+        "required"
+      ],
+      "additionalProperties": false
+    },
+    "requirements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      },
+      "description": "Non-textbook requirements: software, hardware, accounts. Meredith requires a statement about required access to technology; the `<syllabus>` component always prints the laptop sentence and appends these, so list every tool students must install or sign up for (or say explicitly that nothing beyond the laptop is needed)."
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/link"
+      },
+      "description": "Course-wide documents (syllabus PDF, project specs, policies) shown on the landing page; per-week material belongs in that week's `resources`."
+    }
+  },
+  "required": [
+    "code",
+    "name",
+    "status",
+    "description",
+    "outcomes",
+    "requirements"
+  ],
+  "additionalProperties": true,
+  "$defs": {
+    "link": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string",
+          "description": "Optional description of the link."
+        },
+        "href": {
+          "type": "string",
+          "description": "Absolute URL for external material, or site-relative path (e.g. /resources/…) for published files."
+        }
+      },
+      "required": [
+        "title",
+        "href"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

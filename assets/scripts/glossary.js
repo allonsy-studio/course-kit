@@ -4,8 +4,8 @@
  * Enhances the plain list `<glossary-panel>` renders on the server. It
  * reads the terms from the page's JSON, builds the controls, and removes the
  * static list once it has rendered. The page never reads the clock. The query
- * string sets the starting state (see "Linking to a filtered glossary" in
- * AGENTS.md) and is kept in step as the reader changes it.
+ * string (`mode`, `group`, `test`, `reading`, `meeting`, `q`) sets the starting
+ * state and is kept in step as the reader changes it.
  */
 
 /**

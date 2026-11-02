@@ -2,7 +2,7 @@
 	/**
 	 * A meeting's deck links, each on its own line: the slides, then any
 	 * addendum. Renders nothing without either.
-	 * @prop {{ slides?: string, addendum?: string }} meeting
+	 * @prop {{ slides?: string, addendum?: string }} meeting one meeting from `scheduleWeeks`
 	 */
 </script>
 <div webc:root="override" class="decks" webc:if="meeting.slides || meeting.addendum">

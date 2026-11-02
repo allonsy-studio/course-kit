@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "/schemas/grading.schema.json",
+  "title": "Grading",
+  "description": "Grade breakdown keyed by category — the evaluation components and the formula for the final grade that Meredith requires on the syllabus. Every graded activity needs its own category, and the weights MUST total 100%; the build warns when they do not. The PRESENCE of `homework`, `project`, and `final` keys toggles related copy in templates, so key names are part of the contract. Key order is display order.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Relative path to this schema, for editor validation."
+    },
+    "participation": {
+      "$ref": "#/$defs/gradingCategory",
+      "description": "In-class credit (labs, participation). If this category exists, attendance affects the grade, and Meredith requires policies.attendance to state expectations AND consequences."
+    },
+    "homework": {
+      "$ref": "#/$defs/gradingCategory"
+    },
+    "tests": {
+      "$ref": "#/$defs/gradingCategory"
+    },
+    "project": {
+      "$ref": "#/$defs/gradingCategory"
+    },
+    "final": {
+      "$ref": "#/$defs/gradingCategory",
+      "description": "The final exam — the culminating experience Meredith strongly encourages during the exam period. Its presence renders the exam-slot copy from schedule.finalExam (or the exam-period fallback until the registrar publishes the slot)."
+    }
+  },
+  "additionalProperties": true,
+  "required": [],
+  "minProperties": 2,
+  "$defs": {
+    "gradingCategory": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Category heading as shown on the syllabus."
+        },
+        "weight": {
+          "type": "string",
+          "pattern": "^[0-9]{1,2}%$",
+          "description": "Share of the final grade, as a percentage string. All categories together must total 100%."
+        },
+        "body": {
+          "type": "string",
+          "description": "Policy prose for the category (due dates, make-up rules, late-work pointer)."
+        }
+      },
+      "required": [
+        "title",
+        "weight",
+        "body"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

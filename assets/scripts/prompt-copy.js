@@ -1,4 +1,4 @@
-// Copy control for `.prompt` figures (see "Markdown pipeline" in AGENTS.md).
+// Copy control for `.prompt` figures (a ```prompt fence in Markdown).
 // Injected client-side, and only onto `data-copyable` figures — the
 // prohibited examples get no copy control.
 const RESET_MS = 2000;

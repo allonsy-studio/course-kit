@@ -4,6 +4,7 @@
 	 * @prop {object[]} criteria rubric criteria
 	 * @prop {string[]} [levels] level names across the top
 	 * @prop {string} [caption] a screen-reader caption
+	 * @prop {number} [total] the points the rubric adds up to, shown in the footer
 	 */
 </script>
 <table webc:root="override" webc:if="criteria?.length">

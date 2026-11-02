@@ -1,7 +1,7 @@
 <script webc:setup>
 	/**
 	 * A radio group of lettered choices.
-	 * @prop {{ name: string, value: string, text: string, letter?: string }[]} choices
+	 * @prop {{ name: string, value: string, text: string, letter?: string }[]} choices the options, one radio button each
 	 * @prop {string} [legend] the group's legend
 	 * @prop {string} [legendclass] class for the legend, such as `sr-only`
 	 */

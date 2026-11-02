@@ -1,7 +1,7 @@
 <script webc:setup>
 	/**
 	 * A "?" disclosure listing the sources for a question.
-	 * @prop {{ title: string, href?: string }[]} sources
+	 * @prop {{ title: string, href?: string }[]} sources the places to read more, shown as links
 	 * @prop {string} group disclosures sharing a group close each other
 	 * @prop {string} label the summary's accessible name
 	 * @prop {string} [heading] a line above the list

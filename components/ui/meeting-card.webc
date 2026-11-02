@@ -2,7 +2,7 @@
 	/**
 	 * One class meeting in a week's list: the date down the left, the slot
 	 * beside it. Marks itself as the scope `<today-marker>` highlights.
-	 * @prop {{ iso: string, weekday: string, date: string }} meeting
+	 * @prop {{ iso: string, weekday: string, date: string }} meeting one meeting from `scheduleWeeks`
 	 * @slot when extra lines under the date (a note, a link)
 	 * @slot default what the meeting holds; a child sits beside the date
 	 */

@@ -8,7 +8,16 @@ Two layers.
 yarn test
 ```
 
-Covers the helpers, filters, markdown, worksheet preparation and PostCSS. The plugin as a whole is verified by the golden builds below; there is no fixture site.
+Covers the helpers, filters, markdown, worksheet preparation, PostCSS, the data and option checks, the component conventions and the documentation.
+
+Two tests keep the kit honest for a new author:
+
+- `test/starter.test.js` builds [`examples/starter`](../examples/starter) with Eleventy and checks the pages, that no component tag or placeholder is left in the output, and that the starter's data files match the shipped schemas. If you change a component or a data file's shape, this is the test that tells you a new course would break.
+- `test/docs.test.js` checks that every link in the README and `docs/` points at a file and heading that exist.
+
+`docs/components-reference.md` and `docs/tokens.md` are generated; the tests fail when they are out of date. Run `yarn docs` or `yarn schema` to rewrite them.
+
+The starter covers a typical course. The plugin as a whole is still verified against real courses by the golden builds below.
 
 ## Golden builds against a course
 

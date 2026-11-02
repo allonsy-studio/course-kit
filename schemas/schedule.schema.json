@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "/schemas/schedule.schema.json",
+  "title": "Schedule",
+  "description": "Content model for the course schedule (_data/schedule.json) — the course outline Meredith requires on the syllabus: class topics per session, assignment and exam dates, and the final exam. The screen syllabus renders `weeks` as the schedule table; the printed PDF omits the table and prints the fixed dates derived from it instead.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Relative path to this schema, for editor validation."
+    },
+    "meetings": {
+      "type": "object",
+      "description": "Weekly meeting pattern. Day slots also anchor the lesson calendar (day 1 = the week's first meeting).",
+      "properties": {
+        "days": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday"
+            ]
+          }
+        },
+        "time": {
+          "type": "string",
+          "pattern": "^[0-9]{1,2}:[0-9]{2}(am|AM|pm|PM)[–-][0-9]{1,2}:[0-9]{2}(am|AM|pm|PM)$",
+          "description": "Meeting time range, en dash between start and end (e.g. 11:00am–12:20pm)."
+        }
+      },
+      "required": [
+        "days",
+        "time"
+      ],
+      "additionalProperties": false
+    },
+    "finalExam": {
+      "type": "object",
+      "description": "The College-assigned slot for the final exam (the culminating experience). Omit until the registrar publishes it — templates fall back to the exam-period copy (\"the exact date and time will be announced in class\"). Rendered through the `examSlot` filter — never author a display string here.",
+      "properties": {
+        "date": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+          "description": "Exam date, ISO 8601 (interpreted as UTC when formatted)."
+        },
+        "start": {
+          "$ref": "#/$defs/clockTime"
+        },
+        "end": {
+          "$ref": "#/$defs/clockTime"
+        },
+        "note": {
+          "type": "string",
+          "description": "Callout for anything surprising about the slot (e.g. an earlier start than the usual meeting time)."
+        }
+      },
+      "required": [
+        "date",
+        "start",
+        "end"
+      ],
+      "additionalProperties": false
+    },
+    "weeks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/scheduleWeek"
+      },
+      "description": "Week-by-week plan; the week number is derived from the array index (draft against the academic calendar in dates.json). Also the source for the per-meeting `lessons` array."
+    }
+  },
+  "required": [
+    "meetings",
+    "weeks"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "link": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string",
+          "description": "Optional description of the link."
+        },
+        "href": {
+          "type": "string",
+          "description": "Absolute URL for external material, or site-relative path (e.g. /resources/…) for published files."
+        }
+      },
+      "required": [
+        "title",
+        "href"
+      ],
+      "additionalProperties": false
+    },
+    "reading": {
+      "type": "object",
+      "description": "A reading, optionally carrying the reading check students complete before class.",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string",
+          "description": "Optional description of the link."
+        },
+        "href": {
+          "type": "string",
+          "description": "Absolute URL for external material, or site-relative path (e.g. /resources/…) for published files."
+        },
+        "check": {
+          "type": "string",
+          "description": "What the Brightspace reading check for this reading asks for, phrased for students (e.g. \"3 questions, due by the next class\"). Omit for a reading with no check. Keep the questions themselves in your instructor-only notes, not in this file."
+        },
+        "due": {
+          "$ref": "#/$defs/isoDate"
+        },
+        "dueTime": {
+          "$ref": "#/$defs/dueTime"
+        }
+      },
+      "required": [
+        "title",
+        "href"
+      ],
+      "additionalProperties": false
+    },
+    "isoDate": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+      "description": "ISO 8601 date, interpreted as UTC when formatted. Shown through the `dueLabel` helper, never authored as display text."
+    },
+    "dueTime": {
+      "type": "string",
+      "description": "Time of day the item is due, as students read it (e.g. 11:59PM, noon). Omit for \"during class\" or when the date is enough."
+    },
+    "deadline": {
+      "type": "object",
+      "description": "Something students hand in, with the date it is due (the Brightspace due date, which is the one that counts). Listed on the meeting on or before the due date.",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "href": {
+          "type": "string",
+          "description": "Optional page for the item: the spec, the brief, or the Brightspace assignment."
+        },
+        "due": {
+          "$ref": "#/$defs/isoDate"
+        },
+        "dueTime": {
+          "$ref": "#/$defs/dueTime"
+        }
+      },
+      "required": [
+        "title",
+        "due"
+      ],
+      "additionalProperties": false
+    },
+    "clockTime": {
+      "type": "string",
+      "pattern": "^[0-9]{1,2}:[0-9]{2}(am|AM|pm|PM)$",
+      "description": "12-hour clock time, lowercase meridiem, no space (e.g. 9:00am)."
+    },
+    "scheduleWeek": {
+      "type": "object",
+      "properties": {
+        "topics": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          },
+          "description": "Week-level topic summary shown in the public schedule table. A topic that is exactly \"Test <n>\" (e.g. \"Test 1\" — no suffix) is also picked up as a fixed test date on the printed syllabus; descriptive forms like \"Test 1: HTML\" are not. Rendered as HTML, so a topic may carry trusted inline HTML — e.g. <s>…</s> to note a schedule change without deleting the superseded text, the same convention course.json's textbook.access steps use."
+        },
+        "days": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/dayOverride"
+          },
+          "description": "Optional per-meeting breakdown; omitted meetings fall back to the week's `topics`. Meredith asks for the outline to be as specific per class session as possible and updated as needed — add a week's days as soon as its meetings are planned."
+        },
+        "readings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reading"
+          },
+          "description": "Reference material students work through BEFORE the week's first meeting (MDN modules, the PHP manual). Optional — omit the key for a week with no assigned reading. Material handed out or posted after class belongs in `resources`."
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/link"
+          },
+          "description": "Material posted after class (handouts, specs, worksheets, external references); an empty array renders \"Nothing posted yet.\" Pre-class reading belongs in `readings`. Never list slide decks or demos here: each meeting links its own deck (matched by week and day from your slides folder) and demos automatically."
+        }
+      },
+      "required": [
+        "topics"
+      ],
+      "additionalProperties": false
+    },
+    "dayOverride": {
+      "type": "object",
+      "properties": {
+        "day": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Meeting slot within the week — 1 = the week's first meeting per `meetings.days`, not a weekday number."
+        },
+        "topics": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          },
+          "description": "Replaces the week's `topics` for this meeting on lesson pages. The exact-match \"Test <n>\" convention applies here too — it is how a test lands on one meeting (and one printed date) instead of the whole week. Rendered with @raw, same trusted-inline-HTML convention as the week-level `topics`."
+        },
+        "readings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reading"
+          },
+          "description": "Reading to finish BEFORE this meeting, with its reading check's due date. Use it instead of the week-level `readings` when the reading checks fall on different days."
+        },
+        "due": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/deadline"
+          },
+          "description": "Deadlines to announce at this meeting: the last class on or before each due date, so a Friday deadline sits on Thursday's meeting."
+        }
+      },
+      "required": [
+        "day"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

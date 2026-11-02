@@ -1,6 +1,6 @@
 /* A projected surface, not a page: loaded alone by _layouts/deck.webc, no
 base.css/masthead. The class names below are the deck dialect's vocabulary
-(see "Slide decks" in AGENTS.md). */
+(see docs/slides.md). */
 
 @import "font.css";
   @layer reset, base, layout, slide, chrome, reflow, print;
@@ -50,7 +50,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   color-scheme: light dark;
   }
 
-  /* Defined on body, not :root: see "CSS" under "Gotchas" in AGENTS.md.
+  /* Defined on body, not :root.
      Light mode takes the text-tone family — the bright values are
      pastels tuned for dark grounds. */
   body {
@@ -676,8 +676,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
 
   .big.short pre, pre.big.short { font-size: min(3.4cqi, 2.9rem); }
 
-  /* Inline SVG figures take color from classes, never a hex; see "Figures"
-     in AGENTS.md for the fill/stroke vocabulary. */
+  /* Inline SVG figures take color from classes, never a hex. */
   .slide svg {
     inline-size: 100%;
     block-size: auto;
@@ -903,7 +902,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
 
 @layer print {
   /* Landscape, one slide per page, no notes in either flavor; the
-     instructor handout is the notes sheet. See "Slide decks" in AGENTS.md. */
+     instructor handout is the notes sheet. */
   @page { size: 297mm 167mm; margin: 12mm; }
 
   @media print {

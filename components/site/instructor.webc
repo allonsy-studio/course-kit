@@ -4,7 +4,7 @@
 	 * @prop {'card'} [variant] a compact card instead of the full section
 	 */
 </script>
-<section id="instructor" aria-labelledby="instructor-heading" webc:root="override">
+<section id="instructor" aria-labelledby="instructor-heading" webc:root="override" webc:if="$data.instructor">
     <template webc:nokeep webc:if="variant !== 'card'">
         <div class="who">
             <img class="photo screen-only" webc:if="$data.instructor.photo" :src="$data.instructor.photo" :alt="$data.instructor.name" width="160" height="160">
@@ -30,7 +30,7 @@
                     </div>
                     <div webc:if="$data.instructor.email" :class="$data.instructor.contact ? 'print-only' : ''">
                         <dt>Email</dt>
-                        <dd><a :data-email="$data.instructor.email"></a></dd>
+                        <dd><a :data-email="encodeEmail($data.instructor.email)"></a></dd>
                     </div>
                     <div webc:if="$data.instructor.contact" :class="$data.instructor.email ? 'screen-only' : ''">
                         <dt>Message</dt>
@@ -61,7 +61,7 @@
                 </p>
                 <p class="instructor-contact" webc:if="$data.instructor.contact || $data.instructor.email || $data.instructor.blog">
                     <a webc:if="$data.instructor.contact" :href="$data.instructor.contact" :class="$data.instructor.email ? 'cta screen-only' : 'cta'">Send me a message</a>
-                    <a webc:if="$data.instructor.email" :data-email="$data.instructor.email" :class="$data.instructor.contact ? 'print-only' : ''"></a>
+                    <a webc:if="$data.instructor.email" :data-email="encodeEmail($data.instructor.email)" :class="$data.instructor.contact ? 'print-only' : ''"></a>
                     <a webc:if="$data.instructor.blog" class="cta" :href="$data.instructor.blog" @text="$data.instructor.blog.replace(/^https?:\/\//, '').replace(/\/$/, '')"></a>
                 </p>
                 <p class="muted note" @text="$data.instructor.note" webc:if="$data.instructor.note"></p>

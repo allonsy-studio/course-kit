@@ -1,5 +1,5 @@
-// Decodes the base64-encoded instructor email (see "Computed data" in
-// AGENTS.md) into real mailto: links on view.
+// Decodes the instructor email, which the `encodeEmail` filter writes into the
+// page as base64, into a real mailto: link on view.
 for (const anchor of document.querySelectorAll("a[data-email]")) {
 	try {
 		const address = atob(anchor.dataset.email);

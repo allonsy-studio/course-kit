@@ -47,7 +47,7 @@ title: "Instructor lesson plan"
 				<li>Prepare/update slides and live-demo code</li>
 				<li webc:for="deck of $data.lessonDecks">Print or open the <a :href="deck.notesUrl">speaker notes sheet</a></li>
 				<li>Stage starter files or lab handout if needed</li>
-				<li>Check Brightspace for student questions or submissions</li>
+				<li>Check <span @text="$data.site.lms"></span> for student questions or submissions</li>
 			</ul>
 		</section>
 
@@ -76,7 +76,7 @@ title: "Instructor lesson plan"
 			<ul class="checklist" role="list">
 				<li>Post handouts to <code>content/resources/</code> and link them in <code>_data/schedule.json</code>'s <code>resources[]</code> for the week; the slide deck publishes itself from <code>content/slides/</code>, so it only needs a link there if students should see it from the schedule</li>
 				<li>Note anything not covered and roll it into the next lesson</li>
-				<li>Post or grade lab/homework in Brightspace as needed</li>
+				<li>Post or grade lab/homework in <span @text="$data.site.lms"></span> as needed</li>
 			</ul>
 		</section>
 	</template>

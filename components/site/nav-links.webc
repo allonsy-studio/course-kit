@@ -2,7 +2,7 @@
 	/**
 	 * The site navigation as a list of links, marking the current page.
 	 * @prop {{ url: string, title: string }[]} navigation pages from `eleventyNavigation`
-	 * @prop {'footer' | 'hero'} [context] adds the contact and open-source links in the footer
+	 * @prop {'footer' | 'hero'} [context] adds the instructor's contact link in the footer and the hero
 	 */
 </script>
 <nav webc:root="override" webc:if="navigation?.length">
@@ -11,7 +11,6 @@
             <a :href="item?.url" @attributes="({ 'aria-current': item?.url === $data?.page?.url ? 'page' : undefined })" @text="item?.title"></a>
         </li>
         <li webc:if="$data.instructor?.contact && (context === 'footer' || context === 'hero')"><a :href="$data.instructor.contact">Contact</a></li>
-        <li webc:if="context === 'footer'"><a href="https://www.npmjs.com/org/allons-y">Open source</a></li>
     </ul>
 </nav>
 <style webc:scoped>

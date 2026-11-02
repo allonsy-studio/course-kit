@@ -5,6 +5,9 @@
 	 * @prop {string} label the pen's title
 	 * @prop {string} summary the pen's description
 	 * @prop {number} [height] embed height in pixels, default 800
+	 * @prop {string[]} [tags] tags added to the pen
+	 * @slot actions buttons beside the header
+	 * @slot default extra content under the code
 	 */
 </script>
 <figure webc:root="override" class="codepen-embed">
@@ -14,7 +17,7 @@
 	</div>
 
 	<div class="codepen"
-		:data-prefill="codepenPrefill({ title: label, description: summary, tags: ['cs230'] })"
+		:data-prefill="codepenPrefill({ title: label, description: summary, tags: tags ?? [] })"
 		:data-height="height ?? 800"
 		data-default-tab="html,result"
 		data-editable="true"
@@ -28,8 +31,7 @@
 	</div>
 
 	<script webc:keep>
-		/* Set the editor theme before ei.js builds the iframe; see
-		   content/demo/AGENTS.md. */
+		/* Set the editor theme before ei.js builds the iframe. */
 		(function () {
 			try {
 				var forced = document.documentElement.dataset.theme;

@@ -1,7 +1,6 @@
 <script webc:setup>
 	/**
 	 * The page header: institution, term, course title and the navigation. Reads `site`, `term` and `course`.
-	 * @prop {string} [context] where the navigation is shown
 	 */
 </script>
 <header webc:root="override" id="header">
