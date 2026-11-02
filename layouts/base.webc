@@ -30,8 +30,6 @@
     <link rel="stylesheet" webc:keep href="/styles/prism-light.css" media="(prefers-color-scheme: light)" data-prism-theme="light">
     <link rel="stylesheet" webc:keep href="/styles/prism-dark.css" media="(prefers-color-scheme: dark)" data-prism-theme="dark">
 
-    <template webc:nokeep @raw="bundleFile('js', 'content/scripts/theme-restore.js', $data, 'head')"></template>
-    <script webc:keep @raw="getBundle('js', 'head')"></script>
 
     <link rel="stylesheet" webc:keep href="/styles/base.css">
     <link rel="stylesheet" media="print" webc:keep webc:if="$data.printStylesheet" :href="$data.printStylesheet">

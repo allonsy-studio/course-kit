@@ -24,7 +24,6 @@
         </div>
         <div class="links">
             <nav-links column aria-label="Site" @context="hero" :@navigation="[{ url: '/#syllabus', title: 'Syllabus' }, ...eleventyNavigation($data.collections.all).filter((item) => item.url !== '/')]"></nav-links>
-            <theme-switcher></theme-switcher>
         </div>
     </div>
 </header>
