@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light dark" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>function (...args) { for (let key of CONTEXT_KEYS) { if (data &amp;&amp; data[key]) { this[key] = data[key]; } } return fn.call(this, ...args); } | Course kit preview</title>
+    <title>week-block | Course kit preview</title>
     <link rel="icon" href="/course-kit/preview/15/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/course-kit/preview/15/styles/font.css" />
     <link rel="stylesheet" href="/course-kit/preview/15/styles/base.css" />
@@ -17,7 +17,7 @@
     <a href="#main" class="skip">Skip to content</a>
     <header class="bar-top">
       <a href="/course-kit/preview/15/" rel="home"><strong>Course kit</strong> preview</a>
-      <a href="/course-kit/preview/15/foundations/">Foundations</a>
+      <a href="/course-kit/preview/15/theme/">Theme</a>
     </header>
 
     <p data-overrides="" hidden="" class="overrides">
@@ -160,36 +160,60 @@
 
           <h2>Color tokens</h2>
           <p>The tokens this component's styles read. Set one in <code>_data/theme.json</code> to change it everywhere.</p>
-          <p>Type a value to try it in every example above.</p>
+          <p>Pick a color to try it in every example above.</p>
 
           <table data-tokens="" class="tokens">
             <thead>
               <tr>
                 <th scope="col">Token</th>
                 <th scope="col">Colors</th>
-                <th scope="col">Try a value</th>
+                <th scope="col">Try a color</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <th scope="row"><code>--color-accent</code></th>
                 <td>Brand color: fills, buttons, rules, the masthead wash</td>
-                <td><input type="text" data-token="--color-accent" aria-label="Override --color-accent" placeholder="any CSS color" /></td>
+                <td>
+                  <div class="pickers">
+                    <label>Light <input type="color" data-token="--color-accent" data-scheme="light" aria-label="Light color for --color-accent" /></label>
+                    <label>Dark <input type="color" data-token="--color-accent" data-scheme="dark" aria-label="Dark color for --color-accent" /></label>
+                    <button type="button" data-token-reset="--color-accent" aria-label="Reset --color-accent">Reset</button>
+                  </div>
+                </td>
               </tr>
               <tr>
                 <th scope="row"><code>--color-border</code></th>
                 <td>Lines, rules and borders</td>
-                <td><input type="text" data-token="--color-border" aria-label="Override --color-border" placeholder="any CSS color" /></td>
+                <td>
+                  <div class="pickers">
+                    <label>Light <input type="color" data-token="--color-border" data-scheme="light" aria-label="Light color for --color-border" /></label>
+                    <label>Dark <input type="color" data-token="--color-border" data-scheme="dark" aria-label="Dark color for --color-border" /></label>
+                    <button type="button" data-token-reset="--color-border" aria-label="Reset --color-border">Reset</button>
+                  </div>
+                </td>
               </tr>
               <tr>
                 <th scope="row"><code>--color-surface</code></th>
                 <td>Raised or alternate surface: cards, table headers, code</td>
-                <td><input type="text" data-token="--color-surface" aria-label="Override --color-surface" placeholder="any CSS color" /></td>
+                <td>
+                  <div class="pickers">
+                    <label>Light <input type="color" data-token="--color-surface" data-scheme="light" aria-label="Light color for --color-surface" /></label>
+                    <label>Dark <input type="color" data-token="--color-surface" data-scheme="dark" aria-label="Dark color for --color-surface" /></label>
+                    <button type="button" data-token-reset="--color-surface" aria-label="Reset --color-surface">Reset</button>
+                  </div>
+                </td>
               </tr>
               <tr>
                 <th scope="row"><code>--color-text-muted</code></th>
                 <td>Secondary text</td>
-                <td><input type="text" data-token="--color-text-muted" aria-label="Override --color-text-muted" placeholder="any CSS color" /></td>
+                <td>
+                  <div class="pickers">
+                    <label>Light <input type="color" data-token="--color-text-muted" data-scheme="light" aria-label="Light color for --color-text-muted" /></label>
+                    <label>Dark <input type="color" data-token="--color-text-muted" data-scheme="dark" aria-label="Dark color for --color-text-muted" /></label>
+                    <button type="button" data-token-reset="--color-text-muted" aria-label="Reset --color-text-muted">Reset</button>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>

@@ -68,17 +68,64 @@ for (const canvas of document.querySelectorAll("[data-canvas]")) {
 	canvas.querySelector("[data-axe]").addEventListener("click", () => check(canvas).catch((error) => (canvas.querySelector(".axe-result").textContent = `The check failed: ${error.message}`)));
 }
 
-// Token override fields and the bar that counts them.
+// Token color pickers and the bar that counts the overrides.
 const bar = document.querySelector("[data-overrides]");
+const pickers = document.querySelectorAll("input[type=color][data-token]");
+
+/** @param {string} color any CSS color @param {"light" | "dark"} scheme @returns {string} `#rrggbb`, flattened onto the page color */
+const resolved = (color, scheme) => {
+	const canvas = new OffscreenCanvas(1, 1);
+	const context = canvas.getContext("2d", { willReadFrequently: true });
+	context.fillStyle = scheme === "dark" ? "#181b25" : "#ffffff";
+	context.fillRect(0, 0, 1, 1);
+	context.fillStyle = color;
+	context.fillRect(0, 0, 1, 1);
+	const [r, g, b] = context.getImageData(0, 0, 1, 1).data;
+	return `#${[r, g, b].map((channel) => channel.toString(16).padStart(2, "0")).join("")}`;
+};
+
+/** What a token computes to in one scheme. The probe is a child of `<html>`, so it sees the kit's defaults and the saved overrides, never the page chrome's own palette. */
+const probe = document.createElement("span");
+probe.hidden = true;
+document.documentElement.append(probe);
+const computed = (name, scheme) => {
+	probe.style.cssText = `color-scheme: ${scheme}; color: var(${name}); display: none`;
+	probe.hidden = false;
+	const value = getComputedStyle(probe).color;
+	probe.hidden = true;
+	return resolved(value, scheme);
+};
+
+/** @param {string} saved `light-dark(#a, #b)` or one color @returns {{ light: string, dark: string } | null} */
+const parse = (saved) => {
+	const pair = saved?.match(/^light-dark\((#[0-9a-f]{6}), (#[0-9a-f]{6})\)$/i);
+	return pair ? { light: pair[1], dark: pair[2] } : null;
+};
+
 const sync = () => {
 	const saved = window.previewTokens?.get() ?? {};
-	for (const input of document.querySelectorAll("input[data-token]")) if (document.activeElement !== input) input.value = saved[input.dataset.token] ?? "";
+	for (const input of pickers) {
+		if (document.activeElement === input) continue;
+		const own = parse(saved[input.dataset.token]);
+		input.value = own?.[input.dataset.scheme] ?? computed(input.dataset.token, input.dataset.scheme);
+	}
+	for (const reset of document.querySelectorAll("[data-token-reset]")) reset.hidden = !(reset.dataset.tokenReset in saved);
 	if (!bar) return;
 	const count = Object.keys(saved).length;
 	bar.hidden = count === 0;
 	bar.querySelector("[data-overrides-count]").textContent = `${count} token override${count === 1 ? "" : "s"} apply to every frame.`;
 };
-for (const input of document.querySelectorAll("input[data-token]")) input.addEventListener("input", () => window.previewTokens.set(input.dataset.token, input.value));
+
+// Either picker saves both colors, so the other scheme keeps the value it had.
+for (const input of pickers) {
+	input.addEventListener("input", () => {
+		const name = input.dataset.token;
+		const other = [...pickers].find((picker) => picker.dataset.token === name && picker !== input);
+		const [light, dark] = input.dataset.scheme === "light" ? [input.value, other.value] : [other.value, input.value];
+		window.previewTokens.set(name, `light-dark(${light}, ${dark})`);
+	});
+}
+for (const reset of document.querySelectorAll("[data-token-reset]")) reset.addEventListener("click", () => window.previewTokens.set(reset.dataset.tokenReset, ""));
 bar?.querySelector("[data-overrides-reset]").addEventListener("click", () => window.previewTokens.reset());
 window.addEventListener("previewtokenschange", sync);
 sync();
