@@ -59,6 +59,117 @@
         }
       }
       @layer norn.components {
+        norn-segmented-control {
+          --_gap: 2px;
+          --_current: var(--norn-text-accent, light-dark(oklch(from color-mix(in oklch, var(--norn-ui-accent, #2346d4) 82%, black) min(l, 0.5) c h), oklch(from color-mix(in oklch, var(--norn-ui-accent, #2346d4) 55%, white) max(l, 0.72) c h)));
+          display: inline-flex;
+          max-inline-size: 100%;
+
+          & fieldset {
+            box-sizing: border-box;
+            display: grid;
+            grid-auto-columns: minmax(0, 1fr);
+            grid-auto-flow: column;
+            gap: var(--_gap);
+            min-inline-size: 0;
+            margin: 0;
+            padding: var(--_gap);
+            border: 0;
+            border-radius: var(--norn-ui-border-radius, 6px);
+            background: var(--norn-surface-raised, light-dark(hsl(40, 14%, 96%), #242932));
+          }
+
+          & legend,
+          & [data-icon-only] label > span {
+            box-sizing: border-box;
+            position: absolute;
+            inline-size: 1px;
+            block-size: 1px;
+            overflow: hidden;
+            clip-path: inset(50%);
+            white-space: nowrap;
+          }
+
+          /* The radio covers its label, so a click anywhere on the option selects it, and the native control keeps the focus. */
+          & label {
+            --_state: 0%;
+            --_tint: transparent;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--norn-space-2xs, 0.25rem);
+            min-inline-size: 2.5rem;
+            min-block-size: calc(var(--norn-ui-control-height, 2.25rem) - 2 * var(--_gap));
+            padding-inline: var(--norn-space-s, 0.75rem);
+            border-radius: calc(var(--norn-ui-border-radius, 6px) - var(--_gap));
+            background-color: color-mix(in oklab, currentcolor var(--_state), var(--_tint));
+            color: var(--norn-text-muted, light-dark(#4b5160, #a4abba));
+            cursor: pointer;
+            overflow-wrap: anywhere;
+            text-align: center;
+
+            &:hover {
+              --_state: var(--norn-ui-state-hover, 8%);
+            }
+
+            &:active {
+              --_state: var(--norn-ui-state-press, 12%);
+            }
+
+            &:has(input:checked) {
+              --_tint: color-mix(in oklab, var(--_current) 14%, transparent);
+              color: var(--_current);
+            }
+
+            /* The ring sits inside the option, clear of the track's edge. */
+            &:has(input:focus-visible) {
+              outline: var(--norn-ui-focus-width, 2px) solid var(--norn-text-accent, light-dark(oklch(from color-mix(in oklch, var(--norn-ui-accent, #2346d4) 82%, black) min(l, 0.5) c h), oklch(from color-mix(in oklch, var(--norn-ui-accent, #2346d4) 55%, white) max(l, 0.72) c h)));
+              outline-offset: calc(-1 * var(--norn-ui-focus-offset, 2px));
+            }
+          }
+
+          & input {
+            box-sizing: border-box;
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            margin: 0;
+            opacity: 0;
+            cursor: pointer;
+          }
+
+          @media (pointer: coarse) {
+            & label {
+              min-block-size: 2.75rem;
+            }
+          }
+
+          @media (prefers-reduced-motion: no-preference) {
+            & label {
+              transition:
+                background-color var(--norn-ui-motion-duration, 150ms) var(--norn-ui-motion-easing, cubic-bezier(0.2, 0, 0, 1)),
+                color var(--norn-ui-motion-duration, 150ms) var(--norn-ui-motion-easing, cubic-bezier(0.2, 0, 0, 1));
+            }
+          }
+
+          /* The checked option fills itself, since the browser replaces the tint. */
+          @media (forced-colors: active) {
+            & label:has(input:checked) {
+              background-color: Highlight;
+              color: HighlightText;
+              forced-color-adjust: none;
+            }
+
+            & label:has(input:focus-visible) {
+              outline-color: CanvasText;
+            }
+          }
+        }
+      }
+      @layer norn.components {
         norn-copy-button {
           display: inline-flex;
           max-inline-size: 100%;
@@ -1116,8 +1227,8 @@
         <a rel="home" href="/course-kit/preview/15/"><strong>Course kit</strong> preview</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-ocuaz">
-            <span data-label="" id="norn-header-webc-ocuaz">Primary</span>
+          <nav aria-labelledby="norn-header-webc-akv0E">
+            <span data-label="" id="norn-header-webc-akv0E">Primary</span>
 
             <a href="/course-kit/preview/15/theme/">Theme</a>
           </nav>
@@ -1136,8 +1247,8 @@
         <section aria-labelledby="nav-ui">
           <h2 id="nav-ui">Building blocks</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-JRzL6">
-              <span data-label="" id="norn-side-nav-webc-JRzL6"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-RAhiw">
+              <span data-label="" id="norn-side-nav-webc-RAhiw"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -1192,8 +1303,8 @@
         <section aria-labelledby="nav-site">
           <h2 id="nav-site">Site sections</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-dUQig">
-              <span data-label="" id="norn-side-nav-webc-dUQig"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-EFIzu">
+              <span data-label="" id="norn-side-nav-webc-EFIzu"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -1254,8 +1365,8 @@
         <section aria-labelledby="nav-practice">
           <h2 id="nav-practice">Practice worksheets</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-p413M">
-              <span data-label="" id="norn-side-nav-webc-p413M"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-Ciw_J">
+              <span data-label="" id="norn-side-nav-webc-Ciw_J"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -1314,23 +1425,96 @@
             <h3>Default</h3>
 
             <figure data-canvas="" class="canvas">
-              <div role="group" aria-label="Canvas controls" class="canvas-bar">
-                <fieldset>
-                  <legend>Color scheme</legend>
-                  <label><input type="radio" name="scheme-/frames/ui/card-list/default/" value="light" /> Light</label>
-                  <label><input type="radio" name="scheme-/frames/ui/card-list/default/" value="system" checked="" /> System</label>
-                  <label><input type="radio" name="scheme-/frames/ui/card-list/default/" value="dark" /> Dark</label>
-                </fieldset>
-                <fieldset class="widths">
-                  <legend>Width</legend>
-                  <label><input type="radio" name="width-/frames/ui/card-list/default/" value="" checked="" /> Fill</label>
-                  <label><input type="radio" name="width-/frames/ui/card-list/default/" value="320" /> Phone</label>
-                  <label><input type="radio" name="width-/frames/ui/card-list/default/" value="768" /> Tablet</label>
-                  <label><input type="radio" name="width-/frames/ui/card-list/default/" value="1024" /> Desktop</label>
-                </fieldset>
-                <button type="button" data-axe="">Check accessibility</button>
-              </div>
+              <!-- A form of its own makes the radio names local to this canvas. -->
+              <form onsubmit="return false;" class="canvas-bar">
+                <norn-segmented-control>
+                  <fieldset data-icon-only="">
+                    <legend><span>Color scheme</span></legend>
+
+                    <label title="Light"
+                      ><input type="radio" name="scheme" value="light" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M16 12a4 4 0 1 1-8 0a4 4 0 1 1 8 0M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"></path>
+                        </svg> </norn-icon
+                      ><span>Light</span></label
+                    >
+                    <label title="System"
+                      ><input type="radio" name="scheme" value="system" checked="" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0"></path>
+                          <path d="M12 3a9 9 0 0 1 0 18z" data-fill=""></path>
+                        </svg> </norn-icon
+                      ><span>System</span></label
+                    >
+                    <label title="Dark"
+                      ><input type="radio" name="scheme" value="dark" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+                        </svg> </norn-icon
+                      ><span>Dark</span></label
+                    >
+                  </fieldset>
+                </norn-segmented-control>
+                <norn-segmented-control class="widths">
+                  <fieldset data-icon-only="">
+                    <legend><span>Width</span></legend>
+
+                    <label title="Fill"
+                      ><input type="radio" name="width" value="" checked="" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M3 12h18M7 8l-4 4l4 4M17 8l4 4l-4 4"></path>
+                        </svg> </norn-icon
+                      ><span>Fill</span></label
+                    >
+                    <label title="Phone, 320px"
+                      ><input type="radio" name="width" value="320" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M7 2h10v20H7zM11 18h2"></path>
+                        </svg> </norn-icon
+                      ><span>Phone, 320px</span></label
+                    >
+                    <label title="Tablet, 768px"
+                      ><input type="radio" name="width" value="768" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M4 3h16v18H4zM11 18h2"></path>
+                        </svg> </norn-icon
+                      ><span>Tablet, 768px</span></label
+                    >
+                    <label title="Desktop, 1024px"
+                      ><input type="radio" name="width" value="1024" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M3 4h18v12H3zM8 20h8M12 16v4"></path>
+                        </svg> </norn-icon
+                      ><span>Desktop, 1024px</span></label
+                    >
+                  </fieldset>
+                </norn-segmented-control>
+                <button type="button" data-axe="" data-state="idle">
+                  <norn-icon data-for="idle">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M12 7v.5M7.5 10l4.5 1l4.5-1M12 11v3M9.5 18l2.5-4l2.5 4"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="running">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M21 12a9 9 0 1 1-9-9"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="pass">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M8 12l3 3l5-6"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="fail">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M15 9l-6 6M9 9l6 6"></path>
+                    </svg>
+                  </norn-icon>
+                  Check accessibility
+                </button>
+              </form>
               <div class="stage"><iframe src="/course-kit/preview/15/frames/ui/card-list/default/" title="Default" loading="lazy"></iframe></div>
+              <p class="open"><a href="/course-kit/preview/15/frames/ui/card-list/default/">Open on its own</a></p>
               <output aria-live="polite" class="axe-result"></output>
             </figure>
 
@@ -1343,7 +1527,7 @@
                       type="button"
                       hidden=""
                       data-value='<card-list :@items="([{&amp;quot;data&amp;quot;:{&amp;quot;code&amp;quot;:&amp;quot;CS101&amp;quot;,&amp;quot;name&amp;quot;:&amp;quot;Introduction to Web Publishing&amp;quot;,&amp;quot;description&amp;quot;:&amp;quot;HTML, CSS and a first look at JavaScript.&amp;quot;},&amp;quot;page&amp;quot;:{&amp;quot;url&amp;quot;:&amp;quot;/&amp;quot;}},{&amp;quot;data&amp;quot;:{&amp;quot;code&amp;quot;:&amp;quot;CS201&amp;quot;,&amp;quot;name&amp;quot;:&amp;quot;Web Programming&amp;quot;,&amp;quot;description&amp;quot;:&amp;quot;Scripting the page and talking to a server.&amp;quot;},&amp;quot;page&amp;quot;:{&amp;quot;url&amp;quot;:&amp;quot;/&amp;quot;}}])"></card-list>'
-                      data-strings="norn-code-block-webc-t_iuI"
+                      data-strings="norn-code-block-webc-Re-QD"
                       data-compact=""
                       data-surface="code">
                       <span data-icons=""
@@ -1362,8 +1546,8 @@
                   <pre
                     dir="ltr"
                     data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,9,2,1,7,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,30,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,11,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,41,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,11,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,43,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,5,0,0,3,1,0,9,0,0,1]]">&lt;card-list :@items="([{&amp;quot;data&amp;quot;:{&amp;quot;code&amp;quot;:&amp;quot;CS101&amp;quot;,&amp;quot;name&amp;quot;:&amp;quot;Introduction to Web Publishing&amp;quot;,&amp;quot;description&amp;quot;:&amp;quot;HTML, CSS and a first look at JavaScript.&amp;quot;},&amp;quot;page&amp;quot;:{&amp;quot;url&amp;quot;:&amp;quot;/&amp;quot;}},{&amp;quot;data&amp;quot;:{&amp;quot;code&amp;quot;:&amp;quot;CS201&amp;quot;,&amp;quot;name&amp;quot;:&amp;quot;Web Programming&amp;quot;,&amp;quot;description&amp;quot;:&amp;quot;Scripting the page and talking to a server.&amp;quot;},&amp;quot;page&amp;quot;:{&amp;quot;url&amp;quot;:&amp;quot;/&amp;quot;}}])"&gt;&lt;/card-list&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-t_iuI">
-                    <span data-string="label" id="norn-code-block-webc-t_iuI-copy">Copy {name} to clipboard</span>
+                  <span hidden="" id="norn-code-block-webc-Re-QD">
+                    <span data-string="label" id="norn-code-block-webc-Re-QD-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -1377,7 +1561,7 @@
           <h2>Props</h2>
           <p>Write them with the <code>@</code> prefix, and <code>:@</code> for an expression. A prop in square brackets is optional.</p>
           <norn-simple-table class="spec"
-            ><span hidden="" id="norn-simple-table-webc-mwls6"></span>
+            ><span hidden="" id="norn-simple-table-webc-Fe7dE"></span>
             <div>
               <table>
                 <thead>

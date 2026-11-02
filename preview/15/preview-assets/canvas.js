@@ -24,6 +24,8 @@ function setScheme(canvas, scheme) {
 async function check(canvas) {
 	const frame = frameOf(canvas);
 	const out = canvas.querySelector(".axe-result");
+	const button = canvas.querySelector("[data-axe]");
+	button.dataset.state = "running";
 	out.textContent = "Checking…";
 	const win = frame.contentWindow;
 	if (!win.axe) {
@@ -36,6 +38,7 @@ async function check(canvas) {
 		});
 	}
 	const { violations } = await win.axe.run(win.document, { runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"] } });
+	button.dataset.state = violations.length ? "fail" : "pass";
 	if (!violations.length) {
 		out.textContent = "No violations found.";
 		return;
@@ -65,7 +68,12 @@ for (const canvas of document.querySelectorAll("[data-canvas]")) {
 			fit(canvas);
 		}
 	});
-	canvas.querySelector("[data-axe]").addEventListener("click", () => check(canvas).catch((error) => (canvas.querySelector(".axe-result").textContent = `The check failed: ${error.message}`)));
+	canvas.querySelector("[data-axe]").addEventListener("click", () =>
+		check(canvas).catch((error) => {
+			canvas.querySelector("[data-axe]").dataset.state = "fail";
+			canvas.querySelector(".axe-result").textContent = `The check failed: ${error.message}`;
+		}),
+	);
 }
 
 // Token color pickers and the bar that counts the overrides.
@@ -132,3 +140,11 @@ sync();
 
 // On a phone the list of components starts closed, so the page is the first thing on screen.
 if (matchMedia("(max-width: 48rem)").matches) document.querySelector("details.nav")?.removeAttribute("open");
+
+// A table that scrolls sideways must be reachable by keyboard: make its scroll box a labelled, focusable region.
+for (const box of document.querySelectorAll("norn-simple-table > div")) {
+	if (box.scrollWidth <= box.clientWidth) continue;
+	box.tabIndex = 0;
+	box.setAttribute("role", "region");
+	box.setAttribute("aria-label", box.closest("norn-simple-table").previousElementSibling?.textContent?.trim() || "Table");
+}
