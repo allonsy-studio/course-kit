@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>function (...args) { for (let key of CONTEXT_KEYS) { if (data &amp;&amp; data[key]) { this[key] = data[key]; } } return fn.call(this, ...args); } | Course kit preview</title>
+    <link rel="icon" href="/course-kit/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/course-kit/styles/font.css" />
+    <link rel="stylesheet" href="/course-kit/styles/base.css" />
+    <link rel="stylesheet" href="/course-kit/preview-assets/shell.css" />
+    <script src="/course-kit/preview-assets/tokens.js"></script>
+    <script type="module" src="/course-kit/preview-assets/canvas.js"></script>
+  </head>
+  <body class="preview">
+    <a href="#main" class="skip">Skip to content</a>
+    <header class="bar-top">
+      <a href="/course-kit/" rel="home"><strong>Course kit</strong> preview</a>
+      <a href="/course-kit/foundations/">Foundations</a>
+    </header>
+
+    <p data-overrides="" hidden="" class="overrides">
+      <span data-overrides-count=""></span>
+      <button type="button" data-overrides-reset="">Reset</button>
+    </p>
+
+    <div class="app">
+      <details open="" class="nav">
+        <summary>Components</summary>
+        <nav aria-label="Components">
+          <section>
+            <h2>Building blocks</h2>
+            <ul role="list">
+              <li><a href="/course-kit/components/ui/arrow-link/">arrow-link</a></li>
+              <li><a href="/course-kit/components/ui/assigned-list/">assigned-list</a></li>
+              <li><a href="/course-kit/components/ui/callout/">callout</a></li>
+              <li><a href="/course-kit/components/ui/card-list/">card-list</a></li>
+              <li><a href="/course-kit/components/ui/codepen-embed/">codepen-embed</a></li>
+              <li><a href="/course-kit/components/ui/download-button/">download-button</a></li>
+              <li><a href="/course-kit/components/ui/eyebrow/">eyebrow</a></li>
+              <li><a href="/course-kit/components/ui/link-list/">link-list</a></li>
+              <li><a href="/course-kit/components/ui/link-section/">link-section</a></li>
+              <li><a href="/course-kit/components/ui/meeting-card/">meeting-card</a></li>
+              <li><a href="/course-kit/components/ui/meeting-decks/">meeting-decks</a></li>
+              <li><a href="/course-kit/components/ui/table-rubric/">table-rubric</a></li>
+              <li><a href="/course-kit/components/ui/today-link/">today-link</a></li>
+              <li><a href="/course-kit/components/ui/today-marker/">today-marker</a></li>
+              <li><a href="/course-kit/components/ui/week-block/">week-block</a></li>
+            </ul>
+          </section>
+          <section>
+            <h2>Site sections</h2>
+            <ul role="list">
+              <li><a href="/course-kit/components/site/copyright/">copyright</a></li>
+              <li><a href="/course-kit/components/site/course-documents/">course-documents</a></li>
+              <li><a href="/course-kit/components/site/course-summary/">course-summary</a></li>
+              <li><a href="/course-kit/components/site/demo-weeks/">demo-weeks</a></li>
+              <li><a href="/course-kit/components/site/glossary-entry/">glossary-entry</a></li>
+              <li><a href="/course-kit/components/site/glossary-panel/">glossary-panel</a></li>
+              <li><a href="/course-kit/components/site/glossary/">glossary</a></li>
+              <li><a href="/course-kit/components/site/grading/">grading</a></li>
+              <li><a href="/course-kit/components/site/instructor/">instructor</a></li>
+              <li><a href="/course-kit/components/site/masthead/">masthead</a></li>
+              <li><a href="/course-kit/components/site/nav-links/">nav-links</a></li>
+              <li><a href="/course-kit/components/site/policies/">policies</a></li>
+              <li><a href="/course-kit/components/site/schedule-overview/">schedule-overview</a></li>
+              <li><a href="/course-kit/components/site/schedule-weeks/">schedule-weeks</a></li>
+              <li><a href="/course-kit/components/site/site-footer/">site-footer</a></li>
+              <li><a href="/course-kit/components/site/slide-timetable/">slide-timetable</a></li>
+              <li><a href="/course-kit/components/site/syllabus/">syllabus</a></li>
+            </ul>
+          </section>
+          <section>
+            <h2>Practice worksheets</h2>
+            <ul role="list">
+              <li><a href="/course-kit/components/practice/check-controls/">check-controls</a></li>
+              <li><a href="/course-kit/components/practice/choice-list/">choice-list</a></li>
+              <li><a href="/course-kit/components/practice/cite-panel/">cite-panel</a></li>
+              <li><a href="/course-kit/components/practice/practice-figure/">practice-figure</a></li>
+              <li><a href="/course-kit/components/practice/practice-fill/">practice-fill</a></li>
+              <li><a href="/course-kit/components/practice/practice-grid/">practice-grid</a></li>
+              <li><a href="/course-kit/components/practice/practice-judge/">practice-judge</a></li>
+              <li><a href="/course-kit/components/practice/practice-match/">practice-match</a></li>
+              <li><a href="/course-kit/components/practice/practice-question/">practice-question</a></li>
+              <li><a href="/course-kit/components/practice/practice-selfcheck/">practice-selfcheck</a></li>
+              <li><a href="/course-kit/components/practice/practice-terms/">practice-terms</a></li>
+              <li><a href="/course-kit/components/practice/practice-tree/">practice-tree</a></li>
+              <li><a href="/course-kit/components/practice/practice-worksheet/">practice-worksheet</a></li>
+            </ul>
+          </section>
+        </nav>
+      </details>
+
+      <main id="main" tabindex="-1">
+        <div class="component">
+          <h1><code>&lt;arrow-link&gt;</code></h1>
+          <p class="lead">A link with a trailing arrow. The label is the slot; <code>href</code> and any other attribute pass through to the <code>&lt;a&gt;</code>.</p>
+          <p class="meta">Building blocks</p>
+
+          <h2>Examples</h2>
+          <div class="story">
+            <h3>Default</h3>
+
+            <figure data-canvas="" class="canvas">
+              <div role="group" aria-label="Canvas controls" class="canvas-bar">
+                <fieldset>
+                  <legend>Color scheme</legend>
+                  <label><input type="radio" name="scheme-/frames/ui/arrow-link/default/" value="light" /> Light</label>
+                  <label><input type="radio" name="scheme-/frames/ui/arrow-link/default/" value="system" checked="" /> System</label>
+                  <label><input type="radio" name="scheme-/frames/ui/arrow-link/default/" value="dark" /> Dark</label>
+                </fieldset>
+                <fieldset class="widths">
+                  <legend>Width</legend>
+                  <label><input type="radio" name="width-/frames/ui/arrow-link/default/" value="" checked="" /> Fill</label>
+                  <label><input type="radio" name="width-/frames/ui/arrow-link/default/" value="320" /> Phone</label>
+                  <label><input type="radio" name="width-/frames/ui/arrow-link/default/" value="768" /> Tablet</label>
+                  <label><input type="radio" name="width-/frames/ui/arrow-link/default/" value="1024" /> Desktop</label>
+                </fieldset>
+                <button type="button" data-axe="">Check accessibility</button>
+              </div>
+              <div class="stage"><iframe src="/course-kit/frames/ui/arrow-link/default/" title="Default" loading="lazy"></iframe></div>
+              <output aria-live="polite" class="axe-result"></output>
+            </figure>
+
+            <details>
+              <summary>Source</summary>
+              <pre><code>&lt;arrow-link @href="/schedule/"&gt;See the schedule&lt;/arrow-link&gt;</code></pre>
+            </details>
+          </div>
+
+          <h2>Color tokens</h2>
+          <p>The tokens this component's styles read. Set one in <code>_data/theme.json</code> to change it everywhere.</p>
+          <p>Type a value to try it in every example above.</p>
+
+          <table data-tokens="" class="tokens">
+            <thead>
+              <tr>
+                <th scope="col">Token</th>
+                <th scope="col">Colors</th>
+                <th scope="col">Try a value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row"><code>--color-accent-text</code></th>
+                <td>Brand color for type, dark enough to read</td>
+                <td><input type="text" data-token="--color-accent-text" aria-label="Override --color-accent-text" placeholder="any CSS color" /></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
