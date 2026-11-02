@@ -31,8 +31,7 @@
 	</div>
 
 	<script webc:keep>
-		/* Set the editor theme before ei.js builds the iframe; see
-		   content/demo/AGENTS.md. */
+		/* Set the editor theme before ei.js builds the iframe. */
 		(function () {
 			try {
 				var forced = document.documentElement.dataset.theme;

@@ -50,17 +50,6 @@
       },
       "description": "The term this section runs in. Must name an entry in _data/dates.json (year, then season), so a new term is one edit here plus the calendar."
     },
-    "accent": {
-      "oneOf": [
-        {
-          "$ref": "#/$defs/accentPreset"
-        },
-        {
-          "$ref": "#/$defs/accentColors"
-        }
-      ],
-      "description": "The color that identifies this section: it tints the masthead, rules the schedule, and colors the decks. Either the name of a theme bright (the presets both stylesheets know) or a color pair of your own: `ui` for fills and `text` for type, with `text` given for light and dark schemes because a fill color is rarely readable at text size. Optional — a section without one falls back to the site's magenta."
-    },
     "description": {
       "type": "string",
       "description": "Catalog description, verbatim — Meredith requires the catalog description on the syllabus, so do not editorialize here; section-specific prose belongs in `approach`."
@@ -142,48 +131,6 @@
   ],
   "additionalProperties": true,
   "$defs": {
-    "accentPreset": {
-      "enum": [
-        "magenta",
-        "cyan",
-        "orange",
-        "yellow",
-        "purple"
-      ],
-      "description": "A theme bright defined in base.css and deck.css."
-    },
-    "accentColors": {
-      "type": "object",
-      "required": [
-        "ui",
-        "text"
-      ],
-      "additionalProperties": false,
-      "properties": {
-        "ui": {
-          "type": "string",
-          "description": "Any CSS color, used for fills (the masthead wash, rules, deck chrome)."
-        },
-        "text": {
-          "type": "object",
-          "required": [
-            "light",
-            "dark"
-          ],
-          "additionalProperties": false,
-          "properties": {
-            "light": {
-              "type": "string",
-              "description": "The accent at text size on a light ground: usually a darkened `ui`."
-            },
-            "dark": {
-              "type": "string",
-              "description": "The accent at text size on a dark ground: usually a lightened `ui`."
-            }
-          }
-        }
-      }
-    },
     "link": {
       "type": "object",
       "properties": {

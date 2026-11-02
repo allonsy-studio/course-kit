@@ -34,7 +34,8 @@
   ],
   "scripts": {
     "test": "node --test",
-    "schema": "node scripts/theme-schema.js && node scripts/theme-docs.js"
+    "schema": "node scripts/theme-schema.js && node scripts/theme-docs.js",
+    "docs": "node scripts/component-docs.js"
   },
   "dependencies": {
     "@11ty/eleventy-navigation": "^1.0.5",

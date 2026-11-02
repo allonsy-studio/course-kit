@@ -2,7 +2,7 @@
 	/**
 	 * A labelled list of readings or deadlines. Renders nothing when empty.
 	 * @prop {string} label the heading above the list
-	 * @prop {{ title: string, href?: string, check?: string, dueLabel?: string }[]} items
+	 * @prop {{ title: string, href?: string, check?: string, dueLabel?: string }[]} items the readings or deadlines to list
 	 * @prop {string} [prefix] put before an item's due label ("due ")
 	 */
 

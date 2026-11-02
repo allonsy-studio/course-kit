@@ -3,7 +3,7 @@
 	 * A titled list of links. Renders nothing when there are no items and no
 	 * `empty` text.
 	 * @prop {string} [title] the heading; left out when there are no items
-	 * @prop {{ title: string, href?: string, note?: string, extra?: { text: string, href: string, after?: string } }[]} items
+	 * @prop {{ title: string, href?: string, note?: string, extra?: { text: string, href: string, after?: string } }[]} items the links to list; an item with no `href` is plain text
 	 * @prop {string} [empty] shown, muted, when there are no items
 	 */
 </script>

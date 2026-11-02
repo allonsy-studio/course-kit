@@ -4,6 +4,7 @@ import path from "node:path";
 import { test } from "node:test";
 
 import { walk } from "../lib/files.js";
+import { componentsDoc, readHeader } from "../scripts/component-docs.js";
 import { packageRoot } from "../lib/paths.js";
 
 const root = path.join(packageRoot, "components");
@@ -33,4 +34,19 @@ test("component stylesheets use theme tokens, not color literals", () => {
 	const literal = /#[0-9a-f]{3,8}\b|\b(?:rgb|hsl)a?\(/i;
 	const offenders = files.filter((file) => styles(fs.readFileSync(file, "utf8")).some((css) => literal.test(css)));
 	assert.deepEqual(offenders.map(relative), []);
+});
+
+test("every component's header has a summary, and every prop and slot a description", () => {
+	const gaps = [];
+	for (const file of files) {
+		const header = readHeader(fs.readFileSync(file, "utf8"));
+		if (!header?.summary) gaps.push(`${relative(file)}: no summary`);
+		for (const prop of header?.props ?? []) if (!prop.text) gaps.push(`${relative(file)}: prop ${prop.name} has no description`);
+		for (const slot of header?.slots ?? []) if (!slot.text) gaps.push(`${relative(file)}: slot ${slot.name} has no description`);
+	}
+	assert.deepEqual(gaps, []);
+});
+
+test("the committed component reference matches the headers (run `yarn docs`)", () => {
+	assert.equal(fs.readFileSync(path.join(packageRoot, "docs", "components-reference.md"), "utf8"), componentsDoc());
 });

@@ -1,6 +1,6 @@
 /* Syllabus print/PDF styles, loaded only on the home page via
-   `printStylesheet`; see "Syllabus and the PDF" in AGENTS.md. Odd layouts
-   are Chromium print-fragmentation workarounds. */
+   `printStylesheet`, and printed to the syllabus PDF by a production build.
+   Odd layouts are Chromium print-fragmentation workarounds. */
 
 @media print {
 	@page {
