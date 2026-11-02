@@ -214,6 +214,7 @@ __metadata:
     "@allons-y/dashly": "npm:^0.1.0-beta.0"
     ajv: "npm:^8.20.0"
     ajv-formats: "npm:^3.0.1"
+    axe-core: "npm:^4.14.0"
     cssnano: "npm:^9.0.5"
     cssnano-preset-advanced: "npm:^9.0.5"
     dotenv: "npm:^17.4.2"
@@ -1347,6 +1348,13 @@ __metadata:
   bin:
     autoprefixer: bin/autoprefixer
   checksum: 10c0/bd5273fbe36a2baccf29e7cb62b32181b1848a64f92d4d24fe5db66960f6f576ab9684983b93569f1bd890fa25ebc270eafac9692619517705e7be4f4d95db74
+  languageName: node
+  linkType: hard
+
+"axe-core@npm:^4.14.0":
+  version: 4.14.0
+  resolution: "axe-core@npm:4.14.0"
+  checksum: 10c0/8aaa0bf748e0dcf202e8f837951a37b28b4b62d639bed58c07a6890bf035ed6a11ede9f4006db9ca8041db821dc80476c27cff08fd70afa9195ee58fb995a958
   languageName: node
   linkType: hard
 

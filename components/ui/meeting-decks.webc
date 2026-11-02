@@ -4,10 +4,11 @@
 	 * addendum. Renders nothing without either.
 	 * @prop {{ slides?: string, addendum?: string }} meeting one meeting from `scheduleWeeks`
 	 */
+	/* Each link loops over its own href: a prop does not reach a nested component's attribute (docs/internals.md). */
 </script>
 <div webc:root="override" class="decks" webc:if="meeting.slides || meeting.addendum">
-	<p webc:if="meeting.slides"><arrow-link :href="meeting.slides">Slides</arrow-link></p>
-	<p webc:if="meeting.addendum"><arrow-link :href="meeting.addendum">Addendum</arrow-link></p>
+	<p webc:if="meeting.slides"><arrow-link webc:for="href of [meeting.slides]" :href="href">Slides</arrow-link></p>
+	<p webc:if="meeting.addendum"><arrow-link webc:for="href of [meeting.addendum]" :href="href">Addendum</arrow-link></p>
 </div>
 
 <style webc:scoped>

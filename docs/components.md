@@ -8,6 +8,8 @@ WebC components in `components/`, in three folders. Component names are global, 
 | `practice/` | The worksheet's question widgets. They read the prepared `q` and `$data.worksheet.copy`. |
 | `site/` | Sections of a course site. They read `site`, `term`, `course`, `lessons` and the other globals. |
 
+Every component also needs an example in the [preview](preview.md): `preview/stories/<folder>/<name>.stories.js`.
+
 `yarn test` holds the rules: every component opens with a JSDoc header in a `<script webc:setup>` (the props and slots it takes), `ui/` does not read `$data`, a component's CSS has no color literals, and nothing sits outside the three folders.
 
 ## Building blocks

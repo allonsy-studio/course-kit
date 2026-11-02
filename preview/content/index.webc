@@ -1,0 +1,17 @@
+---
+layout: shell
+title: Components
+permalink: /index.html
+---
+<h1>Components</h1>
+<p class="lead">Every component the kit ships, rendered by the kit's own plugin with the starter course's data. What you see here is what a course's build produces.</p>
+<section webc:for="group of $data.catalog.groups">
+	<h2 @text="group.title"></h2>
+	<p @text="group.description"></p>
+	<ul role="list" class="index">
+		<li webc:for="component of group.components">
+			<a :href="component.url"><code @text="component.tag"></code></a>
+			<span @html="component.summaryHtml"></span>
+		</li>
+	</ul>
+</section>
