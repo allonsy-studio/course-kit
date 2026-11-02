@@ -55,6 +55,7 @@ The sample home page is three tags:
 ```html
 ---
 layout: base
+printStylesheet: /styles/print.css
 eleventyNavigation:
   key: Home
   order: 1
@@ -65,7 +66,7 @@ eleventyNavigation:
 <course-documents></course-documents>
 ```
 
-`<course-summary>` shows the description, the instructor, the syllabus and the schedule, all from your [data files](data-files.md). `<policies>` lists your policies. `<course-documents>` lists the links in `course.json`'s `documents`. Take out a tag to take out that part. The menu's "Syllabus" link points at the syllabus on this page, so a course needs a page at `/` that includes `<course-summary>`.
+`printStylesheet` loads the styles that make this page print as a clean syllabus; a production build prints this page to `resources/syllabus.pdf`, so keep it. `<course-summary>` shows the description, the instructor, the syllabus and the schedule, all from your [data files](data-files.md). `<policies>` lists your policies. `<course-documents>` lists the links in `course.json`'s `documents`. Take out a tag to take out that part. The menu's "Syllabus" link points at the syllabus on this page, so a course needs a page at `/` that includes `<course-summary>`.
 
 ## The schedule page
 

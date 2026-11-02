@@ -40,7 +40,10 @@
         font-size: 1em;
     }
 
-    a {
+    /* `a[href]` outranks the page's underline for links in lists. A menu is
+       not a sentence: it carries no underline until you point at it, and the
+       current page keeps an accent one. */
+    a[href] {
         /* Inline padding is left alone; the block padding lifts each link to
            the 24px minimum target size without changing the row rhythm. */
         display: inline-block;
@@ -50,13 +53,18 @@
         text-decoration: none;
 
         &[aria-current="page"] {
+            font-weight: var(--font-weight--semi-bold);
             text-decoration: underline;
-            text-underline-offset: 0.3ex;
+            text-decoration-thickness: var(--border-width);
+            text-underline-offset: 0.4ex;
             text-decoration-color: var(--color-accent);
         }
 
         &:is(:hover, :focus-visible) {
             color: var(--color-link-hover);
+            text-decoration: underline;
+            text-decoration-thickness: var(--thin-border-width);
+            text-underline-offset: 0.4ex;
         }
 
         @media screen and (width <= 612px) {

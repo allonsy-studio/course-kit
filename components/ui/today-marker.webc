@@ -84,7 +84,7 @@
 	   look per host. */
 
 	[data-today] {
-		background-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
+		background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
 		box-shadow: inset var(--border-width) 0 0 var(--color-accent);
 	}
 
@@ -94,7 +94,7 @@
 		box-shadow: none;
 
 		> :is(th, td) {
-			background-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
+			background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
 		}
 
 		> :first-child {
@@ -116,7 +116,7 @@
 		}
 
 		[data-today-scope]:has([data-today]) {
-			background-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
+			background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
 			box-shadow: inset var(--border-width) 0 0 var(--color-accent);
 		}
 

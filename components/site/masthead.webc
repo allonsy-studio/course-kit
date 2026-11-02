@@ -44,7 +44,7 @@
        surface by the bottom edge, so the band needs no closing rule. */
     background: linear-gradient(
         to bottom,
-        color-mix(in sRGB, var(--color-accent) 12%, var(--color-page)),
+        color-mix(in sRGB, var(--color-accent) 7%, var(--color-page)),
         var(--color-page)
     );
 
@@ -86,6 +86,7 @@
     .course-title {
         margin: 0;
         max-inline-size: none;
+        font-family: var(--display-font);
         font-size: clamp(1.75rem, 1.1rem + 2.4vw, 2.75rem);
         font-weight: var(--font-weight--semi-bold);
         line-height: 1.1;
