@@ -1,0 +1,38 @@
+{
+	"$schema": "https://raw.githubusercontent.com/allonsy-studio/webc-resources/main/packages/webc-patterns/schema/project.schema.json",
+	"tagline": "A course website from a few data files.",
+	"lede": "Describe your course in a few JSON files and write your slides in Markdown. Course kit builds the home page, schedule, slide decks, practice worksheets and instructor lesson plans, with light and dark themes and a syllabus that prints clean.",
+	"install": "npm install github:allonsy-studio/course-kit",
+	"usage": {
+		"language": "js",
+		"caption": "eleventy.config.js: the whole setup. Then fill in _data/ and write your pages.",
+		"code": "import courseKit from \"@allons-y/course-kit\";\n\nexport default function (config) {\n  courseKit(config, {\n    institution: { name: \"Example College\", timezone: \"America/New_York\" },\n  });\n}"
+	},
+	"features": [
+		{
+			"title": "A syllabus and schedule from data",
+			"description": "Put the course, the calendar, grading and policies in small JSON files. The kit works out each meeting's date, skips holidays, marks today's class and prints the syllabus to PDF.",
+			"href": "https://github.com/allonsy-studio/course-kit/blob/main/docs/data-files.md"
+		},
+		{
+			"title": "Slides you present from",
+			"description": "Write each deck in Markdown. Speaker notes stay off the slide and land on a printable notes sheet, and every vocabulary slide becomes a glossary entry.",
+			"href": "https://github.com/allonsy-studio/course-kit/blob/main/docs/writing-content.md#slide-decks"
+		},
+		{
+			"title": "Practice worksheets students check themselves",
+			"description": "Write questions in Markdown: choice, matching, fill in the blank, diagrams and code. Each answer links back to the slide that taught it, and nothing is recorded or submitted.",
+			"href": "https://github.com/allonsy-studio/course-kit/blob/main/docs/writing-content.md#practice-worksheets"
+		},
+		{
+			"title": "Lesson plans only you see",
+			"description": "Every class meeting gets a lesson plan and the speaker notes. The instructor build includes them and the student build leaves them out.",
+			"href": "https://github.com/allonsy-studio/course-kit/blob/main/docs/configuration.md#instructor-and-student-builds"
+		},
+		{
+			"title": "Your college's colors, light and dark",
+			"description": "Set a handful of color tokens and every page, slide and worksheet follows, in light, dark and print. Each pair is checked for contrast.",
+			"href": "https://github.com/allonsy-studio/course-kit/blob/main/docs/design.md"
+		}
+	]
+}

@@ -37,7 +37,10 @@
     "schema": "node scripts/theme-schema.js && node scripts/theme-docs.js",
     "docs": "node scripts/component-docs.js",
     "preview": "eleventy --config=preview/eleventy.config.js --serve",
-    "preview:build": "eleventy --config=preview/eleventy.config.js"
+    "preview:build": "eleventy --config=preview/eleventy.config.js",
+    "docs:build": "eleventy --config=website/eleventy.config.js",
+    "docs:start": "eleventy --serve --config=website/eleventy.config.js",
+    "docs:test": "cypress run --project website"
   },
   "dependencies": {
     "@11ty/eleventy-navigation": "^1.0.5",
@@ -87,9 +90,16 @@
   "devDependencies": {
     "@11ty/eleventy": "^3.1.6",
     "@allons-y/webc-code-sample": "0.1.0-beta.1",
+    "@allons-y/webc-oss-site": "^0.1.0-beta.1",
     "@allons-y/webc-patterns": "0.1.0-beta.1",
     "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1",
-    "axe-core": "^4.14.0"
+    "axe-core": "^4.14.0",
+    "cypress": "^15.21.1",
+    "cypress-axe": "^1.7.0"
+  },
+  "oss-docs": {
+    "site": "website",
+    "flavor": "landing"
   }
 }
