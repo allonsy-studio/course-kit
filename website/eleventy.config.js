@@ -36,7 +36,7 @@ export default function (config) {
 
 	return {
 		pathPrefix: process.env.PATH_PREFIX || "/",
-		dir: { input: at("content"), output: at("_site"), includes: "../_includes", layouts: "../_layouts", data: "../_data" },
+		dir: { input: at("content"), output: at(process.env.SITE_OUTPUT ?? "_site"), includes: "../_includes", layouts: "../_layouts", data: "../_data" },
 		templateFormats: ["md", "webc"],
 		markdownTemplateEngine: false,
 	};

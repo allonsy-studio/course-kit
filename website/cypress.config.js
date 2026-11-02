@@ -1,7 +1,7 @@
 // Named .js in "type": "module" projects; .mjs loads as ESM elsewhere.
 
 import { existsSync, readdirSync } from "node:fs";
-import { join, relative, sep } from "node:path";
+import { join, sep } from "node:path";
 
 import Eleventy from "@11ty/eleventy";
 import { defineConfig } from "cypress";
@@ -23,10 +23,11 @@ export default defineConfig({
 		defaultCommandTimeout: 8000,
 		async setupNodeEvents(on, config) {
 			// Unprefixed build, served by Eleventy: a local server serves from `/`.
-			// `source: "cli"` makes the output directory win over the site config's.
+			// The output folder comes from the site config (`SITE_OUTPUT`), not an Eleventy option: the bundle plugin writes
+			// the component CSS to the config's folder, so an option that moved the pages alone would leave them unstyled.
 			process.env.PATH_PREFIX = "/";
-			const eleventy = new Eleventy(undefined, relative(process.cwd(), BUILD_DIR), {
-				source: "cli",
+			process.env.SITE_OUTPUT = "_a11y";
+			const eleventy = new Eleventy(undefined, undefined, {
 				configPath: join(import.meta.dirname, "eleventy.config.js"),
 				runMode: "serve",
 				quietMode: true,
