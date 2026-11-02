@@ -44,7 +44,8 @@
 		}
 	}
 
-	:host + :host {
+	/* A rule between meetings, not above the first. */
+	:host:not(:first-child) {
 		border-block-start: var(--thin-border-width) solid var(--color-border);
 	}
 

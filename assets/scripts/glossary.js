@@ -1,7 +1,7 @@
 /**
  * The course glossary: Review and Flashcards over one tagged, filterable list.
  *
- * Enhances the plain list `_includes/glossary.webc` renders on the server. It
+ * Enhances the plain list `<glossary-panel>` renders on the server. It
  * reads the terms from the page's JSON, builds the controls, and removes the
  * static list once it has rendered. The page never reads the clock. The query
  * string sets the starting state (see "Linking to a filtered glossary" in
@@ -39,10 +39,6 @@
  * @property {Record<string, Tag[]>} tags
  * @property {Place[]} taught
  */
-
-const root = document.getElementById("glossary");
-const app = root?.querySelector("[data-app]");
-const source = document.getElementById("glossary-data");
 
 const KINDS = ["test", "chapter", "meeting", "topic"];
 /** The two kinds with a chip row. */
@@ -83,7 +79,16 @@ const store = {
 	},
 };
 
-if (root && app && source) {
+/**
+ * Build the glossary's controls inside its element, and remove the static list.
+ * @param {HTMLElement} root the `<glossary-app>` element
+ * @param {AbortSignal} signal ends the page-level listeners when the element leaves the page
+ */
+function mount(root, signal) {
+	const app = /** @type {HTMLElement | null} */ (root.querySelector("[data-app]"));
+	const source = root.querySelector('script[type="application/json"]');
+	if (!app || !source) return;
+
 	const data = JSON.parse(source.textContent);
 	const label = data.readingLabel;
 	const dims = [
@@ -692,7 +697,7 @@ if (root && app && source) {
 		} else if (event.key === "ArrowLeft") {
 			studyAction("prev");
 		}
-	});
+	}, { signal });
 
 	// ---- Mode and URL ----
 
@@ -708,7 +713,7 @@ if (root && app && source) {
 	/** An old `#study` link still opens Flashcards. */
 	window.addEventListener("hashchange", () => {
 		if (location.hash === "#study") setMode("study");
-	});
+	}, { signal });
 
 	/** Keep the link in step with the state: only non-default values, replaced, never pushed. */
 	function writeUrl() {
@@ -748,3 +753,21 @@ if (root && app && source) {
 	root.querySelector("[data-static]")?.remove();
 	app.hidden = false;
 }
+
+/** The glossary's element: mounts once when it joins the page, and lets go when it leaves. */
+class GlossaryApp extends HTMLElement {
+	#abort = null;
+
+	connectedCallback() {
+		if (this.#abort) return;
+		this.#abort = new AbortController();
+		mount(this, this.#abort.signal);
+	}
+
+	disconnectedCallback() {
+		this.#abort?.abort();
+		this.#abort = null;
+	}
+}
+
+if (!customElements.get("glossary-app")) customElements.define("glossary-app", GlossaryApp);

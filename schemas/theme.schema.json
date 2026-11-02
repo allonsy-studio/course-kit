@@ -121,6 +121,18 @@
 			"$ref": "#/$defs/color",
 			"description": "Highlighted (marked) text. CSS: --color-highlight"
 		},
+		"tag-test": {
+			"$ref": "#/$defs/color",
+			"description": "Glossary tag hue for tests; its tints derive from it. CSS: --color-tag-test"
+		},
+		"tag-reading": {
+			"$ref": "#/$defs/color",
+			"description": "Glossary tag hue for readings; its tints derive from it. CSS: --color-tag-reading"
+		},
+		"tag-meeting": {
+			"$ref": "#/$defs/color",
+			"description": "Glossary tag hue for class meetings; its tints derive from it. CSS: --color-tag-meeting"
+		},
 		"code": {
 			"$ref": "#/$defs/color",
 			"description": "Preformatted code text and its border. CSS: --color-code"
@@ -250,6 +262,18 @@
 					"$ref": "#/$defs/color",
 					"description": "Highlighted (marked) text. CSS: --color-highlight"
 				},
+				"tag-test": {
+					"$ref": "#/$defs/color",
+					"description": "Glossary tag hue for tests; its tints derive from it. CSS: --color-tag-test"
+				},
+				"tag-reading": {
+					"$ref": "#/$defs/color",
+					"description": "Glossary tag hue for readings; its tints derive from it. CSS: --color-tag-reading"
+				},
+				"tag-meeting": {
+					"$ref": "#/$defs/color",
+					"description": "Glossary tag hue for class meetings; its tints derive from it. CSS: --color-tag-meeting"
+				},
 				"code": {
 					"$ref": "#/$defs/color",
 					"description": "Preformatted code text and its border. CSS: --color-code"
@@ -372,6 +396,18 @@
 				"highlight": {
 					"$ref": "#/$defs/color",
 					"description": "Highlighted (marked) text. CSS: --color-highlight"
+				},
+				"tag-test": {
+					"$ref": "#/$defs/color",
+					"description": "Glossary tag hue for tests; its tints derive from it. CSS: --color-tag-test"
+				},
+				"tag-reading": {
+					"$ref": "#/$defs/color",
+					"description": "Glossary tag hue for readings; its tints derive from it. CSS: --color-tag-reading"
+				},
+				"tag-meeting": {
+					"$ref": "#/$defs/color",
+					"description": "Glossary tag hue for class meetings; its tints derive from it. CSS: --color-tag-meeting"
 				},
 				"code": {
 					"$ref": "#/$defs/color",
