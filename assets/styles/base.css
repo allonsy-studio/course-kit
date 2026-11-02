@@ -9,6 +9,10 @@
     --signature-font: cursive;
     --dense-font: "Instrument Sans", "Instrument Sans Fallback", system-ui, sans-serif;
     --mono-font: "PT Mono", monospace;
+    /* Headings: a book face every system already has (Charter on Mac, iOS and
+       Linux, Sitka on Windows, Cambria as the fallback), so there is nothing
+       to download. */
+    --display-font: Charter, "Bitstream Charter", "Sitka Text", Cambria, "Iowan Old Style", Georgia, serif;
 
     --base-font-size: 14px;
     --mono-font-size: max(var(--base-font-size), .8em);
@@ -67,7 +71,8 @@
 
     /* ---- Sizing ---- */
     --container-max: 1200px;
-    --content-max: 80ch;
+    --content-max: 80ch; /* the page column; tables and figures may use all of it */
+    --measure: 68ch; /* the longest line of running text: about 80 characters */
 
     @media screen and (width <= 768px) {
         --container-space: 10px;
@@ -637,12 +642,28 @@ a {
 	}
 }
 
+/* Running text keeps a comfortable line even in a wide column. Tables, figures
+   and the component lists (which carry role="list") use the whole column. */
+:where(p, dd, blockquote, figcaption),
+:where(ul, ol):not([role="list"]) > :where(li) {
+	max-inline-size: var(--measure);
+}
+
+/* Headings in the display face; the lede and labels stay in the text face. */
+:where(h1, h2, h3, h4) {
+	font-family: var(--display-font);
+	letter-spacing: -0.01em;
+}
+
 main {
+	/* A section opens with a rule and a short accent bar, not an underline:
+	   an underlined heading reads as a link. */
 	:where(h2:not([class])) {
 		margin-block-start: calc(var(--content-space) * 2.5);
-		text-decoration-color: var(--color-accent);
-		text-decoration-thickness: 0.2ex;
-		text-decoration-line: underline;
+		padding-block-start: calc(var(--content-space) * 0.75);
+		border-block-start: var(--thin-border-width) solid var(--color-border);
+		background: linear-gradient(var(--color-accent), var(--color-accent)) top left / 2.75rem var(--border-width) no-repeat;
+		background-origin: border-box;
 	}
 
 	:where(h3:not([class])) {
@@ -1027,9 +1048,13 @@ eyebrow + :where(h1, h2, h3, h4, h5, h6) {
 }
 
 /* ---- Table baseline (formerly simple.css) ---- */
+/* Tables read like a printed table: a heavy rule above and below, a light
+   rule under the header and between rows, and no boxes. */
 :where(table) {
 	border-collapse: collapse;
 	margin-block: 1.5rem;
+	border-block: var(--border-width) solid var(--color-text-muted);
+	font-variant-numeric: tabular-nums;
 
 	> :where(caption) {
 		font-weight: var(--font-weight--bold);
@@ -1057,14 +1082,28 @@ figure > :where(table) {
 }
 
 :where(td, th) {
-	border: var(--border-width) solid var(--color-border);
+	border: 0;
+	border-block-end: var(--thin-border-width) solid var(--color-border);
 	text-align: start;
-	padding: 0.5rem;
+	padding: 0.55rem 0.75rem;
 }
 
-:where(th) {
+:where(tbody tr:last-child > :is(td, th)) {
+	border-block-end: 0;
+}
+
+:where(thead th) {
+	border-block-end: var(--thin-border-width) solid var(--color-text-muted);
 	background-color: var(--color-table-header);
-	font-weight: var(--font-weight--bold);
+	color: var(--color-text-muted);
+	font-size: var(--font-size-6);
+	font-weight: var(--font-weight--semi-bold);
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+:where(tbody th) {
+	font-weight: var(--font-weight--semi-bold);
 }
 
 /* ---- Prompt figures (```prompt fences — prose to say to an assistant) ---- */

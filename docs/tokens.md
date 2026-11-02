@@ -17,10 +17,10 @@ Every color in the site and the slide decks comes from one of these. Override an
 | `text-muted` | `--color-text-muted` | Secondary text | `#414C75` / `#C2B1A6` | `#414C75` / `#a8a4b4` |
 | `border` | `--color-border` | Lines, rules and borders | `color-mix(in oklab, #414C75 22%, #fff)` / `hsl(228deg 14% 32%)` | `#EFEBDF` / `#33313e` |
 | `border-accent` | `--color-border-accent` | Accent-tinted line |  | `color-mix(in oklab, var(--color-accent-strong) 40%, light-dark(white, black))` |
-| `accent` | `--color-accent` | Brand color: fills, buttons, rules, the masthead wash | `#C92C6B` | `#C92C6B` |
-| `accent-text` | `--color-accent-text` | Brand color for type, dark enough to read | `hsl(336deg 68% 40%)` / `hsl(336deg 72% 72%)` | `hsl(336deg 68% 40%)` / `hsl(336deg 72% 72%)` |
+| `accent` | `--color-accent` | Brand color: fills, buttons, rules, the masthead wash | `#7A1F34` / `#D98A9B` | `#7A1F34` / `#D98A9B` |
+| `accent-text` | `--color-accent-text` | Brand color for type, dark enough to read | `#7A1F34` / `#EBB3C0` | `#7A1F34` / `#EBB3C0` |
 | `accent-strong` | `--color-accent-strong` | Brand color for decorative marks: the text tone in light mode, the fill in dark |  | `light-dark(var(--color-accent-text), var(--color-accent))` |
-| `on-accent` | `--color-on-accent` | Text on a brand-color fill | `#FBF9F3` |  |
+| `on-accent` | `--color-on-accent` | Text on a brand-color fill | `#FBF9F3` / `#181B25` |  |
 | `accent-hover` | `--color-accent-hover` | Brand fill, hovered | `color-mix(in oklch, var(--color-accent) 40%, transparent)` |  |
 | `accent-active` | `--color-accent-active` | Brand fill, pressed | `color-mix(in oklch, var(--color-accent) 40%, transparent)` |  |
 | `link` | `--color-link` | Links | `var(--color-accent-text)` |  |
@@ -38,7 +38,7 @@ Every color in the site and the slide decks comes from one of these. Override an
 | `tag-reading` | `--color-tag-reading` | Glossary tag hue for readings; its tints derive from it | `#1938b3` / `#5572e7` |  |
 | `tag-meeting` | `--color-tag-meeting` | Glossary tag hue for class meetings; its tints derive from it | `#13863d` / `#55e78b` |  |
 | `code` | `--color-code` | Preformatted code text and its border | `var(--color-text)` |  |
-| `gradient` | `--color-gradient-1` to `-4`, `--gradient-stops` | Decorative gradient, one to four colors | `#C92C6B`, `#7BD1E6`, `#FFD36C` / `#FFC233`, `#FF9A56` | |
+| `gradient` | `--color-gradient-1` to `-4`, `--gradient-stops` | Decorative gradient, one to four colors | `#7A1F34` / `#D98A9B`, `#7BD1E6`, `#FFD36C` / `#FFC233`, `#FF9A56` | |
 
 A blank default means that stylesheet does not use the token.
 

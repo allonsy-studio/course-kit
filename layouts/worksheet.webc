@@ -15,8 +15,6 @@
 
 	<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
-	<template webc:nokeep @raw="bundleFile('js', 'content/scripts/theme-restore.js', $data, 'head')"></template>
-	<script webc:keep @raw="getBundle('js', 'head')"></script>
 
 	<template webc:nokeep @raw="bundleFile('css', 'content/styles/base.css', $data, 'site')"></template>
 	<style webc:keep @raw="getBundle('css', 'site')"></style>

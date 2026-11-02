@@ -1,0 +1,4 @@
+export default { title: "Site sections/site-footer" };
+
+/** Reads the course's data files, so it needs no props. */
+export const Default = {};

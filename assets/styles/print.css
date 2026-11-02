@@ -335,6 +335,7 @@
 		font-size: 7.5pt;
 		margin-block: 0;
 		border-collapse: collapse;
+		border-block: 0.75pt solid var(--color-text);
 	}
 
 	#syllabus table caption {
@@ -357,6 +358,10 @@
 
 	thead th {
 		border-block-end: 0.75pt solid var(--color-text);
+		color: inherit;
+		font-size: inherit;
+		letter-spacing: normal;
+		text-transform: none;
 	}
 
 	tbody td {

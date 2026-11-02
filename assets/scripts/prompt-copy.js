@@ -4,7 +4,7 @@
 const RESET_MS = 2000;
 
 // Each icon is wrapped in a <span> so `hidden` alone can switch them ([hidden]
-// doesn't apply to SVG) — same pattern as theme-switcher.webc.
+// doesn't apply to SVG).
 const ICON = {
 	copy: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg>',
 	done: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9 17.5 20 6.5"></path></svg>',

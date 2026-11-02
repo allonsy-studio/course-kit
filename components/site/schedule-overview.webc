@@ -51,7 +51,7 @@
 	/* The page header: key dates as stacked groups of label/date rows (they
 	   wrap, so nothing scrolls sideways on a phone) and a "Jump to" row of
 	   tap-sized links (Today, then one per month). */
-	:host > :where(.meets, .key-dates, .schedule-jump) {
+	:host > :where(.meets) {
 		max-inline-size: 70ch;
 	}
 
@@ -73,9 +73,15 @@
 			margin-block-end: 0;
 		}
 
+		/* A group's name is a label for the rows under it, in the text face. */
 		h3 {
 			margin-block: 0 0.25em;
-			font-size: var(--font-size-5);
+			font-family: var(--sans-font);
+			font-size: var(--font-size-6);
+			font-weight: var(--font-weight--semi-bold);
+			letter-spacing: 0.06em;
+			text-transform: uppercase;
+			color: var(--color-text-muted);
 		}
 
 		ul {

@@ -2,7 +2,7 @@
  * Slide deck controller: which slide is showing, and the theme. Speaker
  * notes never reach a deck; they live on the instructor notes sheet.
  * Loaded only by _layouts/deck.webc, a standalone document with none of the
- * site chrome (masthead, theme-switcher, base.css).
+ * site chrome (masthead, base.css).
  *
  * Keys: → ↓ Space PageDown next, ← ↑ PageUp previous, Home/End ends,
  * Enter reveal, T theme, F fullscreen.
@@ -14,10 +14,8 @@ const counter = document.querySelector("[data-count]");
 const fullscreenToggle = document.querySelector("[data-toggle-fullscreen]");
 const root = document.documentElement;
 
-/* The site's theme switcher writes the same key, so a deck opens in whatever
-   the reader last chose on the site (and vice versa). "nocss" is a site-only
-   mode — a deck with its stylesheet disabled is not a deck — so it reads here
-   as "follow the system". */
+/* The deck's own light/dark/system choice, kept for the next time it opens.
+   The site has no switcher and always follows the system. */
 const THEME_KEY = "theme";
 const THEMES = ["system", "light", "dark"];
 

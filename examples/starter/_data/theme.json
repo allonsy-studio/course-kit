@@ -1,0 +1,12 @@
+{
+  "$schema": "../node_modules/@allons-y/course-kit/schemas/theme.schema.json",
+  "page": { "light": "#FBF9F3", "dark": "#181B25" },
+  "surface": { "light": "#F2EEE3", "dark": "#242733" },
+  "text": { "light": "#1F2A44", "dark": "#F4F1E8" },
+  "text-muted": { "light": "#445069", "dark": "#B9C0D0" },
+  "border": { "light": "#D8D0BE", "dark": "#464B5D" },
+  "accent": { "light": "#1F3A5F", "dark": "#6A8CC2" },
+  "accent-text": { "light": "#1F3A5F", "dark": "#A9C1E6" },
+  "on-accent": { "light": "#FBF9F3", "dark": "#10151F" },
+  "gradient": ["#1F3A5F", "#8A6D1D"]
+}
