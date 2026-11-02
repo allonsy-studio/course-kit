@@ -1,0 +1,165 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Meredith College academic calendar",
+  "description": "The `dates` global: one entry per year, one term per season, read by the kit to build the `term` and `lessons` data (the syllabus dates and the per-meeting lesson calendar). Source: the Meredith College Academic Calendar for the years covered.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "LABELS": {
+      "description": "Display names for holidays, keyed by the holiday's (start) date.",
+      "type": "object",
+      "patternProperties": {
+        "^\\d{4}-\\d{2}-\\d{2}$": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "patternProperties": {
+    "^\\d{4}$": {
+      "description": "A calendar year, holding one term per season key.",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/term"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "isoDate": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "term": {
+      "type": "object",
+      "required": [
+        "start",
+        "end",
+        "deadlines",
+        "holidays",
+        "midTerm",
+        "finalExams"
+      ],
+      "properties": {
+        "start": {
+          "description": "First day of classes.",
+          "$ref": "#/$defs/isoDate"
+        },
+        "end": {
+          "description": "Last day of classes.",
+          "$ref": "#/$defs/isoDate"
+        },
+        "deadlines": {
+          "description": "Registrar deadlines, keyed by name. `audience` says who the date is surfaced to — \"students\" entries appear in the syllabus Key Semester Dates list, \"faculty\" entries only on the instructor lesson pages.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "date",
+              "label",
+              "audience"
+            ],
+            "properties": {
+              "date": {
+                "$ref": "#/$defs/isoDate"
+              },
+              "label": {
+                "type": "string"
+              },
+              "audience": {
+                "enum": [
+                  "students",
+                  "faculty"
+                ]
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "preRegistration": {
+          "description": "The day pre-registration for the NEXT term opens; instructor-facing (a heads-up that advisees will come asking about the schedule).",
+          "$ref": "#/$defs/isoDate"
+        },
+        "substitutions": {
+          "description": "College-wide schedule-substitution days, mapping an ISO date to the weekday whose class schedule runs that day. Example: 2026-09-09 is a Wednesday, but the College runs Monday classes that day to make up the meeting lost to Labor Day — so a MWF section meets, a Tue/Thu section does not. The kit flags these on the lesson overview and per-day pages.",
+          "type": "object",
+          "patternProperties": {
+            "^\\d{4}-\\d{2}-\\d{2}$": {
+              "enum": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "holidays": {
+          "description": "No-class days: a bare ISO date for a single day, or `{ start, end }` for a multi-day break (inclusive). Display names live in LABELS, keyed by the (start) date.",
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/isoDate"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "start",
+                  "end"
+                ],
+                "properties": {
+                  "start": {
+                    "$ref": "#/$defs/isoDate"
+                  },
+                  "end": {
+                    "$ref": "#/$defs/isoDate"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "midTerm": {
+          "description": "The official mid-point of the term (progress-report cutoff), used when planning test placement.",
+          "$ref": "#/$defs/isoDate"
+        },
+        "readingDays": {
+          "description": "Study days between classes and exams — no classes or exams may be held.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/isoDate"
+          }
+        },
+        "readingDay": {
+          "description": "Single-day form of readingDays.",
+          "$ref": "#/$defs/isoDate"
+        },
+        "finalExams": {
+          "description": "The College's examination window; each section's exact slot comes from the registrar and lives in the course data (`finalExam`).",
+          "type": "object",
+          "required": [
+            "start",
+            "end"
+          ],
+          "properties": {
+            "start": {
+              "$ref": "#/$defs/isoDate"
+            },
+            "end": {
+              "$ref": "#/$defs/isoDate"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

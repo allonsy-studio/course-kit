@@ -1,0 +1,9 @@
+{
+  "$schema": "../node_modules/@allons-y/course-kit/schemas/policies.schema.json",
+  "attendance": { "title": "Attendance", "body": "Replace this with your attendance policy: what is expected and what happens when you miss class." },
+  "honorCode": { "title": "Honor Code", "body": "Replace this with your college's approved honor code statement, or link to it." },
+  "dei": { "title": "Diversity, Equity, and Inclusion", "body": "Replace this with your college's approved statement." },
+  "disabilities": { "title": "Accessibility", "body": "Replace this with your college's approved statement and the disability services contact." },
+  "titleIX": { "title": "Title IX", "body": "Replace this with your college's approved statement." },
+  "inclementWeather": { "title": "Inclement Weather", "body": "Replace this with your college's inclement weather policy." }
+}

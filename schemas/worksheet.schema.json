@@ -1,0 +1,445 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Practice worksheet",
+  "description": "A self-marking practice worksheet. One file is one worksheet, rendered by <practice-worksheet> and graded by /js/practice.js. Answers ship in the served markup, so a worksheet may only ever be built from material whose answers are already published to students — a practice paper that prints its own key, never a live test.",
+  "type": "object",
+  "required": [
+    "title",
+    "heading",
+    "sections"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Relative path to this schema, so the editor validates and documents fields inline."
+    },
+    "title": {
+      "type": "string",
+      "description": "The page title, used in the browser tab and navigation. Not shown in the body."
+    },
+    "description": {
+      "type": "string",
+      "description": "One sentence for the page's meta description."
+    },
+    "indexed": {
+      "type": "boolean",
+      "default": true,
+      "description": "Set false to keep the page out of the sitemap and search results. Does NOT gate publishing — the page is still served to anyone with the URL."
+    },
+    "eyebrow": {
+      "type": "string",
+      "description": "Small-caps label above the heading, after the term and course code."
+    },
+    "heading": {
+      "type": "string",
+      "description": "The page's <h1>."
+    },
+    "lede": {
+      "type": "string",
+      "description": "One line under the heading: what this is for, and whether it is graded."
+    },
+    "intro": {
+      "type": "array",
+      "description": "Introductory paragraphs: how to use the worksheet, and what it covers.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "terms": {
+      "type": "array",
+      "description": "The vocabulary bank. Each term renders as a button whose definition opens in a popover anchored to it.",
+      "items": {
+        "$ref": "#/$defs/term"
+      }
+    },
+    "sections": {
+      "type": "array",
+      "description": "The worksheet's sections, in the order students meet them. Mirror the real paper's sections and order so practice transfers.",
+      "items": {
+        "$ref": "#/$defs/section"
+      }
+    },
+    "footer": {
+      "type": "array",
+      "description": "Closing paragraphs: where to go back to when something did not land. Omit for no footer.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "links": {
+      "type": "array",
+      "description": "Links listed under the footer paragraphs, resolved the same way a citation is.",
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "copy": {
+      "type": "object",
+      "description": "Overrides for the components' own wording — button labels, the privacy notice, the \"Answer:\" prefix. Every key has a course-neutral default in prepareWorksheet; set only what this worksheet says differently.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "description": "Where an answer comes from. Name a slide by week/day/slide and the URL is built for you; use href for anything else. Cite only what a student can see — a fact that lives in a ::: notes block is not a citation they can follow.",
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "How the citation reads, e.g. \"Week 3 · Tuesday — Naming the regions: landmarks\"."
+        },
+        "week": {
+          "type": "integer",
+          "description": "Deck week number."
+        },
+        "day": {
+          "type": "integer",
+          "description": "Deck day number, 1 for the week's first meeting."
+        },
+        "slide": {
+          "type": "integer",
+          "description": "Slide number within the deck; becomes the #sN anchor."
+        },
+        "href": {
+          "type": "string",
+          "description": "An explicit URL, for a reading or guide rather than a slide. Wins over week/day/slide. A site path (\"/local-setup-guide/\") is made absolute against site.hostname, because a worksheet is a single file students download; an external URL is used as written."
+        },
+        "quote": {
+          "type": "string",
+          "description": "The line from that source that settles the answer. Shown under the link."
+        }
+      },
+      "required": [
+        "label"
+      ]
+    },
+    "term": {
+      "type": "object",
+      "required": [
+        "term",
+        "definition"
+      ],
+      "properties": {
+        "term": {
+          "type": "string",
+          "description": "The term as students will look for it."
+        },
+        "definition": {
+          "type": "string",
+          "description": "One or two sentences, in the course's own words."
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        }
+      }
+    },
+    "legendEntry": {
+      "type": "object",
+      "description": "One verdict a judge question may be given. Order is the order of the radio buttons.",
+      "required": [
+        "letter",
+        "text"
+      ],
+      "properties": {
+        "letter": {
+          "type": "string",
+          "description": "The letter students write on paper."
+        },
+        "text": {
+          "type": "string",
+          "description": "What that verdict means."
+        }
+      }
+    },
+    "bankEntry": {
+      "type": "object",
+      "required": [
+        "letter",
+        "text"
+      ],
+      "properties": {
+        "letter": {
+          "type": "string",
+          "description": "The letter students write in the box."
+        },
+        "text": {
+          "type": "string",
+          "description": "The option itself."
+        }
+      }
+    },
+    "blank": {
+      "type": "object",
+      "description": "One box a student fills in.",
+      "required": [
+        "label",
+        "accept",
+        "display"
+      ],
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "What the box is asking for. Self-numbering, as the list is unnumbered."
+        },
+        "hint": {
+          "type": "string",
+          "description": "Optional placeholder, e.g. \"three languages\"."
+        },
+        "accept": {
+          "type": "array",
+          "description": "Every wording that counts as right. Both sides are normalized before comparison — case, angle brackets, slashes and separators are ignored — so list only genuinely different answers, not punctuation variants.",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "display": {
+          "type": "string",
+          "description": "The answer as it is shown when the student got it wrong."
+        }
+      }
+    },
+    "section": {
+      "type": "object",
+      "required": [
+        "n",
+        "title",
+        "questions"
+      ],
+      "properties": {
+        "n": {
+          "type": "integer",
+          "description": "Section number, matching the real paper."
+        },
+        "title": {
+          "type": "string",
+          "description": "Section heading."
+        },
+        "blurb": {
+          "type": "string",
+          "description": "One line on what the section tests."
+        },
+        "legend": {
+          "type": "array",
+          "description": "Required by `judge` questions: the verdicts on offer, shared by every snippet in the section.",
+          "items": {
+            "$ref": "#/$defs/legendEntry"
+          }
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/question"
+          }
+        }
+      }
+    },
+    "question": {
+      "type": "object",
+      "description": "One item. `kind` decides which other fields apply; every kind takes id, prompt, why and sources.",
+      "required": [
+        "id",
+        "kind",
+        "why",
+        "sources"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Section and number, e.g. \"3.4\". Shown to the student and used to build every input name on the question, so it must be unique across the worksheet."
+        },
+        "kind": {
+          "enum": [
+            "choice",
+            "match",
+            "fill",
+            "tree",
+            "grid",
+            "judge",
+            "selfcheck"
+          ],
+          "description": "choice: one right option. match: items against a lettered bank. fill: text blanks with an optional word bank. tree: a DOM tree with blanks to name. grid: a row/column table of judgements. judge: a code snippet given a verdict plus the offending line. selfcheck: marked by the student against a revealed answer."
+        },
+        "prompt": {
+          "type": "string",
+          "description": "The question itself."
+        },
+        "code": {
+          "type": "string",
+          "description": "A snippet shown above the controls. Rendered verbatim, so say \"below\" in the prompt, not \"above\"."
+        },
+        "lang": {
+          "type": "string",
+          "description": "The snippet fence's language, e.g. python. Picks the Prism grammar the snippet is highlighted with; an unknown or missing one renders plain."
+        },
+        "figure": {
+          "type": "string",
+          "description": "An inline SVG diagram, written in the authored file as an ```svg fence. Styled by <practice-figure>'s class vocabulary — region, dashed, label, small, pin — never by hex values, so it follows the theme. Never a raster: an <img> is a broken image in an uploaded copy of the page."
+        },
+        "dragDrop": {
+          "type": "boolean",
+          "description": "match and fill only: make the bank draggable onto the answers. A pointer affordance layered over the select or input, never a replacement — the control stays the keyboard, touch and screen-reader path."
+        },
+        "dragHint": {
+          "type": "string",
+          "description": "The line telling students they may drag or use the control. Say both."
+        },
+        "why": {
+          "type": "string",
+          "description": "The reasoning, revealed once the question is checked. Explain why the right answer is right, not just what it is."
+        },
+        "sources": {
+          "type": "array",
+          "description": "Where the answer is taught. Rendered as the \"?\" beside the question.",
+          "items": {
+            "$ref": "#/$defs/source"
+          },
+          "minItems": 1
+        },
+        "options": {
+          "type": "array",
+          "description": "choice: the options, in display order.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "answer": {
+          "type": "integer",
+          "description": "choice: the index into options. judge: the index into the section's legend."
+        },
+        "bank": {
+          "description": "match: the lettered options. fill: the word bank, as plain strings.",
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bankEntry"
+              }
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "items": {
+          "type": "array",
+          "description": "match: the things to be matched, each with the bank letter that answers it.",
+          "items": {
+            "type": "object",
+            "required": [
+              "text",
+              "answer"
+            ],
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "answer": {
+                "type": "string",
+                "description": "The correct bank letter."
+              },
+              "source": {
+                "$ref": "#/$defs/source"
+              }
+            }
+          }
+        },
+        "blanks": {
+          "type": "array",
+          "description": "fill and tree: the boxes to fill.",
+          "items": {
+            "$ref": "#/$defs/blank"
+          }
+        },
+        "nodes": {
+          "type": "array",
+          "description": "tree: the tree, in reading order. A node is either a given label or a blank referring to blanks[] by index.",
+          "items": {
+            "type": "object",
+            "required": [
+              "depth"
+            ],
+            "properties": {
+              "depth": {
+                "type": "integer",
+                "description": "Indent level; 0 is the root."
+              },
+              "label": {
+                "type": "string",
+                "description": "A node already filled in. Omit for a blank."
+              },
+              "blank": {
+                "type": "integer",
+                "description": "Index into blanks[]. Omit for a filled node."
+              }
+            }
+          }
+        },
+        "rowHeader": {
+          "type": "string",
+          "description": "grid: the heading over the rows, e.g. Behavior. The table's first header cell."
+        },
+        "columns": {
+          "type": "array",
+          "description": "grid: the column headings, e.g. Works / Doesn't work.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rows": {
+          "type": "array",
+          "description": "grid: one behavior per row.",
+          "items": {
+            "type": "object",
+            "required": [
+              "text",
+              "answer"
+            ],
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "answer": {
+                "type": "integer",
+                "description": "Index of the correct column."
+              }
+            }
+          }
+        },
+        "lines": {
+          "type": "array",
+          "description": "judge: the snippet, one array entry per line. Each becomes a selectable line.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "lineAnswers": {
+          "type": "array",
+          "description": "judge: indexes of the lines that cause the problem. An empty array means the snippet is fine, and \"no line\" becomes the right pick.",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "reveal": {
+          "type": "array",
+          "description": "selfcheck: the model answer, shown when the student asks for it.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "checkYourself": {
+          "type": "array",
+          "description": "selfcheck: the specific things to compare against, as a checklist. Marking by eye needs criteria, not just the answer.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

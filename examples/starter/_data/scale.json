@@ -1,0 +1,8 @@
+{
+  "$schema": "../node_modules/@allons-y/course-kit/schemas/scale.schema.json",
+  "A": { "min": 90 },
+  "B": { "min": 80 },
+  "C": { "min": 70 },
+  "D": { "min": 60 },
+  "F": { "max": 60 }
+}

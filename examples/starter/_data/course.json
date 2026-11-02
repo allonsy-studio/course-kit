@@ -1,0 +1,20 @@
+{
+  "$schema": "../node_modules/@allons-y/course-kit/schemas/course.schema.json",
+  "code": "CS101",
+  "name": "Introduction to Web Publishing",
+  "status": "active",
+  "term": { "year": 2026, "season": "fall" },
+  "description": "An introduction to publishing on the web: writing pages in HTML, styling them with CSS, and putting them online.",
+  "approach": "Every class mixes a short talk with time to build. You learn by making a small site that grows all term.",
+  "prerequisites": ["None"],
+  "outcomes": [
+    "Write well-structured HTML pages.",
+    "Style a page with CSS so it works on a phone and a laptop.",
+    "Publish a small site and keep it up to date."
+  ],
+  "textbook": {
+    "required": "None. Every reading is free and online.",
+    "access": ["Each week's readings are linked from the schedule."]
+  },
+  "requirements": ["You need a reliable internet connection and a free GitHub account."]
+}

@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "/schemas/policies.schema.json",
+  "title": "Policies",
+  "description": "The `policies` global (_data/policies.json): every policy in the syllabus Policies section (the `<policies>` component renders one <details> per key, forced open in the printed PDF). Key order is display order. The `required` list is exactly what Meredith College requires on every syllabus — the attendance policy and the five College statements. College statements use the College's approved wording from my.meredith.edu/pages/syllabus_statements or reference it by link; never paraphrase one.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Relative path to this schema, for editor validation."
+    },
+    "ai": {
+      "$ref": "#/$defs/policy",
+      "description": "Course AI-use summary; `href` links the full policy page."
+    },
+    "attendance": {
+      "$ref": "#/$defs/policy",
+      "description": "Attendance Policy (Meredith-required). If attendance affects the grade — any in-class credit category in grading.json — state expectations AND consequences."
+    },
+    "lateWork": {
+      "$ref": "#/$defs/policy",
+      "description": "Late-work penalty and extension rules."
+    },
+    "honorCode": {
+      "$ref": "#/$defs/policy",
+      "description": "Honor Code Statement (Meredith-required). By reference until the College's approved wording is pasted into `body`."
+    },
+    "dei": {
+      "$ref": "#/$defs/policy",
+      "description": "Diversity, Equity, and Inclusion Statement (Meredith-required). By reference until the College's approved wording is pasted into `body`."
+    },
+    "disabilities": {
+      "$ref": "#/$defs/policy",
+      "description": "Accessibility Statement (Meredith-required): Disability Services contact and the accommodation process."
+    },
+    "titleIX": {
+      "$ref": "#/$defs/policy",
+      "description": "Sexual Misconduct / Title IX Statement (Meredith-required). By reference until the College's approved wording is pasted into `body`."
+    },
+    "inclementWeather": {
+      "$ref": "#/$defs/policy",
+      "description": "Inclement Weather Policy (Meredith-required)."
+    },
+    "collegePolicies": {
+      "$ref": "#/$defs/policy",
+      "description": "Pointer to the College's full syllabus-statements page for anything not stated above."
+    }
+  },
+  "required": [
+    "attendance",
+    "honorCode",
+    "dei",
+    "disabilities",
+    "titleIX",
+    "inclementWeather"
+  ],
+  "additionalProperties": {
+    "$ref": "#/$defs/policy"
+  },
+  "$defs": {
+    "policy": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Heading shown in the <summary>."
+        },
+        "body": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The policy text, one paragraph."
+        },
+        "href": {
+          "type": "string",
+          "description": "Optional link to the full policy or the College's page."
+        },
+        "hrefText": {
+          "type": "string",
+          "description": "Link text; the template defaults to \"Read the full policy\"."
+        }
+      },
+      "required": [
+        "title",
+        "body"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

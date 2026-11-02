@@ -1,17 +1,17 @@
 <script webc:setup>
 	/**
-	 * The grade-weighting table.
-	 * @prop {object} grading category weights, keyed by name
+	 * The grade-weighting table and the grading scale. Reads the `grading` and
+	 * `scale` data; it takes no props and renders nothing without `grading`.
 	 */
 </script>
-<div webc:root="override">
+<div webc:root="override" webc:if="$data.grading">
     <table>
         <caption>Grade weighting</caption>
         <thead>
             <tr><th scope="col">Category</th><th scope="col">Weight</th></tr>
         </thead>
         <tbody>
-            <tr webc:for="entry of Object.entries(grading).filter(([key]) => key !== '$schema')">
+            <tr webc:for="entry of Object.entries($data.grading).filter(([key]) => key !== '$schema')">
                 <td @text="entry[1].title"></td>
                 <td @text="entry[1].weight"></td>
             </tr>
@@ -23,11 +23,11 @@
             <tr><th scope="col">Grade</th><th scope="col">Weighted average</th></tr>
         </thead>
         <tbody>
-            <tr webc:for="(letter, range) in $data.scale">
-                <td @text="letter"></td>
+            <tr webc:for="band of Object.entries($data.scale ?? {}).filter(([key]) => key !== '$schema')">
+                <td @text="band[0]"></td>
                 <td>
-                    <span webc:if="range.min != null" @text="`${range.min} and above`"></span>
-                    <span webc:else @text="`below ${range.max}`"></span>
+                    <span webc:if="band[1].min != null" @text="`${band[1].min} and above`"></span>
+                    <span webc:else @text="`below ${band[1].max}`"></span>
                 </td>
             </tr>
         </tbody>

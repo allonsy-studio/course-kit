@@ -3,6 +3,7 @@
 	 * A bank of terms, each opening its definition in a popover.
 	 * @prop {{ id: string, term: string, definition: string, source?: object }[]} terms
 	 * @prop {string} [hint] a line above the bank
+	 * @prop {string} [sourceprefix] text before each source link's label
 	 */
 </script>
 <template webc:nokeep>

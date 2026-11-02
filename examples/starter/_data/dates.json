@@ -1,0 +1,16 @@
+{
+  "$schema": "../node_modules/@allons-y/course-kit/schemas/dates.schema.json",
+  "LABELS": { "2026-11-26": "Thanksgiving Recess" },
+  "2026": {
+    "fall": {
+      "start": "2026-08-25",
+      "end": "2026-12-10",
+      "deadlines": {
+        "addDrop": { "date": "2026-09-01", "label": "Last day to add or drop", "audience": "students" }
+      },
+      "holidays": ["2026-11-26"],
+      "midTerm": "2026-10-16",
+      "finalExams": { "start": "2026-12-14", "end": "2026-12-18" }
+    }
+  }
+}

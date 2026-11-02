@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "/schemas/scale.schema.json",
+  "title": "Grading scale",
+  "description": "The `scale` global (_data/scale.json): letter-grade bands — the grading scale Meredith College requires on every syllabus, rendered by the `<grading>` component. Bands are a MINIMUM, not a closed range: closed integer ranges (90–100, 80–89, …) leave every fractional average between them unassigned, so a weighted 89.5 belonged to no letter. `min` reads \"this score and above\"; the failing band carries `max` instead and reads \"below that score\". Key order is display order — keep letters descending.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Relative path to this schema, for editor validation."
+    },
+    "A": {
+      "$ref": "#/$defs/band"
+    },
+    "B": {
+      "$ref": "#/$defs/band"
+    },
+    "C": {
+      "$ref": "#/$defs/band"
+    },
+    "D": {
+      "$ref": "#/$defs/band"
+    },
+    "F": {
+      "$ref": "#/$defs/band",
+      "description": "The failing band; carries `max`, not `min`."
+    }
+  },
+  "required": [
+    "A",
+    "F"
+  ],
+  "additionalProperties": {
+    "$ref": "#/$defs/band"
+  },
+  "$defs": {
+    "band": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Lowest weighted average that earns this letter (inclusive)."
+        },
+        "max": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Failing band only: every average below this score."
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "min"
+          ]
+        },
+        {
+          "required": [
+            "max"
+          ]
+        }
+      ],
+      "additionalProperties": false
+    }
+  }
+}

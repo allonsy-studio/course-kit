@@ -1,0 +1,12 @@
+---
+layout: base
+title: Slides
+eleventyNavigation:
+  key: Slides
+  order: 3
+---
+
+<article class="content-column wide">
+	<h1>Slides</h1>
+	<slide-timetable></slide-timetable>
+</article>

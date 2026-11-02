@@ -1,0 +1,10 @@
+---
+layout: base
+eleventyNavigation:
+  key: Home
+  order: 1
+---
+
+<course-summary></course-summary>
+<policies></policies>
+<course-documents></course-documents>

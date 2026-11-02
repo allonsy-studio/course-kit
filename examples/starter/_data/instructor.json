@@ -1,0 +1,7 @@
+{
+  "$schema": "../node_modules/@allons-y/course-kit/schemas/instructor.schema.json",
+  "name": "Dr. Sam Example",
+  "office": "Science Hall 210",
+  "hours": ["Tuesday and Thursday 1:00PM–2:30PM", "or by appointment"],
+  "email": "sam.example@example.edu"
+}

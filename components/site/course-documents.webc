@@ -1,0 +1,17 @@
+<script webc:setup>
+	/**
+	 * The "Additional resources" list: the entries of `course.documents`, each a
+	 * link with an optional description. A PDF is listed only when the build
+	 * produced PDFs. Renders nothing when there are none.
+	 */
+	const listed = ($data.course?.documents ?? []).filter((doc) => $data.pdf?.available || !doc.href?.endsWith(".pdf"));
+</script>
+<section webc:root="override" id="documents" aria-labelledby="documents-heading" webc:if="listed.length">
+	<h2 id="documents-heading">Additional resources</h2>
+	<dl>
+		<template webc:for="doc of listed" webc:nokeep>
+			<dt><a :href="doc.href" @text="doc.title"></a></dt>
+			<dd webc:if="doc.description" @text="doc.description"></dd>
+		</template>
+	</dl>
+</section>

@@ -1,0 +1,22 @@
+{
+  "$schema": "../node_modules/@allons-y/course-kit/schemas/schedule.schema.json",
+  "meetings": { "days": ["Tuesday", "Thursday"], "time": "10:00AM–11:15AM" },
+  "weeks": [
+    {
+      "topics": ["Welcome and how the course runs", "How the web works"],
+      "readings": [{ "title": "MDN: How the web works", "href": "https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/How_the_Web_works" }],
+      "resources": []
+    },
+    {
+      "topics": ["Writing HTML", "Headings, lists and links"],
+      "readings": [{ "title": "MDN: HTML basics", "href": "https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics", "check": "3 questions, due by the next class" }],
+      "resources": []
+    },
+    {
+      "topics": ["Styling with CSS", "Test 1"],
+      "days": [{ "day": 1, "topics": ["Styling with CSS"] }, { "day": 2, "topics": ["Test 1"] }],
+      "readings": [],
+      "resources": []
+    }
+  ]
+}

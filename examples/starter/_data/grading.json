@@ -1,0 +1,6 @@
+{
+  "$schema": "../node_modules/@allons-y/course-kit/schemas/grading.schema.json",
+  "homework": { "title": "Homework", "weight": "40%", "body": "Weekly practice, posted in your course site and due before the next class." },
+  "tests": { "title": "Tests", "weight": "40%", "body": "Two tests during the term." },
+  "final": { "title": "Final exam", "weight": "20%", "body": "A short exam in the College's exam period." }
+}

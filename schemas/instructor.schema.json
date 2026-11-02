@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "/schemas/instructor.schema.json",
+  "title": "Instructor",
+  "description": "The `instructor` global (_data/instructor.json): the instructor's name, office location, contact information, and office hours that Meredith College requires on every syllabus. Rendered by the `<instructor>` component. The kit encodes `email` so the address never appears in served markup; a script decodes it for the reader. Property order here is the suggested authoring order.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Relative path to this schema, for editor validation."
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Full name as it should appear on the syllabus."
+    },
+    "office": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Office location — building and room (e.g. SMB 251). Meredith requires it on the syllabus."
+    },
+    "hours": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "Office hours as displayed, one entry per block; \"by appointment\" is a valid single entry. Meredith requires office hours on the syllabus. Joined with semicolons in the template."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Plain address; write it normally. The kit encodes it at build time and a script fills in the link for the reader. The printed syllabus shows it."
+    },
+    "profile": {
+      "type": "string",
+      "format": "uri",
+      "description": "Optional public profile the name links to."
+    },
+    "blog": {
+      "type": "string",
+      "format": "uri",
+      "description": "Optional personal site or blog, shown as its own row in the instructor panel."
+    },
+    "photo": {
+      "type": "string",
+      "pattern": "^/images/",
+      "description": "Optional headshot, a site-relative path under /images/ (the file lives in content/assets/images/). Shown on screen beside the instructor details; omitted from print, where the instructor collapses to one line."
+    },
+    "note": {
+      "type": "string",
+      "description": "Response-time expectation, rendered muted after the contact details."
+    },
+    "contact": {
+      "type": "string",
+      "pattern": "^/",
+      "description": "Site-relative path of the contact page, shown on screen in place of the address."
+    }
+  },
+  "required": [
+    "name",
+    "office",
+    "hours",
+    "email"
+  ],
+  "additionalProperties": false
+}

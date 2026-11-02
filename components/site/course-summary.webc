@@ -1,49 +1,50 @@
 <script webc:setup>
 	/**
-	 * The course overview: description, prerequisites, grading and key facts.
-	 * @prop {object} c the course, from `course.json`
-	 * @prop {object} [grading] the grade weights
+	 * The course home page's body: the description, the instructor, the syllabus
+	 * and the schedule. Reads the `course`, `grading`, `schedule`, `instructor`
+	 * and `term` data; it takes no props.
 	 */
+	const course = $data.course ?? {};
 </script>
-<article class="content-column wide" webc:root="override" webc:if="c">
+<article class="content-column wide" webc:root="override" webc:if="$data.course">
 	<header class="course-header">
 		<eyebrow class="print-only" @text="$data.term.label"></eyebrow>
-		<h1 class="print-only"><span @text="c.code"></span>: <span @text="c.name"></span></h1>
-		<p class="lede" @text="c.description"></p>
-		<p webc:if="c.prerequisites?.length">
+		<h1 class="print-only"><span @text="course.code"></span>: <span @text="course.name"></span></h1>
+		<p class="lede" @text="course.description"></p>
+		<p webc:if="course.prerequisites?.length">
 			<strong>Prerequisites:</strong>
-			<span @text="c.prerequisites.join(', ')"></span><span webc:if="c.prerequisiteNote">, <span @text="c.prerequisiteNote"></span></span>
+			<span @text="course.prerequisites.join(', ')"></span><span webc:if="course.prerequisiteNote">, <span @text="course.prerequisiteNote"></span></span>
 		</p>
 	</header>
 
-	<section id="approach" aria-labelledby="approach-heading" webc:if="c.approach">
+	<section id="approach" aria-labelledby="approach-heading" webc:if="course.approach">
 		<h2 id="approach-heading">How this section is taught</h2>
-		<p @text="c.approach"></p>
+		<p @text="course.approach"></p>
 	</section>
 
 	<instructor></instructor>
 
-	<syllabus :@c="c"></syllabus>
+	<syllabus></syllabus>
 
 	<section id="schedule" aria-labelledby="schedule-heading">
 		<h2 id="schedule-heading">Schedule &amp; class resources</h2>
 		<p>
 			<span>This is a proposed outline of topics and is subject to change. Any changes will be announced in class.</span>
 			<span>Each week lists what to read before its first meeting and the resources posted after class.</span>
-			<span webc:if="c?.grading?.homework">All assignments will be posted in Brightspace.</span>
-			<span webc:if="c?.grading?.project">The final project is due at this section's last class meeting, <span @text="lastMeeting($data.lessons)"></span>; its milestones and rubric are on <a href="/projects/final/">the project page</a>.</span>
-			<span webc:if="c?.grading?.final && !$data.schedule?.finalExam">The final exam falls in the College's exam period (<span @text="$data.term.finalExamsDisplay"></span>); the exact date and time will be announced in class.</span>
-			<span webc:if="c?.grading?.final && $data.schedule?.finalExam">This section's final exam is <span @text="examSlot($data.schedule.finalExam)"></span> — see the <a href="#coursework">Coursework</a> section.</span>
+			<span webc:if="$data.grading?.homework">All assignments will be posted in <span @text="$data.site.lms"></span>.</span>
+			<span webc:if="$data.grading?.project">The final project is due at this section's last class meeting, <span @text="lastMeeting($data.lessons)"></span>; its milestones and rubric are on <a href="/projects/final/">the project page</a>.</span>
+			<span webc:if="$data.grading?.final && !$data.schedule?.finalExam">The final exam falls in the exam period (<span @text="$data.term.finalExamsDisplay"></span>); the exact date and time will be announced in class.</span>
+			<span webc:if="$data.grading?.final && $data.schedule?.finalExam">This section's final exam is <span @text="examSlot($data.schedule.finalExam)"></span> — see the <a href="#coursework">Coursework</a> section.</span>
 		</p>
 		<div class="print-only">
 			<p>
 				This document omits the week-by-week schedule, which may be adjusted
 				during the term<span webc:if="$data.site?.url">; the live schedule is published at
 				<span @text="`${$data.site.url}${$data.page.url}#schedule`"></span></span>.
-				<span webc:if="c?.grading?.project">The final project is due at the last class meeting, <span @text="lastMeeting($data.lessons)"></span>.</span>
+				<span webc:if="$data.grading?.project">The final project is due at the last class meeting, <span @text="lastMeeting($data.lessons)"></span>.</span>
 			</p>
 		</div>
-		<schedule-weeks :@weeks="scheduleWeeks($data.lessons, $data.schedule?.weeks, $data.collections.deck, $data.demos)"></schedule-weeks>
+		<schedule-weeks></schedule-weeks>
 	</section>
 </article>
 

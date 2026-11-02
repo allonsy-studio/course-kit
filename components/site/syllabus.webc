@@ -1,8 +1,10 @@
 <script webc:setup>
 	/**
-	 * The syllabus: outcomes, grading, policies and schedule notes.
-	 * @prop {object} c the course, from `course.json`
+	 * The syllabus: outcomes, text, technology, coursework and grading. Reads
+	 * the `course`, `grading`, `scale`, `schedule` and `project` data; it takes
+	 * no props.
 	 */
+	const course = $data.course ?? {};
 </script>
 <section id="syllabus" aria-labelledby="syllabus-heading" webc:root="override">
     <h2 id="syllabus-heading">Syllabus</h2>
@@ -11,29 +13,29 @@
         <h3>Learning outcomes</h3>
         <p>Upon completing this course students will be able to:</p>
         <ul>
-            <li webc:for="outcome of c.outcomes" @text="outcome"></li>
+            <li webc:for="outcome of course.outcomes" @text="outcome"></li>
         </ul>
     </article>
 
-    <article webc:if="c.additionalOutcomes?.length">
+    <article webc:if="course.additionalOutcomes?.length">
         <h3 id="additional-outcomes">Additional outcomes in this section</h3>
         <ul>
-            <li webc:for="outcome of c.additionalOutcomes" @text="outcome"></li>
+            <li webc:for="outcome of course.additionalOutcomes" @text="outcome"></li>
         </ul>
     </article>
 
     <article>
         <h3>Text</h3>
-        <p webc:if="!c.textbook?.required">No text is required.</p>
-        <p webc:if="c.textbook?.required"><strong>Required:</strong> <span @text="c.textbook.required"></span></p>
-        <ol webc:if="c.textbook?.access?.length">
-            <li webc:for="step of c.textbook.access" @raw="step"></li>
+        <p webc:if="!course.textbook?.required">No text is required.</p>
+        <p webc:if="course.textbook?.required"><strong>Required:</strong> <span @text="course.textbook.required"></span></p>
+        <ol webc:if="course.textbook?.access?.length">
+            <li webc:for="step of course.textbook.access" @raw="step"></li>
         </ol>
     </article>
 
     <article>
         <h3>Technology</h3>
-        <p>Bring a laptop meeting the minimum specifications specified by Meredith College to class every day. <span webc:for="req of c.requirements ?? []" @text="req"></span> <span webc:if="$data.grading?.homework">Brightspace access is required.</span></p>
+        <p>Bring a laptop meeting the minimum specifications specified by <span @text="$data.site.institution || 'the college'"></span> to class every day. <span webc:for="req of course.requirements ?? []" @text="req"></span> <span webc:if="$data.grading?.homework"><span @text="$data.site.lms"></span> access is required.</span></p>
     </article>
 
     <article webc:if="$data.grading">
@@ -68,7 +70,7 @@
 
     <article webc:if="$data.grading">
         <h3 id="grading">Grading</h3>
-        <grading :@grading="$data.grading"></grading>
+        <grading></grading>
     </article>
 
     <article webc:if="$data.term.keyDates?.length">

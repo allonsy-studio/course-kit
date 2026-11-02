@@ -3,7 +3,7 @@
 	 * The copyright line: the build year and the site's author. Reads `site`.
 	 */
 </script>
-<span webc:nokeep>&copy;&nbsp;<span @text="$data.site.buildYear"></span> <span class="no-wrap" @text="$data.site.author"></span></span>
+<span webc:root="override">&copy;&nbsp;<span @text="$data.site.buildYear"></span> <span class="no-wrap" @text="$data.site.author"></span></span>
 <style webc:scoped>
 :host {
     display: inline-block;
