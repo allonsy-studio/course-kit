@@ -1,0 +1,33 @@
+<script webc:setup>
+	/**
+	 * A self-check question: reveal the answer, then tick what you got.
+	 * @prop {object} q a prepared `selfcheck` question
+	 */
+</script>
+<div class="selfcheck">
+	<div class="disclosures">
+		<details data-reveal>
+			<summary @text="$data.worksheet.copy.showAnswer"></summary>
+			<ul class="reveal">
+				<li webc:for="line of q.reveal" @text="line"></li>
+			</ul>
+			<p class="check-title" @text="$data.worksheet.copy.checkYourself"></p>
+			<ul class="checklist">
+				<li webc:for="line of q.checkYourself" @text="line"></li>
+			</ul>
+		</details>
+	</div>
+</div>
+
+<style webc:scoped>
+	:host {
+		.check-title {
+			font-weight: var(--font-weight--semi-bold);
+			margin-block-end: 0.2em;
+		}
+
+		.reveal {
+			font-family: var(--mono-font);
+		}
+	}
+</style>

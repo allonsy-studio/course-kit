@@ -1,0 +1,134 @@
+<script webc:setup>
+	/**
+	 * A grading rubric as a table: criteria down, performance levels or a due date and points across.
+	 * @prop {object[]} criteria rubric criteria
+	 * @prop {string[]} [levels] level names across the top
+	 * @prop {string} [caption] a screen-reader caption
+	 */
+</script>
+<table webc:root="override" webc:if="criteria?.length">
+    <caption webc:if="caption" @text="caption" class="sr-only"></caption>
+
+    <thead webc:if="criteria[0]?.levels?.length">
+        <tr>
+            <th scope="col" class="criteria">Criteria</th>
+            <th scope="col" webc:for="level of levels" @text="level"></th>
+        </tr>
+    </thead>
+    <tbody webc:if="criteria[0]?.levels?.length">
+        <template webc:for="criterion of criteria" webc:nokeep>
+            <tr>
+                <th scope="row" @text="criterion.title" rowspan="2"></th>
+                <td webc:for="level of criterion.levels" @text="level.description"></td>
+            </tr>
+            <tr class="points"><td webc:for="level of criterion.levels" @text="`${level.points} points`"></td></tr>
+        </template>
+    </tbody>
+    <tfoot webc:if="criteria[0]?.levels?.length">
+        <tr>
+            <th scope="row" :colspan="levels?.length ?? 1">Total points possible</th>
+            <td class="num" @text="total"></td>
+        </tr>
+    </tfoot>
+
+    <thead webc:if="!criteria[0]?.levels?.length">
+        <tr>
+            <th scope="col">Milestone</th>
+            <th scope="col">Due</th>
+            <th scope="col" class="num">Points</th>
+            <th scope="col">What is graded</th>
+        </tr>
+    </thead>
+    <tbody webc:if="!criteria[0]?.levels?.length">
+        <tr webc:for="criterion of criteria">
+            <th scope="row">
+                <span class="id" webc:if="criterion.id" @text="criterion.id"></span>
+                <span @text="criterion.title"></span>
+            </th>
+            <td class="due" @text="criterion.due ? fullDate(criterion.due) + (criterion.dueTime ? `, ${criterion.dueTime}` : '') : ''"></td>
+            <td class="num" @text="criterion.points"></td>
+            <td @text="criterion.description"></td>
+        </tr>
+    </tbody>
+    <tfoot webc:if="!criteria[0]?.levels?.length">
+        <tr>
+            <th scope="row" colspan="2">Total points possible</th>
+            <td class="num" @text="total"></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+
+<style webc:scoped>
+    /* Two rubric shapes share this component, told apart by the data: a
+       criterion carrying a `levels` array renders the classic matrix
+       (criteria × performance levels, points row under each); a flat
+       criterion (title, due, points, description) renders the milestone
+       table. Only one thead/tbody/tfoot set survives per render. */
+    :host {
+        width: 100%;
+        border-block-end: var(--thin-border-width) solid var(--color-border);
+
+        :is(td, th) {
+            border: none;
+            border-block-start: var(--thin-border-width) solid var(--color-border);
+            padding: 0.6em;
+        }
+
+        thead th {
+            background-color: var(--color-surface-accent);
+            font-weight: var(--font-weight--medium);
+            text-wrap: balance;
+        }
+
+        thead th.criteria {
+            inline-size: 22%;
+        }
+
+        tbody {
+            vertical-align: top;
+
+            th {
+                background: none;
+                font-weight: var(--font-weight--medium);
+                text-wrap: balance;
+
+                .id {
+                    display: block;
+                    color: var(--color-accent-text);
+                    font-size: max(var(--base-font-size), 0.85em);
+                }
+            }
+        }
+
+        .points > td {
+            border-block-start: none;
+            padding-block-start: 0;
+            font-weight: var(--font-weight--medium);
+            color: var(--color-text-muted);
+            font-size: max(var(--base-font-size), 0.9em);
+        }
+
+        .due {
+            color: var(--color-text-muted);
+            font-size: max(var(--base-font-size), 0.9em);
+        }
+
+        .num {
+            text-align: end;
+            font-variant-numeric: tabular-nums;
+        }
+
+        tfoot {
+            th {
+                background: none;
+                text-align: end;
+                font-weight: var(--font-weight--medium);
+            }
+
+            :is(th, td) {
+                border-block-start: var(--border-width) solid var(--color-border);
+            }
+        }
+    }
+</style>

@@ -1,0 +1,67 @@
+<script webc:setup>
+	/**
+	 * A radio group of lettered choices.
+	 * @prop {{ name: string, value: string, text: string, letter?: string }[]} choices
+	 * @prop {string} [legend] the group's legend
+	 * @prop {string} [legendclass] class for the legend, such as `sr-only`
+	 */
+</script>
+<fieldset>
+	<legend webc:if="legend && legendclass" :class="legendclass" @text="legend"></legend>
+	<legend webc:if="legend && !legendclass" @text="legend"></legend>
+	<label class="choice" webc:for="choice of choices">
+		<input type="radio" :name="choice.name" :value="choice.value">
+		<span class="letter" webc:if="choice.letter" @text="choice.letter"></span>
+		<span @text="choice.text"></span>
+	</label>
+</fieldset>
+
+<style webc:scoped>
+	:host {
+		fieldset {
+			border: 0;
+			margin: 0;
+			padding: 0;
+		}
+
+		legend {
+			font-weight: var(--font-weight--semi-bold);
+			padding-inline: 0;
+		}
+
+		.letter {
+			background: var(--color-surface);
+			border-radius: var(--standard-border-radius);
+			display: inline-block;
+			font-family: var(--mono-font);
+			font-weight: var(--font-weight--semi-bold);
+			min-inline-size: 1.7em;
+			padding: 0.05em 0.35em;
+			text-align: center;
+			text-transform: uppercase;
+		}
+
+		label {
+			align-items: baseline;
+			border-radius: var(--standard-border-radius);
+			cursor: pointer;
+			display: flex;
+			gap: 0.5em;
+			padding: 0.25em 0.4em;
+
+			&:hover {
+				background: var(--color-accent-hover);
+			}
+
+			&[data-mark="right"] .letter {
+				background: var(--color-success);
+				color: var(--color-on-success);
+			}
+
+			&[data-mark="wrong"] .letter {
+				background: var(--color-error);
+				color: var(--color-on-error);
+			}
+		}
+	}
+</style>

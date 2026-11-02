@@ -1,0 +1,46 @@
+<script webc:setup>
+	/**
+	 * The course glossary page: every `vocab` and `api` slide as one tagged
+	 * term, listed A to Z for readers without scripts and enhanced into
+	 * Review and Flashcards by `<glossary-panel>`.
+	 * Reads the `glossary` global.
+	 */
+</script>
+<article class="content-column glossary" id="glossary" webc:if="$data.glossary?.terms?.length">
+	<header>
+		<eyebrow class="separators">
+			<span @text="$data.term.label"></span>
+			<span @text="$data.course.code"></span>
+			<span>Glossary</span>
+		</eyebrow>
+		<h1>Course glossary</h1>
+		<p class="intro">
+			<strong @text="$data.glossary.terms.length"></strong> terms from class. Each carries tags for its test,
+			its <span @text="$data.glossary.readingLabel.toLowerCase()"></span> and the meeting that taught it.
+			Group by any of them, search, or narrow the list to what you are studying.
+		</p>
+	</header>
+
+	<glossary-panel :@json="$data.glossary.json">
+		<div data-static>
+			<section class="group" webc:for="group of $data.glossary.az" :id="`g-az-${group.key}`" :aria-labelledby="`g-az-${group.key}-h`">
+				<h2 class="heading" :id="`g-az-${group.key}-h`">
+					<span class="name" @text="group.label"></span>
+					<span class="aside">
+						<span class="count"><span @text="group.terms.length"></span> <span @text="group.terms.length === 1 ? 'term' : 'terms'"></span></span>
+					</span>
+				</h2>
+				<dl>
+					<glossary-entry webc:for="item of group.terms" :@entry="item"></glossary-entry>
+				</dl>
+			</section>
+		</div>
+	</glossary-panel>
+</article>
+
+<style webc:scoped>
+	.intro {
+		color: var(--color-text-muted);
+		margin-block: 0;
+	}
+</style>

@@ -32,7 +32,7 @@ output, includes, layouts or data directories, and this sets all of them.
 | `institution` | `{}` | `{ name, timezone }`. The name feeds the site metadata; the time zone is what "today" is judged in (default: the build machine's) |
 | `site` | derived | `{ description, keywords, language }` |
 | `lessons` | built-in | `{ segments, defaultDays }`: the lesson outline, and the meeting days used when the schedule names none |
-| `demos.runtime` | `none` | `codepen` ignores the demo fragments; `pyscript` keeps `py-editor` blocks intact through minification and copies the `.py` files |
+| `demos.runtime` | `none` | `codepen` ignores the demo fragments; `pyscript` keeps `py-editor` blocks intact through minification, copies the `.py` files (not `_answer.py`) and self-hosts PyScript and Pyodide from the course's own `@pyscript/core` and `pyodide` |
 | `slides.decks` | `<inputDir>/slides` | where the fit check looks for decks |
 | `pdf` | read from `_data` | `{ course, term, dataDir }` for the syllabus PDF footer |
 | `components` | none | extra WebC component globs |
@@ -46,16 +46,26 @@ schedule filters), `/theme` (the token table and renderer), `/markdown` (the mar
 
 ## Data
 
-The package supplies these globals from `_data/course.json`, `dates.json` and
-`schedule.json`: `term`, `lessons`, `site`, `audience`, `pdf` and `fontFaces`. A
-`_data` file or folder of the same name replaces one. Eleventy ranks config
-global data above `_data` files, so the package skips its own when it finds
-yours. Replace `term` and `lessons` together, since `lessons` is built from the
-package's term.
+The package supplies these globals from `_data/course.json`, `dates.json`,
+`schedule.json` and `project.json`: `term`, `lessons`, `site`, `glossary`,
+`audience`, `pdf` and `fontFaces`. A `_data` file or folder of the same name
+replaces one. Eleventy ranks config global data above `_data` files, so the
+package skips its own when it finds yours. Replace `term` and `lessons`
+together, since `lessons` is built from the package's term.
+
+- `lessons` places each project milestone on the last meeting on or before it
+  (`project.components` or the rubric criteria that carry a `due` date), after
+  the meeting's own `due[]`, and carries a week's per-meeting `readings`.
+- `glossary` is every `vocab` and `api` slide in `slides.decks` as one term,
+  tagged by test, reading and meeting; a `::: tags` block on a slide overrides
+  them. It is `null` without a deck folder. The `<glossary>` component renders
+  it, with `scripts/glossary.js`.
+- `site.timezone` is `institution.timezone`; `<html data-timezone>` carries it so
+  `<today-marker>` judges "today" on campus.
 
 `@allons-y/course-kit/data` exports the factories (`resolveTerm`, `buildLessons`,
-`resolveSite`, `resolveAudience`, `resolvePdf`, `readCourseData`) for a course
-that wants to build on them. A worksheet's `.11tydata.js` is one line:
+`buildGlossary`, `projectMilestones`, `resolveSite`, `resolveAudience`,
+`resolvePdf`, `readCourseData`) for a course that wants to build on them. A worksheet's `.11tydata.js` is one line:
 `export default worksheetData(import.meta.url);`
 
 ## Theme
@@ -73,11 +83,11 @@ In development, a theme panel docked on the right edge of every page edits these
 | Path | What |
 |---|---|
 | `layouts/` | The page layouts (`base`, `document`, `lesson`, `lesson-detail`, `deck`, `notes`, `worksheet`, `demo`). Not overridable per file; a difference between courses is a data guard in the layout. |
-| `components/` | WebC components, including the home-page set (`course-summary`, `instructor`, `syllabus`, `masthead`, `nav-links`). |
+| `components/` | WebC components in three folders: `ui/` (props and slots only), `practice/` (worksheet questions) and `site/` (sections that read the page's data). See `docs/components.md`. |
 | `schemas/` | `theme.schema.json` for `_data/theme.json`. |
-| `assets/` | `styles/`, `scripts/` and `fonts/`, published at `/styles`, `/js` and `/fonts`. `base.css` styles the "today" marks `scripts/today.js` sets on table rows. |
+| `assets/` | `styles/`, `scripts/` and `fonts/`, published at `/styles`, `/js` and `/fonts`. The `today-marker` component flags today's meeting and styles it. |
 | `glue/` | Pagination and permalink pages with no course prose (`lesson-day`). |
-| `docs/` | Notes on the build: `internals.md`, `testing.md`, `slides.md` (slide kinds and copy rules), `tokens.md`, `theme-panel.md`. |
+| `docs/` | Notes on the build: `components.md`, `internals.md`, `testing.md`, `slides.md` (slide kinds and copy rules), `tokens.md`, `theme-panel.md`. |
 | `lib/` | The build configuration (`plugin.js`), filters, the markdown dialect, the worksheet parser, bundling, the PDF and slide-fit hooks, and the helpers below. |
 
 ## Helpers

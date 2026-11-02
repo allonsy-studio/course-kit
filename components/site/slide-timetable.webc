@@ -1,0 +1,152 @@
+<script webc:setup>
+	/**
+	 * Every slide deck as a timetable: one row per week, one column per meeting
+	 * day.
+	 * @prop {{ days: string[], weeks: object[] }} [timetable] `slideTimetable`
+	 *   output; built from the page's decks, lessons and meeting days when left out
+	 */
+	const defaultTimetable = slideTimetable($data.collections?.deck, $data.lessons, $data.schedule?.meetings?.days);
+</script>
+<table webc:root="override" class="slide-timetable" data-today-host="timetable" webc:if="(timetable ?? defaultTimetable)?.weeks?.length">
+    <today-marker></today-marker>
+    <caption class="sr-only">Every slide deck for this section, one row per week and one column per meeting day</caption>
+    <thead>
+        <tr>
+            <th scope="col">Week</th>
+            <th scope="col" webc:for="day of (timetable ?? defaultTimetable).days" @text="day"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr webc:for="week of (timetable ?? defaultTimetable).weeks">
+            <th scope="row">
+                <span class="week-title">Week <span @text="week.week"></span></span>
+                <span class="week-of" @text="week.dates"></span>
+            </th>
+            <td webc:for="cell of week.cells" :data-day="cell.weekday" :data-date="cell.iso">
+                <p class="empty" webc:if="cell.missing">No meeting</p>
+                <p class="empty no-class" webc:if="cell.noClass">No class: <span @text="cell.noClass"></span></p>
+                <template webc:nokeep webc:if="!cell.missing && !cell.noClass">
+                    <p class="date" @text="cell.date"></p>
+                    <p class="deck-title" webc:if="cell.deck"><arrow-link :href="cell.deck.url"><span @text="cell.deck.title"></span></arrow-link></p>
+                    <p class="empty" webc:if="!cell.deck">No deck</p>
+                    <p class="draft" webc:if="cell.deck?.draft">Draft, not in the student build</p>
+                    <p class="notes" webc:if="cell.deck && $data.audience.instructor"><a :href="cell.deck.notesUrl">Speaker notes</a></p>
+                    <p class="deck-title" webc:if="cell.addendum"><arrow-link :href="cell.addendum.url"><span @text="cell.addendum.title"></span></arrow-link></p>
+                    <p class="draft" webc:if="cell.addendum?.draft">Addendum draft, not in the student build</p>
+                    <p class="notes" webc:if="cell.addendum && $data.audience.instructor"><a :href="cell.addendum.notesUrl">Addendum speaker notes</a></p>
+                </template>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<style webc:scoped>
+    /* A timetable: every week is one row of identical shape, one cell per
+       meeting weekday, so the eye can read down a column or across a row
+       and nothing leaves a hole. On narrow screens each row becomes a week
+       band with its cells stacked beneath, the weekday restored as a label. */
+    :host {
+        inline-size: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        border: var(--thin-border-width) solid var(--color-border);
+        border-radius: var(--standard-border-radius);
+        overflow: hidden;
+        margin-block: 0;
+    }
+
+    :host :is(th, td) {
+        border: 0;
+        border-block-start: var(--thin-border-width) solid var(--color-border);
+        padding: 0.7em 1em;
+        text-align: start;
+        vertical-align: top;
+    }
+
+    :host thead th {
+        border-block-start: 0;
+        border-block-end: var(--border-width) solid var(--color-accent);
+        background-color: var(--color-surface);
+        font-weight: var(--font-weight--semi-bold);
+    }
+
+    :host tbody th {
+        inline-size: 11em;
+        background-color: var(--color-surface);
+        font-weight: var(--font-weight);
+    }
+
+    :host tbody td + td {
+        border-inline-start: var(--thin-border-width) solid var(--color-border);
+    }
+
+    :host .week-title {
+        display: block;
+        font-weight: var(--font-weight--semi-bold);
+    }
+
+    :host .week-of,
+    :host .date,
+    :host .empty,
+    :host .draft,
+    :host .notes {
+        color: var(--color-text-muted);
+        font-size: max(var(--base-font-size), 0.9em);
+    }
+
+    :host .week-of {
+        display: block;
+    }
+
+    :host td p {
+        margin: 0;
+    }
+
+    :host .deck-title {
+        margin-block-start: 0.15em;
+        font-size: max(var(--base-font-size), 1.05em);
+    }
+
+    :host .draft,
+    :host .notes {
+        margin-block-start: 0.25em;
+    }
+
+    @media screen and (width <= 640px) {
+        :host,
+        :host tbody,
+        :host tr,
+        :host th,
+        :host td {
+            display: block;
+        }
+
+        :host thead {
+            position: absolute;
+            inline-size: 1px;
+            block-size: 1px;
+            overflow: hidden;
+            clip-path: inset(50%);
+            white-space: nowrap;
+        }
+
+        :host tbody th {
+            inline-size: auto;
+            border-block-end: var(--border-width) solid var(--color-accent);
+        }
+
+        :host tbody tr + tr th {
+            border-block-start: var(--thin-border-width) solid var(--color-border);
+        }
+
+        :host tbody td + td {
+            border-inline-start: 0;
+        }
+
+        :host td::before {
+            content: attr(data-day);
+            display: block;
+            font-weight: var(--font-weight--semi-bold);
+        }
+    }
+</style>

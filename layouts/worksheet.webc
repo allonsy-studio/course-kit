@@ -11,7 +11,7 @@
 	<meta name="author" :content="site?.author">
 	<meta name="generator" :content="eleventy?.generator">
 	<meta name="robots" content="noindex, nofollow"
-		webc:if="$data.indexed == false || $data.draft == true || $data.instructorOnly == true">
+		webc:if="$data.indexed == false || $data.draft == true || $data.instructorOnly == true || $data.site.preview">
 
 	<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 

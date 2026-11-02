@@ -45,3 +45,15 @@ linker.
 Eleventy reports its default output directory (`_site`) on `eleventy.after`, not
 the one set with `setOutputDirectory`. The PDF and fit hooks take `outputDir`
 from the options instead.
+
+## WebC behavior to design around
+
+Each of these was found by building, not by reading the docs.
+
+- **A setup script cannot see props.** `<script webc:setup>` reads `$data` and the filters, but a bare `level` or `prefix` passed with `@level` is `undefined` there, with no error. Read props in template expressions (`webc:if="level == 2"`), and give setup helpers the prop as an argument (`detail(item, prefix)`). For "prop wins, else page data", compute the default in setup and write `(weeks ?? defaultWeeks)` in the template.
+- **Slot content sees the component's props.** A host that loops with `webc:for="week of weeks"` and passes `:@week="week.week"` shadows its own loop variable inside the slot, and the slot renders `[object Object]`. Name the prop differently from the host's variable (`week-block` takes `number`).
+- **A component with no markup is not resolved.** One that only carries a script and a style leaves its tag in the page and its assets unbundled. Give it a root, such as `<template webc:root="override" webc:nokeep></template>`.
+- **Dynamic `webc:is` does not resolve.** `:webc:is="'practice-' + q.kind"` is printed as an attribute and renders nothing; only a static `webc:is="name"` works. Dispatch with `webc:if`.
+- **`:host + :host` is not rewritten** by `webc:scoped`, so the sibling rule never matches. Use `:host:not(:first-child)`.
+- **Putting a class on a heading changes its weight.** The base stylesheet styles `h3:not([class])` as medium, so a classed `h3` falls back to the browser's bold. `week-block` sets it back.
+- **The page's own `lesson-day` wins over the glue page.** A course that still has `content/lessons/lesson-day.webc` never gets the computed `lessonMaterials`.

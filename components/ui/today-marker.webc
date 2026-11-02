@@ -1,0 +1,147 @@
+<script webc:setup>
+	/**
+	 * <today-marker> marks today's class meeting. A host renders it once, adds
+	 * `data-today-host="<name>"` to its root, and puts `data-date` on what it
+	 * lists; the page's `<today-link>` jumps to the result.
+	 *
+	 * A script flags every [data-date] element listing today's campus date
+	 * (the site's `institution.timezone`): data-today, aria-current="date" and
+	 * a visible "Today" flag (data-today-label overrides the text; a table row
+	 * gets it in its first cell). One element gets id="today" for the link:
+	 * today's, else the next meeting, else the first (before the term) or last
+	 * (after it); never a no-class day. A host puts data-today-scope on the
+	 * element that should carry the id and the highlight (the schedule's
+	 * .meeting), otherwise the dated element itself does. An element that
+	 * already has an id gets an empty <span id="today"> inside it instead, and
+	 * an existing #today wins.
+	 */
+</script>
+<template webc:root="override" webc:nokeep></template>
+
+<script>
+	/**
+	 * <today-marker>: flag today's [data-date] elements and give one of them
+	 * id="today". See the notes in this component's setup script.
+	 */
+	(() => {
+		try {
+			/** @type {string} today on campus (not the reader's zone), as YYYY-MM-DD; <html data-timezone> comes from `site.timezone` */
+			const today = new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone || undefined });
+
+			/** The node that can hold a flag or an anchor: a table row can't, its first cell can. */
+			const holder = (el) => (el instanceof HTMLTableRowElement ? el.cells[0] : el);
+
+			const dated = [...document.querySelectorAll("[data-date]")].map((el) => ({
+				el,
+				dates: (el.dataset.date ?? "").split(/\s+/).filter(Boolean).sort(),
+			}));
+
+			for (const { el, dates } of dated) {
+				if (!dates.includes(today) || el.hasAttribute("data-today")) continue;
+				el.dataset.today = "";
+				el.setAttribute("aria-current", "date");
+				const flag = document.createElement("strong");
+				flag.className = "today-flag";
+				flag.textContent = el.dataset.todayLabel ?? "Today";
+				holder(el)?.prepend(flag);
+			}
+
+			if (document.getElementById("today")) return;
+
+			/** Jump target: today's, else the next; the first before the term, the last after it. */
+			const candidates = dated
+				.filter(({ dates }) => dates.length)
+				.map((item) => ({ ...item, scope: item.el.closest("[data-today-scope]") ?? item.el }))
+				.filter(({ scope }) => !scope.matches(".no-class") && !scope.querySelector(".no-class"))
+				.map((item) => ({ ...item, when: item.dates.find((d) => d >= today) ?? item.dates.at(-1) }));
+			if (!candidates.length) return;
+
+			const upcoming = candidates.filter(({ when }) => when >= today);
+			const pool = upcoming.length ? upcoming : candidates;
+			const target = pool.reduce((best, item) =>
+				(upcoming.length ? item.when < best.when : item.when > best.when) ? item : best,
+			).scope;
+
+			if (target.id) {
+				const anchor = document.createElement("span");
+				anchor.id = "today";
+				holder(target)?.prepend(anchor);
+			} else {
+				target.id = "today";
+			}
+
+			// Opened as /page/#today before the target existed: the browser has already missed it.
+			if (location.hash === "#today") document.getElementById("today")?.scrollIntoView();
+		} catch {
+			// Never let the marker break the scripts bundled after it.
+		}
+	})();
+</script>
+
+<style>
+	/* The single source of the "today" look. Hosts own the dated elements and
+	   name themselves with `data-today-host`; the rules below vary the base
+	   look per host. */
+
+	[data-today] {
+		background-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
+		box-shadow: inset var(--border-width) 0 0 var(--color-accent);
+	}
+
+	/* A table row can't carry a shadow of its own: wash its cells, edge the first. */
+	tr[data-today] {
+		background-color: transparent;
+		box-shadow: none;
+
+		> :is(th, td) {
+			background-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
+		}
+
+		> :first-child {
+			box-shadow: inset var(--border-width) 0 0 var(--color-accent);
+		}
+	}
+
+	.today-flag {
+		display: block;
+		color: var(--color-accent-text);
+	}
+
+	/* host: a list of meetings (schedule-weeks, demo-weeks). The meeting holds
+	   the highlight, not the date line inside it. */
+	[data-today-host="meetings"] {
+		[data-today] {
+			background-color: transparent;
+			box-shadow: none;
+		}
+
+		[data-today-scope]:has([data-today]) {
+			background-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
+			box-shadow: inset var(--border-width) 0 0 var(--color-accent);
+		}
+
+		.today-flag {
+			font-size: max(var(--base-font-size), 0.9em);
+		}
+	}
+
+	/* host: a grid of day cells (slide-timetable). The edge runs along the top. */
+	[data-today-host="timetable"] {
+		[data-today] {
+			box-shadow: inset 0 var(--border-width) 0 var(--color-accent);
+		}
+
+		.today-flag {
+			font-size: max(var(--base-font-size), 0.9em);
+		}
+	}
+
+	/* Without color (forced colors, mono print), the flag's text still says "Today"; add an outline. */
+	@media (forced-colors: active) {
+		[data-today],
+		[data-today-scope]:has([data-today]) {
+			outline: var(--border-width) solid Highlight;
+			outline-offset: calc(var(--border-width) * -1);
+		}
+	}
+</style>

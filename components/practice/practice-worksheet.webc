@@ -1,0 +1,121 @@
+<script webc:setup>
+	/**
+	 * The practice worksheet page: heading, sections of questions, and the check controls. Reads the `worksheet` data a worksheet's `.11tydata.js` supplies.
+	 */
+</script>
+<article class="content-column practice" id="worksheet" webc:if="$data.worksheet">
+	<header class="practice-head">
+		<eyebrow class="separators">
+			<span @text="$data.term.label"></span>
+			<span @text="$data.course.code"></span>
+			<span @text="$data.worksheet.eyebrow"></span>
+		</eyebrow>
+		<h1 @text="$data.worksheet.heading"></h1>
+		<p class="lede" @text="$data.worksheet.lede"></p>
+		<p webc:for="paragraph of $data.worksheet.intro" @text="paragraph"></p>
+
+		<div class="callout">
+			<p><strong @text="$data.worksheet.copy.notice"></strong> <span @text="$data.worksheet.copy.noticeBody"></span></p>
+		</div>
+
+		<h2 id="terms" webc:if="$data.worksheet.terms?.length" @text="$data.worksheet.copy.termsHeading"></h2>
+		<practice-terms webc:if="$data.worksheet.terms?.length" :@terms="$data.worksheet.terms"
+			:@hint="$data.worksheet.copy.termsHint" :@sourceprefix="$data.worksheet.copy.termSource"></practice-terms>
+
+		<check-controls @scope="#worksheet" :@label="$data.worksheet.copy.checkAll"
+			:@reset="$data.worksheet.copy.resetAll" :@note="$data.worksheet.copy.selfMarked"></check-controls>
+	</header>
+
+	<section webc:for="section of $data.worksheet.sections" :id="`section-${section.n}`" class="practice-section">
+		<header>
+			<h2><span class="section-number" @text="`${$data.worksheet.copy.section} ${section.n}:`"></span> <span @text="section.title"></span></h2>
+			<p class="blurb" @text="section.blurb"></p>
+			<ul class="legend" webc:if="section.legend">
+				<li webc:for="entry of section.legend">
+					<span class="letter" @text="entry.letter"></span> <span @text="entry.text"></span>
+				</li>
+			</ul>
+		</header>
+
+		<practice-question webc:for="question of section.questions" :@q="question"></practice-question>
+
+		<check-controls :@scope="`#section-${section.n}`" :@label="`${$data.worksheet.copy.checkSection} ${section.n}`"
+			:@reset="$data.worksheet.copy.resetSection" :@note="$data.worksheet.copy.selfMarked"></check-controls>
+	</section>
+
+	<footer class="practice-foot" webc:if="$data.worksheet.footer?.length || $data.worksheet.links?.length">
+		<p webc:for="paragraph of $data.worksheet.footer" @text="paragraph"></p>
+		<ul class="foot-links" webc:if="$data.worksheet.links?.length">
+			<li webc:for="link of $data.worksheet.links"><a :href="link.href" @text="link.label"></a></li>
+		</ul>
+	</footer>
+</article>
+
+<style webc:scoped>
+	:host {
+		--practice-gap: 1.5em;
+		--color-drop-target: color-mix(in srgb, var(--color-accent) 12%, var(--color-page));
+
+		.practice-section {
+			border-block-start: var(--thin-border-width) solid var(--color-border);
+			padding-block-start: var(--content-space);
+
+			> header h2 {
+				margin-block-end: 0.2em;
+			}
+		}
+
+		.section-number {
+			color: var(--color-accent-text);
+			font-variant-numeric: tabular-nums;
+		}
+
+		.blurb {
+			color: var(--color-text-muted);
+			margin-block-start: 0;
+		}
+
+		.legend {
+			list-style: none;
+			padding-inline-start: 0;
+
+			li {
+				margin-block: 0.3em;
+			}
+		}
+
+		.letter {
+			background: var(--color-surface);
+			border-radius: var(--standard-border-radius);
+			display: inline-block;
+			font-family: var(--mono-font);
+			font-weight: var(--font-weight--semi-bold);
+			min-inline-size: 1.7em;
+			padding: 0.05em 0.35em;
+			text-align: center;
+			text-transform: uppercase;
+		}
+
+		.practice-foot {
+			border-block-start: var(--thin-border-width) solid var(--color-border);
+			margin-block-start: var(--section-space);
+			padding-block-start: var(--content-space);
+		}
+
+		.foot-links {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 1em;
+			list-style: none;
+			padding-inline-start: 0;
+		}
+
+		@media print {
+			check-controls,
+			.feedback,
+			.why {
+				display: none;
+			}
+		}
+	}
+</style>

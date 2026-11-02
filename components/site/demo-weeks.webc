@@ -1,0 +1,86 @@
+<script webc:setup>
+	/**
+	 * The weeks that had a demo, one row per meeting: its demos, then its deck.
+	 * @prop {object[]} [weeks] `demoWeeks` output; built from the page's demos,
+	 *   lessons and decks when left out
+	 */
+	const defaultWeeks = demoWeeks($data.demos, $data.lessons, $data.collections?.deck);
+</script>
+<div webc:root="override" class="demo-weeks" data-today-host="meetings" webc:if="(weeks ?? defaultWeeks)?.length">
+    <today-marker></today-marker>
+    <week-block webc:for="week of (weeks ?? defaultWeeks)" :@number="week.week" :@dates="week.dates" @level="2">
+        <ol class="meetings" role="list">
+            <meeting-card webc:for="meeting of week.meetings" :@meeting="meeting">
+                <a slot="when" class="lesson" webc:if="$data.audience.instructor" :href="`/lessons/week-${meeting.week}/day-${meeting.day}/`">Lesson plan</a>
+                <ul class="demos" role="list">
+                    <li class="demo" webc:for="demo of meeting.demos">
+                        <p class="demo-title"><arrow-link :href="demo.url"><span @text="demo.title"></span></arrow-link></p>
+                        <p class="repeat" webc:if="demo.firstShown">Shown again, first used <span @text="demo.firstShown"></span></p>
+                        <template webc:nokeep webc:if="!demo.firstShown">
+                            <p class="description" webc:if="demo.description" @text="demo.description"></p>
+                            <p class="meta">
+                                <a :href="demo.download" download>Download the HTML file</a>
+                                <span webc:if="demo.alsoOn?.length">Used again <span @text="demo.alsoOn.join(', ')"></span></span>
+                            </p>
+                        </template>
+                    </li>
+                </ul>
+                <meeting-decks :@meeting="meeting"></meeting-decks>
+            </meeting-card>
+        </ol>
+    </week-block>
+</div>
+
+<style webc:scoped>
+    /* The schedule's shape, kept to the weeks that had a demo: one row per
+       meeting with the date down the left and that day's demos beside it, the
+       deck link last so it sits in the same place on every row. */
+    :host {
+        display: grid;
+        gap: var(--content-space);
+    }
+
+    .meetings,
+    .demos {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .lesson,
+    .description,
+    .repeat,
+    .meta {
+        color: var(--color-text-muted);
+        font-size: max(var(--base-font-size), 0.9em);
+    }
+
+    .lesson {
+        margin-block-start: 0.35em;
+    }
+
+    .demo + .demo {
+        margin-block-start: 0.8em;
+    }
+
+    .demo p {
+        margin: 0;
+        max-inline-size: 70ch;
+    }
+
+    .demo-title {
+        font-size: max(var(--base-font-size), 1.05em);
+    }
+
+    .description,
+    .repeat {
+        margin-block-start: 0.15em;
+    }
+
+    .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25em 1em;
+        margin-block-start: 0.25em;
+    }
+</style>

@@ -1,0 +1,52 @@
+<script webc:setup>
+	/**
+	 * One bordered block per week: a tinted header band, then the slot.
+	 * @prop {number} number the week number (not `week`: slot content sees a component's props, and a host loops over `week`)
+	 * @prop {string} dates the week's date range, shown beside the heading
+	 * @prop {2 | 3} [level=3] the heading level
+	 */
+</script>
+<section webc:root="override" class="week" :id="`week-${number}`" :aria-labelledby="`week-${number}-heading`">
+	<header class="week-head">
+		<h2 webc:if="level == 2" class="week-title" :id="`week-${number}-heading`">Week <span @text="number"></span></h2>
+		<h3 webc:if="level != 2" class="week-title" :id="`week-${number}-heading`">Week <span @text="number"></span></h3>
+		<p class="week-of" @text="dates"></p>
+	</header>
+	<slot></slot>
+</section>
+
+<style webc:scoped>
+	:host {
+		margin: 0;
+		padding: 0;
+		border: var(--thin-border-width) solid var(--color-border);
+		border-radius: var(--standard-border-radius);
+		overflow: hidden;
+	}
+
+	.week-head {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.25em 1em;
+		padding: 0.55em 1em;
+		background-color: var(--color-surface);
+		border-block-end: var(--border-width) solid var(--color-accent);
+	}
+
+	.week-title {
+		margin: 0;
+		font-size: var(--font-size-4);
+	}
+
+	/* An h3 without a class gets the medium weight; the h2 kept the browser's bold. */
+	h3.week-title {
+		font-weight: var(--font-weight--medium);
+	}
+
+	.week-of {
+		margin: 0;
+		color: var(--color-text-muted);
+		font-size: max(var(--base-font-size), 0.9em);
+	}
+</style>

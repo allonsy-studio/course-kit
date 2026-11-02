@@ -1,0 +1,42 @@
+<script webc:setup>
+	/**
+	 * The page's Today shortcut: a button that jumps to the `#today` element
+	 * `<today-marker>` picks. Hidden until there is one, and in print.
+	 */
+</script>
+<a webc:root="override" href="#today" class="today-link">Today</a>
+
+<style>
+	/* The primary action, shown only once a #today exists. The :not(:has())
+	   form outranks a host's own `a` rules; without :has() the plain rule
+	   hides it. */
+	.today-link,
+	:root:not(:has(#today)) .today-link {
+		display: none;
+	}
+
+	:root:has(#today) .today-link {
+		display: grid;
+		place-items: center;
+		min-inline-size: 2.75rem;
+		min-block-size: 2.75rem;
+		padding-inline: 1em;
+		border: var(--thin-border-width) solid var(--color-accent);
+		border-radius: var(--standard-border-radius);
+		background-color: var(--color-accent);
+		color: var(--color-on-accent);
+		font-weight: var(--font-weight--semi-bold);
+		text-decoration: none;
+
+		&:is(:hover, :focus-visible) {
+			border-color: var(--color-text);
+			text-decoration: underline;
+		}
+	}
+
+	@media print {
+		:root:has(#today) .today-link {
+			display: none;
+		}
+	}
+</style>

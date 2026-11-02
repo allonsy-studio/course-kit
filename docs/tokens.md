@@ -34,6 +34,9 @@ Every color in the site and the slide decks comes from one of these. Override an
 | `warning` | `--color-warning` | Warnings and cautions | `hsl(40deg 86% 50%)` / `hsl(42deg 100% 40%)` | `#8a3500` / `#ffb37a` |
 | `on-warning` | `--color-on-warning` | Text on a warning fill | `#FBF9F3` |  |
 | `highlight` | `--color-highlight` | Highlighted (marked) text | `#FFD36C` / `#FFC233` |  |
+| `tag-test` | `--color-tag-test` | Glossary tag hue for tests; its tints derive from it | `#b37019` / `#e7a855` |  |
+| `tag-reading` | `--color-tag-reading` | Glossary tag hue for readings; its tints derive from it | `#1938b3` / `#5572e7` |  |
+| `tag-meeting` | `--color-tag-meeting` | Glossary tag hue for class meetings; its tints derive from it | `#13863d` / `#55e78b` |  |
 | `code` | `--color-code` | Preformatted code text and its border | `var(--color-text)` |  |
 | `gradient` | `--color-gradient-1` to `-4`, `--gradient-stops` | Decorative gradient, one to four colors | `#C92C6B`, `#7BD1E6`, `#FFD36C` / `#FFC233`, `#FF9A56` | |
 

@@ -1,3 +1,5 @@
+import { lessonDecks, lessonMaterials } from "../lib/lesson-materials.js";
+
 /** Data for the virtual lesson-day page: one page per entry in `lessons`. */
 export default {
 	layout: "lesson-detail",
@@ -8,5 +10,7 @@ export default {
 	eleventyComputed: {
 		permalink: (data) => `/lessons/week-${data.lesson.week}/day-${data.lesson.day}/`,
 		title: (data) => `Week ${data.lesson.week}, Day ${data.lesson.day} — Lesson Plan`,
+		lessonDecks,
+		lessonMaterials,
 	},
 };

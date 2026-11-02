@@ -232,9 +232,15 @@ __metadata:
     prismjs: "npm:^1.30.0"
   peerDependencies:
     "@11ty/eleventy": ^3.1.0
+    "@pyscript/core": ">=0.7"
     puppeteer: ">=24"
+    pyodide: ">=314"
   peerDependenciesMeta:
+    "@pyscript/core":
+      optional: true
     puppeteer:
+      optional: true
+    pyodide:
       optional: true
   languageName: unknown
   linkType: soft

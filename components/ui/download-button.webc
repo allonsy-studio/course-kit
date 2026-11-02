@@ -1,0 +1,51 @@
+<script webc:setup>
+	/**
+	 * A download link with an icon. The label is the slot.
+	 * @prop {string} url the file to download
+	 */
+</script>
+<a webc:root="override" :href="url" download>
+	<svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="download-icon">
+		<path d="M8 2v8" />
+		<path d="M4.5 7 8 10.5 11.5 7" />
+		<path d="M2.5 12.5h11" />
+	</svg>
+	<slot></slot>
+</a>
+
+<style webc:scoped>
+	:host {
+		--aspect-ratio: auto;
+		--image-size: fit-content;
+
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.4em;
+		padding: 0.6em 1.4em;
+		border: var(--thin-border-width) solid var(--color-border);
+		border-radius: var(--pill-border-radius);
+		color: var(--color-text);
+		font-size: 0.8em;
+		font-weight: var(--font-weight--semi-bold);
+		text-decoration: none;
+
+		&:hover,
+		&:focus-visible {
+			border-color: var(--color-accent);
+			background-color: var(--accent-bg);
+			color: var(--color-accent-text);
+		}
+
+		/* Focus gets the site's outline on top of the hover wash, so a
+		   keyboard user can tell the two apart. */
+		&:focus-visible {
+			outline: var(--outline-width) solid var(--color-accent);
+			outline-offset: var(--outline-offset);
+		}
+
+		.download-icon {
+			min-block-size: 1em;
+		}
+	}
+</style>

@@ -1,0 +1,49 @@
+<script webc:setup>
+	/**
+	 * A labelled list of readings or deadlines. Renders nothing when empty.
+	 * @prop {string} label the heading above the list
+	 * @prop {{ title: string, href?: string, check?: string, dueLabel?: string }[]} items
+	 * @prop {string} [prefix] put before an item's due label ("due ")
+	 */
+
+	/** The muted line under an item: its check, then when it is due. Props are not in scope here, so the template passes `prefix`. */
+	const detail = (item, lead = "") => [item.check, item.dueLabel && `${lead ?? ""}${item.dueLabel}`].filter(Boolean).join(", ");
+</script>
+<div webc:root="override" class="assigned" webc:if="items?.length">
+	<p class="label" @text="label"></p>
+	<ul role="list">
+		<li webc:for="item of items">
+			<a webc:if="item.href" :href="item.href" @text="item.title"></a>
+			<span webc:if="!item.href" @text="item.title"></span>
+			<span class="check" webc:if="detail(item, prefix)" @text="detail(item, prefix)"></span>
+		</li>
+	</ul>
+</div>
+
+<style webc:scoped>
+	:host {
+		ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+
+		li + li {
+			margin-block-start: 0.25em;
+		}
+	}
+
+	.label {
+		margin: 0 0 0.2em;
+		color: var(--color-text-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		font-size: var(--font-size-6);
+	}
+
+	.check {
+		display: block;
+		color: var(--color-text-muted);
+		font-size: max(var(--base-font-size), 0.9em);
+	}
+</style>

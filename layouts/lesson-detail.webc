@@ -43,9 +43,9 @@ title: "Instructor lesson plan"
 		<section aria-labelledby="before-heading">
 			<h2 id="before-heading">Before class</h2>
 			<ul class="checklist" role="list">
-				<li webc:if="$data.lesson.readings?.length">Review the week's readings (see materials below)</li>
+				<li webc:if="$data.lesson.readings?.length || $data.lesson.meetingReadings?.length">Review the readings (see materials below)</li>
 				<li>Prepare/update slides and live-demo code</li>
-				<li webc:for="deck of decksFor($data.collections.deck, $data.lesson.week, $data.lesson.day)">Print or open the <a :href="deck.notesUrl">speaker notes sheet</a></li>
+				<li webc:for="deck of $data.lessonDecks">Print or open the <a :href="deck.notesUrl">speaker notes sheet</a></li>
 				<li>Stage starter files or lab handout if needed</li>
 				<li>Check Brightspace for student questions or submissions</li>
 			</ul>
@@ -68,32 +68,7 @@ title: "Instructor lesson plan"
 
 		<section aria-labelledby="materials-heading">
 			<h2 id="materials-heading">Materials &amp; links</h2>
-			<h3 webc:if="decksFor($data.collections.deck, $data.lesson.week, $data.lesson.day).length">Slides for this meeting</h3>
-			<ul webc:if="decksFor($data.collections.deck, $data.lesson.week, $data.lesson.day).length">
-				<li webc:for="deck of decksFor($data.collections.deck, $data.lesson.week, $data.lesson.day)">
-					<a :href="deck.url" @text="deck.title"></a> — <a :href="deck.notesUrl">speaker notes</a> (printable)
-				</li>
-			</ul>
-			<h3 webc:if="$data.lessonDemos?.length">Demos from this meeting</h3>
-			<ul webc:if="$data.lessonDemos?.length">
-				<li webc:for="demo of $data.lessonDemos">
-					<a :href="`/demo/${demo.slug}/`" @text="demo.title"></a>
-					<span class="muted" webc:if="demo.description"> — <span @text="demo.description"></span></span>
-				</li>
-			</ul>
-			<h3 webc:if="$data.lesson.readings?.length">Assigned before this week</h3>
-			<ul webc:if="$data.lesson.readings?.length">
-				<li webc:for="reading of $data.lesson.readings">
-					<a :href="reading.href" @text="reading.title"></a>
-				</li>
-			</ul>
-			<h3 webc:if="$data.lesson.readings?.length && $data.lesson.resources?.length">Posted for the class</h3>
-			<p class="muted" webc:if="!$data.lesson.resources?.length">Nothing posted for this week yet.</p>
-			<ul webc:if="$data.lesson.resources?.length">
-				<li webc:for="resource of $data.lesson.resources">
-					<a :href="resource.href" @text="resource.title"></a>
-				</li>
-			</ul>
+			<link-section webc:for="section of $data.lessonMaterials" :@title="section.title" :@items="section.items" :@empty="section.empty"></link-section>
 		</section>
 
 		<section aria-labelledby="after-heading">

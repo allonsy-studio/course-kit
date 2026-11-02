@@ -1,3 +1,0 @@
-<div webc:root="override" class="callout">
-    <slot></slot>
-</div>
