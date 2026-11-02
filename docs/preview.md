@@ -54,3 +54,14 @@ export const Default = { args: { default: "<p>Bring a laptop.</p>" } };
 | `preview/content/assets/` | The canvas controls, the token loader and the preview's styles. |
 
 The preview is not part of the published package: `package.json`'s `files` leaves it out.
+
+## Published preview
+
+`.github/workflows/pages.yml` calls the organization's reusable Pages workflow, as the other Allons-y Studio projects do. It builds `yarn preview:build` and publishes `preview/_site` to the `gh-pages` branch:
+
+- Each push to `main` publishes the preview at the site root: <https://allonsy-studio.github.io/course-kit/>.
+- Each pull request from this repository publishes to `preview/<number>/`, gets a comment with the URL, and loses its preview when it closes.
+
+The workflow builds with `PATH_PREFIX` set to the path it serves from. `preview/eleventy.config.js` passes it to Eleventy as `pathPrefix`, and `HtmlBasePlugin` adds it to every link and asset URL in the output, so the layouts and components keep writing root-relative URLs (`/styles/`). A URL built in a script or passed as a prop needs Eleventy's `url` filter. `test/preview.test.js` builds under a prefix and checks that no link escapes it.
+
+Turn on GitHub Pages for the repository with the `gh-pages` branch as the source (Settings, Pages) before the first run.

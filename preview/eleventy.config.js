@@ -1,5 +1,7 @@
 import { createRequire } from "node:module";
 
+import { HtmlBasePlugin } from "@11ty/eleventy";
+
 import courseKit from "../index.js";
 
 import { TOKENS } from "../lib/theme.js";
@@ -22,6 +24,9 @@ export default async function (config) {
 		institution: { name: "Example College", timezone: "America/New_York" },
 		pdf: false,
 	});
+
+	// Pages serves the preview under a path (`/course-kit/`, `/course-kit/preview/12/`); the plugin adds it to every link and asset URL.
+	config.addPlugin(HtmlBasePlugin);
 
 	// The preview's own layouts sit outside the kit's layouts folder.
 	config.addLayoutAlias("shell", "../preview/_layouts/shell.webc");
@@ -48,4 +53,6 @@ export default async function (config) {
 	config.addWatchTarget("components/**");
 	config.addWatchTarget("preview/stories/**");
 	config.addWatchTarget("lib/theme.js");
+
+	return { pathPrefix: process.env.PATH_PREFIX || "/" };
 }
