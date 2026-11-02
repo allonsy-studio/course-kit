@@ -3,6 +3,7 @@
 	const keyDates = typeof groups === "undefined" ? scheduleKeyDates($data.lessons, $data.project, $data.schedule?.finalExam) : groups;
 </script>
 <header webc:root="override" class="schedule-overview">
+	<today-marker></today-marker>
 	<eyebrow class="separators">
 		<span @text="$data.term.label"></span>
 		<span @text="$data.course.code"></span>
@@ -31,7 +32,7 @@
 	<nav class="schedule-jump" aria-label="Jump to" webc:if="scheduleMonths(weeks).length">
 		<h2>Jump to</h2>
 		<ul role="list">
-			<li><today-marker :@link="true"></today-marker></li>
+			<li><today-link></today-link></li>
 			<li webc:for="entry of scheduleMonths(weeks)"><a :href="`#week-${entry.week}`" @text="entry.name"></a></li>
 		</ul>
 	</nav>

@@ -1,65 +1,27 @@
-<div webc:root="override" class="schedule-weeks" webc:if="weeks?.length">
+<div webc:root="override" class="schedule-weeks" data-today-host="meetings" webc:if="weeks?.length">
     <today-marker></today-marker>
-    <section class="week" webc:for="week of weeks" :id="`week-${week.week}`" :aria-labelledby="`week-${week.week}-heading`">
-        <header class="week-head">
-            <h3 :id="`week-${week.week}-heading`">Week <span @text="week.week"></span></h3>
-            <p class="week-of" @text="week.dates"></p>
-        </header>
+    <week-block webc:for="week of weeks" :@number="week.week" :@dates="week.dates">
         <div class="week-body">
             <ol class="meetings" role="list">
-                <li class="meeting" data-today-scope webc:for="meeting of week.meetings">
-                    <p class="when" :data-date="meeting.iso">
-                        <span class="weekday" @text="meeting.weekday"></span>
-                        <span class="date" @text="meeting.date"></span>
-                        <span class="note" webc:if="meeting.substitution">Runs a <span @text="meeting.substitution"></span> schedule</span>
-                    </p>
+                <meeting-card webc:for="meeting of week.meetings" :@meeting="meeting">
+                    <span slot="when" class="note" webc:if="meeting.substitution">Runs a <span @text="meeting.substitution"></span> schedule</span>
                     <p class="no-class" webc:if="meeting.noClass">No class — <span @text="meeting.noClass"></span></p>
                     <ul class="topics" role="list" webc:if="!meeting.noClass">
                         <li webc:for="topic of meeting.topics" @raw="topic"></li>
                     </ul>
-                    <div class="assigned" webc:if="!meeting.noClass && meeting.readings?.length">
-                        <p class="label">Read before class</p>
-                        <ul role="list">
-                            <li webc:for="reading of meeting.readings">
-                                <a :href="reading.href" @text="reading.title"></a>
-                                <span class="check" webc:if="reading.check || reading.dueLabel"><span webc:if="reading.check" @text="reading.check"></span><span webc:if="reading.check && reading.dueLabel">, </span><span webc:if="reading.dueLabel">due <span @text="reading.dueLabel"></span></span></span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="assigned" webc:if="!meeting.noClass && meeting.due?.length">
-                        <p class="label">Due</p>
-                        <ul role="list">
-                            <li webc:for="item of meeting.due">
-                                <a webc:if="item.href" :href="item.href" @text="item.title"></a>
-                                <span webc:if="!item.href" @text="item.title"></span>
-                                <span class="check" @text="item.dueLabel"></span>
-                            </li>
-                        </ul>
-                    </div>
-                    <p class="slides" webc:if="meeting.slides">
-                        <a class="arrow" :href="meeting.slides">Slides <span aria-hidden="true">→</span></a>
-                    </p>
-                    <p class="slides" webc:if="meeting.addendum">
-                        <a class="arrow" :href="meeting.addendum">Addendum <span aria-hidden="true">→</span></a>
-                    </p>
+                    <assigned-list @label="Read before class" @prefix="due " :@items="meeting.noClass ? [] : meeting.readings"></assigned-list>
+                    <assigned-list @label="Due" :@items="meeting.noClass ? [] : meeting.due"></assigned-list>
+                    <meeting-decks :@meeting="meeting"></meeting-decks>
                     <div class="demos" webc:if="meeting.demos?.length">
                         <p class="label">Demos</p>
                         <ul role="list">
-                            <li webc:for="demo of meeting.demos"><a class="arrow" :href="demo.url"><span @text="demo.title"></span> <span aria-hidden="true">→</span></a></li>
+                            <li webc:for="demo of meeting.demos"><arrow-link :href="demo.url"><span @text="demo.title"></span></arrow-link></li>
                         </ul>
                     </div>
-                </li>
+                </meeting-card>
             </ol>
             <div class="materials">
-                <div class="group" webc:if="week.readings?.length">
-                    <p class="label">Read before class</p>
-                    <ul role="list">
-                        <li webc:for="reading of week.readings">
-                            <a :href="reading.href" @text="reading.title"></a>
-                            <span class="check" webc:if="reading.check || reading.dueLabel"><span webc:if="reading.check" @text="reading.check"></span><span webc:if="reading.check && reading.dueLabel">, </span><span webc:if="reading.dueLabel">due <span @text="reading.dueLabel"></span></span></span>
-                        </li>
-                    </ul>
-                </div>
+                <assigned-list @label="Read before class" @prefix="due " :@items="week.readings"></assigned-list>
                 <hr webc:if="week.readings?.length">
                 <div class="group">
                     <p class="label">Resources</p>
@@ -72,46 +34,16 @@
                 </div>
             </div>
         </div>
-    </section>
+    </week-block>
 </div>
 
 <style webc:scoped>
-    /* One bordered block per week: a tinted header band, then the meetings
-       down the left and the week's reading and materials on the right. Stacks
-       to a single column on narrow screens, so nothing scrolls sideways. */
+    /* The meetings down the left and the week's reading and materials on the
+       right. Stacks to a single column on narrow screens, so nothing scrolls
+       sideways. */
     :host {
-        --today-host: meetings;
         display: grid;
         gap: var(--content-space);
-    }
-
-    .week {
-        margin: 0;
-        padding: 0;
-        border: var(--thin-border-width) solid var(--color-border);
-        border-radius: var(--standard-border-radius);
-        overflow: hidden;
-    }
-
-    .week-head {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: baseline;
-        gap: 0.25em 1em;
-        padding: 0.55em 1em;
-        background-color: var(--color-surface);
-        border-block-end: var(--border-width) solid var(--color-accent);
-
-        h3 {
-            margin: 0;
-            font-size: var(--font-size-4);
-        }
-    }
-
-    .week-of {
-        margin: 0;
-        color: var(--color-text-muted);
-        font-size: max(var(--base-font-size), 0.9em);
     }
 
     .week-body {
@@ -129,45 +61,10 @@
         padding: 0;
     }
 
-    .meeting {
-        display: grid;
-        grid-template-columns: 8.5em minmax(0, 1fr);
-        gap: 0.5em 1em;
-        padding: 0.8em 1em;
-
-        & + .meeting {
-            border-block-start: var(--thin-border-width) solid var(--color-border);
-        }
-
-        @media screen and (width <= 520px) {
-            grid-template-columns: minmax(0, 1fr);
-            gap: 0.25em;
-        }
-    }
-
-    .when {
-        display: flex;
-        flex-direction: column;
-        margin: 0;
-
-        @media screen and (width <= 520px) {
-            flex-direction: row;
-            flex-wrap: wrap;
-            gap: 0 0.5em;
-            align-items: baseline;
-        }
-    }
-
-    .weekday {
-        font-weight: var(--font-weight--semi-bold);
-    }
-
-    .date,
     .note,
     .no-class,
     .pending,
-    .label,
-    .check {
+    .label {
         color: var(--color-text-muted);
         font-size: max(var(--base-font-size), 0.9em);
     }
@@ -190,25 +87,10 @@
         }
     }
 
-    /* The meeting's own deck and demos under its topics, each on its own
-       line and always in the same order: the Slides link first, then a
-       labelled Demos region, so the lab line and the demo it builds on sit
-       together and every meeting reads the same way. */
-    .slides,
-    .demos,
-    .assigned {
-        grid-column: 2;
-        margin: 0.35em 0 0;
+    /* A meeting's demos sit under its deck links in a labelled region. */
+    .demos {
+        margin: 0.6em 0 0;
         font-size: max(var(--base-font-size), 0.92em);
-
-        @media screen and (width <= 520px) {
-            grid-column: auto;
-        }
-    }
-
-    .demos,
-    .assigned {
-        margin-block-start: 0.6em;
 
         ul {
             list-style: none;
@@ -218,16 +100,6 @@
 
         li + li {
             margin-block-start: 0.2em;
-        }
-    }
-
-    .arrow {
-        color: var(--color-accent-text);
-        text-decoration: none;
-        font-weight: var(--font-weight--medium);
-
-        &:is(:hover, :focus-visible) {
-            text-decoration: underline;
         }
     }
 
@@ -270,9 +142,5 @@
 
     .pending {
         margin: 0;
-    }
-
-    .check {
-        display: block;
     }
 </style>

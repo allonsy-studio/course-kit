@@ -1,34 +1,22 @@
 <script webc:setup>
-	/*
-	   <today-marker> marks today's class meeting and, optionally, links to it.
-
-	   Props
-	     @link   Boolean. Render the "Today" link button (`<a href="#today">`).
-	             Accepts :@link="true" or a plain truthy value (@link="true");
-	             absent, false, "false", "0", "no" and "off" render no link.
-
-	   Always, link or not, a script (below) marks the page:
-	     - every [data-date] element listing today's campus date (the site's `institution.timezone`)
-	       gets data-today, aria-current="date" and a visible "Today" flag
-	       (data-today-label overrides the text; a table row gets it in its first cell);
-	     - one element gets id="today" for the link to jump to: today's, else the next
-	       meeting, else the first (before the term) or last (after it); never a
-	       no-class day. A host puts data-today-scope on the element that should
-	       carry the id and the highlight (the schedule's .meeting), otherwise the
-	       dated element itself does. An element that already has an id gets an
-	       empty <span id="today"> inside it instead, and an existing #today wins.
-
-	   Hosts: a component that holds [data-date] elements renders
-	   <today-marker></today-marker> itself (the script and styles are bundled once
-	   per page) and declares itself with `--today-host: <name>` on its root; the
-	   styles below read it with `@container style(--today-host: <name>)`.
-	*/
-	const showLink = (value) => {
-		if (value === undefined || value === null || value === false) return false;
-		return !["false", "0", "no", "off"].includes(String(value).trim().toLowerCase());
-	};
+	/**
+	 * <today-marker> marks today's class meeting. A host renders it once, adds
+	 * `data-today-host="<name>"` to its root, and puts `data-date` on what it
+	 * lists; the page's `<today-link>` jumps to the result.
+	 *
+	 * A script flags every [data-date] element listing today's campus date
+	 * (the site's `institution.timezone`): data-today, aria-current="date" and
+	 * a visible "Today" flag (data-today-label overrides the text; a table row
+	 * gets it in its first cell). One element gets id="today" for the link:
+	 * today's, else the next meeting, else the first (before the term) or last
+	 * (after it); never a no-class day. A host puts data-today-scope on the
+	 * element that should carry the id and the highlight (the schedule's
+	 * .meeting), otherwise the dated element itself does. An element that
+	 * already has an id gets an empty <span id="today"> inside it instead, and
+	 * an existing #today wins.
+	 */
 </script>
-<a webc:root="override" webc:if="showLink(typeof link === 'undefined' ? undefined : link)" href="#today" class="today-link">Today</a>
+<template webc:root="override" webc:nokeep></template>
 
 <script>
 	/**
@@ -92,11 +80,8 @@
 
 <style>
 	/* The single source of the "today" look. Hosts own the dated elements and
-	   declare themselves with a custom property (`--today-host: <name>`, which
-	   inherits to everything inside); the @container style() rules below vary
-	   the base look per host. A custom-property style query needs Chrome and
-	   Edge 111, Safari 18 or Firefox 151; elsewhere the rule is skipped and the
-	   base look applies, which is a complete, readable highlight. */
+	   name themselves with `data-today-host`; the rules below vary the base
+	   look per host. */
 
 	[data-today] {
 		background-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
@@ -124,7 +109,7 @@
 
 	/* host: a list of meetings (schedule-weeks, demo-weeks). The meeting holds
 	   the highlight, not the date line inside it. */
-	@container style(--today-host: meetings) {
+	[data-today-host="meetings"] {
 		[data-today] {
 			background-color: transparent;
 			box-shadow: none;
@@ -141,7 +126,7 @@
 	}
 
 	/* host: a grid of day cells (slide-timetable). The edge runs along the top. */
-	@container style(--today-host: timetable) {
+	[data-today-host="timetable"] {
 		[data-today] {
 			box-shadow: inset 0 var(--border-width) 0 var(--color-accent);
 		}
@@ -157,39 +142,6 @@
 		[data-today-scope]:has([data-today]) {
 			outline: var(--border-width) solid Highlight;
 			outline-offset: calc(var(--border-width) * -1);
-		}
-	}
-
-	/* The link button: the page's primary action, shown only once a #today exists.
-	   The :not(:has()) form outranks a host's own `a` rules; without :has() the
-	   plain rule hides it. */
-	.today-link,
-	:root:not(:has(#today)) .today-link {
-		display: none;
-	}
-
-	:root:has(#today) .today-link {
-		display: grid;
-		place-items: center;
-		min-inline-size: 2.75rem;
-		min-block-size: 2.75rem;
-		padding-inline: 1em;
-		border: var(--thin-border-width) solid var(--color-accent);
-		border-radius: var(--standard-border-radius);
-		background-color: var(--color-accent);
-		color: var(--color-on-accent);
-		font-weight: var(--font-weight--semi-bold);
-		text-decoration: none;
-
-		&:is(:hover, :focus-visible) {
-			border-color: var(--color-text);
-			text-decoration: underline;
-		}
-	}
-
-	@media print {
-		:root:has(#today) .today-link {
-			display: none;
 		}
 	}
 </style>

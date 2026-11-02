@@ -1,0 +1,19 @@
+<script webc:setup>
+	/**
+	 * A link with a trailing arrow. The label is the slot; `href` and any
+	 * other attribute pass through to the `<a>`.
+	 */
+</script>
+<a webc:root="override" class="arrow"><slot></slot> <span aria-hidden="true">→</span></a>
+
+<style webc:scoped>
+	:host {
+		color: var(--color-accent-text);
+		text-decoration: none;
+		font-weight: var(--font-weight--medium);
+
+		&:is(:hover, :focus-visible) {
+			text-decoration: underline;
+		}
+	}
+</style>
