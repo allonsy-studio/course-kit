@@ -13,6 +13,20 @@ export const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
 /** @param {string} s @returns {string} `s` as inline code */
 export const code = (s) => `<code>${esc(s)}</code>`;
 
+const stems = [];
+
+/** Remember a question's wording, so the practice worksheet can be checked against it. */
+const note = (text) => {
+	const plain = String(text).replace(/<[^>]*>/g, " ").replace(/&[a-z]+;/g, " ").replace(/\s+/g, " ").trim();
+	if (plain) stems.push(plain);
+};
+
+/** @returns {string[]} the wording of every question built since the last reset */
+export const recordedStems = () => [...stems];
+
+/** Forget the recorded wording. Build the test and the key from a clean slate. */
+export const resetStems = () => void (stems.length = 0);
+
 export const letters = "abcdefghijkl";
 export const LETTERS = "ABCDEFGHIJKL";
 
@@ -32,9 +46,9 @@ export function highlighter(Prism, lang) {
 			.map((line, i) => {
 				const mark = key && bad.includes(i) ? " badline" : "";
 				const gutter = numbered ? `<span class="ln">${i + 1}</span>` : "";
-				return `<span class="cl${mark}">${gutter}${hl(line)}</span>`;
+				return `<span class="cl${mark}">${gutter}${hl(line) || " "}</span>`;
 			})
-			.join("\n");
+			.join("");
 		return `<pre class="language-${lang}">${body}</pre>`;
 	};
 	return { hl, pre };
@@ -50,7 +64,10 @@ export const mark = (text, key) => (key ? `<p class="mark"><b>Marking:</b> ${tex
 export const how = (text) => `<p class="how">${text}</p>`;
 
 /** A sub-question prompt inside a section. */
-export const rubric = (text) => `<p class="rubric">${text}</p>`;
+export const rubric = (text) => {
+	note(text);
+	return `<p class="rubric">${text}</p>`;
+};
 
 /**
  * Multiple choice. `answer` is the 0-based index of the right choice.
@@ -62,6 +79,7 @@ export const rubric = (text) => `<p class="rubric">${text}</p>`;
  * @param {{ aside?: string }} [opts] `aside` puts a code block beside the choices
  */
 export function mc(n, stem, choices, answer, key, { aside = "" } = {}) {
+	note(stem);
 	const opts = choices.map((c, i) => `<li class="${key && i === answer ? "hit" : ""}"><span class="l">${letters[i]})</span> ${c}</li>`).join("");
 	const main = `<div><p class="stem"><b>${n}.</b> ${stem}</p><ol class="choices">${opts}</ol></div>`;
 	return `<div class="item mc">
@@ -75,6 +93,7 @@ export function mc(n, stem, choices, answer, key, { aside = "" } = {}) {
  * @param {{ lines?: number, aside?: string }} [opts] `aside` is a code block above the lines
  */
 export function fill(n, stem, answer, key, { lines = 1, aside = "" } = {}) {
+	note(stem);
 	const rule = key ? `<p class="ans line">${answer}</p>` : Array.from({ length: lines }, () => `<p class="rule"></p>`).join("");
 	return `<div class="item fill"><p class="stem"><b>${n}.</b> ${stem}</p>${aside}${rule}</div>`;
 }
@@ -94,6 +113,7 @@ export function labeledLines(rows, key) {
  * @param {{ bank: string[], rows: [string, number][], key: boolean }} p `rows` are `[label, bankIndex]`
  */
 export function matching({ bank, rows, key }) {
+	for (const [label] of rows) note(label);
 	const bankHtml = bank.map((b, i) => `<span class="bank-item"><b>${LETTERS[i]}</b> ${b}</span>`).join("");
 	const rowHtml = rows.map(([label, answer], i) => `<tr>${box(key ? LETTERS[answer] : "", key)}<td><b>${i + 1}.</b> ${label}</td></tr>`).join("");
 	return `<div class="matching"><div class="bank">${bankHtml}</div><table class="match-table"><tbody>${rowHtml}</tbody></table></div>`;
@@ -104,6 +124,7 @@ export function matching({ bank, rows, key }) {
  * @param {{ terms: [string, number][], defs: string[], key: boolean }} p `terms` are `[term, defIndex]`
  */
 export function termMatch({ terms, defs, key }) {
+	for (const def of defs) note(def);
 	const rows = terms.map(
 		([term, answer], i) => `<tr>${box(key ? LETTERS[answer] : "", key)}<td class="term"><b>${i + 1}.</b> ${term}</td><td class="def"><b>${LETTERS[i]}.</b> ${defs[i]}</td></tr>`,
 	);
@@ -116,6 +137,7 @@ export function termMatch({ terms, defs, key }) {
  * @param {string[]} options e.g. `["Works", "Doesn't work"]`
  */
 export function circleTable(rows, options, key) {
+	for (const [label] of rows) note(label);
 	return `<table class="works"><tbody>${rows
 		.map(([label, answer]) => `<tr><td>${label}</td>${options.map((o, i) => `<td class="opt ${key && i === answer ? "hit" : ""}">${o}</td>`).join("")}</tr>`)
 		.join("")}</tbody></table>`;

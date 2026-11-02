@@ -52,6 +52,7 @@ You need [Node.js](https://nodejs.org) 22 or newer, and a terminal.
 | Make the site look like my college | [Design](docs/design.md), [color tokens](docs/tokens.md) and the [theme panel](docs/theme-panel.md) |
 | Look up a component | [Component reference](docs/components-reference.md) |
 | See every component rendered | [Component preview](docs/preview.md) (`yarn preview`) |
+| Make a test, its key and a practice worksheet | [Test generator skill](skills/test-generator/SKILL.md) |
 | Fix an error message | [Troubleshooting](docs/troubleshooting.md) |
 
 ## Words used here
