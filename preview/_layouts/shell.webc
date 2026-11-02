@@ -7,8 +7,8 @@
 		<meta name="robots" content="noindex, nofollow" />
 		<title @text="[$data.title, 'Course kit preview'].filter(Boolean).join(' | ')"></title>
 		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-		<link rel="stylesheet" href="/styles/font.css" webc:keep />
-		<link rel="stylesheet" href="/styles/base.css" webc:keep />
+		<!-- The kit's base styles sit in a layer below Norn's, so a Norn component is styled by its own CSS, not the kit's. -->
+		<style webc:keep @raw="'@layer kit, norn;\n@import url(' + url('/styles/font.css') + ') layer(kit);\n@import url(' + url('/styles/base.css') + ') layer(kit);'"></style>
 		<link rel="stylesheet" href="/preview-assets/shell.css" webc:keep />
 		<style webc:keep @raw="getBundle('css')"></style>
 		<script webc:keep @raw="getBundle('js')"></script>
