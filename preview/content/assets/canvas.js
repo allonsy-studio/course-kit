@@ -82,3 +82,6 @@ for (const input of document.querySelectorAll("input[data-token]")) input.addEve
 bar?.querySelector("[data-overrides-reset]").addEventListener("click", () => window.previewTokens.reset());
 window.addEventListener("previewtokenschange", sync);
 sync();
+
+// On a phone the list of components starts closed, so the page is the first thing on screen.
+if (matchMedia("(max-width: 48rem)").matches) document.querySelector("details.nav")?.removeAttribute("open");

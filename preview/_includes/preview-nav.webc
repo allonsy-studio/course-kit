@@ -10,7 +10,7 @@
 		<section webc:for="group of groups">
 			<h2 @text="group.title"></h2>
 			<ul role="list">
-				<li webc:for="component of group.components"><a :href="component.url" @text="component.tag"></a></li>
+				<li webc:for="component of group.components"><a :href="component.url" :aria-current="component.url === $data.page?.url ? 'page' : null" @text="component.tag"></a></li>
 			</ul>
 		</section>
 	</nav>
