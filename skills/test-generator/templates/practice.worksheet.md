@@ -6,7 +6,7 @@ heading: __TEST__ practice
 lede: Questions in the same shape as the test, on the same topics. Check yourself as you go.
 ---
 
-<!-- Every question here is new. Reuse no test wording: `node skills/test-generator/lib/guard.mjs overlap <stems.json> <this file>`. -->
+<!-- Every question here is new. Reuse no test wording: `node skills/test-generator/lib/guard.js overlap <stems.json> <this file>`. -->
 
 ::: terms
 - **landmark** — A page region with a role and a name, such as `header` or `nav`. [Week 1 slide 2](1/1#s2)

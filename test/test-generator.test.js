@@ -5,11 +5,11 @@ import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 
-import { checkPoints } from "../skills/test-generator/lib/document.mjs";
-import { assertPrivate, overlap, resolveOutDir, scan } from "../skills/test-generator/lib/guard.mjs";
-import { code, mc, recordedStems, resetStems, termMatch } from "../skills/test-generator/lib/items.mjs";
-import { checkSnippet } from "../skills/test-generator/lib/python-check.mjs";
-import { scaffold } from "../skills/test-generator/scripts/start.mjs";
+import { checkPoints } from "../skills/test-generator/lib/document.js";
+import { assertPrivate, overlap, resolveOutDir, scan } from "../skills/test-generator/lib/guard.js";
+import { code, mc, recordedStems, resetStems, termMatch } from "../skills/test-generator/lib/items.js";
+import { checkSnippet } from "../skills/test-generator/lib/python-check.js";
+import { scaffold } from "../skills/test-generator/scripts/start.js";
 
 const tmp = () => fs.mkdtempSync(path.join(os.tmpdir(), "test-generator-"));
 

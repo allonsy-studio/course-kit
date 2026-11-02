@@ -10,15 +10,15 @@ Makes three things from one request:
 | Output | Where it goes | Published? |
 |---|---|---|
 | The test (PDF) and the answer key (PDF) | A private folder **outside the repository** | **Never** |
-| The content file that builds them (`.mjs`) | The same private folder | **Never** |
+| The content file that builds them (`.js`) | The same private folder | **Never** |
 | A practice worksheet (`.worksheet.md`, `.11tydata.js`, `.webc`) | The course's `content/practice/` | Yes |
 
 The content file holds every question and answer, so it is as private as the key.
 
 ## The rules
 
-1. **Tests, keys and content files never enter the repository.** Not in a branch, not in a pull request, not in `public/`. `lib/guard.mjs` refuses to write them inside a git work tree.
-2. **The worksheet reuses no test question.** Same topics, same kinds of question, different wording and different numbers. `guard.mjs overlap` checks it.
+1. **Tests, keys and content files never enter the repository.** Not in a branch, not in a pull request, not in `public/`. `lib/guard.js` refuses to write them inside a git work tree.
+2. **The worksheet reuses no test question.** Same topics, same kinds of question, different wording and different numbers. `guard.js overlap` checks it.
 3. **Every answer is checked before it is printed.** Points must total the test's points; Python output must match Python's.
 4. **Show the instructor the PDFs before calling it done.** Render pages to images and look at them.
 
@@ -43,29 +43,29 @@ Read the decks in `content/slides/` for the covered weeks, and the glossary entr
 ### 3. Start the test in the private folder
 
 ```sh
-node skills/test-generator/scripts/start.mjs --course cs101 --name test-2 \
+node skills/test-generator/scripts/start.js --course cs101 --name test-2 \
   --title "Test 2: Loops" --date "Friday, October 2" --minutes 50 \
   --school "Example College · Fall 2026" --label "CS 101 · Introduction to Programming"
 ```
 
-This writes `test-2.mjs` and a draft worksheet into `$COURSE_TESTS_DIR/cs101/` (default `~/course-tests/cs101/`), and stops if the folder is inside a repository. Tell the instructor where the folder is.
+This writes `test-2.js`, a draft worksheet and a one-line `package.json` (so the folder's `.js` files are ES modules) into `$COURSE_TESTS_DIR/cs101/` (default `~/course-tests/cs101/`), and stops if the folder is inside a repository. Tell the instructor where the folder is.
 
 ### 4. Write the questions
 
-Edit `test-2.mjs`. It is a list of sections, each a function of `key` that returns the section's number, title, points, a one-line blurb and its body. Build the body from the helpers in `lib/items.mjs`; each takes `key` so one definition makes both the student copy and the key. Details and every helper: [question types](reference/question-types.md).
+Edit `test-2.js`. It is a list of sections, each a function of `key` that returns the section's number, title, points, a one-line blurb and its body. Build the body from the helpers in `lib/items.js`; each takes `key` so one definition makes both the student copy and the key. Details and every helper: [question types](reference/question-types.md).
 
 - Put the answer in the call (`mc(1, "…", choices, 1, key)`), never in the stem.
 - Use `mark("…", key)` for partial credit; it prints only in the key.
-- For a code course, list each snippet once with its expected output and check them with `lib/python-check.mjs`, so the key cannot drift from what Python prints.
+- For a code course, list each snippet once with its expected output and check them with `lib/python-check.js`, so the key cannot drift from what Python prints.
 - Draw figures as SVG with `svgBox` for write-in boxes, as the course builders do.
 - Keep each section on its own page unless it is short; give it `flow: true` to share a page.
 
 ### 5. Build and check
 
 ```sh
-node ~/course-tests/cs101/test-2.mjs          # test and key, as PDFs
-KEY=1 node ~/course-tests/cs101/test-2.mjs    # only the key
-HTML=1 node ~/course-tests/cs101/test-2.mjs   # also write the HTML
+node ~/course-tests/cs101/test-2.js          # test and key, as PDFs
+KEY=1 node ~/course-tests/cs101/test-2.js    # only the key
+HTML=1 node ~/course-tests/cs101/test-2.js   # also write the HTML
 ```
 
 The build fails if the points do not total. Then render and look:
@@ -88,7 +88,7 @@ Start from the draft next to the test. Rules for the worksheet:
 Then check it against the test:
 
 ```sh
-node skills/test-generator/lib/guard.mjs overlap ~/course-tests/cs101/test-2-stems.json content/practice/test-2.worksheet.md
+node skills/test-generator/lib/guard.js overlap ~/course-tests/cs101/test-2-stems.json content/practice/test-2.worksheet.md
 ```
 
 Rewrite any question it lists.
@@ -98,7 +98,7 @@ Rewrite any question it lists.
 Before any commit in the course repo:
 
 ```sh
-node skills/test-generator/lib/guard.mjs scan
+node skills/test-generator/lib/guard.js scan
 ```
 
 It fails when the repository holds a test, a key or a content file. Commit only the three worksheet files, authored as the instructor, with no attribution lines.

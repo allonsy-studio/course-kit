@@ -1,6 +1,6 @@
 # Question types
 
-Every helper is in `lib/items.mjs` and takes `key` as its last argument (except where noted). `key` false builds the student copy; true builds the answer key. A helper returns HTML; join them in a section's `body`.
+Every helper is in `lib/items.js` and takes `key` as its last argument (except where noted). `key` false builds the student copy; true builds the answer key. A helper returns HTML; join them in a section's `body`.
 
 | Helper | Use for | Call |
 |---|---|---|
@@ -41,7 +41,7 @@ Points across sections must total `meta.total` (default 100); the build stops ot
 For a Python course, give every snippet an id, its source and the exact output, and check them before building:
 
 ```js
-import { checkSnippets } from "../lib/python-check.mjs";
+import { checkSnippets } from "../lib/python-check.js";
 
 const snippets = [{ id: "3.1", src: "for i in range(3):\n    print(i)", expect: "0\n1\n2" }];
 checkSnippets(snippets);

@@ -1,14 +1,15 @@
 #!/usr/bin/env node
 /**
- * Start a test: copy the content template and a practice-worksheet draft into the course's private folder.
- * `node start.mjs --course cs101 --name test-2 --title "Test 2: Loops" --date "Friday, October 2" --minutes 50`
+ * Start a test: copy the content template and a practice-worksheet draft into the course's private folder,
+ * with a `package.json` that makes its `.js` files ES modules.
+ * `node start.js --course cs101 --name test-2 --title "Test 2: Loops" --date "Friday, October 2" --minutes 50`
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 
-import { assertPrivate, resolveOutDir } from "../lib/guard.mjs";
+import { assertPrivate, resolveOutDir } from "../lib/guard.js";
 
 const root = path.resolve(import.meta.dirname, "..");
 
@@ -22,7 +23,11 @@ export function scaffold(values) {
 	assertPrivate(dir);
 	mkdirSync(dir, { recursive: true });
 
-	const content = path.join(dir, `${values.name}.mjs`);
+	// The folder is outside any package, so say its `.js` files are ES modules.
+	const manifest = path.join(dir, "package.json");
+	if (!existsSync(manifest)) writeFileSync(manifest, `${JSON.stringify({ private: true, type: "module" }, null, "\t")}\n`);
+
+	const content = path.join(dir, `${values.name}.js`);
 	if (existsSync(content)) throw new Error(`${content} exists. Pick another --name, or edit it.`);
 
 	const fill = {
@@ -37,7 +42,7 @@ export function scaffold(values) {
 	const apply = (text) => Object.entries(fill).reduce((out, [token, value]) => out.replaceAll(token, value), text);
 
 	const libUrl = `${pathToFileURL(path.join(root, "lib")).href}/`;
-	writeFileSync(content, apply(readFileSync(path.join(root, "templates", "content.mjs"), "utf8").replaceAll('"../lib/', `"${libUrl}`)));
+	writeFileSync(content, apply(readFileSync(path.join(root, "templates", "content.js"), "utf8").replaceAll('"../lib/', `"${libUrl}`)));
 
 	const draft = path.join(dir, `${values.name}.practice.worksheet.md`);
 	writeFileSync(draft, apply(readFileSync(path.join(root, "templates", "practice.worksheet.md"), "utf8")));

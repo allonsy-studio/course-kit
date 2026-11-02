@@ -23,7 +23,7 @@ The test and the worksheet cover the same topics, not the same questions.
 - Ask the same skill from another angle (give the code, ask the output; then give the output, ask what code might print it).
 - Do not copy a distractor set. Write new wrong answers.
 
-`guard.mjs overlap` compares every test question with the worksheet by word runs and fails on a close match. Passing it is not proof that the questions are different enough; read the two side by side.
+`guard.js overlap` compares every test question with the worksheet by word runs and fails on a close match. Passing it is not proof that the questions are different enough; read the two side by side.
 
 ## Files
 

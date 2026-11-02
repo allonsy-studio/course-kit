@@ -4,15 +4,15 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
-import { buildDocument, checkPoints } from "./document.mjs";
-import { assertPrivate, MARKER, resolveOutDir } from "./guard.mjs";
-import { recordedStems, resetStems, section } from "./items.mjs";
-import { renderPdf } from "./render.mjs";
+import { buildDocument, checkPoints } from "./document.js";
+import { assertPrivate, MARKER, resolveOutDir } from "./guard.js";
+import { recordedStems, resetStems, section } from "./items.js";
+import { renderPdf } from "./render.js";
 
 /**
  * @typedef {object} Built
  * @property {string[]} files the paths written
- * @property {string[]} stems the wording of every question, for `guard.mjs overlap`
+ * @property {string[]} stems the wording of every question, for `guard.js overlap`
  */
 
 /**
@@ -21,7 +21,7 @@ import { renderPdf } from "./render.mjs";
  * Environment: `KEY=1` builds only the key, `HTML=1` also writes the HTML, `HTML_ONLY=1` skips the PDFs.
  *
  * @param {object} options
- * @param {import("./document.mjs").Meta & { slug: string }} options.meta `slug` names the course folder, e.g. "cs101"
+ * @param {import("./document.js").Meta & { slug: string }} options.meta `slug` names the course folder, e.g. "cs101"
  * @param {((key: boolean) => { n: number, title: string, points: number, blurb?: string, body: string, flow?: boolean })[]} options.sections one function per section, returning its number, title, points, blurb and body
  * @param {string} [options.css] extra CSS for this test
  * @param {string} [options.outDir] a folder; default is the course's folder under `$COURSE_TESTS_DIR`

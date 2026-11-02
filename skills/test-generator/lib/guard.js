@@ -2,8 +2,8 @@
 /**
  * Keeps tests and answer keys out of the repository.
  *
- * `node guard.mjs scan [dir]`: fail when the repository holds a test, a key or a builder.
- * `node guard.mjs overlap <stems.json> <worksheet.md>`: fail when the worksheet reuses a test question.
+ * `node guard.js scan [dir]`: fail when the repository holds a test, a key or a builder.
+ * `node guard.js overlap <stems.json> <worksheet.md>`: fail when the worksheet reuses a test question.
  */
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
@@ -72,9 +72,9 @@ export function scan(dir = process.cwd()) {
 	if (!root) throw new Error(`${dir} is not inside a git repository.`);
 	const files = git(root, "ls-files", "-co", "--exclude-standard").split("\n").filter(Boolean);
 	return files.filter((file) => {
-		if (/^skills\/test-generator\//.test(file)) return false;
-		if (NAMES.test(file) && /\.(pdf|html?|mjs|json)$/i.test(file)) return true;
-		if (!/\.(html?|mjs|json|md|txt)$/i.test(file)) return false;
+		if (/^(skills\/test-generator\/|test\/test-generator\.test\.js$)/.test(file)) return false;
+		if (NAMES.test(file) && /\.(pdf|html?|js|json)$/i.test(file)) return true;
+		if (!/\.(html?|js|json|md|txt)$/i.test(file)) return false;
 		try {
 			const text = readFileSync(path.join(root, file), "utf8");
 			return CONTENT.some((pattern) => pattern.test(text));
@@ -129,7 +129,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 		}
 		console.log("The worksheet shares no question wording with the test.");
 	} else {
-		console.error("Usage: guard.mjs scan [dir] | overlap <stems.json> <worksheet.md>");
+		console.error("Usage: guard.js scan [dir] | overlap <stems.json> <worksheet.md>");
 		process.exit(2);
 	}
 }

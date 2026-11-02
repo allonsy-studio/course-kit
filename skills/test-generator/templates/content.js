@@ -1,11 +1,11 @@
 // test-generator:private
 /**
- * __COURSE__ · __TEST__ content. `node __FILE__.mjs` writes the test and its key next to this file.
+ * __COURSE__ · __TEST__ content. `node __FILE__.js` writes the test and its key next to this file.
  * KEY=1 builds only the key. HTML=1 also writes the HTML.
  */
-import { buildTest } from "../lib/build.mjs";
-import { code, circleTable, fill, how, highlighter, matching, mc, mark, termMatch } from "../lib/items.mjs";
-import { load } from "../lib/render.mjs";
+import { buildTest } from "../lib/build.js";
+import { code, circleTable, fill, how, highlighter, matching, mc, mark, termMatch } from "../lib/items.js";
+import { load } from "../lib/render.js";
 
 const Prism = load("prismjs");
 const { pre } = highlighter(Prism, "markup");
