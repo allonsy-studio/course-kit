@@ -71,40 +71,6 @@ body.preview {
 	}
 }
 
-.skip {
-	position: absolute;
-	inset-inline-start: 0.5rem;
-	inset-block-start: -4rem;
-	padding: 0.5rem 1rem;
-	background: var(--p-bg);
-	border: 1px solid var(--p-text);
-
-	&:focus {
-		inset-block-start: 0.5rem;
-	}
-}
-
-/* The bar across the top. */
-.bar-top {
-	display: flex;
-	gap: 1.5rem;
-	align-items: baseline;
-	padding: 0.75rem 1.5rem;
-	border-block-end: 1px solid var(--p-line);
-
-	a[href] {
-		color: var(--p-text);
-
-		&:first-child {
-			margin-inline-end: auto;
-		}
-	}
-
-	strong {
-		font-weight: 700;
-	}
-}
-
 .overrides {
 	display: flex;
 	gap: 1rem;
@@ -151,29 +117,19 @@ body.preview {
 		color: var(--p-muted);
 	}
 
-	ul {
-		list-style: none;
-		margin: 0;
-		padding: 0;
+	/* The kit's links get a dotted underline inside any container; the Norn list marks the current page itself. */
+	norn-side-nav :is(a[href], a[href] *) {
+		text-decoration: none;
 	}
+}
 
-	a[href] {
-		display: block;
-		padding: 0.2rem 0.5rem;
-		margin-inline: -0.5rem;
-		color: var(--p-text);
+/* The Norn header and footer carry their own look; only the kit's link underline is undone. */
+:is(norn-header, norn-footer) :is(a[href], a[href] *) {
+	text-decoration: none;
+}
 
-		&:is(:hover, :focus-visible) {
-			background: var(--p-hover);
-			text-decoration: none;
-		}
-
-		&[aria-current="page"] {
-			font-weight: 700;
-			color: var(--p-link);
-			box-shadow: inset 2px 0 0 var(--p-link);
-		}
-	}
+norn-footer a[href] {
+	font-weight: 600;
 }
 
 main#main {
@@ -325,30 +281,6 @@ main#main {
 				background: var(--p-text);
 				color: var(--p-bg);
 			}
-		}
-	}
-}
-
-/* A nod to who built it. */
-body.preview .credit {
-	grid-column: auto;
-	padding: 1.25rem 1.5rem;
-	border-block-start: 1px solid var(--p-line);
-	color: var(--p-muted);
-	font-size: 0.875rem;
-	text-align: start;
-
-	p {
-		margin: 0;
-		max-inline-size: none;
-	}
-
-	a[href] {
-		color: var(--p-text);
-		font-weight: 600;
-
-		&:is(:hover, :focus-visible) {
-			color: var(--p-link);
 		}
 	}
 }
