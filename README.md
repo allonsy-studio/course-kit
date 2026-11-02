@@ -51,6 +51,7 @@ You need [Node.js](https://nodejs.org) 22 or newer, and a terminal.
 | Change the name, time zone, or what the build does | [Configuration](docs/configuration.md) |
 | Make the site look like my college | [Design](docs/design.md), [color tokens](docs/tokens.md) and the [theme panel](docs/theme-panel.md) |
 | Look up a component | [Component reference](docs/components-reference.md) |
+| See every component rendered | [Component preview](docs/preview.md) (`yarn preview`) |
 | Fix an error message | [Troubleshooting](docs/troubleshooting.md) |
 
 ## Words used here
@@ -68,6 +69,7 @@ yarn install
 yarn test      # unit tests, plus a real build of examples/starter
 yarn docs      # rewrite docs/components-reference.md from the component headers
 yarn schema    # rewrite the theme schema and docs/tokens.md from lib/theme.js
+yarn preview   # every component rendered, with scheme, width and accessibility controls
 ```
 
 How the code is organized, and the quirks it works around, is in [`docs/components.md`](docs/components.md) and [`docs/internals.md`](docs/internals.md). [`docs/testing.md`](docs/testing.md) says how to check a change against a real course.

@@ -35,7 +35,9 @@
   "scripts": {
     "test": "node --test",
     "schema": "node scripts/theme-schema.js && node scripts/theme-docs.js",
-    "docs": "node scripts/component-docs.js"
+    "docs": "node scripts/component-docs.js",
+    "preview": "eleventy --config=preview/eleventy.config.js --serve",
+    "preview:build": "eleventy --config=preview/eleventy.config.js"
   },
   "dependencies": {
     "@11ty/eleventy-navigation": "^1.0.5",
@@ -85,6 +87,7 @@
   "devDependencies": {
     "@11ty/eleventy": "^3.1.6",
     "ajv": "^8.20.0",
-    "ajv-formats": "^3.0.1"
+    "ajv-formats": "^3.0.1",
+    "axe-core": "^4.14.0"
   }
 }

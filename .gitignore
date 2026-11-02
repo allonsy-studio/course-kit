@@ -10,3 +10,4 @@ public/
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+preview/_site/

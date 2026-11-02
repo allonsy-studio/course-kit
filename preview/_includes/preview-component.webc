@@ -1,0 +1,60 @@
+<script webc:setup>
+	/**
+	 * One component's page: what it is, its examples, props, slots and the color tokens it reads.
+	 * @prop {object} entry an entry of the catalog
+	 */
+</script>
+<div webc:root="override" class="component">
+	<h1><code @text="'<' + entry.tag + '>'"></code></h1>
+	<p class="lead" @html="entry.summaryHtml"></p>
+	<p class="meta" @text="entry.groupTitle"></p>
+
+	<template webc:if="entry.stories.length" webc:nokeep>
+		<h2>Examples</h2>
+		<div class="story" webc:for="story of entry.stories">
+			<h3 @text="story.name"></h3>
+			<preview-canvas :@story="story"></preview-canvas>
+			<details webc:if="story.source">
+				<summary>Source</summary>
+				<pre><code @text="story.source"></code></pre>
+			</details>
+		</div>
+	</template>
+	<p webc:elseif="entry.noStory">This component renders only inside another one, so it has no example of its own.</p>
+	<p webc:else class="missing">No example yet. Add <code @text="'preview/stories/' + entry.group + '/' + entry.tag + '.stories.js'"></code>.</p>
+
+	<template webc:if="entry.props.length" webc:nokeep>
+		<h2>Props</h2>
+		<p>Write them with the <code>@</code> prefix, and <code>:@</code> for an expression. A prop in square brackets is optional.</p>
+		<table class="spec">
+			<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Description</th></tr></thead>
+			<tbody>
+				<tr webc:for="prop of entry.props">
+					<th scope="row"><code @text="prop.optional ? '[' + prop.name + ']' : prop.name"></code></th>
+					<td data-label="Type"><code @text="prop.type"></code></td>
+					<td @html="prop.textHtml"></td>
+				</tr>
+			</tbody>
+		</table>
+	</template>
+
+	<template webc:if="entry.slots.length" webc:nokeep>
+		<h2>Slots</h2>
+		<table class="spec">
+			<thead><tr><th scope="col">Name</th><th scope="col">Description</th></tr></thead>
+			<tbody>
+				<tr webc:for="slot of entry.slots">
+					<th scope="row"><code @text="slot.name"></code></th>
+					<td @html="slot.textHtml"></td>
+				</tr>
+			</tbody>
+		</table>
+	</template>
+
+	<template webc:if="entry.tokens.length" webc:nokeep>
+		<h2>Color tokens</h2>
+		<p>The tokens this component's styles read. Set one in <code>_data/theme.json</code> to change it everywhere.</p>
+		<p webc:if="entry.stories.length">Type a value to try it in every example above.</p>
+		<preview-tokens webc:for="list of [entry.tokens]" :@rows="list"></preview-tokens>
+	</template>
+</div>
