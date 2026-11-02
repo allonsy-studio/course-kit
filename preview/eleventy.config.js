@@ -44,7 +44,7 @@ export default async function (config) {
 	// The practice components read a worksheet from the page data, as a worksheet page supplies it.
 	config.addGlobalData("worksheet", () => worksheet);
 	config.addGlobalData("catalog", () => buildCatalog());
-	config.addGlobalData("foundations", () => TOKENS.map(({ key, role }) => ({ name: `--color-${key}`, role })));
+	config.addGlobalData("themeTokens", () => TOKENS.map(({ key, role, site }) => ({ name: `--color-${key}`, role, defined: Boolean(site) })));
 	config.addWatchTarget("components/**");
 	config.addWatchTarget("preview/stories/**");
 	config.addWatchTarget("lib/theme.js");

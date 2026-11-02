@@ -1,18 +1,25 @@
 <script webc:setup>
 	/**
-	 * A table of color tokens with an override field in each row. A value applies to every frame on the page.
+	 * A table of color tokens with a light and a dark color picker in each row. A color applies to every frame on the page.
 	 * @prop {{ name: string, role: string }[]} rows
 	 */
 </script>
 <table webc:root="override" class="tokens" data-tokens>
 	<thead>
-		<tr><th scope="col">Token</th><th scope="col">Colors</th><th scope="col">Try a value</th></tr>
+		<tr><th scope="col">Token</th><th scope="col">Colors</th><th scope="col">Try a color</th></tr>
 	</thead>
 	<tbody>
 		<tr webc:for="token of rows">
 			<th scope="row"><code @text="token.name"></code></th>
 			<td @text="token.role"></td>
-			<td><input type="text" :data-token="token.name" :aria-label="'Override ' + token.name" placeholder="any CSS color" /></td>
+			<td>
+				<div class="pickers" webc:if="token.defined !== false">
+				<label>Light <input type="color" :data-token="token.name" data-scheme="light" :aria-label="'Light color for ' + token.name" /></label>
+				<label>Dark <input type="color" :data-token="token.name" data-scheme="dark" :aria-label="'Dark color for ' + token.name" /></label>
+				<button type="button" :data-token-reset="token.name" :aria-label="'Reset ' + token.name">Reset</button>
+				</div>
+				<span class="none" webc:else>Decks only</span>
+			</td>
 		</tr>
 	</tbody>
 </table>

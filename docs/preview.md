@@ -15,7 +15,7 @@ yarn preview:build    # build into preview/_site
 | Examples | The stories in `preview/stories/<folder>/<name>.stories.js`, each in its own frame. |
 | Every option | For a prop with a fixed set of values or a true/false prop, one more frame that shows each value on its own. |
 | Source | The markup the preview wrote from the story's `args`. |
-| Color tokens | The `--color-*` tokens the component's styles read, each with a field to try a value. |
+| Color tokens | The `--color-*` tokens the component's styles read, each with a light and a dark color picker. |
 
 Each example sits in a **canvas** with three controls:
 
@@ -23,7 +23,7 @@ Each example sits in a **canvas** with three controls:
 - **Width**: fill, phone (320px), tablet (768px) or desktop (1024px). Hidden on a phone.
 - **Check accessibility**: runs [axe-core](https://github.com/dequelabs/axe-core) on the frame as it is now (scheme, width and token values included) and lists each failure.
 
-The [Foundations](../preview/content/foundations.webc) page lists every color token with a field to try a value. A value applies to every frame, is kept in this browser (`localStorage`, key `kit-preview-tokens`), and reaches other open tabs. A bar under the header counts the values in use, with a Reset.
+The [Theme](../preview/content/theme.webc) page lists every color token with a light and a dark color picker. A color applies to every frame, is kept in this browser (`localStorage`, key `kit-preview-tokens`), and reaches other open tabs. A bar under the header counts the values in use, with a Reset.
 
 ## Add a story
 

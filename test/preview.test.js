@@ -36,12 +36,20 @@ test("a component page lists its props, slots and examples", () => {
 	for (const text of ["&lt;assigned-list&gt;", "label", "items", "prefix", "data-canvas"]) assert.ok(html.includes(text), `the assigned-list page is missing "${text}"`);
 });
 
-test("the foundations page lists every color token", () => {
-	const html = pages["/foundations/"];
-	for (const { key } of TOKENS) assert.ok(html.includes(`--color-${key}`), `--color-${key} is missing from the foundations page`);
+test("the theme page lists every color token", () => {
+	const html = pages["/theme/"];
+	for (const { key } of TOKENS) assert.ok(html.includes(`--color-${key}`), `--color-${key} is missing from the theme page`);
 });
 
 test("no story names an argument its component does not declare", () => {
 	// buildCatalog throws on an arg with no argType; reaching here means every arg matched.
 	assert.ok(catalog.frames.length >= catalog.components.length);
+});
+
+test("every page has a readable tab title", () => {
+	for (const [url, html] of Object.entries(pages)) {
+		const title = typeof html === "string" ? html.match(/<title>([^<]*)<\/title>/)?.[1] : undefined;
+		if (title === undefined) continue;
+		assert.ok(title.trim() && !/function|=>|\[object/.test(title), `${url} has the title "${title}"`);
+	}
 });

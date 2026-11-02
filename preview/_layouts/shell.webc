@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="color-scheme" content="light dark" />
 		<meta name="robots" content="noindex, nofollow" />
-		<title @text="[title, 'Course kit preview'].filter(Boolean).join(' | ')"></title>
+		<title @text="[$data.title, 'Course kit preview'].filter(Boolean).join(' | ')"></title>
 		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 		<link rel="stylesheet" href="/styles/font.css" webc:keep />
 		<link rel="stylesheet" href="/styles/base.css" webc:keep />
@@ -17,7 +17,7 @@
 		<a class="skip" href="#main">Skip to content</a>
 		<header class="bar-top">
 			<a href="/" rel="home"><strong>Course kit</strong> preview</a>
-			<a href="/foundations/">Foundations</a>
+			<a href="/theme/">Theme</a>
 		</header>
 		<preview-overrides></preview-overrides>
 		<div class="app">

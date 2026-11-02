@@ -243,6 +243,10 @@ main#main {
 		border-collapse: collapse;
 		font-size: 0.9rem;
 
+		tbody tr {
+			background: none;
+		}
+
 		:is(th, td) {
 			padding: 0.5rem 0.75rem 0.5rem 0;
 			border: 0;
@@ -270,15 +274,59 @@ main#main {
 		}
 	}
 
-	table.tokens input {
-		inline-size: 100%;
-		min-inline-size: 10rem;
-		padding: 0.3rem 0.5rem;
-		font: inherit;
-		color: var(--p-text);
-		background: var(--p-bg);
-		border: 1px solid var(--p-muted);
-		border-radius: 3px;
+	table.tokens .none {
+		color: var(--p-muted);
+	}
+
+	/* Light and dark color pickers, and a reset, side by side. */
+	table.tokens .pickers {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1rem;
+		align-items: center;
+
+		/* The kit's form styles pad labels and space controls; here they sit on one line. */
+		label {
+			display: inline-flex;
+			gap: 0.4rem;
+			align-items: center;
+			padding: 0;
+			margin: 0;
+			color: var(--p-muted);
+		}
+
+		:is(input, button) {
+			margin: 0;
+		}
+
+		input[type="color"] {
+			inline-size: 2.5rem;
+			block-size: 1.75rem;
+			padding: 2px;
+			background: var(--p-bg);
+			border: 1px solid var(--p-muted);
+			border-radius: 3px;
+			cursor: pointer;
+		}
+
+		button {
+			padding: 0.2rem 0.6rem;
+			font: inherit;
+			color: var(--p-text);
+			background: transparent;
+			border: 1px solid var(--p-muted);
+			border-radius: 3px;
+			cursor: pointer;
+
+			&[hidden] {
+				display: none;
+			}
+
+			&:is(:hover, :focus-visible) {
+				background: var(--p-text);
+				color: var(--p-bg);
+			}
+		}
 	}
 }
 
@@ -448,5 +496,9 @@ main#main {
 		button {
 			margin-inline-start: 0;
 		}
+	}
+
+	main#main table.tokens .pickers :is(input, button) {
+		min-block-size: 44px;
 	}
 }

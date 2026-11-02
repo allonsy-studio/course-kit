@@ -54,7 +54,7 @@
 	<template webc:if="entry.tokens.length" webc:nokeep>
 		<h2>Color tokens</h2>
 		<p>The tokens this component's styles read. Set one in <code>_data/theme.json</code> to change it everywhere.</p>
-		<p webc:if="entry.stories.length">Type a value to try it in every example above.</p>
+		<p webc:if="entry.stories.length">Pick a color to try it in every example above.</p>
 		<preview-tokens webc:for="list of [entry.tokens]" :@rows="list"></preview-tokens>
 	</template>
 </div>

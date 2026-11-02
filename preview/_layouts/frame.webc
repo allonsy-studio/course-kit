@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="color-scheme" content="light dark" />
 		<meta name="robots" content="noindex, nofollow" />
-		<title @text="title"></title>
+		<title @text="$data.title"></title>
 		<link rel="stylesheet" href="/styles/font.css" webc:keep />
 		<link rel="stylesheet" href="/styles/prism-light.css" webc:keep media="(prefers-color-scheme: light)" data-prism-theme="light" />
 		<link rel="stylesheet" href="/styles/prism-dark.css" webc:keep media="(prefers-color-scheme: dark)" data-prism-theme="dark" />
@@ -14,7 +14,7 @@
 	</head>
 	<body>
 		<main id="main-content" tabindex="-1" style="margin: 0; padding: 1rem; min-block-size: 0">
-			<h1 class="sr-only" @text="title"></h1>
+			<h1 class="sr-only" @text="$data.title"></h1>
 			<template webc:nokeep @raw="content"></template>
 		</main>
 	</body>
