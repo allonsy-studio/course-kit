@@ -161,7 +161,6 @@ body.preview {
 		display: block;
 		padding: 0.2rem 0.5rem;
 		margin-inline: -0.5rem;
-		border-radius: 3px;
 		color: var(--p-text);
 
 		&:is(:hover, :focus-visible) {
