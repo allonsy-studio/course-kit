@@ -28,7 +28,7 @@ Tables read like a printed table: a heavy rule above and below, a light rule und
 
 ## A collegiate palette
 
-The default accent is the kit's magenta. To use your college's colors, set the tokens in `_data/theme.json`. The starter shows a restrained navy-and-paper palette:
+The default accent is burgundy (`#7A1F34`, a light rose in dark mode). To use your college's colors, set the tokens in `_data/theme.json`. The starter shows a restrained navy-and-paper palette:
 
 ```json
 {
