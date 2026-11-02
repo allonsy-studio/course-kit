@@ -40,7 +40,8 @@
     "preview:build": "eleventy --config=preview/eleventy.config.js",
     "docs:build": "eleventy --config=website/eleventy.config.js",
     "docs:start": "eleventy --serve --config=website/eleventy.config.js",
-    "docs:test": "cypress run --project website"
+    "docs:test": "cypress run --project website",
+    "pages:build": "node scripts/build-pages.js"
   },
   "dependencies": {
     "@11ty/eleventy-navigation": "^1.0.5",

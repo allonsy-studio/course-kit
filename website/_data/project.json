@@ -33,6 +33,11 @@
 			"title": "Your college's colors, light and dark",
 			"description": "Set a handful of color tokens and every page, slide and worksheet follows, in light, dark and print. Each pair is checked for contrast.",
 			"href": "https://github.com/allonsy-studio/course-kit/blob/main/docs/design.md"
+		},
+		{
+			"title": "Every component, rendered",
+			"description": "A page for each component with its props and slots, examples in light, dark and phone widths, an accessibility check, and the color tokens it reads.",
+			"href": "/components/"
 		}
 	]
 }
