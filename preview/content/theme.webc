@@ -1,0 +1,7 @@
+---
+layout: shell
+title: Theme
+---
+<h1>Theme</h1>
+<p class="lead">Every color token, what it colors, and a light and a dark color picker to try one. A color applies to every example on every page, and is kept in this browser until you reset it. The defaults are in <code>docs/tokens.md</code>.</p>
+<preview-tokens :@rows="$data.themeTokens"></preview-tokens>

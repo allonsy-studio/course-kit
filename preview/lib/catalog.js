@@ -36,6 +36,9 @@ export const kebabCase = (name) => name.replace(/([a-z0-9])([A-Z])/g, "$1-$2").t
 
 const tokenRoles = new Map(TOKENS.map((token) => [`--color-${token.key}`, token.role]));
 
+/** The tokens the site's stylesheet defines; the rest are the decks' alone. */
+const siteTokens = new Set(TOKENS.filter((token) => token.site).map((token) => `--color-${token.key}`));
+
 /**
  * The color tokens a component's CSS reads, with what each colors.
  * @param {string} source a `.webc` file
@@ -43,7 +46,7 @@ const tokenRoles = new Map(TOKENS.map((token) => [`--color-${token.key}`, token.
  */
 export function tokensRead(source) {
 	const names = [...new Set([...source.matchAll(/var\((--color-[a-z-]+)/g)].map((match) => match[1]))].filter((name) => tokenRoles.has(name));
-	return names.sort().map((name) => ({ name, role: tokenRoles.get(name) }));
+	return names.sort().map((name) => ({ name, role: tokenRoles.get(name), defined: siteTokens.has(name) }));
 }
 
 /**

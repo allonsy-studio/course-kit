@@ -5,24 +5,33 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="color-scheme" content="light dark" />
 		<meta name="robots" content="noindex, nofollow" />
-		<title @text="[title, 'Course kit preview'].filter(Boolean).join(' | ')"></title>
+		<title @text="[$data.title, 'Course kit preview'].filter(Boolean).join(' | ')"></title>
 		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-		<link rel="stylesheet" href="/styles/font.css" webc:keep />
-		<link rel="stylesheet" href="/styles/base.css" webc:keep />
+		<!-- The kit's base styles sit in a layer below Norn's, so a Norn component is styled by its own CSS, not the kit's. -->
+		<style webc:keep @raw="'@layer kit, norn;\n@import url(' + url('/styles/font.css') + ') layer(kit);\n@import url(' + url('/styles/base.css') + ') layer(kit);'"></style>
 		<link rel="stylesheet" href="/preview-assets/shell.css" webc:keep />
+		<style webc:keep @raw="getBundle('css')"></style>
+		<script webc:keep @raw="getBundle('js')"></script>
 		<script src="/preview-assets/tokens.js" webc:keep></script>
 		<script type="module" src="/preview-assets/canvas.js" webc:keep></script>
 	</head>
 	<body class="preview">
-		<a class="skip" href="#main">Skip to content</a>
-		<header class="bar-top">
-			<a href="/" rel="home"><strong>Course kit</strong> preview</a>
-			<a href="/foundations/">Foundations</a>
-		</header>
+		<norn-skip-link></norn-skip-link>
+		<norn-header>
+			<a slot="brand" rel="home" href="/"><strong>Course kit</strong> preview</a>
+			<a href="/theme/">Theme</a>
+		</norn-header>
 		<preview-overrides></preview-overrides>
 		<div class="app">
 			<preview-nav :@groups="$data.catalog.groups"></preview-nav>
 			<main id="main" tabindex="-1"><template webc:nokeep @raw="content"></template></main>
 		</div>
+		<norn-footer>
+			<div>
+				<strong>Course kit</strong>
+				<p>Every component, rendered with the starter course's data.</p>
+			</div>
+			<p slot="colophon">Built by <a href="https://allons-y.studio">Allons-y Studio</a>. Course kit is open source under MPL-2.0.</p>
+		</norn-footer>
 	</body>
 </html>

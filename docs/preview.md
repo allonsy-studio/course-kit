@@ -15,15 +15,15 @@ yarn preview:build    # build into preview/_site
 | Examples | The stories in `preview/stories/<folder>/<name>.stories.js`, each in its own frame. |
 | Every option | For a prop with a fixed set of values or a true/false prop, one more frame that shows each value on its own. |
 | Source | The markup the preview wrote from the story's `args`. |
-| Color tokens | The `--color-*` tokens the component's styles read, each with a field to try a value. |
+| Color tokens | The `--color-*` tokens the component's styles read, each with a light and a dark color picker. |
 
-Each example sits in a **canvas** with three controls:
+Each example sits in a **canvas** with three controls, and an **Open on its own** link that opens its frame as a page:
 
-- **Color scheme**: light, system or dark.
-- **Width**: fill, phone (320px), tablet (768px) or desktop (1024px). Hidden on a phone.
-- **Check accessibility**: runs [axe-core](https://github.com/dequelabs/axe-core) on the frame as it is now (scheme, width and token values included) and lists each failure.
+- **Color scheme**: light, system or dark, as icon toggles (a sun, a half-filled circle, a moon).
+- **Width**: fill, phone (320px), tablet (768px) or desktop (1024px), as device icons. Hidden on a phone.
+- **Check accessibility**: its icon shows the state (idle, running, no violations, violations). It runs [axe-core](https://github.com/dequelabs/axe-core) on the frame as it is now (scheme, width and token values included) and lists each failure.
 
-The [Foundations](../preview/content/foundations.webc) page lists every color token with a field to try a value. A value applies to every frame, is kept in this browser (`localStorage`, key `kit-preview-tokens`), and reaches other open tabs. A bar under the header counts the values in use, with a Reset.
+The [Theme](../preview/content/theme.webc) page lists every color token with a light and a dark color picker. A color applies to every frame, is kept in this browser (`localStorage`, key `kit-preview-tokens`), and reaches other open tabs. A bar under the header counts the values in use, with a Reset.
 
 ## Add a story
 
@@ -50,6 +50,7 @@ export const Default = { args: { default: "<p>Bring a laptop.</p>" } };
 | `preview/lib/catalog.js` | Reads every component header and story, and lists the pages and frames. |
 | `preview/lib/render-story.js` | Writes a story's args as the WebC a page would hold. Eleventy compiles it, so the real component renders. |
 | `preview/_includes/` | The preview's own components: `preview-nav`, `preview-canvas`, `preview-component`, `preview-tokens`, `preview-overrides`. |
+| `@allons-y/webc-patterns`, `@allons-y/webc-code-sample` | Dev dependencies. The kit's base styles load in a `kit` layer below Norn's, so a Norn component keeps its own look; `shell.css` styles only the preview's own pieces. The page frame uses their `norn-skip-link`, `norn-header`, `norn-side-nav`, `norn-simple-table`, `norn-code-block` and `norn-footer`. The kit's plugin owns the one WebC registration, so they join its `components` list, and the preview adds the helpers they call. |
 | `preview/_data` | A link to `examples/starter/_data`, so the preview shows the starter course. |
 | `preview/content/assets/` | The canvas controls, the token loader and the preview's styles. |
 
