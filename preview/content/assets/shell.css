@@ -123,6 +123,58 @@ body.preview {
 	}
 }
 
+/*
+ * The kit's base styles size and fill every svg, and unlayered rules beat the Norn components' layered ones,
+ * so an icon is set back to Norn's: a 1em (or 1.25rem) stroke drawing that follows the text color.
+ */
+norn-icon svg {
+	inline-size: 1em;
+	block-size: 1em;
+	min-block-size: 0;
+	fill: none;
+	stroke: currentcolor;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-width: 2;
+
+	&[data-size="m"] {
+		inline-size: 1.25rem;
+		block-size: 1.25rem;
+	}
+
+	[data-fill] {
+		fill: currentcolor;
+		stroke: none;
+	}
+}
+
+/*
+ * The kit's zero-specificity form styles beat the toggles' layered ones too: a fieldset gets a border and padding, a label
+ * its own color and spacing. Put them back to Norn's: a flat track, and the checked option in the link color.
+ */
+norn-segmented-control {
+	fieldset {
+		margin: 0;
+		padding: 2px;
+		border: 0;
+		border-radius: 6px;
+	}
+
+	label {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding-block: 0;
+		font-weight: inherit;
+		line-height: 1.2;
+		color: var(--p-muted);
+
+		&:has(input:checked) {
+			color: var(--p-link);
+		}
+	}
+}
+
 /* The Norn header and footer carry their own look; only the kit's link underline is undone. */
 :is(norn-header, norn-footer) :is(a[href], a[href] *) {
 	text-decoration: none;
@@ -175,6 +227,10 @@ main#main {
 
 	p {
 		max-inline-size: 70ch;
+
+		&.open {
+			max-inline-size: none;
+		}
 	}
 
 	code {
@@ -340,6 +396,7 @@ main#main {
 	border-radius: 4px;
 	overflow: hidden;
 
+	/* The toolbar: the Norn toggles, then the check. Their own styles are in the component. */
 	.canvas-bar {
 		display: flex;
 		flex-wrap: wrap;
@@ -349,35 +406,10 @@ main#main {
 		border-block-end: 1px solid var(--p-line);
 		font-size: 0.875rem;
 
-		fieldset {
-			display: flex;
-			gap: 0.75rem;
-			align-items: center;
-			border: 0;
-			margin: 0;
-			padding: 0;
-		}
-
-		legend {
-			float: inline-start;
-			margin-inline-end: 0.5rem;
-			padding: 0;
-			color: var(--p-muted);
-			font-weight: 600;
-		}
-
-		label {
-			display: inline-flex;
-			gap: 0.3rem;
-			align-items: center;
-		}
-
-		input[type="radio"] {
-			accent-color: var(--p-link);
-			margin: 0;
-		}
-
 		button {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.4em;
 			margin-inline-start: auto;
 			padding: 0.3rem 0.75rem;
 			font: inherit;
@@ -391,7 +423,41 @@ main#main {
 				background: var(--p-text);
 				color: var(--p-bg);
 			}
+
+			/* One icon per state: idle, running, pass, fail. */
+			&:not([data-state="idle"]) [data-for="idle"],
+			&:not([data-state="running"]) [data-for="running"],
+			&:not([data-state="pass"]) [data-for="pass"],
+			&:not([data-state="fail"]) [data-for="fail"] {
+				display: none;
+			}
+
+			&[data-state="pass"] [data-for="pass"] {
+				color: light-dark(#0b6b3a, #7ed6a1);
+			}
+
+			&[data-state="fail"] [data-for="fail"] {
+				color: light-dark(#b42318, #ff8a80);
+			}
+
+			&:is(:hover, :focus-visible)[data-state="pass"] [data-for="pass"],
+			&:is(:hover, :focus-visible)[data-state="fail"] [data-for="fail"] {
+				color: inherit;
+			}
+
+			@media (prefers-reduced-motion: no-preference) {
+				&[data-state="running"] [data-for="running"] svg {
+					animation: preview-spin 0.8s linear infinite;
+				}
+			}
 		}
+	}
+
+	.open {
+		margin: 0;
+		padding: 0.4rem 0.75rem;
+		border-block-start: 1px solid var(--p-line);
+		font-size: 0.875rem;
 	}
 
 	.stage {
@@ -418,42 +484,115 @@ main#main {
 	}
 }
 
+@keyframes preview-spin {
+	to {
+		rotate: 1turn;
+	}
+}
+
 @media (width <= 48rem) {
 	.app {
 		display: block;
 	}
 
+	/* The list of components is a closed disclosure above the page. Touch targets are 44px. */
 	body.preview details.nav {
 		position: static;
 		max-block-size: none;
+		padding-block: 0.25rem;
 		border-inline-end: 0;
 		border-block-end: 1px solid var(--p-line);
 
+		&[open] {
+			padding-block-end: 1rem;
+		}
+
+		> summary {
+			display: list-item;
+			box-sizing: border-box;
+			min-block-size: 44px;
+			padding-block: 0.6rem;
+		}
+
 		a[href] {
+			display: flex;
+			align-items: center;
 			min-block-size: 44px;
 		}
+	}
+
+	norn-header a[rel="home"] {
+		min-block-size: 44px;
 	}
 
 	.index li {
 		grid-template-columns: 1fr;
 		gap: 0.1rem;
+
+		a[href] {
+			display: flex;
+			align-items: center;
+			min-block-size: 44px;
+		}
 	}
 
+	/* The width control is hidden on a phone, where the frame always fills its box. */
 	.canvas .canvas-bar {
 		.widths {
 			display: none;
 		}
 
-		:is(button, input) {
-			min-block-size: 44px;
-		}
-
 		button {
+			min-block-size: 44px;
 			margin-inline-start: 0;
 		}
 	}
 
-	main#main table.tokens .pickers :is(input, button) {
+	.canvas .open a[href] {
+		display: inline-flex;
+		align-items: center;
 		min-block-size: 44px;
+	}
+
+	/* `display: list-item` keeps the disclosure triangle. */
+	body.preview .story details > summary {
+		display: list-item;
+		box-sizing: border-box;
+		min-block-size: 44px;
+		padding-block: 0.6rem;
+	}
+
+	/* The token table is too wide for a phone: each row stacks. */
+	main#main table.tokens {
+		thead {
+			position: absolute;
+			inline-size: 1px;
+			block-size: 1px;
+			overflow: hidden;
+			clip-path: inset(50%);
+		}
+
+		tbody tr {
+			display: grid;
+			gap: 0.25rem;
+			padding-block: 0.75rem;
+			border-block-end: 1px solid var(--p-line);
+		}
+
+		:is(th, td) {
+			display: block;
+			padding: 0;
+			border: 0;
+		}
+
+		.pickers {
+			:is(input, button) {
+				min-block-size: 44px;
+			}
+
+			input[type="color"] {
+				min-inline-size: 44px;
+			}
+		}
 	}
 }

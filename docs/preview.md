@@ -17,11 +17,11 @@ yarn preview:build    # build into preview/_site
 | Source | The markup the preview wrote from the story's `args`. |
 | Color tokens | The `--color-*` tokens the component's styles read, each with a light and a dark color picker. |
 
-Each example sits in a **canvas** with three controls:
+Each example sits in a **canvas** with three controls, and an **Open on its own** link that opens its frame as a page:
 
-- **Color scheme**: light, system or dark.
-- **Width**: fill, phone (320px), tablet (768px) or desktop (1024px). Hidden on a phone.
-- **Check accessibility**: runs [axe-core](https://github.com/dequelabs/axe-core) on the frame as it is now (scheme, width and token values included) and lists each failure.
+- **Color scheme**: light, system or dark, as icon toggles (a sun, a half-filled circle, a moon).
+- **Width**: fill, phone (320px), tablet (768px) or desktop (1024px), as device icons. Hidden on a phone.
+- **Check accessibility**: its icon shows the state (idle, running, no violations, violations). It runs [axe-core](https://github.com/dequelabs/axe-core) on the frame as it is now (scheme, width and token values included) and lists each failure.
 
 The [Theme](../preview/content/theme.webc) page lists every color token with a light and a dark color picker. A color applies to every frame, is kept in this browser (`localStorage`, key `kit-preview-tokens`), and reaches other open tabs. A bar under the header counts the values in use, with a Reset.
 
