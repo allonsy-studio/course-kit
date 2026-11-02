@@ -16,7 +16,7 @@ import path from "node:path";
  */
 
 /** Make `input()` read stdin without echoing the prompt. */
-const HARNESS = ['import builtins, sys', 'builtins.input = lambda prompt="": sys.stdin.readline().rstrip("\\n")', "src = open(sys.argv[1]).read()", "exec(compile(src, 'item.py', 'exec'))"].join("\n");
+const HARNESS = ["import builtins, sys", 'builtins.input = lambda prompt="": sys.stdin.readline().rstrip("\\n")', "src = open(sys.argv[1]).read()", "exec(compile(src, 'item.py', 'exec'))"].join("\n");
 
 /**
  * @param {Snippet} snippet

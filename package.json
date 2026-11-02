@@ -37,7 +37,9 @@
     "schema": "node scripts/theme-schema.js && node scripts/theme-docs.js",
     "docs": "node scripts/component-docs.js",
     "preview": "eleventy --config=preview/eleventy.config.js --serve",
-    "preview:build": "eleventy --config=preview/eleventy.config.js"
+    "preview:build": "eleventy --config=preview/eleventy.config.js",
+    "format": "opx lint --fix",
+    "lint": "opx lint"
   },
   "dependencies": {
     "@11ty/eleventy-navigation": "^1.0.5",
@@ -86,6 +88,10 @@
   "packageManager": "yarn@4.18.1",
   "devDependencies": {
     "@11ty/eleventy": "^3.1.6",
+    "@allons-y/opx-cli": "^0.1.0-beta.0",
+    "@allons-y/opx-lint-js": "^0.1.0-beta.0",
+    "@allons-y/opx-lint-json": "^0.1.0-beta.0",
+    "@allons-y/opx-lint-md": "^0.1.0-beta.0",
     "@allons-y/webc-code-sample": "0.1.0-beta.1",
     "@allons-y/webc-patterns": "0.1.0-beta.1",
     "ajv": "^8.20.0",

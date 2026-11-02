@@ -27,7 +27,7 @@ The test and the worksheet cover the same topics, not the same questions.
 
 ## Files
 
-```
+```text
 content/practice/test-2.worksheet.md     the questions
 content/practice/test-2.11tydata.js      export default worksheetData(import.meta.url);
 content/practice/test-2.webc             <practice-worksheet></practice-worksheet>

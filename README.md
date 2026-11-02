@@ -68,6 +68,7 @@ You need [Node.js](https://nodejs.org) 22 or newer, and a terminal.
 ```sh
 yarn install
 yarn test      # unit tests, plus a real build of examples/starter
+yarn lint      # opx lint: JavaScript, JSON and Markdown (yarn format fixes what it can)
 yarn docs      # rewrite docs/components-reference.md from the component headers
 yarn schema    # rewrite the theme schema and docs/tokens.md from lib/theme.js
 yarn preview   # every component rendered, with scheme, width and accessibility controls
