@@ -329,6 +329,30 @@ main#main {
 	}
 }
 
+/* A nod to who built it. */
+body.preview .credit {
+	grid-column: auto;
+	padding: 1.25rem 1.5rem;
+	border-block-start: 1px solid var(--p-line);
+	color: var(--p-muted);
+	font-size: 0.875rem;
+	text-align: start;
+
+	p {
+		margin: 0;
+		max-inline-size: none;
+	}
+
+	a[href] {
+		color: var(--p-text);
+		font-weight: 600;
+
+		&:is(:hover, :focus-visible) {
+			color: var(--p-link);
+		}
+	}
+}
+
 .lead {
 	font-size: 1.1rem;
 	color: var(--p-text);
