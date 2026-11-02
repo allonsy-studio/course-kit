@@ -16,7 +16,7 @@
 			<preview-canvas :@story="story"></preview-canvas>
 			<details webc:if="story.source">
 				<summary>Source</summary>
-				<pre><code @text="story.source"></code></pre>
+				<norn-code-block :@code="story.source" @language="html"></norn-code-block>
 			</details>
 		</div>
 	</template>
@@ -26,29 +26,29 @@
 	<template webc:if="entry.props.length" webc:nokeep>
 		<h2>Props</h2>
 		<p>Write them with the <code>@</code> prefix, and <code>:@</code> for an expression. A prop in square brackets is optional.</p>
-		<table class="spec">
+		<norn-simple-table class="spec" webc:for="list of [entry.props]"><table>
 			<thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Description</th></tr></thead>
 			<tbody>
-				<tr webc:for="prop of entry.props">
+				<tr webc:for="prop of list">
 					<th scope="row"><code @text="prop.optional ? '[' + prop.name + ']' : prop.name"></code></th>
 					<td data-label="Type"><code @text="prop.type"></code></td>
 					<td @html="prop.textHtml"></td>
 				</tr>
 			</tbody>
-		</table>
+		</table></norn-simple-table>
 	</template>
 
 	<template webc:if="entry.slots.length" webc:nokeep>
 		<h2>Slots</h2>
-		<table class="spec">
+		<norn-simple-table class="spec" webc:for="list of [entry.slots]"><table>
 			<thead><tr><th scope="col">Name</th><th scope="col">Description</th></tr></thead>
 			<tbody>
-				<tr webc:for="slot of entry.slots">
+				<tr webc:for="slot of list">
 					<th scope="row"><code @text="slot.name"></code></th>
 					<td @html="slot.textHtml"></td>
 				</tr>
 			</tbody>
-		</table>
+		</table></norn-simple-table>
 	</template>
 
 	<template webc:if="entry.tokens.length" webc:nokeep>

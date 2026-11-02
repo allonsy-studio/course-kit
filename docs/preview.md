@@ -50,6 +50,7 @@ export const Default = { args: { default: "<p>Bring a laptop.</p>" } };
 | `preview/lib/catalog.js` | Reads every component header and story, and lists the pages and frames. |
 | `preview/lib/render-story.js` | Writes a story's args as the WebC a page would hold. Eleventy compiles it, so the real component renders. |
 | `preview/_includes/` | The preview's own components: `preview-nav`, `preview-canvas`, `preview-component`, `preview-tokens`, `preview-overrides`. |
+| `@allons-y/webc-patterns`, `@allons-y/webc-code-sample` | Dev dependencies. The page frame uses their `norn-skip-link`, `norn-header`, `norn-side-nav`, `norn-simple-table`, `norn-code-block` and `norn-footer`. The kit's plugin owns the one WebC registration, so they join its `components` list, and the preview adds the helpers they call. |
 | `preview/_data` | A link to `examples/starter/_data`, so the preview shows the starter course. |
 | `preview/content/assets/` | The canvas controls, the token loader and the preview's styles. |
 

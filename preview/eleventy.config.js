@@ -2,6 +2,9 @@ import { createRequire } from "node:module";
 
 import { HtmlBasePlugin } from "@11ty/eleventy";
 
+import { patterns } from "@allons-y/webc-patterns";
+import { codeBlock, tokenRanges } from "@allons-y/webc-code-sample";
+
 import courseKit from "../index.js";
 
 import { TOKENS } from "../lib/theme.js";
@@ -20,10 +23,16 @@ export default async function (config) {
 		inputDir: "preview/content",
 		outputDir: "preview/_site",
 		dataDir: "preview/_data",
-		components: ["preview/_includes/*.webc"],
+		// The Norn components from npm: the kit owns the one WebC registration, so they join its list.
+		components: ["preview/_includes/*.webc", patterns(), codeBlock],
 		institution: { name: "Example College", timezone: "America/New_York" },
 		pdf: false,
 	});
+
+	// The helpers the Norn components call. The English strings are their defaults.
+	config.addJavaScriptFunction("nornComponentStrings", () => undefined);
+	config.addJavaScriptFunction("nornTokenRanges", tokenRanges);
+	config.addJavaScriptFunction("nornIcons", () => []);
 
 	// Pages serves the preview under a path (`/course-kit/`, `/course-kit/preview/12/`); the plugin adds it to every link and asset URL.
 	config.addPlugin(HtmlBasePlugin);
