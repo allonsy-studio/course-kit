@@ -7,8 +7,12 @@
     <meta name="robots" content="noindex, nofollow" />
     <title>practice-selfcheck | Course kit preview</title>
     <link rel="icon" href="/course-kit/preview/15/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/course-kit/preview/15/styles/font.css" />
-    <link rel="stylesheet" href="/course-kit/preview/15/styles/base.css" />
+    <!-- The kit's base styles sit in a layer below Norn's, so a Norn component is styled by its own CSS, not the kit's. -->
+    <style>
+      @layer kit, norn;
+      @import url(/course-kit/preview/15/styles/font.css) layer(kit);
+      @import url(/course-kit/preview/15/styles/base.css) layer(kit);
+    </style>
     <link rel="stylesheet" href="/course-kit/preview/15/preview-assets/shell.css" />
     <style>
       @layer norn.components {
@@ -1227,8 +1231,8 @@
         <a rel="home" href="/course-kit/preview/15/"><strong>Course kit</strong> preview</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-ssoQL">
-            <span data-label="" id="norn-header-webc-ssoQL">Primary</span>
+          <nav aria-labelledby="norn-header-webc-4EGiw">
+            <span data-label="" id="norn-header-webc-4EGiw">Primary</span>
 
             <a href="/course-kit/preview/15/theme/">Theme</a>
           </nav>
@@ -1247,8 +1251,8 @@
         <section aria-labelledby="nav-ui">
           <h2 id="nav-ui">Building blocks</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-_ctb_">
-              <span data-label="" id="norn-side-nav-webc-_ctb_"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-bWgp8">
+              <span data-label="" id="norn-side-nav-webc-bWgp8"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -1303,8 +1307,8 @@
         <section aria-labelledby="nav-site">
           <h2 id="nav-site">Site sections</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-O0C-6">
-              <span data-label="" id="norn-side-nav-webc-O0C-6"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-1NSE6">
+              <span data-label="" id="norn-side-nav-webc-1NSE6"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -1365,8 +1369,8 @@
         <section aria-labelledby="nav-practice">
           <h2 id="nav-practice">Practice worksheets</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-fCrT2">
-              <span data-label="" id="norn-side-nav-webc-fCrT2"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-Q17t0">
+              <span data-label="" id="norn-side-nav-webc-Q17t0"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -1527,7 +1531,7 @@
                       type="button"
                       hidden=""
                       data-value='<practice-selfcheck :@q="({&amp;quot;id&amp;quot;:&amp;quot;3.2&amp;quot;,&amp;quot;kind&amp;quot;:&amp;quot;selfcheck&amp;quot;,&amp;quot;prompt&amp;quot;:&amp;quot;Explain why a heading level should not be chosen for its size.&amp;quot;,&amp;quot;reveal&amp;quot;:[&amp;quot;Headings are an outline; the level says where the section sits in it.&amp;quot;],&amp;quot;checkYourself&amp;quot;:[&amp;quot;I mentioned the outline.&amp;quot;],&amp;quot;answers&amp;quot;:{},&amp;quot;sources&amp;quot;:[]})"></practice-selfcheck>'
-                      data-strings="norn-code-block-webc-gtu7f"
+                      data-strings="norn-code-block-webc-1n_q4"
                       data-compact=""
                       data-surface="code">
                       <span data-icons=""
@@ -1546,8 +1550,8 @@
                   <pre
                     dir="ltr"
                     data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,18,2,1,3,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,62,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,69,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,13,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,24,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,6,0,0,3,1,0,18,0,0,1]]">&lt;practice-selfcheck :@q="({&amp;quot;id&amp;quot;:&amp;quot;3.2&amp;quot;,&amp;quot;kind&amp;quot;:&amp;quot;selfcheck&amp;quot;,&amp;quot;prompt&amp;quot;:&amp;quot;Explain why a heading level should not be chosen for its size.&amp;quot;,&amp;quot;reveal&amp;quot;:[&amp;quot;Headings are an outline; the level says where the section sits in it.&amp;quot;],&amp;quot;checkYourself&amp;quot;:[&amp;quot;I mentioned the outline.&amp;quot;],&amp;quot;answers&amp;quot;:{},&amp;quot;sources&amp;quot;:[]})"&gt;&lt;/practice-selfcheck&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-gtu7f">
-                    <span data-string="label" id="norn-code-block-webc-gtu7f-copy">Copy {name} to clipboard</span>
+                  <span hidden="" id="norn-code-block-webc-1n_q4">
+                    <span data-string="label" id="norn-code-block-webc-1n_q4-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -1561,7 +1565,7 @@
           <h2>Props</h2>
           <p>Write them with the <code>@</code> prefix, and <code>:@</code> for an expression. A prop in square brackets is optional.</p>
           <norn-simple-table class="spec"
-            ><span hidden="" id="norn-simple-table-webc-wOSqC"></span>
+            ><span hidden="" id="norn-simple-table-webc-TCPgv"></span>
             <div>
               <table>
                 <thead>

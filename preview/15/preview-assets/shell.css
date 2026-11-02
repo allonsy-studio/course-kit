@@ -28,47 +28,49 @@ body.preview {
 	color: var(--p-text);
 	font-size: 1rem;
 	line-height: 1.55;
+}
 
-	/* The kit's base styles underline links in lists and box a disclosure; the preview does neither. */
-	a[href] {
-		color: var(--p-link);
-		text-decoration: none;
+/* The page's own links, focus ring and disclosures. The Norn components style theirs. */
+:is(main#main, .overrides, .open) a[href] {
+	color: var(--p-link);
+	text-decoration: none;
 
-		&:is(:hover, :focus-visible) {
-			text-decoration: underline;
-			text-underline-offset: 0.2em;
-		}
+	&:is(:hover, :focus-visible) {
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+}
+
+:is(main#main, .canvas) :is(a, button, input, summary):focus-visible {
+	outline: 2px solid var(--p-link);
+	outline-offset: 2px;
+}
+
+:is(.nav, .story details) {
+	border: 0;
+	border-radius: 0;
+	background: none;
+	margin: 0;
+
+	> summary {
+		cursor: pointer;
+		padding-block: 0.4rem;
+		color: var(--p-muted);
+		font-size: 0.9rem;
 	}
 
-	:is(a, button, input, summary):focus-visible {
-		outline: 2px solid var(--p-link);
-		outline-offset: 2px;
+	&[open] > summary {
+		color: var(--p-text);
 	}
+}
 
-	details {
-		border: 0;
-		border-radius: 0;
-		background: none;
-		padding: 0;
-		margin: 0;
+.story details {
+	padding: 0;
+}
 
-		/* The component list is a disclosure too: a sidebar with a rule beside it. */
-		&.nav {
-			padding: 1rem 1.5rem 2rem;
-			border-inline-end: 1px solid var(--p-line);
-		}
-
-		> summary {
-			cursor: pointer;
-			padding-block: 0.4rem;
-			color: var(--p-muted);
-			font-size: 0.9rem;
-		}
-
-		&[open] > summary {
-			color: var(--p-text);
-		}
-	}
+details.nav {
+	padding: 1rem 1.5rem 2rem;
+	border-inline-end: 1px solid var(--p-line);
 }
 
 .overrides {
@@ -117,71 +119,11 @@ body.preview {
 		color: var(--p-muted);
 	}
 
-	/* The kit's links get a dotted underline inside any container; the Norn list marks the current page itself. */
-	norn-side-nav :is(a[href], a[href] *) {
-		text-decoration: none;
-	}
 }
 
-/*
- * The kit's base styles size and fill every svg, and unlayered rules beat the Norn components' layered ones,
- * so an icon is set back to Norn's: a 1em (or 1.25rem) stroke drawing that follows the text color.
- */
-norn-icon svg {
-	inline-size: 1em;
-	block-size: 1em;
-	min-block-size: 0;
-	fill: none;
-	stroke: currentcolor;
-	stroke-linecap: round;
-	stroke-linejoin: round;
-	stroke-width: 2;
-
-	&[data-size="m"] {
-		inline-size: 1.25rem;
-		block-size: 1.25rem;
-	}
-
-	[data-fill] {
-		fill: currentcolor;
-		stroke: none;
-	}
-}
-
-/*
- * The kit's zero-specificity form styles beat the toggles' layered ones too: a fieldset gets a border and padding, a label
- * its own color and spacing. Put them back to Norn's: a flat track, and the checked option in the link color.
- */
-norn-segmented-control {
-	fieldset {
-		margin: 0;
-		padding: 2px;
-		border: 0;
-		border-radius: 6px;
-	}
-
-	label {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		padding-block: 0;
-		font-weight: inherit;
-		line-height: 1.2;
-		color: var(--p-muted);
-
-		&:has(input:checked) {
-			color: var(--p-link);
-		}
-	}
-}
-
-/* The Norn header and footer carry their own look; only the kit's link underline is undone. */
-:is(norn-header, norn-footer) :is(a[href], a[href] *) {
+/* The one leak left: the kit's base styles dot-underline a span inside any nav link, and Norn's list has no such mark. */
+norn-side-nav a span {
 	text-decoration: none;
-}
-
-norn-footer a[href] {
-	font-weight: 600;
 }
 
 main#main {
@@ -521,6 +463,7 @@ main#main {
 		}
 	}
 
+	/* Norn's brand link is 31px tall; a phone needs 44. */
 	norn-header a[rel="home"] {
 		min-block-size: 44px;
 	}

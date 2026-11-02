@@ -7,8 +7,12 @@
     <meta name="robots" content="noindex, nofollow" />
     <title>callout | Course kit preview</title>
     <link rel="icon" href="/course-kit/preview/15/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/course-kit/preview/15/styles/font.css" />
-    <link rel="stylesheet" href="/course-kit/preview/15/styles/base.css" />
+    <!-- The kit's base styles sit in a layer below Norn's, so a Norn component is styled by its own CSS, not the kit's. -->
+    <style>
+      @layer kit, norn;
+      @import url(/course-kit/preview/15/styles/font.css) layer(kit);
+      @import url(/course-kit/preview/15/styles/base.css) layer(kit);
+    </style>
     <link rel="stylesheet" href="/course-kit/preview/15/preview-assets/shell.css" />
     <style>
       @layer norn.components {
@@ -1121,8 +1125,8 @@
         <a rel="home" href="/course-kit/preview/15/"><strong>Course kit</strong> preview</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-DQdot">
-            <span data-label="" id="norn-header-webc-DQdot">Primary</span>
+          <nav aria-labelledby="norn-header-webc-N_aAW">
+            <span data-label="" id="norn-header-webc-N_aAW">Primary</span>
 
             <a href="/course-kit/preview/15/theme/">Theme</a>
           </nav>
@@ -1141,8 +1145,8 @@
         <section aria-labelledby="nav-ui">
           <h2 id="nav-ui">Building blocks</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-RoCZo">
-              <span data-label="" id="norn-side-nav-webc-RoCZo"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-tbi1d">
+              <span data-label="" id="norn-side-nav-webc-tbi1d"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -1197,8 +1201,8 @@
         <section aria-labelledby="nav-site">
           <h2 id="nav-site">Site sections</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-pvdkQ">
-              <span data-label="" id="norn-side-nav-webc-pvdkQ"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-cpfXA">
+              <span data-label="" id="norn-side-nav-webc-cpfXA"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -1259,8 +1263,8 @@
         <section aria-labelledby="nav-practice">
           <h2 id="nav-practice">Practice worksheets</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-M5-Fo">
-              <span data-label="" id="norn-side-nav-webc-M5-Fo"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-fAYMq">
+              <span data-label="" id="norn-side-nav-webc-fAYMq"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -1417,7 +1421,7 @@
               <norn-code-block>
                 <figure>
                   <norn-copy-button>
-                    <button type="button" hidden="" data-value="<callout><p><strong>Bring a laptop.</strong> We build something in every class.</p></callout>" data-strings="norn-code-block-webc-WVXx6" data-compact="" data-surface="code">
+                    <button type="button" hidden="" data-value="<callout><p><strong>Bring a laptop.</strong> We build something in every class.</p></callout>" data-strings="norn-code-block-webc-PkEAB" data-compact="" data-surface="code">
                       <span data-icons=""
                         ><norn-icon>
                           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1432,8 +1436,8 @@
                     <span role="status"></span>
                   </norn-copy-button>
                   <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;],[0,0,1,1,0,7,0,0,2,1,0,1,0,0,2,1,0,6,0,0,1,0,15,2,1,0,6,0,0,1,0,35,2,1,0,1,0,0,3,1,0,7,0,0,1]]">&lt;callout&gt;&lt;p&gt;&lt;strong&gt;Bring a laptop.&lt;/strong&gt; We build something in every class.&lt;/p&gt;&lt;/callout&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-WVXx6">
-                    <span data-string="label" id="norn-code-block-webc-WVXx6-copy">Copy {name} to clipboard</span>
+                  <span hidden="" id="norn-code-block-webc-PkEAB">
+                    <span data-string="label" id="norn-code-block-webc-PkEAB-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>

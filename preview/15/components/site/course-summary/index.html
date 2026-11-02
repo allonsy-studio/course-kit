@@ -7,8 +7,12 @@
     <meta name="robots" content="noindex, nofollow" />
     <title>course-summary | Course kit preview</title>
     <link rel="icon" href="/course-kit/preview/15/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/course-kit/preview/15/styles/font.css" />
-    <link rel="stylesheet" href="/course-kit/preview/15/styles/base.css" />
+    <!-- The kit's base styles sit in a layer below Norn's, so a Norn component is styled by its own CSS, not the kit's. -->
+    <style>
+      @layer kit, norn;
+      @import url(/course-kit/preview/15/styles/font.css) layer(kit);
+      @import url(/course-kit/preview/15/styles/base.css) layer(kit);
+    </style>
     <link rel="stylesheet" href="/course-kit/preview/15/preview-assets/shell.css" />
     <style>
       @layer norn.components {
@@ -1121,8 +1125,8 @@
         <a rel="home" href="/course-kit/preview/15/"><strong>Course kit</strong> preview</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-6OH0b">
-            <span data-label="" id="norn-header-webc-6OH0b">Primary</span>
+          <nav aria-labelledby="norn-header-webc-wkmho">
+            <span data-label="" id="norn-header-webc-wkmho">Primary</span>
 
             <a href="/course-kit/preview/15/theme/">Theme</a>
           </nav>
@@ -1141,8 +1145,8 @@
         <section aria-labelledby="nav-ui">
           <h2 id="nav-ui">Building blocks</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-xilNb">
-              <span data-label="" id="norn-side-nav-webc-xilNb"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-Zbdb0">
+              <span data-label="" id="norn-side-nav-webc-Zbdb0"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -1197,8 +1201,8 @@
         <section aria-labelledby="nav-site">
           <h2 id="nav-site">Site sections</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-_oCjx">
-              <span data-label="" id="norn-side-nav-webc-_oCjx"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-rAigc">
+              <span data-label="" id="norn-side-nav-webc-rAigc"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -1259,8 +1263,8 @@
         <section aria-labelledby="nav-practice">
           <h2 id="nav-practice">Practice worksheets</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-NB73U">
-              <span data-label="" id="norn-side-nav-webc-NB73U"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-Vzkds">
+              <span data-label="" id="norn-side-nav-webc-Vzkds"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -1417,7 +1421,7 @@
               <norn-code-block>
                 <figure>
                   <norn-copy-button>
-                    <button type="button" hidden="" data-value="<course-summary></course-summary>" data-strings="norn-code-block-webc-HmmTp" data-compact="" data-surface="code">
+                    <button type="button" hidden="" data-value="<course-summary></course-summary>" data-strings="norn-code-block-webc-LysxC" data-compact="" data-surface="code">
                       <span data-icons=""
                         ><norn-icon>
                           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1432,8 +1436,8 @@
                     <span role="status"></span>
                   </norn-copy-button>
                   <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;],[0,0,1,1,0,14,0,0,3,1,0,14,0,0,1]]">&lt;course-summary&gt;&lt;/course-summary&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-HmmTp">
-                    <span data-string="label" id="norn-code-block-webc-HmmTp-copy">Copy {name} to clipboard</span>
+                  <span hidden="" id="norn-code-block-webc-LysxC">
+                    <span data-string="label" id="norn-code-block-webc-LysxC-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>

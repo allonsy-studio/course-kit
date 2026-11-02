@@ -7,8 +7,12 @@
     <meta name="robots" content="noindex, nofollow" />
     <title>assigned-list | Course kit preview</title>
     <link rel="icon" href="/course-kit/preview/15/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/course-kit/preview/15/styles/font.css" />
-    <link rel="stylesheet" href="/course-kit/preview/15/styles/base.css" />
+    <!-- The kit's base styles sit in a layer below Norn's, so a Norn component is styled by its own CSS, not the kit's. -->
+    <style>
+      @layer kit, norn;
+      @import url(/course-kit/preview/15/styles/font.css) layer(kit);
+      @import url(/course-kit/preview/15/styles/base.css) layer(kit);
+    </style>
     <link rel="stylesheet" href="/course-kit/preview/15/preview-assets/shell.css" />
     <style>
       @layer norn.components {
@@ -1227,8 +1231,8 @@
         <a rel="home" href="/course-kit/preview/15/"><strong>Course kit</strong> preview</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-vrDcF">
-            <span data-label="" id="norn-header-webc-vrDcF">Primary</span>
+          <nav aria-labelledby="norn-header-webc-FUhBp">
+            <span data-label="" id="norn-header-webc-FUhBp">Primary</span>
 
             <a href="/course-kit/preview/15/theme/">Theme</a>
           </nav>
@@ -1247,8 +1251,8 @@
         <section aria-labelledby="nav-ui">
           <h2 id="nav-ui">Building blocks</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-M-HkJ">
-              <span data-label="" id="norn-side-nav-webc-M-HkJ"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-ilSGV">
+              <span data-label="" id="norn-side-nav-webc-ilSGV"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -1303,8 +1307,8 @@
         <section aria-labelledby="nav-site">
           <h2 id="nav-site">Site sections</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-H1Pwb">
-              <span data-label="" id="norn-side-nav-webc-H1Pwb"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-iFv63">
+              <span data-label="" id="norn-side-nav-webc-iFv63"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -1365,8 +1369,8 @@
         <section aria-labelledby="nav-practice">
           <h2 id="nav-practice">Practice worksheets</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-dPHV0">
-              <span data-label="" id="norn-side-nav-webc-dPHV0"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-DaNmC">
+              <span data-label="" id="norn-side-nav-webc-DaNmC"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -1527,7 +1531,7 @@
                       type="button"
                       hidden=""
                       data-value='<assigned-list @label="Read before class" @prefix="due " :@items="([{&amp;quot;title&amp;quot;:&amp;quot;Chapter 1&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;#&amp;quot;,&amp;quot;check&amp;quot;:&amp;quot;Answer the review questions&amp;quot;,&amp;quot;dueLabel&amp;quot;:&amp;quot;Tue, Sep 1&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;MDN: HTML basics&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;#&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;Course syllabus&amp;quot;}])"></assigned-list>'
-                      data-strings="norn-code-block-webc-mtEqE"
+                      data-strings="norn-code-block-webc-__jfB"
                       data-compact=""
                       data-surface="code">
                       <span data-icons=""
@@ -1546,8 +1550,8 @@
                   <pre
                     dir="ltr"
                     data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,13,2,1,6,0,0,1,3,0,19,2,1,7,0,0,1,3,0,6,2,1,7,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,27,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,16,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,4,0,0,3,1,0,13,0,0,1]]">&lt;assigned-list @label="Read before class" @prefix="due " :@items="([{&amp;quot;title&amp;quot;:&amp;quot;Chapter 1&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;#&amp;quot;,&amp;quot;check&amp;quot;:&amp;quot;Answer the review questions&amp;quot;,&amp;quot;dueLabel&amp;quot;:&amp;quot;Tue, Sep 1&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;MDN: HTML basics&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;#&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;Course syllabus&amp;quot;}])"&gt;&lt;/assigned-list&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-mtEqE">
-                    <span data-string="label" id="norn-code-block-webc-mtEqE-copy">Copy {name} to clipboard</span>
+                  <span hidden="" id="norn-code-block-webc-__jfB">
+                    <span data-string="label" id="norn-code-block-webc-__jfB-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -1561,7 +1565,7 @@
           <h2>Props</h2>
           <p>Write them with the <code>@</code> prefix, and <code>:@</code> for an expression. A prop in square brackets is optional.</p>
           <norn-simple-table class="spec"
-            ><span hidden="" id="norn-simple-table-webc-4cA5F"></span>
+            ><span hidden="" id="norn-simple-table-webc-FJmsF"></span>
             <div>
               <table>
                 <thead>
