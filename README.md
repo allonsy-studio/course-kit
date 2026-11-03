@@ -71,7 +71,7 @@ yarn test      # unit tests, plus a real build of examples/starter
 yarn lint      # opx lint: JavaScript, JSON and Markdown (yarn format fixes what it can)
 yarn docs      # rewrite docs/components-reference.md from the component headers
 yarn schema    # rewrite the theme schema and docs/tokens.md from lib/theme.js
-yarn preview   # every component rendered, with scheme, width and accessibility controls
+yarn preview   # the landing site and every component rendered, at http://localhost:8080
 ```
 
 How the code is organized, and the quirks it works around, is in [`docs/components.md`](docs/components.md) and [`docs/internals.md`](docs/internals.md). [`docs/testing.md`](docs/testing.md) says how to check a change against a real course.

@@ -10,7 +10,7 @@ const site = path.join(root, "website", "_site");
 const prefix = "/course-kit/";
 
 before(() => {
-	const built = spawnSync(process.execPath, [path.join(root, "scripts", "build-pages.js")], { cwd: root, env: { ...process.env, PATH_PREFIX: prefix }, encoding: "utf8" });
+	const built = spawnSync(process.execPath, [path.join(root, "scripts", "site.js"), "build"], { cwd: root, env: { ...process.env, PATH_PREFIX: prefix }, encoding: "utf8" });
 	assert.equal(built.status, 0, built.stderr || built.stdout);
 });
 
