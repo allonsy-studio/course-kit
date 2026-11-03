@@ -11,3 +11,7 @@ public/
 !.yarn/sdks
 !.yarn/versions
 preview/_site/
+
+# opx
+.opx/*
+!.opx/config.json

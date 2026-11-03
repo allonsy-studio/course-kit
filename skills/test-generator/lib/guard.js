@@ -14,7 +14,7 @@ import path from "node:path";
 export const MARKER = "test-generator:private";
 
 /** File names that look like a test or a key. */
-const NAMES = /(^|[-_.\/])(key|answer-?key|test-?\d*-?(key|build)|build-?test)([-_.]|$)/i;
+const NAMES = /(^|[-_./])(key|answer-?key|test-?\d*-?(key|build)|build-?test)([-_.]|$)/i;
 
 /** Content that only a generated test, key or content file holds. */
 const CONTENT = [new RegExp(MARKER), /class="(?:ans|svg-ans)"/, /<body class="key"/];

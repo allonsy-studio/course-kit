@@ -516,7 +516,7 @@ function mount(root, signal) {
 		els.clearQ.hidden = !state.q;
 		const active = FILTERED.reduce((sum, kind) => sum + state.filters[kind].size, 0);
 		els.summary.textContent = `Filter by test or ${label.toLowerCase()}${active ? ` (${active} on)` : ""}`;
-		els.status.innerHTML = `${filtered().length} of ${terms.length} terms${active ? ` · <button type="button" data-clear>Clear filters</button>` : ""}`;
+		els.status.innerHTML = `${filtered().length} of ${terms.length} terms${active ? " · <button type=\"button\" data-clear>Clear filters</button>" : ""}`;
 		els.review.hidden = state.mode !== "review";
 		els.study.hidden = state.mode !== "study";
 	}
@@ -535,7 +535,7 @@ function mount(root, signal) {
 	function renderReview() {
 		const list = filtered();
 		if (!list.length) {
-			els.review.innerHTML = `<div class="empty"><strong>No terms match.</strong><span>Clear the search or a filter to see more.</span></div>`;
+			els.review.innerHTML = "<div class=\"empty\"><strong>No terms match.</strong><span>Clear the search or a filter to see more.</span></div>";
 			return;
 		}
 		const sets = groups(list);
@@ -547,7 +547,7 @@ function mount(root, signal) {
 				<dl>${set.items
 					.map(
 						(term) => `<div class="entry">
-					<dt><span class="term">${highlight(term, hits?.get(term.id)?.marks)}</span>${term.group ? `<span class="api-group">${esc(term.group)}</span>` : ""}${state.known.has(term.id) ? `<span class="known">✓ known</span>` : ""}</dt>
+					<dt><span class="term">${highlight(term, hits?.get(term.id)?.marks)}</span>${term.group ? `<span class="api-group">${esc(term.group)}</span>` : ""}${state.known.has(term.id) ? "<span class=\"known\">✓ known</span>" : ""}</dt>
 					<dd>${term.sig ? `<p class="sig">${term.sig}</p>` : ""}<p class="definition">${term.definition}</p>${term.meta ? `<p class="meta">${term.meta}</p>` : ""}${term.example ? `<p class="example"><span class="label">Example</span> ${term.example}</p>` : ""}${tagList(term)}<p class="links">${slideLinks(term)}</p></dd>
 				</div>`,
 					)
@@ -603,7 +603,7 @@ function mount(root, signal) {
 			<div class="opts">
 				<button type="button" class="chip" data-act="shuffle" aria-pressed="${state.shuffle}">Shuffle</button>
 				<button type="button" class="chip" data-act="direction" aria-pressed="${state.direction === "def"}">Definition first</button>
-				${knownCount && card ? `<button type="button" class="chip" data-act="reset">Reset known</button>` : ""}
+				${knownCount && card ? "<button type=\"button\" class=\"chip\" data-act=\"reset\">Reset known</button>" : ""}
 			</div></div>
 			<div class="meter" role="progressbar" aria-label="Known terms" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${knownCount}"><i style="inline-size:${total ? Math.round((knownCount / total) * 100) : 0}%"></i></div>`;
 
@@ -624,7 +624,7 @@ function mount(root, signal) {
 					<div class="content">${state.revealed ? front + back + restPart(card) : front}</div>
 					<div class="foot">${state.revealed ? "" : `<button type="button" class="reveal primary" data-act="reveal">Show ${termFirst ? "definition" : "term"}</button>`}</div>
 				</div>
-				${state.revealed ? `<div class="verdict"><button type="button" class="yes" data-act="know">I know this</button><button type="button" data-act="later">Show me again later</button></div>` : ""}
+				${state.revealed ? "<div class=\"verdict\"><button type=\"button\" class=\"yes\" data-act=\"know\">I know this</button><button type=\"button\" data-act=\"later\">Show me again later</button></div>" : ""}
 				<div class="nav"><button type="button" data-act="prev" ${state.idx === 0 ? "disabled" : ""}>← Previous</button><span class="hint">Space reveals · arrows move</span><button type="button" data-act="next" ${state.idx >= state.deck.length - 1 ? "disabled" : ""}>Next →</button></div>`;
 		}
 		els.study.innerHTML = html;

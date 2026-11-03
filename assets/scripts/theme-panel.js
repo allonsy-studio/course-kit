@@ -353,7 +353,7 @@ class ThemePanel extends HTMLElement {
 							<summary>Every color</summary>
 							<div>
 								${this.fieldset("All tokens", this.tokens.map((token) => [token.key, token.role]), true)}
-								${this.context === "site" ? `<fieldset><legend>Gradient</legend><div class="stops"></div><button type="button" data-action="add-stop">Add a color</button></fieldset>` : ""}
+								${this.context === "site" ? "<fieldset><legend>Gradient</legend><div class=\"stops\"></div><button type=\"button\" data-action=\"add-stop\">Add a color</button></fieldset>" : ""}
 							</div>
 						</details>
 						<menu>
