@@ -9,6 +9,8 @@ import { HtmlBasePlugin } from "@11ty/eleventy";
 import norn, { fillHooks, reset } from "@allons-y/webc-patterns/plugin";
 import oss, { ossEnabled, ossProps } from "@allons-y/webc-oss-site";
 
+import { withPreview } from "./lib/chrome.js";
+
 // Anchored to this file so the build runs from the repository root or the site directory.
 const here = path.relative(process.cwd(), import.meta.dirname) || ".";
 const at = (...parts) => path.posix.join(here.split(path.sep).join("/"), ...parts);
@@ -20,7 +22,7 @@ const withOss = ossEnabled({ packagePath: path.resolve(import.meta.dirname, "../
 export default function (config) {
 	config.addPlugin(withOss ? oss : norn, {
 		props: (data) => ({
-			...ossProps(data.site, data.project, { anchors: data.anchors === true, oss: withOss }),
+			...withPreview(ossProps(data.site, data.project, { anchors: data.anchors === true, oss: withOss }), { components: "/components/", theme: "/components/theme/" }),
 			title: data.title,
 			ogImage: data.project?.ogImage && { src: `assets/img/${data.project.ogImage}`, alt: data.site?.name },
 		}),

@@ -539,3 +539,9 @@ main#main {
 		}
 	}
 }
+
+/* The kit's icon-link rule squares any link around an image; the studio's bar & credit are wide. */
+oss-bar a,
+oss-credit a {
+	aspect-ratio: auto;
+}

@@ -7,6 +7,8 @@
 		<meta name="robots" content="noindex, nofollow" />
 		<title @text="[$data.title, 'Course kit preview'].filter(Boolean).join(' | ')"></title>
 		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<meta webc:is="oss-head" webc:nokeep />
+		<style @raw="brandCss()"></style>
 		<!-- The kit's base styles sit in a layer below Norn's, so a Norn component is styled by its own CSS, not the kit's. -->
 		<style webc:keep @raw="'@layer kit, norn;\n@import url(' + url('/styles/font.css') + ') layer(kit);\n@import url(' + url('/styles/base.css') + ') layer(kit);'"></style>
 		<link rel="stylesheet" href="/preview-assets/shell.css" webc:keep />
@@ -17,9 +19,10 @@
 	</head>
 	<body class="preview">
 		<norn-skip-link></norn-skip-link>
+		<oss-bar></oss-bar>
 		<norn-header>
-			<a slot="brand" rel="home" href="/"><strong>Course kit</strong> preview</a>
-			<a href="/theme/">Theme</a>
+			<a slot="brand" rel="home" :href="chromeFor($data.page.url).home"><span webc:nokeep @text="chromeFor($data.page.url).name"></span></a>
+			<a webc:for="link of chromeFor($data.page.url).nav" :href="link.href" :aria-current="link.current ? 'page' : undefined"><span webc:nokeep @text="link.title"></span></a>
 		</norn-header>
 		<preview-overrides></preview-overrides>
 		<div class="app">
@@ -28,10 +31,19 @@
 		</div>
 		<norn-footer>
 			<div>
-				<strong>Course kit</strong>
-				<p>Every component, rendered with the starter course's data.</p>
+				<p><strong @text="chromeFor($data.page.url).footer.name"></strong></p>
+				<p @text="chromeFor($data.page.url).footer.text"></p>
+				<p webc:if="chromeFor($data.page.url).footer.license"><small>Licensed under <a :href="chromeFor($data.page.url).footer.license.url" @text="chromeFor($data.page.url).footer.license.name"></a></small></p>
 			</div>
-			<p slot="colophon">Built by <a href="https://allons-y.studio">Allons-y Studio</a>. Course kit is open source under MPL-2.0.</p>
+			<nav aria-label="Footer">
+				<div webc:for="group of chromeFor($data.page.url).footer.groups">
+					<p><strong @text="group.heading"></strong></p>
+					<ul>
+						<li webc:for="link of group.links"><a :href="link.href" @text="link.title"></a></li>
+					</ul>
+				</div>
+			</nav>
+			<oss-credit></oss-credit>
 		</norn-footer>
 	</body>
 </html>

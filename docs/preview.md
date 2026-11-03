@@ -65,4 +65,6 @@ The preview is not part of the published package: `package.json`'s `files` leave
 
 The workflow builds with `PATH_PREFIX` set to the path it serves from. `preview/eleventy.config.js` passes it to Eleventy as `pathPrefix`, and `HtmlBasePlugin` adds it to every link and asset URL in the output, so the layouts and components keep writing root-relative URLs (`/styles/`). The preview's prefix is the site's with `components/` added. A URL built in a script or passed as a prop needs Eleventy's `url` filter. `test/pages.test.js` builds both under a prefix and checks that no link escapes it.
 
+The two builds look like one site. The preview's header, banner and footer come from the landing's data (`website/_data/`, through `ossProps` and `website/lib/chrome.js`), and its links back to the landing are relative, so they work under any prefix. A local `yarn preview` has no landing site beside it, so those links go nowhere there.
+
 Turn on GitHub Pages for the repository with the `gh-pages` branch as the source (Settings, Pages) before the first run.

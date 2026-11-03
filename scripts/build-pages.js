@@ -18,4 +18,4 @@ function run(args, env = {}) {
 const prefix = (process.env.PATH_PREFIX || "/").replace(/\/?$/, "/");
 
 run(["--config=website/eleventy.config.js"], { PATH_PREFIX: prefix });
-run(["--config=preview/eleventy.config.js", "--output=website/_site/components"], { PATH_PREFIX: `${prefix}components/` });
+run(["--config=preview/eleventy.config.js"], { PATH_PREFIX: `${prefix}components/`, PREVIEW_OUTPUT: "website/_site/components" });
