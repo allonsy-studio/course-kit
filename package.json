@@ -41,7 +41,9 @@
     "docs:build": "eleventy --config=website/eleventy.config.js",
     "docs:start": "eleventy --serve --config=website/eleventy.config.js",
     "docs:test": "cypress run --project website",
-    "pages:build": "node scripts/build-pages.js"
+    "pages:build": "node scripts/build-pages.js",
+    "format": "opx lint --fix",
+    "lint": "opx lint"
   },
   "dependencies": {
     "@11ty/eleventy-navigation": "^1.0.5",
@@ -90,6 +92,10 @@
   "packageManager": "yarn@4.18.1",
   "devDependencies": {
     "@11ty/eleventy": "^3.1.6",
+    "@allons-y/opx-cli": "^0.1.0-beta.0",
+    "@allons-y/opx-lint-js": "^0.1.0-beta.0",
+    "@allons-y/opx-lint-json": "^0.1.0-beta.0",
+    "@allons-y/opx-lint-md": "^0.1.0-beta.0",
     "@allons-y/webc-code-sample": "0.1.0-beta.1",
     "@allons-y/webc-oss-site": "^0.1.0-beta.1",
     "@allons-y/webc-patterns": "0.1.0-beta.1",
@@ -97,7 +103,8 @@
     "ajv-formats": "^3.0.1",
     "axe-core": "^4.14.0",
     "cypress": "^15.21.1",
-    "cypress-axe": "^1.7.0"
+    "cypress-axe": "^1.7.0",
+    "typescript": "^6.0.0"
   },
   "oss-docs": {
     "site": "website",

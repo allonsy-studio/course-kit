@@ -15,7 +15,7 @@ To stop the server, press `Ctrl+C`. To build the site into a `public/` folder, r
 
 ## 2. What is in the folder
 
-```
+```text
 my-course/
 ├── eleventy.config.js     your settings (the college's name and time zone)
 ├── package.json

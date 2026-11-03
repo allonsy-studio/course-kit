@@ -94,7 +94,7 @@ export function mc(n, stem, choices, answer, key, { aside = "" } = {}) {
  */
 export function fill(n, stem, answer, key, { lines = 1, aside = "" } = {}) {
 	note(stem);
-	const rule = key ? `<p class="ans line">${answer}</p>` : Array.from({ length: lines }, () => `<p class="rule"></p>`).join("");
+	const rule = key ? `<p class="ans line">${answer}</p>` : Array.from({ length: lines }, () => "<p class=\"rule\"></p>").join("");
 	return `<div class="item fill"><p class="stem"><b>${n}.</b> ${stem}</p>${aside}${rule}</div>`;
 }
 
@@ -104,7 +104,7 @@ export function fill(n, stem, answer, key, { lines = 1, aside = "" } = {}) {
  */
 export function labeledLines(rows, key) {
 	return `<div class="labeled-lines">${rows
-		.map(([label, answer]) => `<div><span>${label}</span>${key ? `<span class="ans">${answer}</span>` : `<span class="short-rule"></span>`}</div>`)
+		.map(([label, answer]) => `<div><span>${label}</span>${key ? `<span class="ans">${answer}</span>` : "<span class=\"short-rule\"></span>"}</div>`)
 		.join("")}</div>`;
 }
 
