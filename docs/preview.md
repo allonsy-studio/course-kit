@@ -3,8 +3,8 @@
 A page for every component the kit ships, rendered by the kit's own plugin with the starter course's data. What you see is what a course's build produces. It is for people changing the kit; a course does not need it.
 
 ```sh
-yarn preview          # build, serve at http://localhost:8080, rebuild when a component or story changes
-yarn preview:build    # build into preview/_site
+yarn preview          # build the whole site, serve http://localhost:8080, rebuild on change
+yarn preview:build    # build the whole site into website/_site
 ```
 
 ## What a component page has
@@ -58,11 +58,13 @@ The preview is not part of the published package: `package.json`'s `files` leave
 
 ## Published preview
 
-`.github/workflows/pages.yml` calls the organization's reusable Pages workflow, as the other Allons-y Studio projects do. It builds `yarn preview:build` and publishes `preview/_site` to the `gh-pages` branch:
+`.github/workflows/pages.yml` calls the organization's reusable Pages workflow, as the other Allons-y Studio projects do. `yarn pages:build` (`scripts/site.js`) writes the project's landing site (`website/`) at the root and this preview under `components/`, and `yarn docs:test` audits the landing site before anything is published to the `gh-pages` branch:
 
-- Each push to `main` publishes the preview at the site root: <https://allonsy-studio.github.io/course-kit/>.
-- Each pull request from this repository publishes to `preview/<number>/`, gets a comment with the URL, and loses its preview when it closes.
+- Each push to `main` publishes at the site root: the landing site at <https://allonsy-studio.github.io/course-kit/> and the preview at <https://allonsy-studio.github.io/course-kit/components/>.
+- Each pull request from this repository publishes the same two to `preview/<number>/`, gets a comment with the URL, and loses its preview when it closes.
 
-The workflow builds with `PATH_PREFIX` set to the path it serves from. `preview/eleventy.config.js` passes it to Eleventy as `pathPrefix`, and `HtmlBasePlugin` adds it to every link and asset URL in the output, so the layouts and components keep writing root-relative URLs (`/styles/`). A URL built in a script or passed as a prop needs Eleventy's `url` filter. `test/preview.test.js` builds under a prefix and checks that no link escapes it.
+The workflow builds with `PATH_PREFIX` set to the path it serves from. `preview/eleventy.config.js` passes it to Eleventy as `pathPrefix`, and `HtmlBasePlugin` adds it to every link and asset URL in the output, so the layouts and components keep writing root-relative URLs (`/styles/`). The preview's prefix is the site's with `components/` added. A URL built in a script or passed as a prop needs Eleventy's `url` filter. `test/pages.test.js` builds both under a prefix and checks that no link escapes it.
+
+The two builds look like one site. The preview's header, banner and footer come from the landing's data (`website/_data/`, through `ossProps` and `website/lib/chrome.js`), and its links back to the landing are relative, so they work under any prefix.  `yarn preview`, `yarn docs:start` and `yarn pages:build` all run `scripts/site.js`, so the landing is at <http://localhost:8080/> and the preview at <http://localhost:8080/components/>.
 
 Turn on GitHub Pages for the repository with the `gh-pages` branch as the source (Settings, Pages) before the first run.

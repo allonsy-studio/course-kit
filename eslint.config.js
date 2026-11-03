@@ -17,4 +17,9 @@ export default [
 		files: ["assets/scripts/**/*.js", "preview/content/assets/**/*.js"],
 		languageOptions: { globals: { document: "readonly", window: "readonly", localStorage: "readonly", navigator: "readonly", matchMedia: "readonly", location: "readonly", history: "readonly", URL: "readonly", ResizeObserver: "readonly", OffscreenCanvas: "readonly", CSSStyleSheet: "readonly", CustomEvent: "readonly", getComputedStyle: "readonly", requestAnimationFrame: "readonly", IntersectionObserver: "readonly", HTMLElement: "readonly", customElements: "readonly", Event: "readonly", KeyboardEvent: "readonly", MutationObserver: "readonly", fetch: "readonly", setTimeout: "readonly", clearTimeout: "readonly", Image: "readonly", FormData: "readonly", CSS: "readonly", sessionStorage: "readonly", alert: "readonly", console: "readonly", screen: "readonly", NodeFilter: "readonly", getSelection: "readonly" } },
 	},
+	{
+		// The landing site's accessibility check runs in Cypress.
+		files: ["website/cypress/**/*.js"],
+		languageOptions: { globals: { cy: "readonly", Cypress: "readonly", describe: "readonly", it: "readonly" } },
+	},
 ];

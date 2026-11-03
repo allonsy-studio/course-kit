@@ -12,6 +12,11 @@ public/
 !.yarn/versions
 preview/_site/
 
+# The project site
+website/_site/
+website/_a11y/
+website/cypress/screenshots/
+
 # opx
 .opx/*
 !.opx/config.json
