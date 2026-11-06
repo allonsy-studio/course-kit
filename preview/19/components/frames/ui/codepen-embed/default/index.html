@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>codepen-embed: Default</title>
+    <link rel="stylesheet" href="/course-kit/preview/19/components/styles/font.css" />
+    <link rel="stylesheet" href="/course-kit/preview/19/components/styles/prism-light.css" media="(prefers-color-scheme: light)" data-prism-theme="light" />
+    <link rel="stylesheet" href="/course-kit/preview/19/components/styles/prism-dark.css" media="(prefers-color-scheme: dark)" data-prism-theme="dark" />
+    <link rel="stylesheet" href="/course-kit/preview/19/components/styles/base.css" />
+    <script src="/course-kit/preview/19/components/preview-assets/tokens.js"></script>
+  </head>
+  <body>
+    <main id="main-content" tabindex="-1" style="margin: 0; padding: 1rem; min-block-size: 0">
+      <h1 class="sr-only">codepen-embed: Default</h1>
+
+      <figure class="codepen-embed wpqv1nd4r">
+        <div class="embed-header">
+          <h2>A first page</h2>
+          <a href="https://codepen.io/">Open in CodePen</a>
+        </div>
+
+        <div data-prefill='{"title":"A first page in HTML","description":"Open the pen and change the heading.","stylesheets":[],"scripts":[]}' data-height="300" data-default-tab="html,result" data-editable="true" data-preview="true" class="codepen"></div>
+
+        <script>
+          /* Set the editor theme before ei.js builds the iframe. */
+          (function () {
+            try {
+              var forced = document.documentElement.dataset.theme;
+              var dark = forced === "dark" || (forced !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+              document.querySelectorAll(".codepen[data-prefill]").forEach(function (embed) {
+                embed.dataset.themeId = dark ? "dark" : "light";
+              });
+            } catch (e) {}
+          })();
+        </script>
+        <script async="" src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+        <figcaption>
+          <p>The embed loads when you click.</p>
+        </figcaption>
+      </figure>
+    </main>
+  </body>
+</html>
