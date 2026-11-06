@@ -10,7 +10,12 @@ on:
 
 jobs:
     test:
+        name: CI (node${{ matrix.node }})
         runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                node: [26, 24]
 
         steps:
             - name: Check out code
@@ -23,7 +28,7 @@ jobs:
               uses: actions/setup-node@v7
               with:
                   cache: yarn
-                  node-version-file: .nvmrc
+                  node-version: ${{ matrix.node }}
 
             - name: Install dependencies
               run: yarn install --immutable --mode=skip-build
