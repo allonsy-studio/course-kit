@@ -52,15 +52,17 @@
         color: inherit;
         text-decoration: none;
 
+        /* The current page is a filled pill, so it reads as "you are here"
+           without relying on an underline. */
         &[aria-current="page"] {
+            padding-inline: 0.85em;
+            border-radius: 9999px;
+            background-color: var(--color-text);
+            color: var(--color-page);
             font-weight: var(--font-weight--semi-bold);
-            text-decoration: underline;
-            text-decoration-thickness: var(--border-width);
-            text-underline-offset: 0.4ex;
-            text-decoration-color: var(--color-accent);
         }
 
-        &:is(:hover, :focus-visible) {
+        &:not([aria-current="page"]):is(:hover, :focus-visible) {
             color: var(--color-link-hover);
             text-decoration: underline;
             text-decoration-thickness: var(--thin-border-width);
@@ -126,6 +128,7 @@
     color: inherit;
 
     &[aria-current="page"] {
+        background: none;
         color: var(--color-accent-text);
     }
 }

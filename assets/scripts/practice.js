@@ -199,10 +199,55 @@ function reset(question) {
 	question.querySelector(".why").hidden = true;
 }
 
+/** A question's status for the question list and the results: checked right, checked wrong, or not checked. */
+const STATUS = { right: "Correct", wrong: "Try again", open: "Not checked" };
+const stateOf = (question) => question.dataset.state ?? "open";
+const gradable = () => [...document.querySelectorAll(".question")].filter((question) => GRADERS[question.dataset.kind]);
+
+const questionNav = document.querySelector("[data-question-nav]");
+const results = document.querySelector("[data-results]");
+
+/** One row per gradable question: its number badge (or a mark once checked) and its status, linked to it. */
+const statusRows = () =>
+	gradable()
+		.map((question) => {
+			const state = stateOf(question);
+			const badge = state === "right" ? "✓" : state === "wrong" ? "✕" : question.dataset.question;
+			return `<li data-state="${state}"><a href="#${question.id}"><span class="badge" aria-hidden="true">${badge}</span><span>Question ${question.dataset.question}</span> <span class="status">${STATUS[state]}</span></a></li>`;
+		})
+		.join("");
+
+/** Redraw the question list and, when it is showing, the results. */
+function refreshStatus() {
+	if (questionNav) questionNav.querySelector("ol").innerHTML = statusRows();
+	if (!results || results.hidden) return;
+	const questions = gradable();
+	const right = questions.filter((question) => stateOf(question) === "right").length;
+	results.querySelector("[data-score]").textContent = String(right);
+	results.querySelector("[data-score-of]").textContent = `of ${questions.length}`;
+	results.querySelector(".result-rows").innerHTML = statusRows();
+	results.querySelector("[data-retry-results]").hidden = right === questions.length;
+}
+
 const tallyFor = (scope) => document.querySelector(`[data-tally="${scope}"]`);
 const retryFor = (scope) => document.querySelector(`[data-retry="${scope}"]`);
 
 document.addEventListener("click", (event) => {
+	const oneButton = event.target.closest("[data-check-one]");
+	if (oneButton) {
+		check(oneButton.closest(".question"));
+		refreshStatus();
+		return;
+	}
+
+	if (event.target.closest("[data-see-results]") && results) {
+		for (const question of gradable()) if (stateOf(question) === "open") check(question);
+		results.hidden = false;
+		refreshStatus();
+		results.focus();
+		return;
+	}
+
 	const checkButton = event.target.closest("[data-check]");
 	if (checkButton) {
 		const scope = checkButton.dataset.check;
@@ -225,6 +270,7 @@ document.addEventListener("click", (event) => {
 		}
 		const retry = retryFor(scope);
 		if (retry) retry.hidden = !questionsIn(scope).some((question) => question.dataset.state === "wrong");
+		refreshStatus();
 		return;
 	}
 
@@ -236,6 +282,8 @@ document.addEventListener("click", (event) => {
 		retryButton.hidden = true;
 		const tally = tallyFor(scope);
 		if (tally) tally.textContent = "";
+		if (results) results.hidden = true;
+		refreshStatus();
 		const first = missed[0]?.querySelector("input, select, textarea, button");
 		first?.focus();
 		return;
@@ -249,6 +297,8 @@ document.addEventListener("click", (event) => {
 		if (tally) tally.textContent = "";
 		const retry = retryFor(scope);
 		if (retry) retry.hidden = true;
+		if (results) results.hidden = true;
+		refreshStatus();
 	}
 });
 
@@ -346,4 +396,15 @@ for (const question of document.querySelectorAll(".question[data-kind='fill']"))
 /* The buttons ship hidden so a no-JS reader is never offered a dead control. */
 for (const button of document.querySelectorAll("[data-check], [data-reset]")) {
 	button.hidden = false;
+}
+
+/* Self-marked questions have nothing to check, so they get no button. */
+for (const question of gradable()) {
+	const button = question.querySelector("[data-check-one]");
+	if (button) button.hidden = false;
+}
+
+if (questionNav && gradable().length) {
+	questionNav.hidden = false;
+	refreshStatus();
 }

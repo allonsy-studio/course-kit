@@ -23,6 +23,7 @@
 			<li webc:for="tag of entry.tags.topic" data-kind="topic" @text="tag.label"></li>
 		</ul>
 		<p class="links">
+			<span class="label" webc:if="entry.taught?.length || entry.ref">Taught in</span>
 			<a webc:for="place of entry.taught" :href="place.href"><span @text="`Week ${place.week} · ${place.weekday}, slide ${place.slide}`"></span></a>
 			<a webc:if="entry.ref" :href="entry.ref.href" @text="entry.ref.label"></a>
 		</p>

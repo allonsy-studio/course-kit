@@ -374,24 +374,27 @@
 				border-inline-start: var(--thick-border-width) solid var(--k-mark);
 			}
 
+			/* Terms sit as cards in a grid that falls to one column on a phone. */
 			dl {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+				gap: var(--content-space);
 				margin-block: calc(var(--content-space) * 0.6) 0;
 			}
 		}
 
 		.entry {
-			display: grid;
-			grid-template-columns: minmax(9rem, 14rem) 1fr;
-			gap: calc(var(--gutter) * 1.5) var(--content-space);
-			padding-block: calc(var(--content-space) * 0.8);
-			border-block-start: var(--thin-border-width) solid var(--color-border);
+			display: flex;
+			flex-direction: column;
+			gap: calc(var(--gutter) * 2);
+			padding: calc(var(--content-space) * 1.1) calc(var(--content-space) * 1.2);
+			border: var(--thin-border-width) solid var(--color-border);
+			border-radius: calc(var(--standard-border-radius) * 3);
+			background-color: var(--color-surface);
 			break-inside: avoid;
 
-			@media (width < 560px) {
-				grid-template-columns: 1fr;
-			}
-
 			dt {
+				font-size: var(--font-size-4);
 				display: flex;
 				flex-wrap: wrap;
 				align-content: start;
@@ -435,6 +438,16 @@
 
 			.meta,
 			.example {
+				color: var(--color-text-muted);
+			}
+
+			.example code,
+			.sig {
+				overflow-wrap: anywhere;
+			}
+
+			.links .label {
+				align-self: center;
 				color: var(--color-text-muted);
 			}
 

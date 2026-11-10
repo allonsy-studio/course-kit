@@ -24,9 +24,11 @@
 	<practice-judge webc:if="q.kind === 'judge'" :@q="q"></practice-judge>
 	<practice-selfcheck webc:if="q.kind === 'selfcheck'" :@q="q"></practice-selfcheck>
 
+	<button type="button" class="check-one" data-check-one hidden @text="$data.worksheet.copy.checkOne"></button>
 	<p class="feedback" role="status" hidden></p>
 	<div class="why" hidden>
 		<p @text="q.why"></p>
+		<p class="review" webc:if="q.sources?.[0]?.href"><a :href="q.sources[0].href"><span @text="$data.worksheet.copy.review"></span> <span @text="q.sources[0].label"></span></a></p>
 	</div>
 </div>
 
@@ -95,6 +97,15 @@
 			.token:is(.punctuation, .operator) {
 				color: var(--color-text-muted);
 			}
+		}
+
+		.check-one {
+			margin-block-start: 0.8em;
+		}
+
+		.review {
+			margin-block-start: 0.4em;
+			font-weight: var(--font-weight--semi-bold);
 		}
 
 		.feedback {

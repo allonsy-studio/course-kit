@@ -11,6 +11,7 @@
 			<span @text="$data.worksheet.eyebrow"></span>
 		</eyebrow>
 		<h1 @text="$data.worksheet.heading"></h1>
+		<p class="pills"><span @text="$data.worksheet.copy.notGraded"></span></p>
 		<p class="lede" @text="$data.worksheet.lede"></p>
 		<p webc:for="paragraph of $data.worksheet.intro" @text="paragraph"></p>
 
@@ -24,6 +25,12 @@
 
 		<check-controls @scope="#worksheet" :@label="$data.worksheet.copy.checkAll"
 			:@reset="$data.worksheet.copy.resetAll" :@note="$data.worksheet.copy.selfMarked"></check-controls>
+
+		<nav class="question-nav" data-question-nav hidden :aria-label="$data.worksheet.copy.questions">
+			<h2 class="nav-heading" @text="$data.worksheet.copy.questions"></h2>
+			<ol role="list"></ol>
+			<button type="button" data-see-results @text="$data.worksheet.copy.seeResults"></button>
+		</nav>
 	</header>
 
 	<section webc:for="section of $data.worksheet.sections" :id="`section-${section.n}`" class="practice-section">
@@ -41,6 +48,13 @@
 
 		<check-controls :@scope="`#section-${section.n}`" :@label="`${$data.worksheet.copy.checkSection} ${section.n}`"
 			:@reset="$data.worksheet.copy.resetSection" :@note="$data.worksheet.copy.selfMarked"></check-controls>
+	</section>
+
+	<section class="results" id="results" data-results hidden tabindex="-1" aria-labelledby="results-heading">
+		<div class="score"><strong data-score></strong> <span data-score-of></span></div>
+		<h2 id="results-heading" @text="$data.worksheet.copy.results"></h2>
+		<ol class="result-rows" role="list"></ol>
+		<button type="button" data-retry="#worksheet" data-retry-results>Try missed questions</button>
 	</section>
 
 	<footer class="practice-foot" webc:if="$data.worksheet.footer?.length || $data.worksheet.links?.length">
@@ -96,6 +110,147 @@
 			text-transform: uppercase;
 		}
 
+		.pills {
+			margin-block: 0 var(--content-space);
+
+			span {
+				display: inline-block;
+				padding: 0.1em 0.8em;
+				border: var(--thin-border-width) solid var(--color-border);
+				border-radius: 9999px;
+				color: var(--color-text-muted);
+				font-size: max(var(--base-font-size), 0.9em);
+			}
+		}
+
+		/* The question list: one link per question with its status. */
+		.question-nav {
+			margin-block: var(--content-space);
+
+			&[hidden] {
+				display: none;
+			}
+
+			.nav-heading {
+				margin-block: 0 0.5em;
+				color: var(--color-text-muted);
+				font-size: var(--font-size-6);
+				font-weight: var(--font-weight--medium);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+			}
+
+			ol {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+				gap: 0.4em;
+				margin: 0 0 var(--content-space);
+				padding: 0;
+				list-style: none;
+			}
+
+			a {
+				display: flex;
+				align-items: center;
+				gap: 0.6em;
+				min-block-size: 44px;
+				padding: 0.3em 0.7em;
+				border: var(--thin-border-width) solid var(--color-border);
+				border-radius: calc(var(--standard-border-radius) * 3);
+				color: var(--color-text);
+				text-decoration: none;
+
+				&:is(:hover, :focus-visible) {
+					border-color: var(--color-accent);
+					background-color: var(--color-surface-accent);
+				}
+			}
+
+			.badge {
+				display: grid;
+				place-items: center;
+				flex: none;
+				inline-size: 1.9em;
+				block-size: 1.9em;
+				border: var(--border-width) solid transparent;
+				border-radius: 50%;
+				background-color: var(--color-surface);
+				font-family: var(--mono-font);
+				font-size: max(var(--base-font-size), 0.85em);
+				font-weight: var(--font-weight--bold);
+			}
+
+			.status {
+				color: var(--color-text-muted);
+				font-size: max(var(--base-font-size), 0.9em);
+			}
+
+			[data-state="right"] .badge {
+				border-color: var(--color-success);
+				color: var(--color-success);
+			}
+
+			[data-state="wrong"] .badge {
+				border-color: var(--color-error);
+				color: var(--color-error);
+			}
+		}
+
+		.results {
+			margin-block-start: var(--section-space);
+			padding: calc(var(--content-space) * 1.5);
+			border: var(--thin-border-width) solid var(--color-border);
+			border-radius: calc(var(--standard-border-radius) * 4);
+			background-color: var(--color-surface);
+
+			&[hidden] {
+				display: none;
+			}
+
+			.score {
+				display: inline-grid;
+				place-items: center;
+				inline-size: 7em;
+				block-size: 7em;
+				border: 0.6em solid var(--color-accent-secondary);
+				border-radius: 50%;
+				line-height: var(--font-height--dense);
+
+				strong {
+					font-size: var(--font-size-2);
+				}
+
+				span {
+					color: var(--color-text-muted);
+				}
+			}
+
+			.result-rows {
+				margin: 0 0 var(--content-space);
+				padding: 0;
+				list-style: none;
+				border-block-start: var(--thin-border-width) solid var(--color-border);
+
+				li {
+					display: flex;
+					flex-wrap: wrap;
+					align-items: center;
+					justify-content: space-between;
+					gap: 0.5em 1em;
+					padding-block: 0.6em;
+					border-block-end: var(--thin-border-width) solid var(--color-border);
+				}
+
+				[data-state="right"] .status {
+					color: var(--color-success);
+				}
+
+				[data-state="wrong"] .status {
+					color: var(--color-error);
+				}
+			}
+		}
+
 		.practice-foot {
 			border-block-start: var(--thin-border-width) solid var(--color-border);
 			margin-block-start: var(--section-space);
@@ -112,6 +267,9 @@
 
 		@media print {
 			check-controls,
+			.question-nav,
+			.results,
+			.check-one,
 			.feedback,
 			.why {
 				display: none;

@@ -17,13 +17,17 @@
 		if (/\b(practice|worksheet|exercise)\b/.test(title)) return "practice";
 		return "";
 	};
-	const KIND_LABELS = { test: "Test", lab: "Graded work", practice: "Practice" };
+	/** The chip's word: the one the title uses ("Quiz", "Lab"), so the chip never renames the work. */
+	const kindLabel = (item) => {
+		const word = String(item?.title ?? "").toLowerCase().match(/\b(test|exam|quiz|midterm|final|lab|project|assignment|milestone|practice|worksheet|exercise)\b/)?.[1] ?? "";
+		return word.charAt(0).toUpperCase() + word.slice(1);
+	};
 </script>
 <div webc:root="override" class="assigned" webc:if="items?.length">
 	<p class="label" @text="label"></p>
 	<ul role="list">
 		<li webc:for="item of items">
-			<span class="due-kind" webc:if="label === 'Due' && kindOf(item)" :data-kind="kindOf(item)" @text="KIND_LABELS[kindOf(item)]"></span>
+			<span class="due-kind" webc:if="label === 'Due' && kindOf(item)" :data-kind="kindOf(item)" @text="kindLabel(item)"></span>
 			<a webc:if="item.href" :href="item.href" @text="item.title"></a>
 			<span webc:if="!item.href" @text="item.title"></span>
 			<span class="check" webc:if="detail(item, prefix)" @text="detail(item, prefix)"></span>

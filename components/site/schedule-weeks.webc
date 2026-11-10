@@ -10,8 +10,19 @@
 <div webc:root="override" class="schedule-weeks" data-today-host="meetings" webc:if="(weeks ?? defaultWeeks)?.length">
     <today-marker></today-marker>
     <div class="week-tools" data-week-tools hidden>
-        <p class="this-week" data-this-week hidden><span class="label">This week</span> <a data-this-week-link href="#today"></a></p>
-        <button type="button" class="past-toggle" aria-pressed="false" data-past-toggle>Hide past weeks</button>
+        <div class="this-week" data-this-week hidden>
+            <p class="eyebrow-label">This week</p>
+            <a class="this-week-link" data-this-week-link href="#today"></a>
+            <p class="this-week-dates" data-this-week-dates></p>
+        </div>
+        <div class="tool-row">
+            <ul class="due-key" aria-label="Key" role="list" data-due-key hidden>
+                <li><span class="due-kind" data-kind="test">Quiz or test</span> Graded</li>
+                <li><span class="due-kind" data-kind="lab">Lab or project</span> Graded</li>
+                <li><span class="due-kind" data-kind="practice">Practice</span> Not graded</li>
+            </ul>
+            <button type="button" class="past-toggle" aria-pressed="false" data-past-toggle>Hide past weeks</button>
+        </div>
     </div>
     <week-block webc:for="week of (weeks ?? defaultWeeks)" :@number="week.week" :@dates="week.dates">
         <div class="week-body">
@@ -79,12 +90,13 @@
 					head.append(flag);
 				}
 				if (current) {
-					const title = current.week.querySelector(".week-title")?.textContent.trim() ?? "";
 					const link = tools.querySelector("[data-this-week-link]");
 					link.href = `#${current.week.id}`;
-					link.textContent = [title, current.week.querySelector(".week-of")?.textContent.trim()].filter(Boolean).join(", ");
+					link.textContent = current.week.querySelector(".week-title")?.textContent.trim() ?? "";
+					tools.querySelector("[data-this-week-dates]").textContent = current.week.querySelector(".week-of")?.textContent.trim() ?? "";
 					tools.querySelector("[data-this-week]").hidden = false;
 				}
+				tools.querySelector("[data-due-key]").hidden = !host.querySelector(".due-kind[data-kind]");
 				const toggle = tools.querySelector("[data-past-toggle]");
 				toggle.hidden = !dated.some(({ week }) => week.dataset.week === "done");
 				toggle.addEventListener("click", () => {
@@ -120,12 +132,66 @@
     }
 
     .this-week {
+        display: grid;
+        gap: 0.15em;
+
+        p {
+            margin: 0;
+        }
+    }
+
+    .eyebrow-label {
+        color: var(--color-text-muted);
+        font-size: var(--font-size-6);
+        font-weight: var(--font-weight--medium);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .this-week-link {
+        font-size: var(--font-size-4);
+        font-weight: var(--font-weight--semi-bold);
+    }
+
+    .this-week-dates {
+        color: var(--color-text-muted);
+    }
+
+    .tool-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75em 1.25em;
+    }
+
+    /* The chips' key, matching assigned-list's chips. */
+    .due-key {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4em 1em;
         margin: 0;
+        padding: 0;
+        list-style: none;
+        color: var(--color-text-muted);
+        font-size: max(var(--base-font-size), 0.9em);
+
+        &[hidden] {
+            display: none;
+        }
+    }
+
+    .due-kind {
+        display: inline-block;
+        margin-inline-end: 0.3em;
+        padding: 0 0.55em;
+        border: var(--thin-border-width) solid transparent;
+        border-radius: 9999px;
+        color: var(--color-text);
         font-weight: var(--font-weight--semi-bold);
 
-        .label {
-            display: block;
-        }
+        &[data-kind="test"] { border: var(--border-width) solid var(--color-accent); }
+        &[data-kind="lab"] { background-color: var(--color-surface-accent); }
+        &[data-kind="practice"] { border-style: dashed; border-color: var(--color-text-muted); font-weight: var(--font-weight); }
     }
 
     .past-toggle {
@@ -161,6 +227,10 @@
 
     :host .week[data-week="done"] .week-flag {
         color: var(--color-success);
+
+        &::before {
+            content: "\2713\00a0" / "";
+        }
     }
 
     /* The meetings down the left and the week's reading and materials on the

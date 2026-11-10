@@ -516,7 +516,7 @@ function mount(root, signal) {
 		els.clearQ.hidden = !state.q;
 		const active = FILTERED.reduce((sum, kind) => sum + state.filters[kind].size, 0);
 		els.summary.textContent = `Filter by test or ${label.toLowerCase()}${active ? ` (${active} on)` : ""}`;
-		els.status.innerHTML = `${filtered().length} of ${terms.length} terms${active ? " · <button type=\"button\" data-clear>Clear filters</button>" : ""}`;
+		els.status.innerHTML = `${active ? `Showing ${filtered().length} of ${terms.length} terms` : `${terms.length} terms`}${active ? " · <button type=\"button\" data-clear>Clear filters</button>" : ""}`;
 		els.review.hidden = state.mode !== "review";
 		els.study.hidden = state.mode !== "study";
 	}
@@ -565,7 +565,7 @@ function mount(root, signal) {
 					.map(
 						(term) => `<div class="entry">
 					<dt><span class="term">${highlight(term, hits?.get(term.id)?.marks)}</span>${term.group ? `<span class="api-group">${esc(term.group)}</span>` : ""}${state.known.has(term.id) ? "<span class=\"known\">✓ known</span>" : ""}</dt>
-					<dd>${term.sig ? `<p class="sig">${term.sig}</p>` : ""}<p class="definition">${term.definition}</p>${term.meta ? `<p class="meta">${term.meta}</p>` : ""}${term.example ? `<p class="example"><span class="label">Example</span> ${term.example}</p>` : ""}${tagList(term)}<p class="links">${slideLinks(term)}</p></dd>
+					<dd>${term.sig ? `<p class="sig">${term.sig}</p>` : ""}<p class="definition">${term.definition}</p>${term.meta ? `<p class="meta">${term.meta}</p>` : ""}${term.example ? `<p class="example"><span class="label">Example</span> ${term.example}</p>` : ""}${tagList(term)}<p class="links">${term.taught.length || term.ref ? "<span class=\"label\">Taught in</span>" : ""}${slideLinks(term)}</p></dd>
 				</div>`,
 					)
 					.join("")}</dl>

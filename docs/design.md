@@ -7,7 +7,7 @@ How the kit's pages are meant to look, why, and how to make a course look like i
 A course site is read by students scanning for one fact (when is the test, what do I read) and by instructors preparing a class. The design serves that scan: it should look credible, and it should never make a reader work to find the date.
 
 - **Look like a syllabus, not an app.** Warm paper, dark ink, serif headings, rules between sections. Color is a signal (a link, today's class, the current page), not decoration.
-- **Say what is clickable.** Only links are underlined. A heading is never underlined, and the menu is underlined only for the current page and on hover.
+- **Say what is clickable.** Only links are underlined. A heading is never underlined, and the menu is underlined only on hover; the current page is a filled pill.
 - **Keep lines readable.** Running text stops at about 80 characters a line (`--measure`). Tables, schedules and figures use the full column.
 - **Put the answer first.** Dates, readings and deadlines sit beside the thing they belong to, in a smaller muted type, so they scan as data and not as prose.
 - **Work everywhere.** Light and dark, a phone and a projector, and print. The default and starter palettes are checked at 4.5:1 or better for every text color.
