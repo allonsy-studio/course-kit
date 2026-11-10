@@ -148,8 +148,8 @@
 
 	/* The one accent block on the page: the class to open next. */
 	.next-class {
-		display: grid;
-		align-content: start;
+		display: flex;
+		flex-direction: column;
 		gap: 0.5em;
 		padding: calc(var(--content-space) * 2);
 		border-radius: calc(var(--standard-border-radius) * 5);
@@ -177,11 +177,12 @@
 		}
 
 		.next-link {
-			justify-self: start;
+			align-self: start;
 			display: inline-grid;
 			place-items: center;
 			min-block-size: 2.75rem;
-			margin-block-start: 0.5em;
+			/* Pinned to the card's bottom edge when the card is stretched. */
+			margin-block-start: auto;
 			padding-inline: 1.4em;
 			border-radius: 9999px;
 			background-color: var(--color-on-accent);
