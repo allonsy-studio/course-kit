@@ -8,11 +8,22 @@
 
 	/** The muted line under an item: its check, then when it is due. Props are not in scope here, so the template passes `prefix`. */
 	const detail = (item, lead = "") => [item.check, item.dueLabel && `${lead ?? ""}${item.dueLabel}`].filter(Boolean).join(", ");
+
+	/** A deadline's kind, from its title, for the chip beside it: "test", "lab" or "practice"; "" for anything else. */
+	const kindOf = (item) => {
+		const title = String(item?.title ?? "").toLowerCase();
+		if (/\b(test|exam|quiz|midterm|final)\b/.test(title)) return "test";
+		if (/\b(lab|project|assignment|milestone)\b/.test(title)) return "lab";
+		if (/\b(practice|worksheet|exercise)\b/.test(title)) return "practice";
+		return "";
+	};
+	const KIND_LABELS = { test: "Test", lab: "Graded work", practice: "Practice" };
 </script>
 <div webc:root="override" class="assigned" webc:if="items?.length">
 	<p class="label" @text="label"></p>
 	<ul role="list">
 		<li webc:for="item of items">
+			<span class="due-kind" webc:if="label === 'Due' && kindOf(item)" :data-kind="kindOf(item)" @text="KIND_LABELS[kindOf(item)]"></span>
 			<a webc:if="item.href" :href="item.href" @text="item.title"></a>
 			<span webc:if="!item.href" @text="item.title"></span>
 			<span class="check" webc:if="detail(item, prefix)" @text="detail(item, prefix)"></span>
@@ -39,6 +50,24 @@
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
 		font-size: var(--font-size-6);
+	}
+
+	/* A deadline's kind as a small chip: tests outlined in the accent, graded
+	   work on an accent wash, practice dashed (not graded). */
+	.due-kind {
+		display: inline-block;
+		margin-inline-end: 0.4em;
+		padding: 0 0.55em;
+		border: var(--thin-border-width) solid transparent;
+		border-radius: 9999px;
+		font-size: max(var(--base-font-size), 0.8em);
+		font-weight: var(--font-weight--semi-bold);
+		color: var(--color-text);
+		vertical-align: 0.1em;
+
+		&[data-kind="test"] { border: var(--border-width) solid var(--color-accent); }
+		&[data-kind="lab"] { background-color: var(--color-surface-accent); }
+		&[data-kind="practice"] { border-style: dashed; border-color: var(--color-text-muted); font-weight: var(--font-weight); }
 	}
 
 	.check {

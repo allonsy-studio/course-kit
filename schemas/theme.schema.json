@@ -77,6 +77,14 @@
 			"$ref": "#/$defs/color",
 			"description": "Brand fill, pressed. CSS: --color-accent-active"
 		},
+		"accent-secondary": {
+			"$ref": "#/$defs/color",
+			"description": "Wayfinding color: progress, section bars, the current location, highlighted code. CSS: --color-accent-secondary"
+		},
+		"on-accent-secondary": {
+			"$ref": "#/$defs/color",
+			"description": "Text on a wayfinding-color fill. CSS: --color-on-accent-secondary"
+		},
 		"link": {
 			"$ref": "#/$defs/color",
 			"description": "Links. CSS: --color-link"
@@ -218,6 +226,14 @@
 					"$ref": "#/$defs/color",
 					"description": "Brand fill, pressed. CSS: --color-accent-active"
 				},
+				"accent-secondary": {
+					"$ref": "#/$defs/color",
+					"description": "Wayfinding color: progress, section bars, the current location, highlighted code. CSS: --color-accent-secondary"
+				},
+				"on-accent-secondary": {
+					"$ref": "#/$defs/color",
+					"description": "Text on a wayfinding-color fill. CSS: --color-on-accent-secondary"
+				},
 				"link": {
 					"$ref": "#/$defs/color",
 					"description": "Links. CSS: --color-link"
@@ -352,6 +368,14 @@
 				"accent-active": {
 					"$ref": "#/$defs/color",
 					"description": "Brand fill, pressed. CSS: --color-accent-active"
+				},
+				"accent-secondary": {
+					"$ref": "#/$defs/color",
+					"description": "Wayfinding color: progress, section bars, the current location, highlighted code. CSS: --color-accent-secondary"
+				},
+				"on-accent-secondary": {
+					"$ref": "#/$defs/color",
+					"description": "Text on a wayfinding-color fill. CSS: --color-on-accent-secondary"
 				},
 				"link": {
 					"$ref": "#/$defs/color",

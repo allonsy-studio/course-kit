@@ -9,6 +9,10 @@
 </script>
 <div webc:root="override" class="schedule-weeks" data-today-host="meetings" webc:if="(weeks ?? defaultWeeks)?.length">
     <today-marker></today-marker>
+    <div class="week-tools" data-week-tools hidden>
+        <p class="this-week" data-this-week hidden><span class="label">This week</span> <a data-this-week-link href="#today"></a></p>
+        <button type="button" class="past-toggle" aria-pressed="false" data-past-toggle>Hide past weeks</button>
+    </div>
     <week-block webc:for="week of (weeks ?? defaultWeeks)" :@number="week.week" :@dates="week.dates">
         <div class="week-body">
             <ol class="meetings" role="list">
@@ -46,7 +50,119 @@
     </week-block>
 </div>
 
+<script>
+	/**
+	 * <schedule-weeks>: mark each week Now or Done (by campus date), point the
+	 * "This week" panel at the current week, and let readers hide past weeks.
+	 * Without the script every week shows and the tools stay hidden.
+	 */
+	(() => {
+		try {
+			const today = new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone || undefined });
+			for (const host of document.querySelectorAll(".schedule-weeks")) {
+				const tools = host.querySelector("[data-week-tools]");
+				const weeks = [...host.querySelectorAll(":scope > .week")].map((week) => ({
+					week,
+					dates: [...week.querySelectorAll("[data-date]")].flatMap((el) => el.dataset.date.split(/\s+/)).filter(Boolean).sort(),
+				}));
+				const dated = weeks.filter(({ dates }) => dates.length);
+				if (!tools || !dated.length) continue;
+				const current = dated.find(({ dates }) => dates.at(-1) >= today);
+				for (const { week, dates } of dated) {
+					const head = week.querySelector(".week-head");
+					const state = week === current?.week ? "now" : dates.at(-1) < today ? "done" : "";
+					if (!state || !head) continue;
+					week.dataset.week = state;
+					const flag = document.createElement("span");
+					flag.className = "week-flag";
+					flag.textContent = state === "now" ? "Now" : "Done";
+					head.append(flag);
+				}
+				if (current) {
+					const title = current.week.querySelector(".week-title")?.textContent.trim() ?? "";
+					const link = tools.querySelector("[data-this-week-link]");
+					link.href = `#${current.week.id}`;
+					link.textContent = [title, current.week.querySelector(".week-of")?.textContent.trim()].filter(Boolean).join(", ");
+					tools.querySelector("[data-this-week]").hidden = false;
+				}
+				const toggle = tools.querySelector("[data-past-toggle]");
+				toggle.hidden = !dated.some(({ week }) => week.dataset.week === "done");
+				toggle.addEventListener("click", () => {
+					const hide = toggle.getAttribute("aria-pressed") !== "true";
+					toggle.setAttribute("aria-pressed", String(hide));
+					toggle.textContent = hide ? "Show past weeks" : "Hide past weeks";
+					for (const { week } of dated) if (week.dataset.week === "done") week.hidden = hide;
+				});
+				tools.hidden = false;
+			}
+		} catch {
+			// Never let the schedule tools break the scripts bundled after them.
+		}
+	})();
+</script>
+
 <style webc:scoped>
+    /* "This week" and the past-weeks toggle, above the weeks. */
+    .week-tools {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75em 1.5em;
+        padding: 0.9em 1.1em;
+        border: var(--border-width) solid var(--color-accent-secondary);
+        border-radius: var(--standard-border-radius);
+        background-color: color-mix(in srgb, var(--color-accent-secondary) 10%, var(--color-page));
+
+        &[hidden] {
+            display: none;
+        }
+    }
+
+    .this-week {
+        margin: 0;
+        font-weight: var(--font-weight--semi-bold);
+
+        .label {
+            display: block;
+        }
+    }
+
+    .past-toggle {
+        min-block-size: 44px;
+        padding-inline: 1.1em;
+        border: var(--border-width) solid var(--color-text-muted);
+        border-radius: 9999px;
+        background: transparent;
+        color: var(--color-text);
+        font: inherit;
+        font-weight: var(--font-weight--semi-bold);
+        cursor: pointer;
+    }
+
+    /* A week's flag: Now on the wayfinding color, Done muted. */
+    :host :is(.week-flag) {
+        margin-inline-start: auto;
+        padding: 0 0.6em;
+        border-radius: 9999px;
+        font-size: max(var(--base-font-size), 0.85em);
+        font-weight: var(--font-weight--semi-bold);
+    }
+
+    :host .week[data-week="now"] {
+        border-color: var(--color-accent-secondary);
+        box-shadow: inset var(--border-width) 0 0 var(--color-accent-secondary);
+
+        .week-flag {
+            background-color: var(--color-accent-secondary);
+            color: var(--color-on-accent-secondary);
+        }
+    }
+
+    :host .week[data-week="done"] .week-flag {
+        color: var(--color-success);
+    }
+
     /* The meetings down the left and the week's reading and materials on the
        right. Stacks to a single column on narrow screens, so nothing scrolls
        sideways. */

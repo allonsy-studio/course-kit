@@ -8,5 +8,8 @@
   "accent": { "light": "#1F3A5F", "dark": "#6A8CC2" },
   "accent-text": { "light": "#1F3A5F", "dark": "#A9C1E6" },
   "on-accent": { "light": "#FBF9F3", "dark": "#10151F" },
+  "accent-secondary": { "light": "#1F3A5F", "dark": "#6A8CC2" },
+  "on-accent-secondary": { "light": "#FBF9F3", "dark": "#10151F" },
+  "link": { "light": "#1F3A5F", "dark": "#A9C1E6" },
   "gradient": ["#1F3A5F", "#8A6D1D"]
 }

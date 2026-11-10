@@ -8,7 +8,7 @@ const STORE = "course-kit:theme-panel";
 
 /** Plain-language groups for the most used tokens; every token is also under "Every color". */
 const GROUPS = [
-	{ legend: "Brand", tokens: [["accent", "Brand color"], ["accent-text", "Brand color for text"], ["on-accent", "Text on brand color"]] },
+	{ legend: "Brand", tokens: [["accent", "Brand color"], ["accent-text", "Brand color for text"], ["on-accent", "Text on brand color"], ["accent-secondary", "Wayfinding color"], ["on-accent-secondary", "Text on wayfinding color"]] },
 	{ legend: "Page", tokens: [["page", "Page background"], ["surface", "Cards and panels"], ["border", "Lines and borders"]] },
 	{ legend: "Text", tokens: [["text", "Body text"], ["text-muted", "Secondary text"], ["link", "Links"]] },
 ];

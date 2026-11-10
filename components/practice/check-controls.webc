@@ -5,11 +5,13 @@
 	 * @prop {string} label the check button's text
 	 * @prop {string} reset the reset button's text
 	 * @prop {string} [note] text shown with the tally
+	 * @prop {string} [retry="Try missed questions"] the text of the button that clears only the questions marked wrong
 	 */
 </script>
 <template webc:nokeep>
 	<button type="button" :data-check="scope" hidden @text="label"></button>
 	<button type="button" :data-reset="scope" hidden @text="reset"></button>
+	<button type="button" :data-retry="scope" hidden @text="retry ?? 'Try missed questions'"></button>
 	<p :data-tally="scope" :data-note="note ?? ''" role="status"></p>
 </template>
 

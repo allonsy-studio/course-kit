@@ -28,7 +28,11 @@ Tables read like a printed table: a heavy rule above and below, a light rule und
 
 ## A collegiate palette
 
-The default accent is burgundy (`#7A1F34`, a light rose in dark mode). To use your college's colors, set the tokens in `_data/theme.json`. The starter shows a restrained navy-and-paper palette:
+The default palette is warm paper and dark ink with two accents. Magenta (`#8B1E5E`, a light pink in dark mode) marks what you act on: buttons, the current lesson, a primary link. Blue (`accent-secondary`, `#1F4E9C`, a light blue in dark mode) marks where you are: progress, the bar over a section heading, the current page and highlighted code lines. Links are bourbon brown (`#8A4A12`, a light amber in dark mode). The dark theme is a warm espresso black, not a blue-black.
+
+In the defaults, text on the page measures 10.9:1 in light and 17:1 in dark; muted text 7.9:1 and 8.3:1; links 6.5:1 and 8.4:1; magenta text 8.2:1 and 6.3:1; blue 7.6:1 and 7.9:1.
+
+To use your college's colors, set the tokens in `_data/theme.json`. The starter shows a restrained navy-and-paper palette:
 
 ```json
 {
@@ -39,7 +43,10 @@ The default accent is burgundy (`#7A1F34`, a light rose in dark mode). To use yo
 	"border": { "light": "#D8D0BE", "dark": "#464B5D" },
 	"accent": { "light": "#1F3A5F", "dark": "#6A8CC2" },
 	"accent-text": { "light": "#1F3A5F", "dark": "#A9C1E6" },
-	"on-accent": { "light": "#FBF9F3", "dark": "#10151F" }
+	"on-accent": { "light": "#FBF9F3", "dark": "#10151F" },
+	"accent-secondary": { "light": "#1F3A5F", "dark": "#6A8CC2" },
+	"on-accent-secondary": { "light": "#FBF9F3", "dark": "#10151F" },
+	"link": { "light": "#1F3A5F", "dark": "#A9C1E6" }
 }
 ```
 
@@ -47,9 +54,14 @@ Its contrast, measured: text on the page 13.5:1 in light and 15.2:1 in dark; mut
 
 When you choose your own, keep these rules:
 
-- `accent-text` is for links and small text, so it must be dark enough on `page` (light) and light enough (dark). `accent` is for fills and rules; `on-accent` is the text on it.
+- `accent-text` and `link` are for small text, so each must be dark enough on `page` (light) and light enough (dark). `accent` is for fills and rules; `on-accent` is the text on it. `link` no longer follows `accent-text`, so set both when you change the brand color.
+- `accent-secondary` is the wayfinding color. Set it to your accent if you want one color, as the starter does.
 - Check every pair at 4.5:1 for text and 3:1 for lines and fills. [Color tokens](tokens.md) lists every token and what it colors.
-- One accent is enough. A second color earns its place only when it carries meaning, such as a test or a deadline.
+- Keep the second accent for wayfinding. Any other color earns its place only when it carries meaning, such as a test or a deadline.
+
+## Code samples
+
+A fenced code block renders as a figure: a bar in the language's color inside the top border (cyan for CSS, yellow for JavaScript, bourbon for HTML, tan for the shell, neutral for anything else), a title bar with the language and, given `title="path/file.ext"` on the fence, the file name, then the lines. Multi-line samples get line numbers from CSS, so copying never takes them. Lines highlighted with the fence's `/2-3` range get a blue wash and edge. A copy button appears when JavaScript runs; a terminal session copies only its `$ ` commands. Fences inside a slide stay plain.
 
 ## Print
 

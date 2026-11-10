@@ -369,7 +369,7 @@ a {
         color: inherit;
         font-weight: var(--font-weight--semi-bold);
         text-decoration: underline;
-        text-decoration-color: var(--color-link-active);
+        text-decoration-color: var(--color-accent-secondary);
     }
 
     :where(img) {
@@ -662,7 +662,7 @@ main {
 		margin-block-start: calc(var(--content-space) * 2.5);
 		padding-block-start: calc(var(--content-space) * 0.75);
 		border-block-start: var(--thin-border-width) solid var(--color-border);
-		background: linear-gradient(var(--color-accent), var(--color-accent)) top left / 2.75rem var(--border-width) no-repeat;
+		background: linear-gradient(var(--color-accent-secondary), var(--color-accent-secondary)) top left / 2.75rem var(--border-width) no-repeat;
 		background-origin: border-box;
 	}
 
@@ -1389,6 +1389,124 @@ blockquote {
 	overflow: auto;
 }
 
+/* ---- Code blocks ----
+   A fenced sample (lib/markdown.js): a bar in the language's color inside the
+   top border, a title bar (language, then file name, then the copy button
+   added by /js/code-copy.js), and the lines. Line numbers are CSS counters, so
+   selecting or copying never takes them. */
+.code-block {
+	--code-edge: var(--color-border);
+	--code-keyword: var(--color-link);
+	--code-string: light-dark(#6B5A00, #FFD36C);
+	--code-function: light-dark(#1F5F73, #7BD1E6);
+	--code-number: light-dark(#A0341C, #FF9F80);
+
+	margin-block: 0 1rem;
+	margin-inline: 0;
+	max-inline-size: 100%;
+	border: var(--thin-border-width) solid var(--color-border);
+	border-radius: 3px;
+	background-color: var(--color-surface);
+	overflow: hidden;
+
+	&::before {
+		content: "";
+		display: block;
+		block-size: 4px;
+		background-color: var(--code-edge);
+	}
+
+	&[data-edge="css"] { --code-edge: #7BD1E6; }
+	&[data-edge="js"] { --code-edge: #FFC233; }
+	&[data-edge="html"] { --code-edge: #B0651E; }
+	&[data-edge="shell"] { --code-edge: #D6A86A; }
+
+	.code-block-head {
+		display: flex;
+		align-items: center;
+		gap: 0.75em;
+		min-block-size: 44px;
+		padding-inline: 1rem 0.25rem;
+		border-block-end: var(--thin-border-width) solid var(--color-border);
+		font-size: 0.875rem;
+		max-inline-size: none;
+	}
+
+	.code-block-lang {
+		font-family: var(--sans-font);
+		font-weight: var(--font-weight--semi-bold);
+		color: var(--color-text);
+	}
+
+	.code-block-file {
+		font-family: var(--mono-font);
+		color: var(--color-text-muted);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.code-copy {
+		display: grid;
+		place-items: center;
+		inline-size: 44px;
+		block-size: 44px;
+		margin-inline-start: auto;
+		padding: 0;
+		border: 0;
+		border-radius: 50%;
+		background: none;
+		color: var(--color-link);
+		cursor: pointer;
+
+		svg { inline-size: 1.2em; block-size: 1.2em; }
+	}
+
+	pre {
+		margin: 0;
+		border: 0;
+		border-radius: 0;
+		background: none;
+		padding-inline: 0;
+	}
+
+	code {
+		display: block;
+		min-inline-size: max-content;
+		counter-reset: line;
+	}
+
+	br { display: none; }
+
+	.highlight-line {
+		display: block;
+		padding-inline: 1.25rem;
+		border-inline-start: 2px solid transparent;
+	}
+
+	&[data-line-numbers] .highlight-line::before {
+		counter-increment: line;
+		content: counter(line);
+		display: inline-block;
+		inline-size: 2.5em;
+		margin-inline: -0.5rem 1.25em;
+		text-align: end;
+		color: var(--color-text-muted);
+		user-select: none;
+	}
+
+	.highlight-line-active {
+		background-color: color-mix(in srgb, var(--color-accent-secondary) 22%, transparent);
+		border-inline-start-color: var(--color-accent-secondary);
+	}
+
+	.token:is(.keyword, .atrule, .rule, .important, .selector) { color: var(--code-keyword); }
+	.token:is(.string, .attr-value, .char, .regex, .url) { color: var(--code-string); }
+	.token:is(.function, .class-name, .tag, .property, .attr-name, .builtin) { color: var(--code-function); }
+	.token:is(.number, .boolean, .constant, .unit) { color: var(--code-number); }
+	.token:is(.comment, .prolog, .doctype) { color: var(--color-text-muted); font-style: italic; }
+}
+
 :where(kbd) {
 	font-family: var(--mono-font);
 	color: var(--color-code);
@@ -1581,12 +1699,12 @@ blockquote {
 
 	&::-webkit-progress-value {
 		border-radius: var(--standard-border-radius);
-		background-color: var(--color-accent);
+		background-color: var(--color-accent-secondary);
 	}
 
 	&::-moz-progress-bar {
 		border-radius: var(--standard-border-radius);
-		background-color: var(--color-accent);
+		background-color: var(--color-accent-secondary);
 		transition-property: inline-size;
 		transition-duration: 0.3s;
 	}

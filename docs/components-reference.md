@@ -264,6 +264,7 @@ The Check and Reset buttons and the score line for one worksheet scope. `practic
 | `label` | `string` | the check button's text |
 | `reset` | `string` | the reset button's text |
 | `[note]` | `string` | text shown with the tally |
+| `[retry="Try]` | `string` | missed questions"] the text of the button that clears only the questions marked wrong |
 
 ### `<choice-list>`
 

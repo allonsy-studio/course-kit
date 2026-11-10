@@ -23,8 +23,9 @@ test("every token name is --color- plus its key, and no name is a hue", () => {
 test("the defaults render in both stylesheets, each with only the tokens it uses", () => {
 	const site = renderColors("site", resolveTheme());
 	const deck = renderColors("deck", resolveTheme());
-	assert.ok(site.includes("--color-page: light-dark(#fff, hsl(228deg 20% 12%));"));
-	assert.ok(deck.includes("--color-page: light-dark(#FBF9F3, #14131a);"));
+	assert.ok(site.includes("--color-page: light-dark(#FBF9F3, #1C1613);"));
+	assert.ok(site.includes("--color-accent-secondary: light-dark(#1F4E9C, #82AEF5);"));
+	assert.ok(deck.includes("--color-page: light-dark(#FBF9F3, #1C1613);"));
 	assert.ok(!deck.includes("--color-link:"));
 	assert.ok(!site.includes("--color-accent-strong:"));
 });
@@ -41,7 +42,7 @@ test("an override reaches both stylesheets; a deck override reaches decks only",
 test("a site override stays off the decks", () => {
 	const theme = resolveTheme({ dataDir: dirWith({ site: { border: "#C2B1A6" }, accent: "#7BD1E6" }) });
 	assert.ok(renderColors("site", theme).includes("--color-border: #C2B1A6;"));
-	assert.ok(renderColors("deck", theme).includes("--color-border: light-dark(#EFEBDF, #33313e);"));
+	assert.ok(renderColors("deck", theme).includes("--color-border: light-dark(#EFEBDF, #3A2E27);"));
 	assert.ok(renderColors("deck", theme).includes("--color-accent: #7BD1E6;"));
 	assert.throws(() => resolveTheme({ dataDir: dirWith({ site: { magenta: "#f0f" } }) }), /theme\.site: "magenta" is not a color token/);
 });

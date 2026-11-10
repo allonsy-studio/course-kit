@@ -175,7 +175,7 @@ function check(question) {
 		? total > 1
 			? `Correct — all ${total}.`
 			: "Correct."
-		: `${right} of ${total} correct.`;
+		: `Try again: ${right} of ${total} correct.`;
 	why.hidden = false;
 	return { right, total };
 }
@@ -200,6 +200,7 @@ function reset(question) {
 }
 
 const tallyFor = (scope) => document.querySelector(`[data-tally="${scope}"]`);
+const retryFor = (scope) => document.querySelector(`[data-retry="${scope}"]`);
 
 document.addEventListener("click", (event) => {
 	const checkButton = event.target.closest("[data-check]");
@@ -222,6 +223,21 @@ document.addEventListener("click", (event) => {
 			const note = selfMarked ? ` · ${selfMarked} ${tally.dataset.note || "self-marked"}` : "";
 			tally.textContent = total ? `${right} of ${total}${note}` : "";
 		}
+		const retry = retryFor(scope);
+		if (retry) retry.hidden = !questionsIn(scope).some((question) => question.dataset.state === "wrong");
+		return;
+	}
+
+	const retryButton = event.target.closest("[data-retry]");
+	if (retryButton) {
+		const scope = retryButton.dataset.retry;
+		const missed = questionsIn(scope).filter((question) => question.dataset.state === "wrong");
+		for (const question of missed) reset(question);
+		retryButton.hidden = true;
+		const tally = tallyFor(scope);
+		if (tally) tally.textContent = "";
+		const first = missed[0]?.querySelector("input, select, textarea, button");
+		first?.focus();
 		return;
 	}
 
@@ -231,6 +247,8 @@ document.addEventListener("click", (event) => {
 		for (const question of questionsIn(scope)) reset(question);
 		const tally = tallyFor(scope);
 		if (tally) tally.textContent = "";
+		const retry = retryFor(scope);
+		if (retry) retry.hidden = true;
 	}
 });
 

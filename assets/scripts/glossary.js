@@ -532,6 +532,23 @@ function mount(root, signal) {
 	const tagList = (term) =>
 		`<ul class="tags" role="list">${KINDS.flatMap((kind) => term.tags[kind].map((tag) => `<li data-kind="${kind}">${esc(tag.label)}</li>`)).join("")}</ul>`;
 
+	/**
+	 * A to Z jump links above the A to Z groups. A letter with no term in view
+	 * is shown but not linked, so the row keeps its shape as the list narrows.
+	 * @param {{ key: string, label: string }[]} sets
+	 * @param {(set: object) => string} id
+	 */
+	const jumpBar = (sets, id) => {
+		const byLetter = new Map(sets.map((set) => [String(set.label).toUpperCase(), set]));
+		const letters = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+		const extra = sets.filter((set) => !letters.includes(String(set.label).toUpperCase()));
+		const cell = (label, set) =>
+			set
+				? `<li><a href="#${id(set)}">${esc(label)}</a></li>`
+				: `<li><span aria-disabled="true" title="No terms start with ${esc(label)}">${esc(label)}</span></li>`;
+		return `<nav class="jump" aria-label="Jump to letter"><ul role="list">${extra.map((set) => cell(set.label, set)).join("")}${letters.map((letter) => cell(letter, byLetter.get(letter))).join("")}</ul></nav>`;
+	};
+
 	function renderReview() {
 		const list = filtered();
 		if (!list.length) {
@@ -540,7 +557,7 @@ function mount(root, signal) {
 		}
 		const sets = groups(list);
 		const id = (set) => `g-${state.by}-${slug(set.key)}`;
-		els.review.innerHTML = sets
+		els.review.innerHTML = (state.by === "az" ? jumpBar(sets, id) : "") + sets
 			.map(
 				(set) => `<section class="group" id="${id(set)}"${state.by === "az" ? "" : ` data-kind="${state.by}"`} aria-labelledby="${id(set)}-h">
 				<h2 class="heading" id="${id(set)}-h"><span class="name">${esc(set.label)}</span><span class="aside">${set.when ? `<span class="when">${esc(set.when)}</span>` : ""}${state.by === "meeting" ? `<span class="deck">${esc(set.deck)}</span>` : ""}<span class="count">${set.items.length} ${set.items.length === 1 ? "term" : "terms"}</span></span></h2>
