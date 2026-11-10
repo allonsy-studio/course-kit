@@ -47,7 +47,7 @@
       .wfb8ab2x1 h3 {
         margin-block-start: calc(var(--content-space) * 1.75);
       }
-      .w4i8m2o1y {
+      .wpdcpfyhx {
         display: flex;
         gap: calc(var(--container-space) * 3.5);
         ul {
@@ -84,15 +84,17 @@
           color: inherit;
           text-decoration: none;
 
+          /* The current page is a filled pill, so it reads as "you are here"
+           without relying on an underline. */
           &[aria-current="page"] {
+            padding-inline: 0.85em;
+            border-radius: 9999px;
+            background-color: var(--color-text);
+            color: var(--color-page);
             font-weight: var(--font-weight--semi-bold);
-            text-decoration: underline;
-            text-decoration-thickness: var(--border-width);
-            text-underline-offset: 0.4ex;
-            text-decoration-color: var(--color-accent);
           }
 
-          &:is(:hover, :focus-visible) {
+          &:not([aria-current="page"]):is(:hover, :focus-visible) {
             color: var(--color-link-hover);
             text-decoration: underline;
             text-decoration-thickness: var(--thin-border-width);
@@ -104,7 +106,7 @@
           }
         }
       }
-      .w4i8m2o1y[stacked] ul {
+      .wpdcpfyhx[stacked] ul {
         display: flex;
         flex-wrap: wrap;
         justify-content: start;
@@ -112,11 +114,11 @@
         column-gap: calc(var(--content-space) * 2);
         row-gap: calc(var(--content-space) * 0.35);
       }
-      .w4i8m2o1y[column] {
+      .wpdcpfyhx[column] {
         padding: 0;
         line-height: inherit;
       }
-      .w4i8m2o1y[column] ul {
+      .wpdcpfyhx[column] ul {
         display: flex;
         flex-direction: column;
         align-items: start;
@@ -131,11 +133,11 @@
           row-gap: calc(var(--content-space) * 0.25);
         }
       }
-      .w4i8m2o1y[column] li {
+      .wpdcpfyhx[column] li {
         display: block;
       }
-      .w4i8m2o1y[column] a,
-      .w4i8m2o1y[column] a:visited {
+      .wpdcpfyhx[column] a,
+      .wpdcpfyhx[column] a:visited {
         margin: 0;
         padding-inline: 0;
         border: none;
@@ -143,7 +145,8 @@
         line-height: inherit;
         font-size: max(var(--base-font-size), 1em);
         color: inherit;
-        .w4i8m2o1y &[aria-current="page"] {
+        .wpdcpfyhx &[aria-current="page"] {
+          background: none;
           color: var(--color-accent-text);
         }
       }
@@ -350,7 +353,7 @@
           </p>
         </div>
         <div class="links">
-          <nav column="" aria-label="Site" class="w4i8m2o1y">
+          <nav column="" aria-label="Site" class="wpdcpfyhx">
             <ul role="list">
               <li>
                 <a href="/course-kit/preview/24/components/#syllabus">Syllabus</a>
@@ -474,7 +477,7 @@
         <div class="group">
           <p id="footer-pages" class="label">Pages</p>
 
-          <nav column="" aria-labelledby="footer-pages" class="w4i8m2o1y">
+          <nav column="" aria-labelledby="footer-pages" class="wpdcpfyhx">
             <ul role="list">
               <li>
                 <a href="/course-kit/preview/24/components/lessons/">Lesson Plans</a>

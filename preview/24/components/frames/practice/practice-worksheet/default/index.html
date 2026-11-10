@@ -15,7 +15,7 @@
   <body>
     <main id="main-content" tabindex="-1" style="margin: 0; padding: 1rem; min-block-size: 0">
       <h1 class="sr-only">practice-worksheet: Sample worksheet</h1>
-      <practice-worksheet class="wjzbl8omu">
+      <practice-worksheet class="wayxkt779">
         <article id="worksheet" class="content-column practice">
           <header class="practice-head">
             <p class="eyebrow separators">
@@ -25,6 +25,7 @@
             </p>
 
             <h1>Sample worksheet</h1>
+            <p class="pills"><span>Not graded</span></p>
             <p class="lede">One question of every kind.</p>
             <p>Every question here is checked in the browser, and nothing is sent anywhere.</p>
 
@@ -53,6 +54,12 @@
               <button type="button" data-retry="#worksheet" hidden="">Try missed questions</button>
               <p data-tally="#worksheet" data-note="self-marked" role="status"></p>
             </check-controls>
+
+            <nav data-question-nav="" hidden="" aria-label="Questions" class="question-nav">
+              <h2 class="nav-heading">Questions</h2>
+              <ol role="list"></ol>
+              <button type="button" data-see-results="">See results</button>
+            </nav>
           </header>
 
           <section id="section-1" class="practice-section">
@@ -61,7 +68,7 @@
               <p class="blurb"></p>
             </header>
 
-            <practice-question class="wkorgrcz_">
+            <practice-question class="wqxygmziw">
               <div id="q-1.1" data-question="1.1" data-kind="choice" data-answers='{"answer":1}' class="question">
                 <div class="question-head">
                   <p class="question-prompt"><span class="q-number">1.1</span> <span>Which element holds the page's main content?</span></p>
@@ -104,13 +111,17 @@
                   </fieldset>
                 </choice-list>
 
+                <button type="button" data-check-one="" hidden="" class="check-one">Check answer</button>
                 <p role="status" hidden="" class="feedback"></p>
                 <div hidden="" class="why">
                   <p>`main` is the landmark for the content that is unique to the page.</p>
+                  <p class="review">
+                    <a href="/course-kit/preview/24/components/slides/week-1-day-1/#s2"><span>Review in the lesson:</span> <span>Week 1 slide 2</span></a>
+                  </p>
                 </div>
               </div>
             </practice-question>
-            <practice-question class="wkorgrcz_">
+            <practice-question class="wqxygmziw">
               <div id="q-1.2" data-question="1.2" data-kind="match" data-answers='{"items":["A","B"]}' class="question">
                 <div class="question-head">
                   <p class="question-prompt"><span class="q-number">1.2</span> <span>Match each element to what it is.</span></p>
@@ -170,6 +181,7 @@
                   </div>
                 </practice-match>
 
+                <button type="button" data-check-one="" hidden="" class="check-one">Check answer</button>
                 <p role="status" hidden="" class="feedback"></p>
                 <div hidden="" class="why">
                   <p>Each element names one kind of content.</p>
@@ -190,7 +202,7 @@
               <p class="blurb"></p>
             </header>
 
-            <practice-question class="wkorgrcz_">
+            <practice-question class="wqxygmziw">
               <div id="q-2.1" data-question="2.1" data-kind="fill" data-answers='{"blanks":[["ul"],["li"]]}' class="question">
                 <div class="question-head">
                   <p class="question-prompt"><span class="q-number">2.1</span> <span>Complete the markup.</span></p>
@@ -232,13 +244,14 @@
                   </div>
                 </practice-fill>
 
+                <button type="button" data-check-one="" hidden="" class="check-one">Check answer</button>
                 <p role="status" hidden="" class="feedback"></p>
                 <div hidden="" class="why">
                   <p>A list's only valid child is `li`.</p>
                 </div>
               </div>
             </practice-question>
-            <practice-question class="wkorgrcz_">
+            <practice-question class="wqxygmziw">
               <div id="q-2.2" data-question="2.2" data-kind="grid" data-answers='{"rows":[0,1]}' class="question">
                 <div class="question-head">
                   <p class="question-prompt"><span class="q-number">2.2</span> <span>Which column does each element belong in?</span></p>
@@ -305,13 +318,14 @@
                   </table>
                 </practice-grid>
 
+                <button type="button" data-check-one="" hidden="" class="check-one">Check answer</button>
                 <p role="status" hidden="" class="feedback"></p>
                 <div hidden="" class="why">
                   <p>Block elements start a new line.</p>
                 </div>
               </div>
             </practice-question>
-            <practice-question class="wkorgrcz_">
+            <practice-question class="wqxygmziw">
               <div id="q-2.3" data-question="2.3" data-kind="tree" data-answers='{"blanks":[["li"]]}' class="question">
                 <div class="question-head">
                   <p class="question-prompt"><span class="q-number">2.3</span> <span>Fill in the tree for this markup.</span></p>
@@ -346,6 +360,7 @@
                   </div>
                 </practice-tree>
 
+                <button type="button" data-check-one="" hidden="" class="check-one">Check answer</button>
                 <p role="status" hidden="" class="feedback"></p>
                 <div hidden="" class="why">
                   <p>A tree shows each element inside its parent.</p>
@@ -370,7 +385,7 @@
               </ul>
             </header>
 
-            <practice-question class="wkorgrcz_">
+            <practice-question class="wqxygmziw">
               <div id="q-3.1" data-question="3.1" data-kind="judge" data-answers='{"answer":1,"lines":[1]}' class="question">
                 <div class="question-head">
                   <p class="question-prompt"><span class="q-number">3.1</span> <span>Is this markup valid and correct?</span></p>
@@ -419,13 +434,14 @@
                   </div>
                 </practice-judge>
 
+                <button type="button" data-check-one="" hidden="" class="check-one">Check answer</button>
                 <p role="status" hidden="" class="feedback"></p>
                 <div hidden="" class="why">
                   <p>A list may only hold `li` elements.</p>
                 </div>
               </div>
             </practice-question>
-            <practice-question class="wkorgrcz_">
+            <practice-question class="wqxygmziw">
               <div id="q-3.2" data-question="3.2" data-kind="selfcheck" data-answers="{}" class="question">
                 <div class="question-head">
                   <p class="question-prompt"><span class="q-number">3.2</span> <span>Explain why a heading level should not be chosen for its size.</span></p>
@@ -459,6 +475,7 @@
                   </div>
                 </practice-selfcheck>
 
+                <button type="button" data-check-one="" hidden="" class="check-one">Check answer</button>
                 <p role="status" hidden="" class="feedback"></p>
                 <div hidden="" class="why">
                   <p></p>
@@ -472,6 +489,13 @@
               <button type="button" data-retry="#section-3" hidden="">Try missed questions</button>
               <p data-tally="#section-3" data-note="self-marked" role="status"></p>
             </check-controls>
+          </section>
+
+          <section id="results" data-results="" hidden="" tabindex="-1" aria-labelledby="results-heading" class="results">
+            <div class="score"><strong data-score=""></strong> <span data-score-of=""></span></div>
+            <h2 id="results-heading">Results</h2>
+            <ol role="list" class="result-rows"></ol>
+            <button type="button" data-retry="#worksheet" data-retry-results="">Try missed questions</button>
           </section>
         </article>
       </practice-worksheet>

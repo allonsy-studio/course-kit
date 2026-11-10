@@ -1311,8 +1311,8 @@
         <a rel="home" href="../../../../">course-kit</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-yGhdG">
-            <span data-label="" id="norn-header-webc-yGhdG">Primary</span>
+          <nav aria-labelledby="norn-header-webc-NVaV-">
+            <span data-label="" id="norn-header-webc-NVaV-">Primary</span>
 
             <a href="../../../../#install">Install</a>
             <a href="../../../../#usage">Usage</a>
@@ -1337,8 +1337,8 @@
         <section aria-labelledby="nav-ui">
           <h2 id="nav-ui">Building blocks</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-IXsk4">
-              <span data-label="" id="norn-side-nav-webc-IXsk4"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-EaVAX">
+              <span data-label="" id="norn-side-nav-webc-EaVAX"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -1393,8 +1393,8 @@
         <section aria-labelledby="nav-site">
           <h2 id="nav-site">Site sections</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-sk0av">
-              <span data-label="" id="norn-side-nav-webc-sk0av"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-tKS3z">
+              <span data-label="" id="norn-side-nav-webc-tKS3z"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -1455,8 +1455,8 @@
         <section aria-labelledby="nav-practice">
           <h2 id="nav-practice">Practice worksheets</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc--PD2a">
-              <span data-label="" id="norn-side-nav-webc--PD2a"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-anhyG">
+              <span data-label="" id="norn-side-nav-webc-anhyG"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -1613,7 +1613,7 @@
               <norn-code-block>
                 <figure>
                   <norn-copy-button>
-                    <button type="button" hidden="" data-value="<practice-worksheet></practice-worksheet>" data-strings="norn-code-block-webc-r1ffd" data-compact="" data-surface="code">
+                    <button type="button" hidden="" data-value="<practice-worksheet></practice-worksheet>" data-strings="norn-code-block-webc-Ll-XX" data-compact="" data-surface="code">
                       <span data-icons=""
                         ><norn-icon>
                           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1628,8 +1628,8 @@
                     <span role="status"></span>
                   </norn-copy-button>
                   <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;],[0,0,1,1,0,18,0,0,3,1,0,18,0,0,1]]">&lt;practice-worksheet&gt;&lt;/practice-worksheet&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-r1ffd">
-                    <span data-string="label" id="norn-code-block-webc-r1ffd-copy">Copy {name} to clipboard</span>
+                  <span hidden="" id="norn-code-block-webc-Ll-XX">
+                    <span data-string="label" id="norn-code-block-webc-Ll-XX-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -1665,6 +1665,17 @@
                 </td>
               </tr>
               <tr>
+                <th scope="row"><code>--color-accent-secondary</code></th>
+                <td>Wayfinding color: progress, section bars, the current location, highlighted code</td>
+                <td>
+                  <div class="pickers">
+                    <label>Light <input type="color" data-token="--color-accent-secondary" data-scheme="light" aria-label="Light color for --color-accent-secondary" /></label>
+                    <label>Dark <input type="color" data-token="--color-accent-secondary" data-scheme="dark" aria-label="Dark color for --color-accent-secondary" /></label>
+                    <button type="button" data-token-reset="--color-accent-secondary" aria-label="Reset --color-accent-secondary">Reset</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
                 <th scope="row"><code>--color-accent-text</code></th>
                 <td>Brand color for type, dark enough to read</td>
                 <td>
@@ -1687,6 +1698,17 @@
                 </td>
               </tr>
               <tr>
+                <th scope="row"><code>--color-error</code></th>
+                <td>Error: wrong answers, failures</td>
+                <td>
+                  <div class="pickers">
+                    <label>Light <input type="color" data-token="--color-error" data-scheme="light" aria-label="Light color for --color-error" /></label>
+                    <label>Dark <input type="color" data-token="--color-error" data-scheme="dark" aria-label="Dark color for --color-error" /></label>
+                    <button type="button" data-token-reset="--color-error" aria-label="Reset --color-error">Reset</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
                 <th scope="row"><code>--color-page</code></th>
                 <td>Page background</td>
                 <td>
@@ -1698,6 +1720,17 @@
                 </td>
               </tr>
               <tr>
+                <th scope="row"><code>--color-success</code></th>
+                <td>Success: correct answers, confirmations</td>
+                <td>
+                  <div class="pickers">
+                    <label>Light <input type="color" data-token="--color-success" data-scheme="light" aria-label="Light color for --color-success" /></label>
+                    <label>Dark <input type="color" data-token="--color-success" data-scheme="dark" aria-label="Dark color for --color-success" /></label>
+                    <button type="button" data-token-reset="--color-success" aria-label="Reset --color-success">Reset</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
                 <th scope="row"><code>--color-surface</code></th>
                 <td>Raised or alternate surface: cards, table headers, code</td>
                 <td>
@@ -1705,6 +1738,28 @@
                     <label>Light <input type="color" data-token="--color-surface" data-scheme="light" aria-label="Light color for --color-surface" /></label>
                     <label>Dark <input type="color" data-token="--color-surface" data-scheme="dark" aria-label="Dark color for --color-surface" /></label>
                     <button type="button" data-token-reset="--color-surface" aria-label="Reset --color-surface">Reset</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row"><code>--color-surface-accent</code></th>
+                <td>Accent-tinted wash</td>
+                <td>
+                  <div class="pickers">
+                    <label>Light <input type="color" data-token="--color-surface-accent" data-scheme="light" aria-label="Light color for --color-surface-accent" /></label>
+                    <label>Dark <input type="color" data-token="--color-surface-accent" data-scheme="dark" aria-label="Dark color for --color-surface-accent" /></label>
+                    <button type="button" data-token-reset="--color-surface-accent" aria-label="Reset --color-surface-accent">Reset</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row"><code>--color-text</code></th>
+                <td>Body text</td>
+                <td>
+                  <div class="pickers">
+                    <label>Light <input type="color" data-token="--color-text" data-scheme="light" aria-label="Light color for --color-text" /></label>
+                    <label>Dark <input type="color" data-token="--color-text" data-scheme="dark" aria-label="Dark color for --color-text" /></label>
+                    <button type="button" data-token-reset="--color-text" aria-label="Reset --color-text">Reset</button>
                   </div>
                 </td>
               </tr>
