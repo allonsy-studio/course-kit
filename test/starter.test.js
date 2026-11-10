@@ -95,3 +95,17 @@ test("the instructor's email is encoded in the page, never written out", () => {
 	assert.ok(!html.includes("sam.example@example.edu"));
 	assert.ok(html.includes(Buffer.from("sam.example@example.edu").toString("base64")));
 });
+
+test("the home page carries the schedule for the where-we-are panel", () => {
+	const html = pages["/"];
+	for (const text of ["data-course-now", "data-weeks=", "Term progress", "/schedule/#week-1"]) {
+		assert.ok(html.includes(text), `home page is missing "${text}"`);
+	}
+});
+
+test("a lesson plan sits between the week's outline and its materials", () => {
+	const html = pages["/lessons/week-1/day-1/"];
+	for (const text of ["lesson-outline", "aria-current=\"page\"", "On this page", "Materials &amp; links"]) {
+		assert.ok(html.includes(text), `lesson plan is missing "${text}"`);
+	}
+});

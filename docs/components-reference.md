@@ -152,6 +152,14 @@ The copyright line: the build year and the site's author. Reads `site`.
 
 The "Additional resources" list: the entries of `course.documents`, each a link with an optional description. A PDF is listed only when the build produced PDFs. Renders nothing when there are none.
 
+### `<course-now>`
+
+Where the course is now, for the home page: the current or next class, what is due soon, and a week-by-week track of the term. Built from the schedule, not from anything a student has done. The script fills it in by campus date; without it the section stays hidden.
+
+| Prop | Type | |
+|---|---|---|
+| `[schedule="/schedule/"]` | `string` | the schedule page's URL, which the links point at |
+
 ### `<course-summary>`
 
 The course home page's body: the description, the instructor, the syllabus and the schedule. Reads the `course`, `grading`, `schedule`, `instructor` and `term` data; it takes no props.

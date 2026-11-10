@@ -962,6 +962,122 @@ eyebrow + :where(h1, h2, h3, h4, h5, h6) {
 	}
 }
 
+/* ---- Side columns ----
+   A contents column beside a document, and an outline and a tools rail beside
+   a lesson plan. Nothing is sticky, and each falls to one column on a narrow
+   screen, the side columns first. */
+.rail-label {
+	margin: 0 0 0.5em;
+	color: var(--color-text-muted);
+	font-family: var(--sans-font, inherit);
+	font-size: var(--font-size-6);
+	font-weight: var(--font-weight--medium);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+body:has(.doc-layout[data-contents="true"], .lesson-layout) {
+	--page-column: min(var(--container-max), 95%);
+}
+
+.doc-layout[data-contents="true"],
+.lesson-layout {
+	display: grid;
+	align-items: start;
+	gap: 0 calc(var(--content-space) * 3);
+
+	@media print {
+		display: block;
+	}
+}
+
+.doc-layout[data-contents="true"] {
+	grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+
+	@media screen and (width <= 900px) {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.lesson-layout {
+	grid-template-columns: minmax(0, 13rem) minmax(0, 1fr) minmax(0, 16rem);
+
+	@media screen and (width <= 1100px) {
+		grid-template-columns: minmax(0, 13rem) minmax(0, 1fr);
+
+		.lesson-rail {
+			grid-column: 2;
+		}
+	}
+
+	@media screen and (width <= 900px) {
+		grid-template-columns: minmax(0, 1fr);
+
+		.lesson-rail {
+			grid-column: auto;
+		}
+	}
+}
+
+.doc-contents,
+.lesson-outline,
+.lesson-rail {
+	padding-block: calc(var(--section-space) / 2) 0;
+	font-size: max(var(--base-font-size), 0.95em);
+
+	@media print {
+		display: none;
+	}
+}
+
+:is(.doc-contents nav, .lesson-outline, .lesson-rail nav) > :is(ol, ul) {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border-inline-start: var(--border-width) solid var(--color-border);
+
+	:is(ol, ul) {
+		margin: 0 0 0 0.9em;
+		padding: 0;
+		list-style: none;
+	}
+
+	li a[href] {
+		display: block;
+		margin-inline-start: calc(var(--border-width) * -1);
+		padding: 0.35em 0.9em;
+		border-inline-start: var(--border-width) solid transparent;
+		color: var(--color-text-muted);
+		text-decoration: none;
+
+		&:is(:hover, :focus-visible) {
+			color: var(--color-text);
+			text-decoration: underline;
+		}
+
+		&[aria-current] {
+			border-inline-start-color: var(--color-accent-secondary);
+			color: var(--color-text);
+			font-weight: var(--font-weight--semi-bold);
+		}
+
+	}
+}
+
+.lesson-rail {
+	display: grid;
+	gap: var(--section-space);
+	inline-size: auto;
+	margin: 0;
+	padding-inline: 0;
+	border: 0;
+	background: none;
+
+	@media screen and (width <= 900px) {
+		padding-block-end: var(--section-space);
+	}
+}
+
 /* ---- Lesson plans (instructor) ---- */
 .lesson-nav {
 	display: flex;

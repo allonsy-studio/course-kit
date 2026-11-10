@@ -96,7 +96,7 @@
 					tools.querySelector("[data-this-week-dates]").textContent = current.week.querySelector(".week-of")?.textContent.trim() ?? "";
 					tools.querySelector("[data-this-week]").hidden = false;
 				}
-				tools.querySelector("[data-due-key]").hidden = !host.querySelector(".due-kind[data-kind]");
+				tools.querySelector("[data-due-key]").hidden = !host.querySelector(".assigned .due-kind[data-kind]");
 				const toggle = tools.querySelector("[data-past-toggle]");
 				toggle.hidden = !dated.some(({ week }) => week.dataset.week === "done");
 				toggle.addEventListener("click", () => {

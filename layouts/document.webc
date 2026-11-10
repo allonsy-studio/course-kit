@@ -1,5 +1,11 @@
 ---
 layout: "base"
 ---
-<article class="content-column" @raw="content"></article>
+<div class="doc-layout" :data-contents="toc(content) ? 'true' : 'false'">
+	<div class="doc-contents" webc:if="toc(content)">
+		<p class="rail-label" id="doc-contents-label">Contents</p>
+		<template webc:nokeep @raw="toc(content).replaceAll('&quot;># ', '&quot;>').replace('<nav ', '<nav aria-labelledby=&quot;doc-contents-label&quot; ')"></template>
+	</div>
+	<article class="content-column" @raw="content"></article>
+</div>
 <script type="module" src="/js/prompt-copy.js" webc:keep></script>

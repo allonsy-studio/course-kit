@@ -6,6 +6,7 @@ eleventyNavigation:
   order: 1
 ---
 
+<course-now></course-now>
 <course-summary></course-summary>
 <policies></policies>
 <course-documents></course-documents>
