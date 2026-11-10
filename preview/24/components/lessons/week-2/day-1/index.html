@@ -47,7 +47,7 @@
       .wfb8ab2x1 h3 {
         margin-block-start: calc(var(--content-space) * 1.75);
       }
-      .wpdcpfyhx {
+      .wagoe9qvi {
         display: flex;
         gap: calc(var(--container-space) * 3.5);
         ul {
@@ -106,7 +106,7 @@
           }
         }
       }
-      .wpdcpfyhx[stacked] ul {
+      .wagoe9qvi[stacked] ul {
         display: flex;
         flex-wrap: wrap;
         justify-content: start;
@@ -114,11 +114,11 @@
         column-gap: calc(var(--content-space) * 2);
         row-gap: calc(var(--content-space) * 0.35);
       }
-      .wpdcpfyhx[column] {
+      .wagoe9qvi[column] {
         padding: 0;
         line-height: inherit;
       }
-      .wpdcpfyhx[column] ul {
+      .wagoe9qvi[column] ul {
         display: flex;
         flex-direction: column;
         align-items: start;
@@ -133,11 +133,11 @@
           row-gap: calc(var(--content-space) * 0.25);
         }
       }
-      .wpdcpfyhx[column] li {
+      .wagoe9qvi[column] li {
         display: block;
       }
-      .wpdcpfyhx[column] a,
-      .wpdcpfyhx[column] a:visited {
+      .wagoe9qvi[column] a,
+      .wagoe9qvi[column] a:visited {
         margin: 0;
         padding-inline: 0;
         border: none;
@@ -145,7 +145,8 @@
         line-height: inherit;
         font-size: max(var(--base-font-size), 1em);
         color: inherit;
-        .wpdcpfyhx &[aria-current="page"] {
+        .wagoe9qvi &[aria-current="page"] {
+          padding-inline: 0;
           background: none;
           color: var(--color-accent-text);
         }
@@ -353,7 +354,7 @@
           </p>
         </div>
         <div class="links">
-          <nav column="" aria-label="Site" class="wpdcpfyhx">
+          <nav column="" aria-label="Site" class="wagoe9qvi">
             <ul role="list">
               <li>
                 <a href="/course-kit/preview/24/components/#syllabus">Syllabus</a>
@@ -368,105 +369,132 @@
     </header>
 
     <main id="main-content" tabindex="-1">
-      <article class="lesson-plan content-column">
-        <header class="stacked">
-          <nav aria-label="Lesson navigation" class="lesson-nav">
-            <a href="/course-kit/preview/24/components/lessons/">All lessons</a>
-            <a href="/course-kit/preview/24/components/lessons/week-1/day-2/">Previous day</a>
-            <a href="/course-kit/preview/24/components/lessons/week-2/day-2/">Next day</a>
-          </nav>
-          <eyebrow class="eyebrow">
-            <p class="eyebrow">Week 2, Day 1 — Lesson Plan</p>
-          </eyebrow>
-          <h1 class="lesson-heading">Week <span>2</span>, Day <span>1</span></h1>
-          <p class="lesson-when separators">
-            <span>Tuesday, September 1, 2026</span>
-            <span>10:00AM–11:15AM</span>
-            <span>Class meeting #<span>3</span> of the term</span>
-          </p>
-        </header>
+      <div class="lesson-layout">
+        <nav aria-labelledby="lesson-outline-heading" class="lesson-outline">
+          <p id="lesson-outline-heading" class="rail-label">Week <span>2</span></p>
+          <ol role="list">
+            <li>
+              <a href="/course-kit/preview/24/components/lessons/week-2/day-1/" aria-current="page">
+                <span>Tuesday, September 1, 2026</span>
+              </a>
+            </li>
+            <li>
+              <a href="/course-kit/preview/24/components/lessons/week-2/day-2/">
+                <span>Thursday, September 3, 2026</span>
+              </a>
+            </li>
+          </ol>
+        </nav>
+        <article class="lesson-plan content-column">
+          <header class="stacked">
+            <nav aria-label="Lesson navigation" class="lesson-nav">
+              <a href="/course-kit/preview/24/components/lessons/">All lessons</a>
+              <a href="/course-kit/preview/24/components/lessons/week-1/day-2/">Previous day</a>
+              <a href="/course-kit/preview/24/components/lessons/week-2/day-2/">Next day</a>
+            </nav>
+            <eyebrow class="eyebrow">
+              <p class="eyebrow">Week 2, Day 1 — Lesson Plan</p>
+            </eyebrow>
+            <h1 class="lesson-heading">Week <span>2</span>, Day <span>1</span></h1>
+            <p class="lesson-when separators">
+              <span>Tuesday, September 1, 2026</span>
+              <span>10:00AM–11:15AM</span>
+              <span>Class meeting #<span>3</span> of the term</span>
+            </p>
+          </header>
 
-        <p class="focus"><strong>Focus:</strong> <span>Introduce this week's material</span></p>
+          <p class="focus"><strong>Focus:</strong> <span>Introduce this week's material</span></p>
 
-        <section aria-labelledby="topics-heading">
-          <h2 id="topics-heading">This week's topics</h2>
-          <ul>
-            <li>Writing HTML</li>
-            <li>Headings, lists and links</li>
-          </ul>
-        </section>
-
-        <section aria-labelledby="before-heading">
-          <h2 id="before-heading">Before class</h2>
-          <ul role="list" class="checklist">
-            <li>Review the readings (see materials below)</li>
-            <li>Prepare/update slides and live-demo code</li>
-
-            <li>Stage starter files or lab handout if needed</li>
-            <li>Check <span>Brightspace</span> for student questions or submissions</li>
-          </ul>
-        </section>
-
-        <section aria-labelledby="outline-heading">
-          <h2 id="outline-heading">Lesson outline (<span>75</span> minutes)</h2>
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Time</th>
-                <th scope="col">Segment</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>5 min</td>
-                <td>Welcome, recap the previous class, open questions</td>
-              </tr>
-              <tr>
-                <td>25 min</td>
-                <td>Instruction: this week's topics (see above)</td>
-              </tr>
-              <tr>
-                <td>30 min</td>
-                <td>Guided practice / lab work</td>
-              </tr>
-              <tr>
-                <td>10 min</td>
-                <td>Wrap-up: recap, preview next class, assignment reminders</td>
-              </tr>
-              <tr>
-                <td>5 min</td>
-                <td>Buffer</td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-
-        <section aria-labelledby="materials-heading">
-          <h2 id="materials-heading">Materials &amp; links</h2>
-
-          <div class="link-section wfb8ab2x1">
-            <h3>Assigned before this week</h3>
+          <section aria-labelledby="topics-heading">
+            <h2 id="topics-heading">This week's topics</h2>
             <ul>
-              <li>
-                <a href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics">MDN: HTML basics</a>
-              </li>
+              <li>Writing HTML</li>
+              <li>Headings, lists and links</li>
             </ul>
-          </div>
+          </section>
 
-          <div class="link-section wfb8ab2x1">
-            <p class="muted">Nothing posted for this week yet.</p>
-          </div>
-        </section>
+          <section aria-labelledby="before-heading">
+            <h2 id="before-heading">Before class</h2>
+            <ul role="list" class="checklist">
+              <li>Review the readings (see materials below)</li>
+              <li>Prepare/update slides and live-demo code</li>
 
-        <section aria-labelledby="after-heading">
-          <h2 id="after-heading">After class</h2>
-          <ul role="list" class="checklist">
-            <li>Post handouts to <code>content/resources/</code> and link them in <code>_data/schedule.json</code>'s <code>resources[]</code> for the week; the slide deck publishes itself from <code>content/slides/</code>, so it only needs a link there if students should see it from the schedule</li>
-            <li>Note anything not covered and roll it into the next lesson</li>
-            <li>Post or grade lab/homework in <span>Brightspace</span> as needed</li>
-          </ul>
-        </section>
-      </article>
+              <li>Stage starter files or lab handout if needed</li>
+              <li>Check <span>Brightspace</span> for student questions or submissions</li>
+            </ul>
+          </section>
+
+          <section aria-labelledby="outline-heading">
+            <h2 id="outline-heading">Lesson outline (<span>75</span> minutes)</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Time</th>
+                  <th scope="col">Segment</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>5 min</td>
+                  <td>Welcome, recap the previous class, open questions</td>
+                </tr>
+                <tr>
+                  <td>25 min</td>
+                  <td>Instruction: this week's topics (see above)</td>
+                </tr>
+                <tr>
+                  <td>30 min</td>
+                  <td>Guided practice / lab work</td>
+                </tr>
+                <tr>
+                  <td>10 min</td>
+                  <td>Wrap-up: recap, preview next class, assignment reminders</td>
+                </tr>
+                <tr>
+                  <td>5 min</td>
+                  <td>Buffer</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section aria-labelledby="after-heading">
+            <h2 id="after-heading">After class</h2>
+            <ul role="list" class="checklist">
+              <li>Post handouts to <code>content/resources/</code> and link them in <code>_data/schedule.json</code>'s <code>resources[]</code> for the week; the slide deck publishes itself from <code>content/slides/</code>, so it only needs a link there if students should see it from the schedule</li>
+              <li>Note anything not covered and roll it into the next lesson</li>
+              <li>Post or grade lab/homework in <span>Brightspace</span> as needed</li>
+            </ul>
+          </section>
+        </article>
+        <aside aria-label="Lesson tools" class="lesson-rail">
+          <nav aria-labelledby="on-this-page-heading">
+            <p id="on-this-page-heading" class="rail-label">On this page</p>
+            <ul role="list">
+              <li><a href="#topics-heading">This week's topics</a></li>
+              <li><a href="#before-heading">Before class</a></li>
+              <li><a href="#outline-heading">Lesson outline</a></li>
+              <li><a href="#after-heading">After class</a></li>
+            </ul>
+          </nav>
+          <section aria-labelledby="materials-heading">
+            <h2 id="materials-heading" class="rail-label">Materials &amp; links</h2>
+
+            <div class="link-section wfb8ab2x1">
+              <h3>Assigned before this week</h3>
+              <ul>
+                <li>
+                  <a href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics">MDN: HTML basics</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="link-section wfb8ab2x1">
+              <p class="muted">Nothing posted for this week yet.</p>
+            </div>
+          </section>
+        </aside>
+      </div>
     </main>
 
     <footer>
@@ -485,7 +513,7 @@
         <div class="group">
           <p id="footer-pages" class="label">Pages</p>
 
-          <nav column="" aria-labelledby="footer-pages" class="wpdcpfyhx">
+          <nav column="" aria-labelledby="footer-pages" class="wagoe9qvi">
             <ul role="list">
               <li>
                 <a href="/course-kit/preview/24/components/lessons/">Lesson Plans</a>
