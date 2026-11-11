@@ -26,7 +26,8 @@
         display: none;
     }
 
-    :is(:host, :host > ul) {
+    :host,
+    :host > ul {
         list-style: none;
         margin: 0;
         padding: 0;

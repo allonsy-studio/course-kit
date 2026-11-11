@@ -19,7 +19,9 @@
         display: none;
     }
 
-    :is(:host, :host > ul, :host > dl) {
+    :host,
+    :host > ul,
+    :host > dl {
         list-style: none;
         margin: 0;
         padding: 0;
@@ -48,7 +50,8 @@
         }
     }
 
-    :is(:host([cards]), :host([cards]) > ul) {
+    :host([cards]),
+    :host([cards]) > ul {
         grid-template-columns: repeat(auto-fill, minmax(min(100%, 15em), 1fr));
         gap: var(--content-space);
 

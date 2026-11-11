@@ -111,3 +111,12 @@ test("no story writes a link with no name in a slot", async () => {
 	}
 	assert.deepEqual(unnamed, []);
 });
+
+test("a component's scoped CSS never wraps :host in :is, :where, :not or :has, which WebC's rewriter leaves unrewritten", () => {
+	const wrapped = [];
+	for (const file of files) {
+		const text = fs.readFileSync(file, "utf8");
+		for (const [style] of text.matchAll(/<style[^>]*>[\s\S]*?<\/style>/g)) if (/:(is|where|not|has)\(\s*:host/.test(style)) wrapped.push(path.relative(root, file));
+	}
+	assert.deepEqual(wrapped, []);
+});
