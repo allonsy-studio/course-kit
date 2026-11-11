@@ -1,0 +1,640 @@
+/*
+ * The preview's own chrome: flat, one-pixel rules, no tinted bars, and a fixed high-contrast palette
+ * (text 7:1 or better, links 7:1). It is set on the body, so the course's theme and the token fields
+ * change the frames and never the page around them.
+ */
+body.preview {
+	--p-bg: light-dark(#fff, #0d1117);
+	--p-text: light-dark(#111827, #f3f4f6);
+	--p-muted: light-dark(#4b5563, #b8c0cc);
+	--p-line: light-dark(#c9ced6, #3a4350);
+	--p-link: light-dark(#7a1f34, #f0bfcc);
+	--p-hover: light-dark(#f3f4f6, #1a212b);
+	/* Norn's own current-page color is 6.3:1 in dark; the preview's link color is higher. */
+	--norn-text-accent: var(--p-link);
+
+	/* The kit's base styles read these. */
+	--color-page: var(--p-bg);
+	--color-text: var(--p-text);
+	--color-text-muted: var(--p-muted);
+	--color-border: var(--p-line);
+	--color-link: var(--p-link);
+	--color-accent-text: var(--p-link);
+	--color-surface: var(--p-hover);
+
+	display: block;
+	margin: 0;
+	padding: 0;
+	max-inline-size: none;
+	background: var(--p-bg);
+	color: var(--p-text);
+	font-size: 1rem;
+	line-height: 1.55;
+}
+
+/* The page's own links, focus ring and disclosures. The Norn components style theirs. */
+:is(main#main, .overrides, .open) a[href] {
+	color: var(--p-link);
+	text-decoration: none;
+
+	&:is(:hover, :focus-visible) {
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+}
+
+:is(main#main, .canvas) :is(a, button, input, summary):focus-visible {
+	outline: 2px solid var(--p-link);
+	outline-offset: 2px;
+}
+
+.story details {
+	border: 0;
+	border-radius: 0;
+	background: none;
+	margin: 0;
+
+	> summary {
+		cursor: pointer;
+		padding-block: 0.4rem;
+		color: var(--p-muted);
+		font-size: 0.9rem;
+	}
+
+	&[open] > summary {
+		color: var(--p-text);
+	}
+}
+
+.story details {
+	padding: 0;
+}
+
+
+.overrides {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+	margin: 0;
+	padding: 0.5rem 1.5rem;
+	border-block-end: 1px solid var(--p-line);
+	font-size: 0.9rem;
+
+	&[hidden] {
+		display: none;
+	}
+}
+
+.app {
+	display: grid;
+	grid-template-columns: 15rem minmax(0, 1fr);
+	align-items: start;
+}
+
+/* The list of components: a sidebar, and a closed disclosure on a phone. */
+.nav {
+	position: sticky;
+	inset-block-start: 0;
+	max-block-size: 100dvh;
+	overflow: auto;
+	padding: 1rem 1.5rem 2rem;
+	border-inline-end: 1px solid var(--p-line);
+	font-size: 0.9rem;
+
+	/* One disclosure per group: the summary is the group's small-caps label, with a 44px target. */
+	details {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		border-radius: 0;
+		background: none;
+	}
+
+	details + details {
+		margin-block-start: 0.5rem;
+	}
+
+	summary {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		min-block-size: 44px;
+		padding-block: 0;
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--p-muted);
+		list-style: none;
+		cursor: pointer;
+
+		&:focus-visible {
+			outline: 2px solid var(--p-link);
+			outline-offset: 2px;
+		}
+
+		&::-webkit-details-marker {
+			display: none;
+		}
+
+		&::before {
+			content: "";
+			inline-size: 0.45em;
+			block-size: 0.45em;
+			border-block-end: 2px solid currentcolor;
+			border-inline-end: 2px solid currentcolor;
+			rotate: -45deg;
+			transition: rotate 0.15s;
+		}
+
+		&:dir(rtl)::before {
+			rotate: 135deg;
+		}
+	}
+
+	details[open] > summary::before {
+		rotate: 45deg;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		summary::before {
+			transition: none;
+		}
+	}
+}
+
+/* The one leak left: the kit's base styles dot-underline a span inside any nav link, and Norn's list has no such mark. */
+norn-side-nav a span {
+	text-decoration: none;
+}
+
+main#main {
+	padding: 2rem clamp(1rem, 4vw, 3rem) 5rem;
+	max-inline-size: 62rem;
+	min-inline-size: 0;
+
+	:is(h1, h2, h3) {
+		font-family: inherit;
+		color: var(--p-text);
+		letter-spacing: 0;
+	}
+
+	h1 {
+		margin: 0 0 0.5rem;
+		font-size: 1.75rem;
+		line-height: 1.2;
+		font-weight: 700;
+
+		code {
+			font-size: inherit;
+			padding: 0;
+			background: none;
+			border: 0;
+		}
+	}
+
+	h2 {
+		margin: 2.5rem 0 0.75rem;
+		padding: 0 0 0.4rem;
+		border: 0;
+		border-block-end: 1px solid var(--p-line);
+		background: none;
+		font-size: 1.2rem;
+		font-weight: 700;
+	}
+
+	h3 {
+		margin: 1.75rem 0 0.5rem;
+		font-size: 1rem;
+		font-weight: 700;
+	}
+
+	p {
+		max-inline-size: 70ch;
+
+		&.open {
+			max-inline-size: none;
+		}
+	}
+
+	code {
+		font-size: 0.9em;
+	}
+
+	pre {
+		margin: 0 0 1rem;
+		padding: 0.75rem 1rem;
+		overflow-x: auto;
+		border: 1px solid var(--p-line);
+		border-radius: 3px;
+		background: transparent;
+		font-size: 0.85rem;
+		line-height: 1.5;
+	}
+
+	/* Props, slots and tokens: ruled rows, no boxes. */
+	table:is(.spec, .tokens) {
+		inline-size: 100%;
+		border-collapse: collapse;
+		font-size: 0.9rem;
+
+		tbody tr {
+			background: none;
+		}
+
+		:is(th, td) {
+			padding: 0.5rem 0.75rem 0.5rem 0;
+			border: 0;
+			border-block-end: 1px solid var(--p-line);
+			text-align: start;
+			vertical-align: top;
+			background: none;
+			font: inherit;
+			text-transform: none;
+			letter-spacing: 0;
+		}
+
+		thead th {
+			color: var(--p-muted);
+			font-weight: 700;
+			font-size: 0.75rem;
+			letter-spacing: 0.06em;
+			text-transform: uppercase;
+			border-block-end-color: var(--p-text);
+		}
+
+		tbody th {
+			font-weight: 600;
+			white-space: nowrap;
+		}
+	}
+
+	table.tokens .none {
+		color: var(--p-muted);
+	}
+
+	/* Light and dark color pickers, and a reset, side by side. */
+	table.tokens .pickers {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1rem;
+		align-items: center;
+
+		/* The kit's form styles pad labels and space controls; here they sit on one line. */
+		label {
+			display: inline-flex;
+			gap: 0.4rem;
+			align-items: center;
+			padding: 0;
+			margin: 0;
+			color: var(--p-muted);
+		}
+
+		:is(input, button) {
+			margin: 0;
+		}
+
+		input[type="color"] {
+			inline-size: 2.5rem;
+			block-size: 1.75rem;
+			padding: 2px;
+			background: var(--p-bg);
+			border: 1px solid var(--p-muted);
+			border-radius: 3px;
+			cursor: pointer;
+		}
+
+		button {
+			padding: 0.2rem 0.6rem;
+			font: inherit;
+			color: var(--p-text);
+			background: transparent;
+			border: 1px solid var(--p-muted);
+			border-radius: 3px;
+			cursor: pointer;
+
+			&[hidden] {
+				display: none;
+			}
+
+			&:is(:hover, :focus-visible) {
+				background: var(--p-text);
+				color: var(--p-bg);
+			}
+		}
+	}
+}
+
+.lead {
+	font-size: 1.1rem;
+	color: var(--p-text);
+}
+
+.meta {
+	margin-block: 0 1rem;
+	color: var(--p-muted);
+	font-size: 0.9rem;
+}
+
+.index {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	border-block-start: 1px solid var(--p-line);
+
+	li {
+		display: grid;
+		grid-template-columns: 14rem 1fr;
+		gap: 1rem;
+		padding-block: 0.6rem;
+		border-block-end: 1px solid var(--p-line);
+	}
+
+	span {
+		color: var(--p-muted);
+	}
+
+	a[href] {
+		text-decoration: none;
+
+		&:is(:hover, :focus-visible) {
+			text-decoration: underline;
+			text-underline-offset: 0.2em;
+		}
+	}
+}
+
+.missing {
+	padding: 0.5rem 0.75rem;
+	border-inline-start: 3px solid var(--p-text);
+}
+
+/* One example: a toolbar over the frame, divided by single lines. */
+.story {
+	margin-block: 1.5rem;
+}
+
+.canvas {
+	margin: 0;
+	border: 1px solid var(--p-line);
+	border-radius: 4px;
+	overflow: hidden;
+
+	/* The toolbar: the Norn toggles, then the check. Their own styles are in the component. */
+	.canvas-bar {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1.5rem;
+		align-items: center;
+		padding: 0.5rem 0.75rem;
+		border-block-end: 1px solid var(--p-line);
+		font-size: 0.875rem;
+
+		button {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			margin-inline-start: auto;
+			inline-size: 44px;
+			block-size: 44px;
+			padding: 0;
+			font: inherit;
+			color: var(--p-text);
+			background: transparent;
+			border: 1px solid var(--p-text);
+			border-radius: 3px;
+			cursor: pointer;
+
+			&:is(:hover, :focus-visible) {
+				background: var(--p-text);
+				color: var(--p-bg);
+			}
+
+			/* One icon per state: idle, running, pass, fail. */
+			&:not([data-state="idle"]) [data-for="idle"],
+			&:not([data-state="running"]) [data-for="running"],
+			&:not([data-state="pass"]) [data-for="pass"],
+			&:not([data-state="fail"]) [data-for="fail"] {
+				display: none;
+			}
+
+			&[data-state="pass"] [data-for="pass"] {
+				color: light-dark(#0b6b3a, #7ed6a1);
+			}
+
+			&[data-state="fail"] [data-for="fail"] {
+				color: light-dark(#b42318, #ff8a80);
+			}
+
+			&:is(:hover, :focus-visible)[data-state="pass"] [data-for="pass"],
+			&:is(:hover, :focus-visible)[data-state="fail"] [data-for="fail"] {
+				color: inherit;
+			}
+
+			@media (prefers-reduced-motion: no-preference) {
+				&[data-state="running"] [data-for="running"] svg {
+					animation: preview-spin 0.8s linear infinite;
+				}
+			}
+		}
+	}
+
+	.open {
+		margin: 0;
+		padding: 0.4rem 0.75rem;
+		border-block-start: 1px solid var(--p-line);
+		font-size: 0.875rem;
+	}
+
+	.stage {
+		margin-inline: auto;
+		background: var(--color-page, #fff);
+
+		iframe {
+			display: block;
+			inline-size: 100%;
+			min-block-size: 4rem;
+			border: 0;
+		}
+	}
+
+	.axe-result {
+		display: block;
+		padding-inline: 0.75rem;
+		font-size: 0.875rem;
+
+		&:not(:empty) {
+			padding-block: 0.5rem;
+			border-block-start: 1px solid var(--p-line);
+		}
+	}
+}
+
+@keyframes preview-spin {
+	to {
+		rotate: 1turn;
+	}
+}
+
+@media (width <= 48rem) {
+	.app {
+		display: block;
+	}
+
+	/* The groups sit above the page; only the current one starts open (canvas.js). Touch targets are 44px. */
+	body.preview .nav {
+		position: static;
+		max-block-size: none;
+		padding-block: 0.5rem;
+		border-inline-end: 0;
+		border-block-end: 1px solid var(--p-line);
+
+		a[href] {
+			display: flex;
+			align-items: center;
+			min-block-size: 44px;
+		}
+	}
+
+	/* Norn's brand link is 31px tall; a phone needs 44. */
+	norn-header a[rel="home"] {
+		min-block-size: 44px;
+	}
+
+	.index li {
+		grid-template-columns: 1fr;
+		gap: 0.1rem;
+
+		a[href] {
+			display: flex;
+			align-items: center;
+			min-block-size: 44px;
+		}
+	}
+
+	/* The width control is hidden on a phone, where the frame always fills its box. */
+	.canvas .canvas-bar {
+		.widths {
+			display: none;
+		}
+
+		button {
+			margin-inline-start: 0;
+		}
+	}
+
+	.canvas .open a[href] {
+		display: inline-flex;
+		align-items: center;
+		min-block-size: 44px;
+	}
+
+	/* `display: list-item` keeps the disclosure triangle. */
+	body.preview .story details > summary {
+		display: list-item;
+		box-sizing: border-box;
+		min-block-size: 44px;
+		padding-block: 0.6rem;
+	}
+
+	/* The token table is too wide for a phone: each row stacks. */
+	main#main table.tokens {
+		thead {
+			position: absolute;
+			inline-size: 1px;
+			block-size: 1px;
+			overflow: hidden;
+			clip-path: inset(50%);
+		}
+
+		tbody tr {
+			display: grid;
+			gap: 0.25rem;
+			padding-block: 0.75rem;
+			border-block-end: 1px solid var(--p-line);
+		}
+
+		:is(th, td) {
+			display: block;
+			padding: 0;
+			border: 0;
+		}
+
+		.pickers {
+			:is(input, button) {
+				min-block-size: 44px;
+			}
+
+			input[type="color"] {
+				min-inline-size: 44px;
+			}
+		}
+	}
+}
+
+/* The kit's icon-link rule squares any link around an image; the studio's bar & credit are wide. */
+oss-bar a,
+oss-credit a {
+	aspect-ratio: auto;
+}
+
+/* "What you can build": a card per starter page, the page itself live in a scaled, inert frame. */
+.examples {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+	gap: 1.5rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	article {
+		position: relative;
+		display: grid;
+		gap: 0.5rem;
+		block-size: 100%;
+		align-content: start;
+	}
+
+	h3 {
+		margin: 0.25rem 0 0;
+		font-size: 1.1rem;
+	}
+
+	p {
+		margin: 0;
+	}
+}
+
+/* The frame renders at three times the card's width and is scaled down to fit. */
+.example-frame {
+	position: relative;
+	aspect-ratio: 16 / 10;
+	overflow: hidden;
+	border: 1px solid var(--p-line);
+	border-radius: 6px;
+	background: var(--p-bg);
+
+	iframe {
+		position: absolute;
+		inset: 0;
+		inline-size: 300%;
+		block-size: 300%;
+		border: 0;
+		scale: calc(1 / 3);
+		transform-origin: 0 0;
+		pointer-events: none;
+	}
+}
+
+.example-uses {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem 0.75rem;
+	font-size: 0.85rem;
+
+	a[href] {
+		display: inline-flex;
+		align-items: center;
+		min-block-size: 24px;
+	}
+}

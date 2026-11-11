@@ -1,0 +1,2457 @@
+<!doctype html>
+<html lang="en-US" data-timezone="America/New_York">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="color-scheme" content="light dark" />
+
+    <title>Home | CS101: Introduction to Web Publishing</title>
+    <meta name="description" content="Course content for Example College." />
+    <meta name="keywords" content="Example College, CS101, Introduction to Web Publishing, syllabus, course schedule, class resources" />
+    <meta name="author" content="Cassondra Roberts" />
+    <meta name="generator" content="Eleventy v3.1.7" />
+
+    <meta name="robots" content="noindex, nofollow" />
+
+    <meta property="og:locale" content="en-US" />
+    <meta property="og:title" content="Home" />
+    <meta property="og:url" content="/examples/home/" />
+    <meta property="og:description" content="Course content for Example College." />
+    <meta property="og:site_name" content="CS101: Introduction to Web Publishing" />
+    <meta name="fediverse:creator" content="@castastrophe@front-end.social" />
+    <meta property="og:type" content="website" />
+
+    <link rel="icon" href="/course-kit/preview/25/components/favicon.svg" type="image/svg+xml" />
+
+    <link rel="preload" href="/course-kit/preview/25/components/fonts/instrument-sans-var.woff2" as="font" type="font/woff2" crossorigin="" />
+
+    <link rel="stylesheet" href="/course-kit/preview/25/components/styles/prism-light.css" media="(prefers-color-scheme: light)" data-prism-theme="light" />
+    <link rel="stylesheet" href="/course-kit/preview/25/components/styles/prism-dark.css" media="(prefers-color-scheme: dark)" data-prism-theme="dark" />
+
+    <link rel="stylesheet" href="/course-kit/preview/25/components/styles/base.css" />
+
+    <style>
+      .wxkk88cxd[hidden],
+      .wxkk88cxd .course-now[hidden] {
+        display: none;
+      }
+      .wxkk88cxd {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
+        gap: var(--content-space);
+        margin-block-end: var(--section-space);
+        @media (width <= 768px) {
+          grid-template-columns: minmax(0, 1fr);
+        }
+        h2:not(.sr-only) {
+          margin: 0;
+          font-size: var(--font-size-4);
+        }
+      }
+      .wxkk88cxd .now-card {
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--gutter) * 2);
+        padding: calc(var(--content-space) * 1.75);
+        border-radius: calc(var(--standard-border-radius) * 4);
+        background-color: var(--color-accent);
+        color: var(--color-on-accent);
+        .wxkk88cxd &[hidden] {
+          display: none;
+        }
+        p {
+          margin: 0;
+        }
+
+        .label {
+          font-size: max(var(--base-font-size), 0.875em);
+          font-weight: var(--font-weight--medium);
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .topic {
+          color: inherit;
+          text-transform: none;
+          font-size: var(--font-size-2, 1.9em);
+          font-weight: var(--font-weight--semi-bold);
+          line-height: 1.15;
+          text-wrap: balance;
+        }
+
+        .actions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: calc(var(--gutter) * 2.5);
+          /* Pinned to the card's bottom edge when the card is stretched. */
+          margin-block-start: auto;
+          padding-block-start: calc(var(--gutter) * 2);
+        }
+
+        a {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5em;
+          min-block-size: var(--target-min);
+          min-inline-size: var(--target-min);
+          justify-content: center;
+          padding-inline: 1.25em;
+          border: var(--border-width) solid var(--color-on-accent);
+          border-radius: var(--radius-pill);
+          color: var(--color-on-accent);
+          font-weight: var(--font-weight--semi-bold);
+          text-decoration: none;
+
+          &[hidden] {
+            display: none;
+          }
+
+          &.primary {
+            background-color: var(--color-on-accent);
+            color: var(--color-accent);
+          }
+        }
+      }
+      .wxkk88cxd .coming-up {
+        display: grid;
+        gap: calc(var(--gutter) * 3);
+        align-content: start;
+        padding: calc(var(--content-space) * 1.4);
+        border: var(--thin-border-width) solid var(--color-border);
+        border-radius: calc(var(--standard-border-radius) * 4);
+        background-color: var(--color-surface);
+        .wxkk88cxd &[hidden] {
+          display: none;
+        }
+        ul {
+          display: grid;
+          gap: calc(var(--gutter) * 2);
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+
+        li {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: baseline;
+          gap: 0.25em 0.6em;
+          padding: 0.6em 0.8em;
+        }
+
+        .what {
+          font-weight: var(--font-weight--semi-bold);
+        }
+
+        .due {
+          flex-basis: 100%;
+          color: var(--color-text-muted);
+          font-size: max(var(--base-font-size), 0.875em);
+        }
+
+        p {
+          margin: 0;
+          font-weight: var(--font-weight--semi-bold);
+
+          &[hidden] {
+            display: none;
+          }
+        }
+
+        .empty {
+          color: var(--color-text-muted);
+          font-weight: var(--font-weight);
+        }
+      }
+      .wxkk88cxd .progress {
+        display: grid;
+        grid-column: 1/-1;
+        grid-template-columns: 1fr auto;
+        gap: calc(var(--gutter) * 3) var(--content-space);
+        align-items: baseline;
+        .count {
+          margin: 0;
+          color: var(--color-text-muted);
+        }
+
+        /* One row that scrolls sideways when the weeks don't fit; the
+           script opens it with the current week centered. */
+        ol {
+          position: relative;
+          display: flex;
+          grid-column: 1 / -1;
+          gap: calc(var(--gutter) * 2);
+          margin: 0;
+          /* Room for the focus ring, so the scroll box never clips it. */
+          padding: calc(var(--focus-ring-width) + var(--focus-ring-offset));
+          overflow-x: auto;
+          list-style: none;
+        }
+
+        li {
+          flex: 1 0 5.5rem;
+        }
+
+        a {
+          display: grid;
+          gap: 0.35em;
+          padding-block: 0.25em;
+          color: var(--color-text);
+          font-size: max(var(--base-font-size), 0.875em);
+          text-decoration: none;
+        }
+
+        .bar {
+          block-size: 0.6rem;
+          border-radius: var(--radius-pill);
+          background-color: var(--color-border);
+        }
+
+        .name {
+          font-weight: var(--font-weight--semi-bold);
+        }
+
+        .state {
+          min-block-size: 1.5em;
+          color: var(--color-text-muted);
+        }
+
+        [data-state="done"] .bar {
+          background-color: var(--color-text);
+        }
+
+        [data-state="now"] .bar {
+          background-color: var(--color-accent-secondary);
+          outline: var(--border-width) solid var(--color-accent-secondary);
+          outline-offset: 2px;
+        }
+      }
+      @media (forced-colors: active) {
+        .wxkk88cxd .progress [data-state="now"] .bar {
+          background: Highlight;
+        }
+        .wxkk88cxd .progress [data-state="done"] .bar {
+          background: CanvasText;
+        }
+      }
+      .eyebrow {
+        font-size: var(--font-size-6);
+        text-transform: uppercase;
+        text-decoration: none;
+        letter-spacing: 0.08em;
+        font-weight: var(--font-weight--semi-bold);
+        color: var(--color-text-muted);
+        margin-block: 0;
+      }
+      .wvs7ubxo3 .who {
+        display: flex;
+        align-items: flex-start;
+        gap: calc(var(--content-space) * 1.1);
+        @media print {
+          display: block;
+        }
+      }
+      .wvs7ubxo3 .facts-column {
+        min-inline-size: 0;
+        flex: 1 1 auto;
+      }
+      .wvs7ubxo3 .facts-column h2 {
+        margin-block: 0 0.35em;
+        font-size: var(--font-size-6);
+        font-weight: var(--font-weight--semi-bold);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+      }
+      .wvs7ubxo3 .facts {
+        display: grid;
+        grid-template-columns: max-content minmax(0, 1fr);
+        column-gap: var(--content-space);
+        row-gap: 0.3em;
+        margin: 0;
+        > div {
+          display: contents;
+        }
+
+        /* `display: contents` outranks the utility classes, so restate them
+           for rows that appear on one medium only. */
+        > div.print-only {
+          display: none;
+        }
+
+        dt {
+          color: var(--color-text-muted);
+          font-size: var(--font-size-6);
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          line-height: var(--font-height);
+          padding-block-start: 0.15em;
+        }
+
+        dd {
+          margin: 0;
+        }
+
+        ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+        }
+
+        .name dd {
+          grid-column: 1 / -1;
+          font-size: var(--font-size-4);
+          line-height: var(--font-height--dense);
+          margin-block-end: 0.35em;
+        }
+
+        @media print {
+          display: inline;
+        }
+      }
+      .wvs7ubxo3 .note {
+        margin-block: 0.75em 0;
+        font-size: max(var(--base-font-size), 0.9em);
+      }
+      .wvs7ubxo3 .photo {
+        flex: none;
+        inline-size: 5.5em;
+        block-size: 5.5em;
+        border-radius: var(--circle-border-radius);
+        object-fit: cover;
+        border: var(--thin-border-width) solid var(--color-border);
+      }
+      .wvs7ubxo3 .instructor-contact {
+        margin-block: 0;
+      }
+      .wvs7ubxo3 .instructor-card {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--content-space);
+        max-inline-size: min(60ch, 100%);
+        margin-inline: auto;
+        padding: calc(var(--content-space) * 1.2);
+        background-color: var(--color-surface);
+        border: var(--thin-border-width) solid var(--color-border);
+        border-radius: var(--standard-border-radius);
+      }
+      .wvs7ubxo3 .instructor-card .photo {
+        inline-size: 4em;
+        block-size: 4em;
+      }
+      .wvs7ubxo3 .monogram {
+        flex: none;
+        display: grid;
+        place-items: center;
+        inline-size: 2.75em;
+        block-size: 2.75em;
+        margin: 0;
+        background-color: color-mix(in sRGB, var(--color-accent) 14%, transparent);
+        border-radius: 50%;
+        color: var(--color-accent-text);
+        font-weight: var(--font-weight--semi-bold);
+      }
+      .wvs7ubxo3 .instructor-name {
+        margin-block: 0 0.15em;
+        font-size: max(var(--base-font-size), 1.15em);
+      }
+      .wvs7ubxo3 .instructor-meta {
+        margin-block: 0 0.75em;
+        color: var(--color-text-muted);
+        font-size: max(var(--base-font-size), 0.92em);
+      }
+      .wvs7ubxo3 .cta {
+        color: var(--color-link);
+      }
+      @media print {
+        .wvs7ubxo3#instructor .facts > div.screen-only {
+          display: none;
+        }
+      }
+      .wu6bknhkr {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 18em), 1fr));
+        gap: calc(var(--content-space, 1rem) * 2);
+        align-items: start;
+        caption {
+          text-align: start;
+          font-weight: var(--font-weight--semi-bold);
+          padding-block-end: calc(var(--content-space, 1rem) / 2);
+        }
+      }
+      #syllabus article {
+        border: none;
+        border-radius: 0;
+        padding: 0;
+        margin-block-end: 0;
+      }
+
+      /* Screen layout only: a single stacked column with a reading measure,
+       coursework as a card grid with the weight on each card, and key dates
+       as a stacked list. print.css keeps its own hooks (`#syllabus > article`,
+       `#coursework ~ div`, `#grading`, `#key-dates`), none of which this
+       markup changes. */
+      @media screen {
+        /* The section's row-gap is the only vertical rhythm between
+           articles: each article's first heading and last block drop their
+           own outer margins so nothing stacks on top of the gap. */
+        #syllabus {
+          display: grid;
+          row-gap: var(--section-space);
+        }
+
+        #syllabus > h2 {
+          margin-block-end: 0;
+        }
+
+        #syllabus > article > :first-child {
+          margin-block-start: 0;
+        }
+
+        #syllabus > article > :last-child {
+          margin-block-end: 0;
+        }
+
+        #syllabus > article > :where(p, ul, ol) {
+          max-inline-size: 70ch;
+        }
+
+        /* Cards wrap as a centered flex row rather than a grid, so a short
+           last row (two cards under three) is centered instead of hugging
+           the left; each card is capped at a third of the row so the
+           widths still match across rows. */
+        #syllabus article:has(> #coursework) {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: var(--content-space);
+        }
+
+        #coursework {
+          flex: 1 0 100%;
+          margin-block-end: 0;
+        }
+
+        #coursework ~ .course-item {
+          flex: 1 1 20em;
+          max-inline-size: calc((100% - 2 * var(--content-space)) / 3);
+
+          @media (width <= 60em) {
+            max-inline-size: none;
+          }
+        }
+
+        #coursework ~ .course-item {
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          padding: calc(var(--content-space) * 1.1);
+          border: var(--thin-border-width) solid var(--color-border);
+          border-radius: var(--standard-border-radius);
+
+          h4 {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 0.25em 0.75em;
+            margin-block: 0 0.5em;
+          }
+
+          /* Flex items do not collapse margins, so paragraphs keep only
+               their bottom margin. */
+          > p {
+            margin-block-start: 0;
+          }
+
+          p:last-child {
+            margin-block-end: 0;
+          }
+
+          /* A callout sits at the foot of its card, so the cards in a
+               row line up. */
+          .callout {
+            margin-block: auto 0;
+          }
+        }
+
+        #coursework ~ .course-item .weight {
+          flex: none;
+          padding: 0.1em 0.6em;
+          border-radius: var(--pill-border-radius);
+          background-color: color-mix(in oklab, var(--color-accent) 24%, transparent);
+          color: var(--color-accent-text);
+          font-size: var(--font-size-6);
+          font-weight: var(--font-weight--semi-bold);
+          letter-spacing: 0.03em;
+        }
+
+        #key-dates + ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+
+          li {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0 0.75em;
+            padding-block: 0.4em;
+            border-block-start: var(--thin-border-width) solid var(--color-border);
+          }
+
+          li > strong {
+            flex: 0 1 22em;
+          }
+
+          li > span:last-child {
+            color: var(--color-text-muted);
+          }
+        }
+      }
+      /* The single source of the "today" look. Hosts own the dated elements and
+	   name themselves with `data-today-host`; the rules below vary the base
+	   look per host. */
+
+      [data-today] {
+        background-color: var(--color-surface-accent-secondary);
+        box-shadow: inset var(--border-width) 0 0 var(--color-accent-secondary);
+      }
+
+      /* A table row can't carry a shadow of its own: wash its cells, edge the first. */
+      tr[data-today] {
+        background-color: transparent;
+        box-shadow: none;
+
+        > :is(th, td) {
+          background-color: var(--color-surface-accent-secondary);
+        }
+
+        > :first-child {
+          box-shadow: inset var(--border-width) 0 0 var(--color-accent-secondary);
+        }
+      }
+
+      .today-flag {
+        display: block;
+        color: var(--color-accent-secondary);
+      }
+
+      /* host: a list of meetings (schedule-weeks, demo-weeks). The meeting holds
+	   the highlight, not the date line inside it. */
+      [data-today-host="meetings"] {
+        [data-today] {
+          background-color: transparent;
+          box-shadow: none;
+        }
+
+        [data-today-scope]:has([data-today]) {
+          background-color: var(--color-surface-accent-secondary);
+          box-shadow: inset var(--border-width) 0 0 var(--color-accent-secondary);
+        }
+
+        .today-flag {
+          font-size: max(var(--base-font-size), 0.9em);
+        }
+      }
+
+      /* host: a grid of day cells (slide-timetable). The edge runs along the top. */
+      [data-today-host="timetable"] {
+        [data-today] {
+          box-shadow: inset 0 var(--border-width) 0 var(--color-accent-secondary);
+        }
+
+        .today-flag {
+          font-size: max(var(--base-font-size), 0.9em);
+        }
+      }
+
+      /* Without color (forced colors, mono print), the flag's text still says "Today"; add an outline. */
+      @media (forced-colors: active) {
+        [data-today],
+        [data-today-scope]:has([data-today]) {
+          outline: var(--border-width) solid Highlight;
+          outline-offset: calc(var(--border-width) * -1);
+        }
+      }
+      .wuaoycijn {
+        --week-grid: 8.5em minmax(0, 7fr) minmax(0, 5fr);
+        display: grid;
+        gap: var(--content-space);
+      }
+      .wuaoycijn ul,
+      .wuaoycijn ol {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .wuaoycijn .label {
+        margin: 0 0 0.3em;
+        color: var(--color-text-muted);
+        font-size: var(--font-size-6);
+        font-weight: var(--font-weight--medium);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .wuaoycijn .week {
+        margin: 0;
+        padding: 0;
+        border: var(--thin-border-width) solid var(--color-border);
+        border-radius: var(--standard-border-radius);
+        overflow: hidden;
+      }
+      .wuaoycijn .week-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.25em 1em;
+        padding: 0.55em 1em;
+        background-color: var(--color-surface);
+        border-block-end: var(--border-width) solid var(--color-accent);
+        h3 {
+          margin: 0;
+          font-size: var(--font-size-4);
+          font-weight: var(--font-weight--medium);
+        }
+      }
+      .wuaoycijn .week-of {
+        margin: 0;
+        color: var(--color-text-muted);
+        font-size: max(var(--base-font-size), 0.9em);
+      }
+      .wuaoycijn .week-cols {
+        display: grid;
+        grid-template-columns: var(--week-grid);
+        gap: 0 1.5em;
+        padding: 0.5em 1em 0.4em;
+        border-block-end: var(--thin-border-width) solid var(--color-text);
+        color: var(--color-text-muted);
+        font-size: var(--font-size-6);
+        font-weight: var(--font-weight--medium);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        @media (width <= 860px) {
+          display: none;
+        }
+      }
+      .wuaoycijn .meeting {
+        display: grid;
+        grid-template-columns: var(--week-grid);
+        gap: 0.6em 1.5em;
+        align-items: start;
+        padding: 0.9em 1em;
+        .wuaoycijn & + .meeting {
+          border-block-start: var(--thin-border-width) solid var(--color-border);
+        }
+        @media (width <= 860px) {
+          grid-template-columns: 8.5em minmax(0, 1fr);
+          .for-class {
+            grid-column: 2;
+          }
+        }
+        @media (width <= 520px) {
+          grid-template-columns: minmax(0, 1fr);
+          .for-class {
+            grid-column: auto;
+          }
+        }
+      }
+      .wuaoycijn .when {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        @media (width <= 520px) {
+          flex-direction: row;
+          flex-wrap: wrap;
+          gap: 0 0.5em;
+          align-items: baseline;
+        }
+      }
+      .wuaoycijn .weekday {
+        font-weight: var(--font-weight--semi-bold);
+      }
+      .wuaoycijn .date,
+      .wuaoycijn .note,
+      .wuaoycijn .no-class,
+      .wuaoycijn .check {
+        color: var(--color-text-muted);
+        font-size: max(var(--base-font-size), 0.9em);
+      }
+      .wuaoycijn .note {
+        font-style: italic;
+      }
+      .wuaoycijn .no-class {
+        margin: 0;
+      }
+      .wuaoycijn .topics li + li {
+        margin-block-start: 0.3em;
+      }
+      .wuaoycijn .for-class {
+        display: grid;
+        gap: 0.8em;
+        font-size: max(var(--base-font-size), 0.94em);
+        @media (860px < width) {
+          padding-inline-start: 1.5em;
+          border-inline-start: var(--thin-border-width) solid var(--color-border);
+        }
+        li + li {
+          margin-block-start: 0.3em;
+        }
+      }
+      .wuaoycijn .check {
+        display: block;
+      }
+      .wuaoycijn .arrow {
+        color: var(--color-accent-text);
+        text-decoration: none;
+        font-weight: var(--font-weight--medium);
+        .wuaoycijn &:is(:hover, :focus-visible) {
+          text-decoration: underline;
+        }
+      }
+      .wuaoycijn .week-resources {
+        padding: 0.8em 1em;
+        border-block-start: var(--thin-border-width) solid var(--color-border);
+        background-color: var(--color-surface);
+        font-size: max(var(--base-font-size), 0.94em);
+        ul {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.4em 2em;
+        }
+      }
+      .wuaoycijn .schedule-tools {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: calc(var(--gutter) * 2) var(--content-space);
+        .wuaoycijn &[hidden] {
+          display: none;
+        }
+      }
+      .wuaoycijn .schedule-status {
+        margin: 0;
+        color: var(--color-text-muted);
+      }
+      .wuaoycijn .hide-past {
+        min-block-size: var(--target-min);
+        min-inline-size: var(--target-min);
+        padding-inline: 1.1em;
+        border: var(--thin-border-width) solid var(--color-border-strong);
+        border-radius: var(--radius-pill);
+        background: transparent;
+        color: var(--color-text);
+        font: inherit;
+        font-weight: var(--font-weight--semi-bold);
+        cursor: pointer;
+        .wuaoycijn &[aria-pressed="true"] {
+          border-color: var(--color-accent-secondary);
+          background-color: var(--color-accent-secondary);
+          color: var(--color-on-accent-secondary);
+          --color-focus-ring: var(--color-on-accent-secondary);
+        }
+      }
+      .wuaoycijn .this-week {
+        display: grid;
+        gap: var(--content-space);
+        padding: calc(var(--content-space) * 1.4);
+        border: var(--border-width) solid var(--color-accent-secondary);
+        border-radius: calc(var(--standard-border-radius) * 4);
+        background-color: var(--color-surface-accent-secondary);
+        .wuaoycijn &[hidden] {
+          display: none;
+        }
+        h3 {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: baseline;
+          gap: 0.2em 0.6em;
+          margin: 0;
+          font-size: var(--font-size-3);
+        }
+
+        .week-of {
+          font-weight: var(--font-weight);
+        }
+      }
+      .wuaoycijn .this-days {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 16em), 1fr));
+        gap: var(--content-space);
+      }
+      .wuaoycijn .this-day {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+        padding: 1em;
+        border: var(--thin-border-width) solid var(--color-border);
+        border-radius: calc(var(--standard-border-radius) * 2);
+        background-color: var(--color-page);
+        .when {
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-items: baseline;
+          gap: 0 0.5em;
+        }
+
+        .slides {
+          margin: 0;
+          margin-block-start: auto;
+          padding-block-start: 0.3em;
+        }
+
+        .arrow {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.35em;
+          min-block-size: var(--target-min);
+          font-weight: var(--font-weight--semi-bold);
+        }
+      }
+      .wuaoycijn .day-flag {
+        padding: 0.05em 0.65em;
+        border-radius: var(--radius-pill);
+        background-color: var(--color-accent-secondary);
+        color: var(--color-on-accent-secondary);
+        font-size: max(var(--base-font-size), 0.85em);
+        font-weight: var(--font-weight--semi-bold);
+      }
+      .wuaoycijn .this-groups {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 16em), 1fr));
+        gap: var(--content-space);
+        padding-block-start: var(--content-space);
+        border-block-start: var(--thin-border-width) solid var(--color-border-strong);
+        .wuaoycijn &[hidden],
+        .wuaoycijn [hidden] {
+          display: none;
+        }
+        li + li {
+          margin-block-start: 0.4em;
+        }
+      }
+      .wuaoycijn .week[data-current] {
+        border-color: var(--color-accent-secondary);
+        box-shadow: inset var(--border-width) 0 0 var(--color-accent-secondary);
+      }
+      .wuaoycijn .week-flag {
+        padding: 0.1em 0.65em;
+        border-radius: var(--radius-pill);
+        font-size: max(var(--base-font-size), 0.85em);
+        font-weight: var(--font-weight--semi-bold);
+        .wuaoycijn &.now {
+          background-color: var(--color-accent-secondary);
+          color: var(--color-on-accent-secondary);
+        }
+        .wuaoycijn &.done {
+          color: var(--color-text-muted);
+        }
+        .wuaoycijn &.done::before {
+          content: "✓ "/"";
+        }
+      }
+      @media print {
+        .wuaoycijn .this-week,
+        .wuaoycijn .schedule-tools,
+        .wuaoycijn .week-cols {
+          display: none;
+        }
+      }
+      .wq1ulaw1z {
+        display: grid;
+        grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+        column-gap: calc(var(--section-space) * 1.5);
+        row-gap: var(--content-space);
+        align-items: start;
+        @media screen and (width <= 900px) {
+          grid-template-columns: minmax(0, 1fr);
+        }
+        @media print {
+          display: block;
+        }
+      }
+      .wq1ulaw1z > .course-header {
+        grid-column: 1;
+        margin-block-end: 0;
+      }
+      .wq1ulaw1z > #approach {
+        grid-column: 1;
+      }
+      .wq1ulaw1z > #instructor {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        box-sizing: border-box;
+        padding: calc(var(--content-space) * 1.2);
+        background-color: var(--color-surface);
+        border: var(--thin-border-width) solid var(--color-border);
+        border-radius: var(--standard-border-radius);
+        @media screen and (width <= 900px) {
+          grid-column: 1;
+          grid-row: auto;
+        }
+        @media print {
+          padding: 0;
+          background: none;
+          border: none;
+        }
+      }
+      .wq1ulaw1z > #syllabus,
+      .wq1ulaw1z > #schedule {
+        grid-column: 1/-1;
+      }
+      .wq1ulaw1z > #schedule {
+        margin-block-start: var(--section-space);
+      }
+      @media screen {
+        .wq1ulaw1z > .course-header .lede,
+        .wq1ulaw1z > #approach p {
+          max-inline-size: 70ch;
+        }
+        .wq1ulaw1z > #schedule > p {
+          max-inline-size: 90ch;
+        }
+      }
+      .waz1ptg-h {
+        display: flex;
+        gap: calc(var(--container-space) * 3.5);
+        ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+
+          display: inline-flex;
+          flex-wrap: wrap;
+          justify-content: space-evenly;
+          inline-size: 100%;
+          gap: calc(var(--content-space) * 1.6);
+
+          @media screen and (width <= 612px) {
+            justify-content: flex-start;
+            column-gap: calc(var(--content-space) * 0.75);
+            row-gap: calc(var(--content-space) * 0.25);
+          }
+        }
+
+        li {
+          font-size: 1em;
+        }
+
+        /* `a[href]` outranks the page's underline for links in lists. A menu is
+       not a sentence: it carries no underline until you point at it, and the
+       current page keeps an accent one. */
+        a[href] {
+          /* Inline padding is left alone; the block padding lifts each link to
+           the 24px minimum target size without changing the row rhythm. */
+          display: inline-flex;
+          align-items: center;
+          min-block-size: var(--target-min);
+          min-inline-size: var(--target-min);
+          padding-block: 0.2em;
+          font-size: max(var(--base-font-size), 0.95em);
+          color: inherit;
+          text-decoration: none;
+
+          /* The current page keeps an underline here; the hero menu fills it (below). */
+          &[aria-current="page"] {
+            text-decoration: underline;
+            text-decoration-color: var(--color-accent-text);
+            text-decoration-thickness: var(--border-width);
+            text-underline-offset: 0.4ex;
+          }
+
+          &:not([aria-current="page"]):is(:hover, :focus-visible) {
+            color: var(--color-link-hover);
+            text-decoration: underline;
+            text-decoration-thickness: var(--thin-border-width);
+            text-underline-offset: 0.4ex;
+          }
+
+          @media screen and (width <= 612px) {
+            font-size: max(var(--base-font-size), 0.875em);
+          }
+        }
+      }
+      .waz1ptg-h[stacked] ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+        align-items: baseline;
+        column-gap: calc(var(--content-space) * 2);
+        row-gap: calc(var(--content-space) * 0.35);
+      }
+      .waz1ptg-h[column] {
+        padding: 0;
+        line-height: inherit;
+      }
+      .waz1ptg-h[column] ul {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: start;
+        inline-size: auto;
+        gap: calc(var(--content-space) * 0.35);
+        @media screen and (width <= 768px) {
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-items: baseline;
+          column-gap: calc(var(--content-space) * 1.25);
+          row-gap: calc(var(--content-space) * 0.25);
+        }
+      }
+      .waz1ptg-h[column] li {
+        display: block;
+      }
+      .waz1ptg-h[column] a,
+      .waz1ptg-h[column] a:visited {
+        margin: 0;
+        padding-inline: var(--link-pad, 0);
+        border: none;
+        border-radius: 0;
+        line-height: inherit;
+        font-size: max(var(--base-font-size), 1em);
+        color: inherit;
+        .waz1ptg-h &[aria-current="page"] {
+          padding-inline: var(--link-pad, 0);
+          background: none;
+          color: var(--color-accent-text);
+        }
+      }
+      .waz1ptg-h[data-context="hero"][column] {
+        --link-pad: 0.85em;
+      }
+      .waz1ptg-h[data-context="hero"][column] a[href] {
+        border-radius: var(--radius-pill);
+      }
+      .waz1ptg-h[data-context="hero"][column] a[href][aria-current="page"] {
+        background-color: var(--color-accent-secondary);
+        color: var(--color-on-accent-secondary);
+        text-decoration: none;
+        font-weight: var(--font-weight--semi-bold);
+        --color-focus-ring: var(--color-on-accent-secondary);
+      }
+      .waz1ptg-h[data-context="hero"][column] a[href]:not([aria-current="page"]):hover {
+        background-color: color-mix(in oklab, var(--color-accent-secondary) 10%, transparent);
+      }
+      @media (forced-colors: active) {
+        .waz1ptg-h[data-context="hero"][column] a[href][aria-current="page"] {
+          forced-color-adjust: none;
+          background: SelectedItem;
+          color: SelectedItemText;
+        }
+      }
+      .woorkyj9o {
+        text-align: start;
+        padding: 0;
+        background: linear-gradient(to bottom, color-mix(in sRGB, var(--color-accent) 7%, var(--color-page)), var(--color-page));
+        @media print {
+          display: none;
+        }
+        > .container {
+          box-sizing: border-box;
+          /* Match the content column (`--page-column`, set on body). */
+          inline-size: var(--page-column);
+          margin-inline: auto;
+          margin-block: 0;
+          padding-inline: 0;
+          padding-block: calc(var(--section-space) * 1.25) var(--section-space);
+
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) auto;
+          column-gap: calc(var(--section-space) * 2);
+          row-gap: var(--content-space);
+          align-items: start;
+
+          @media screen and (width <= 768px) {
+            grid-template-columns: minmax(0, 1fr);
+            padding-block: var(--section-space) calc(var(--section-space) * 0.75);
+          }
+        }
+
+        .identity {
+          display: grid;
+          gap: calc(var(--content-space) * 0.6);
+
+          > * {
+            margin: 0;
+            max-inline-size: none;
+          }
+        }
+
+        .course-title {
+          margin: 0;
+          max-inline-size: none;
+          font-family: var(--display-font);
+          font-size: clamp(1.75rem, 1.1rem + 2.4vw, 2.75rem);
+          font-weight: var(--font-weight--semi-bold);
+          line-height: 1.1;
+          letter-spacing: -0.01em;
+          text-wrap: balance;
+
+          a {
+            color: var(--color-text);
+            text-decoration: none;
+
+            &:is(:hover, :focus-visible) .name {
+              text-decoration: underline;
+              text-decoration-thickness: 0.06em;
+              text-underline-offset: 0.12em;
+              text-decoration-color: var(--color-accent);
+            }
+          }
+
+          .code {
+            display: block;
+            font-size: 0.5em;
+            font-weight: var(--font-weight--semi-bold);
+            letter-spacing: 0.06em;
+            color: var(--color-accent-text);
+            margin-block-end: 0.2em;
+          }
+        }
+
+        .meta {
+          margin: 0;
+          color: var(--color-text-muted);
+          font-size: max(var(--base-font-size), 0.95em);
+        }
+
+        .links {
+          display: flex;
+          align-items: start;
+          gap: calc(var(--content-space) * 1.5);
+          padding-inline-start: calc(var(--section-space) * 1.25);
+          border-inline-start: var(--thin-border-width) solid var(--color-border);
+
+          @media screen and (width <= 768px) {
+            inline-size: 100%;
+            justify-content: space-between;
+            padding-inline-start: 0;
+            padding-block-start: var(--content-space);
+            border-inline-start: none;
+            border-block-start: var(--thin-border-width) solid var(--color-border);
+          }
+        }
+      }
+      .wwkwz-tyb {
+        display: inline-block;
+        font-size: max(var(--base-font-size), 0.85em);
+        color: var(--color-text-muted);
+      }
+      .wqox_maih {
+        --context: footer;
+        text-align: start;
+        display: grid;
+        grid-template-columns: minmax(0, 1.6fr) repeat(2, minmax(0, 1fr));
+        gap: var(--section-space) calc(var(--section-space) * 1.5);
+        align-items: start;
+        @media screen and (width <= 768px) {
+          grid-template-columns: minmax(0, 1fr);
+          gap: var(--section-space);
+        }
+        .brand {
+          display: grid;
+          gap: calc(var(--content-space) * 0.4);
+        }
+
+        .course {
+          margin: 0;
+          max-inline-size: none;
+          font-weight: var(--font-weight--semi-bold);
+
+          a {
+            color: var(--color-text);
+            text-decoration: none;
+
+            &:is(:hover, :focus-visible) {
+              color: var(--color-link-hover);
+            }
+          }
+        }
+
+        .meta {
+          margin: 0;
+          color: var(--color-text-muted);
+          font-size: max(var(--base-font-size), 0.85em);
+        }
+
+        .label {
+          margin: 0 0 calc(var(--content-space) * 0.5);
+          font-size: var(--font-size-6);
+          font-weight: var(--font-weight--semi-bold);
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: var(--color-text-muted);
+        }
+
+        ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+
+          display: flex;
+          flex-direction: column;
+          align-items: start;
+          gap: calc(var(--content-space) * 0.35);
+
+          @media screen and (width <= 768px) {
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: baseline;
+            column-gap: calc(var(--content-space) * 1.25);
+            row-gap: calc(var(--content-space) * 0.25);
+          }
+        }
+
+        li {
+          font-size: 1em;
+        }
+
+        nav.group a {
+          display: inline-block;
+          padding-block: 0.2em;
+          font-size: max(var(--base-font-size), 1em);
+          color: inherit;
+          text-decoration: none;
+
+          &:is(:hover, :focus-visible) {
+            color: var(--color-link-hover);
+          }
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <a href="#main-content" id="to-content" class="sr-only">Skip to content</a>
+
+    <header id="header" class="woorkyj9o">
+      <div class="container">
+        <div class="identity">
+          <p class="eyebrow separators">
+            <span>Example College</span>
+            <span>Fall 2026</span>
+          </p>
+
+          <p class="course-title">
+            <a href="/course-kit/preview/25/components/"><span class="code">CS101</span> <span class="name">Introduction to Web Publishing</span></a>
+          </p>
+          <p class="meta separators">
+            <span>Tuesday &amp; Thursday</span>
+            <span>10:00AM–11:15AM</span>
+            <span>Science Hall 210</span>
+          </p>
+        </div>
+        <div class="links">
+          <nav data-context="hero" column="" aria-label="Site" class="waz1ptg-h">
+            <ul role="list">
+              <li>
+                <a href="/course-kit/preview/25/components/#syllabus">Syllabus</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+      <section aria-labelledby="course-now-heading" data-course-now="" hidden="" class="course-now screen-only wxkk88cxd">
+        <h2 id="course-now-heading" class="sr-only">Where the course is</h2>
+        <div data-now-card="" hidden="" class="now-card on-accent">
+          <p data-now-label="" class="label"></p>
+          <p data-now-when="" class="when"></p>
+          <p data-now-title="" class="topic"></p>
+          <p class="actions">
+            <a data-now-slides="" hidden="" class="primary"><span>Open the slides</span> <span aria-hidden="true">→</span></a>
+            <a data-now-week="" class="secondary">See the week</a>
+          </p>
+        </div>
+        <div data-coming-up="" class="coming-up">
+          <h2>Coming up</h2>
+          <ul role="list" data-coming-list=""></ul>
+          <p data-coming-empty="" hidden="" class="empty">Nothing else is due this term.</p>
+          <p>
+            <a href="/course-kit/preview/25/components/schedule/"><span>Full schedule</span> <span aria-hidden="true">→</span></a>
+          </p>
+        </div>
+        <div data-progress="" class="progress">
+          <h2>Progress</h2>
+          <p data-progress-count="" role="status" class="count"></p>
+          <ol role="list">
+            <li data-week-dates="2026-08-25 2026-08-27">
+              <a href="/course-kit/preview/25/components/schedule/#week-1">
+                <span aria-hidden="true" class="bar"></span>
+                <span class="name">Week 1</span>
+                <span data-state="" class="state"></span>
+              </a>
+            </li>
+            <li data-week-dates="2026-09-01 2026-09-03">
+              <a href="/course-kit/preview/25/components/schedule/#week-2">
+                <span aria-hidden="true" class="bar"></span>
+                <span class="name">Week 2</span>
+                <span data-state="" class="state"></span>
+              </a>
+            </li>
+            <li data-week-dates="2026-09-08 2026-09-10">
+              <a href="/course-kit/preview/25/components/schedule/#week-3">
+                <span aria-hidden="true" class="bar"></span>
+                <span class="name">Week 3</span>
+                <span data-state="" class="state"></span>
+              </a>
+            </li>
+          </ol>
+        </div>
+        <script type="application/json" data-course-now-data="">
+          {
+            "meetings": [
+              { "iso": "2026-08-25", "week": 1, "weekday": "Tuesday", "date": "Aug 25", "title": "Welcome and how the course runs", "slides": "" },
+              { "iso": "2026-08-27", "week": 1, "weekday": "Thursday", "date": "Aug 27", "title": "Welcome and how the course runs", "slides": "" },
+              { "iso": "2026-09-01", "week": 2, "weekday": "Tuesday", "date": "Sep 1", "title": "Writing HTML", "slides": "" },
+              { "iso": "2026-09-03", "week": 2, "weekday": "Thursday", "date": "Sep 3", "title": "Writing HTML", "slides": "" },
+              { "iso": "2026-09-08", "week": 3, "weekday": "Tuesday", "date": "Sep 8", "title": "Styling with CSS", "slides": "" },
+              { "iso": "2026-09-10", "week": 3, "weekday": "Thursday", "date": "Sep 10", "title": "Test 1", "slides": "" }
+            ],
+            "deadlines": [{ "iso": "2026-09-10", "time": "10:00AM", "sort": "2026-09-10T10:00", "title": "Test 1", "kind": "test", "label": "Thu, Sep 10, 10:00AM", "week": 3 }]
+          }
+        </script>
+      </section>
+
+      <article class="content-column wide wq1ulaw1z">
+        <header class="course-header">
+          <eyebrow class="print-only eyebrow">
+            <p class="eyebrow print-only">Fall 2026</p>
+          </eyebrow>
+          <h1 class="print-only"><span>CS101</span>: <span>Introduction to Web Publishing</span></h1>
+          <p class="lede">An introduction to publishing on the web: writing pages in HTML, styling them with CSS, and putting them online.</p>
+          <p>
+            <strong>Prerequisites:</strong>
+            <span>None</span>
+          </p>
+        </header>
+
+        <section id="approach" aria-labelledby="approach-heading">
+          <h2 id="approach-heading">How this section is taught</h2>
+          <p>Every class mixes a short talk with time to build. You learn by making a small site that grows all term.</p>
+        </section>
+
+        <section id="instructor" aria-labelledby="instructor-heading" class="wvs7ubxo3">
+          <div class="who">
+            <div class="facts-column">
+              <h2 id="instructor-heading">Your instructor</h2>
+              <dl class="facts">
+                <div class="name">
+                  <dt class="sr-only">Name</dt>
+                  <dd>
+                    <strong><span>Dr. Sam Example</span></strong>
+                  </dd>
+                </div>
+                <div>
+                  <dt>Office</dt>
+                  <dd>Science Hall 210</dd>
+                </div>
+                <div>
+                  <dt>Office hours</dt>
+                  <dd>
+                    <ul role="list">
+                      <li>Tuesday and Thursday 1:00PM–2:30PM</li>
+                      <li>or by appointment</li>
+                    </ul>
+                  </dd>
+                </div>
+                <div>
+                  <dt>Email</dt>
+                  <dd><a data-email="c2FtLmV4YW1wbGVAZXhhbXBsZS5lZHU="></a></dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </section>
+
+        <section id="syllabus" aria-labelledby="syllabus-heading">
+          <h2 id="syllabus-heading">Syllabus</h2>
+
+          <article>
+            <h3>Learning outcomes</h3>
+            <p>Upon completing this course students will be able to:</p>
+            <ul>
+              <li>Write well-structured HTML pages.</li>
+              <li>Style a page with CSS so it works on a phone and a laptop.</li>
+              <li>Publish a small site and keep it up to date.</li>
+            </ul>
+          </article>
+
+          <article>
+            <h3>Text</h3>
+
+            <p><strong>Required:</strong> <span>None. Every reading is free and online.</span></p>
+            <ol>
+              <li>Each week's readings are linked from the schedule.</li>
+            </ol>
+          </article>
+
+          <article>
+            <h3>Technology</h3>
+            <p><span>Bring a laptop meeting the minimum specifications specified by Example College to class every day.</span> <span>You need a reliable internet connection and a free GitHub account.</span> <span>Brightspace access is required.</span></p>
+          </article>
+
+          <article>
+            <h3 id="coursework">Coursework</h3>
+            <div class="course-item">
+              <h4><span>Homework</span> <span class="weight screen-only">40%</span></h4>
+              <p>Weekly practice, posted in your course site and due before the next class.</p>
+            </div>
+            <div class="course-item">
+              <h4><span>Tests</span> <span class="weight screen-only">40%</span></h4>
+              <p>Two tests during the term.</p>
+            </div>
+            <div class="course-item">
+              <h4><span>Final exam</span> <span class="weight screen-only">20%</span></h4>
+              <p>A short exam in the College's exam period.</p>
+            </div>
+          </article>
+
+          <article>
+            <h3 id="grading">Grading</h3>
+
+            <div class="wu6bknhkr">
+              <table>
+                <caption>
+                  Grade weighting
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Category</th>
+                    <th scope="col">Weight</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Homework</td>
+                    <td>40%</td>
+                  </tr>
+                  <tr>
+                    <td>Tests</td>
+                    <td>40%</td>
+                  </tr>
+                  <tr>
+                    <td>Final exam</td>
+                    <td>20%</td>
+                  </tr>
+                </tbody>
+              </table>
+              <table>
+                <caption>
+                  Grading scale
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Grade</th>
+                    <th scope="col">Weighted average</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>A</td>
+                    <td>
+                      <span>90 and above</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>B</td>
+                    <td>
+                      <span>80 and above</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>C</td>
+                    <td>
+                      <span>70 and above</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>D</td>
+                    <td>
+                      <span>60 and above</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>F</td>
+                    <td>
+                      <span>below 60</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article>
+            <h3 id="key-dates">Key dates</h3>
+            <ul>
+              <li><strong>Classes begin</strong><span class="print-only"> — </span><span>Tuesday, August 25, 2026</span></li>
+              <li><strong>Last day to add or drop</strong><span class="print-only"> — </span><span>Tuesday, September 1, 2026</span></li>
+              <li><strong>Thanksgiving Recess</strong><span class="print-only"> — </span><span>Thursday, November 26, 2026</span></li>
+              <li><strong>Last day of classes</strong><span class="print-only"> — </span><span>Thursday, December 10, 2026</span></li>
+              <li><strong>Final examination period</strong><span class="print-only"> — </span><span>December 14–18, 2026</span></li>
+            </ul>
+          </article>
+        </section>
+
+        <section id="schedule" aria-labelledby="schedule-heading">
+          <h2 id="schedule-heading">Schedule &amp; class resources</h2>
+          <p>
+            <span>This is a proposed outline of topics and is subject to change. Any changes will be announced in class.</span>
+            <span>Each week lists what to read before its first meeting and the resources posted after class.</span>
+            <span>All assignments will be posted in Brightspace.</span>
+
+            <span>The final exam falls in the exam period (December 14–18, 2026); the exact date and time will be announced in class.</span>
+          </p>
+          <div class="print-only">
+            <p>
+              <span>This document omits the week-by-week schedule, which may be adjusted during the term.</span>
+            </p>
+          </div>
+
+          <div data-today-host="meetings" class="schedule-weeks wuaoycijn">
+            <div data-schedule-tools="" hidden="" class="schedule-tools screen-only">
+              <p data-schedule-status="" role="status" class="schedule-status"></p>
+              <button type="button" data-hide-past="" aria-pressed="false" class="hide-past">Hide past weeks</button>
+            </div>
+            <section data-this-week="" aria-labelledby="this-week-heading" hidden="" class="this-week screen-only">
+              <header class="this-head">
+                <p data-this-label="" class="label">This week</p>
+                <h3 id="this-week-heading"><a href="#" data-this-link=""></a> <span data-this-dates="" class="week-of"></span></h3>
+              </header>
+              <ol role="list" data-this-days="" class="this-days"></ol>
+              <div data-this-groups="" hidden="" class="this-groups">
+                <div data-this-read="" hidden="" class="group">
+                  <p class="label">Read</p>
+                  <ul role="list"></ul>
+                </div>
+                <div data-this-due="" hidden="" class="group">
+                  <p class="label">Due this week</p>
+                  <ul role="list"></ul>
+                </div>
+              </div>
+            </section>
+            <ul aria-label="Key to due items" role="list" class="due-key">
+              <li><span data-kind="test" class="due-chip">Test</span> <span>graded</span></li>
+            </ul>
+            <section id="week-1" aria-labelledby="week-1-heading" data-week-dates="2026-08-25 2026-08-27" class="week">
+              <header class="week-head">
+                <h3 id="week-1-heading">Week 1</h3>
+                <p class="week-of">Aug 25–27</p>
+              </header>
+              <div aria-hidden="true" class="week-cols screen-only">
+                <span>Class</span>
+                <span>Topics</span>
+                <span>For this class</span>
+              </div>
+              <ol role="list" class="meetings">
+                <li data-today-scope="" class="meeting">
+                  <p data-date="2026-08-25" class="when">
+                    <span class="weekday">Tuesday</span>
+                    <span class="date">Aug 25</span>
+                  </p>
+                  <div class="about">
+                    <ul role="list" class="topics">
+                      <li>Welcome and how the course runs</li>
+                      <li>How the web works</li>
+                    </ul>
+                  </div>
+                </li>
+                <li data-today-scope="" class="meeting">
+                  <p data-date="2026-08-27" class="when">
+                    <span class="weekday">Thursday</span>
+                    <span class="date">Aug 27</span>
+                  </p>
+                  <div class="about">
+                    <ul role="list" class="topics">
+                      <li>Welcome and how the course runs</li>
+                      <li>How the web works</li>
+                    </ul>
+                  </div>
+                </li>
+              </ol>
+              <footer class="week-resources">
+                <p class="label">This week’s resources</p>
+                <ul role="list">
+                  <li data-reading="">
+                    <a href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/How_the_Web_works">MDN: How the web works</a>
+                  </li>
+                </ul>
+              </footer>
+            </section>
+            <section id="week-2" aria-labelledby="week-2-heading" data-week-dates="2026-09-01 2026-09-03" class="week">
+              <header class="week-head">
+                <h3 id="week-2-heading">Week 2</h3>
+                <p class="week-of">Sep 1–3</p>
+              </header>
+              <div aria-hidden="true" class="week-cols screen-only">
+                <span>Class</span>
+                <span>Topics</span>
+                <span>For this class</span>
+              </div>
+              <ol role="list" class="meetings">
+                <li data-today-scope="" class="meeting">
+                  <p data-date="2026-09-01" class="when">
+                    <span class="weekday">Tuesday</span>
+                    <span class="date">Sep 1</span>
+                  </p>
+                  <div class="about">
+                    <ul role="list" class="topics">
+                      <li>Writing HTML</li>
+                      <li>Headings, lists and links</li>
+                    </ul>
+                  </div>
+                </li>
+                <li data-today-scope="" class="meeting">
+                  <p data-date="2026-09-03" class="when">
+                    <span class="weekday">Thursday</span>
+                    <span class="date">Sep 3</span>
+                  </p>
+                  <div class="about">
+                    <ul role="list" class="topics">
+                      <li>Writing HTML</li>
+                      <li>Headings, lists and links</li>
+                    </ul>
+                  </div>
+                </li>
+              </ol>
+              <footer class="week-resources">
+                <p class="label">This week’s resources</p>
+                <ul role="list">
+                  <li data-reading="">
+                    <a href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics">MDN: HTML basics</a>
+                    <span class="check">3 questions, due by the next class</span>
+                  </li>
+                </ul>
+              </footer>
+            </section>
+            <section id="week-3" aria-labelledby="week-3-heading" data-week-dates="2026-09-08 2026-09-10" class="week">
+              <header class="week-head">
+                <h3 id="week-3-heading">Week 3</h3>
+                <p class="week-of">Sep 8–10</p>
+              </header>
+              <div aria-hidden="true" class="week-cols screen-only">
+                <span>Class</span>
+                <span>Topics</span>
+                <span>For this class</span>
+              </div>
+              <ol role="list" class="meetings">
+                <li data-today-scope="" class="meeting">
+                  <p data-date="2026-09-08" class="when">
+                    <span class="weekday">Tuesday</span>
+                    <span class="date">Sep 8</span>
+                  </p>
+                  <div class="about">
+                    <ul role="list" class="topics">
+                      <li>Styling with CSS</li>
+                    </ul>
+                  </div>
+                </li>
+                <li data-today-scope="" class="meeting">
+                  <p data-date="2026-09-10" class="when">
+                    <span class="weekday">Thursday</span>
+                    <span class="date">Sep 10</span>
+                  </p>
+                  <div class="about">
+                    <ul role="list" class="topics">
+                      <li>Test 1</li>
+                    </ul>
+                  </div>
+                  <div class="for-class">
+                    <div data-group="due" class="group">
+                      <p class="label">Due</p>
+                      <ul role="list">
+                        <li data-kind="test" class="due-item">
+                          <span data-kind="test" class="due-chip">Test</span>
+
+                          <span>Test 1</span>
+                          <span class="check">Thu, Sep 10, 10:00AM</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              </ol>
+            </section>
+          </div>
+        </section>
+      </article>
+
+      <section aria-labelledby="policies-heading" class="content-column">
+        <h2 id="policies-heading">Policies</h2>
+        <div class="disclosures">
+          <details id="policy-attendance" open="">
+            <summary>Attendance</summary>
+            <p>Replace this with your attendance policy: what is expected and what happens when you miss class.</p>
+          </details>
+          <details id="policy-honorCode" open="">
+            <summary>Honor Code</summary>
+            <p>Replace this with your college's approved honor code statement, or link to it.</p>
+          </details>
+          <details id="policy-dei" open="">
+            <summary>Diversity, Equity, and Inclusion</summary>
+            <p>Replace this with your college's approved statement.</p>
+          </details>
+          <details id="policy-disabilities" open="">
+            <summary>Accessibility</summary>
+            <p>Replace this with your college's approved statement and the disability services contact.</p>
+          </details>
+          <details id="policy-titleIX" open="">
+            <summary>Title IX</summary>
+            <p>Replace this with your college's approved statement.</p>
+          </details>
+          <details id="policy-inclementWeather" open="">
+            <summary>Inclement Weather</summary>
+            <p>Replace this with your college's inclement weather policy.</p>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wqox_maih">
+        <div class="brand">
+          <p class="course">
+            <a href="/course-kit/preview/25/components/"><span>CS101</span>: <span>Introduction to Web Publishing</span></a>
+          </p>
+          <p class="meta separators">
+            <span>Example College</span>
+            <span>Fall 2026</span>
+          </p>
+
+          <span class="wwkwz-tyb">©&nbsp;<span>2026</span> <span class="no-wrap">Cassondra Roberts</span></span>
+        </div>
+        <div class="group">
+          <p id="footer-pages" class="label">Pages</p>
+
+          <nav data-context="footer" column="" aria-labelledby="footer-pages" class="waz1ptg-h">
+            <ul role="list">
+              <li>
+                <a href="/course-kit/preview/25/components/lessons/">Lesson Plans</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <nav aria-labelledby="footer-policies" class="group">
+          <p id="footer-policies" class="label">Policies</p>
+          <ul role="list">
+            <li>
+              <a href="/course-kit/preview/25/components/#policy-$schema"></a>
+            </li>
+            <li>
+              <a href="/course-kit/preview/25/components/#policy-attendance">Attendance</a>
+            </li>
+            <li>
+              <a href="/course-kit/preview/25/components/#policy-honorCode">Honor Code</a>
+            </li>
+            <li>
+              <a href="/course-kit/preview/25/components/#policy-dei">Diversity, Equity, and Inclusion</a>
+            </li>
+            <li>
+              <a href="/course-kit/preview/25/components/#policy-disabilities">Accessibility</a>
+            </li>
+            <li>
+              <a href="/course-kit/preview/25/components/#policy-titleIX">Title IX</a>
+            </li>
+            <li>
+              <a href="/course-kit/preview/25/components/#policy-inclementWeather">Inclement Weather</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <script type="application/json" id="copy-data">
+        {
+          "common": { "sep": " · " },
+          "nav": { "site": "Site", "syllabus": "Syllabus", "contact": "Contact", "openSource": "Open source" },
+          "code": {
+            "copy": "Copy code",
+            "copied": "Copied",
+            "selected": "Code selected. Press your copy shortcut.",
+            "plain": "Code",
+            "languages": {
+              "bash": "Terminal",
+              "sh": "Terminal",
+              "shell": "Terminal",
+              "zsh": "Terminal",
+              "console": "Terminal",
+              "shellsession": "Terminal",
+              "css": "CSS",
+              "scss": "SCSS",
+              "html": "HTML",
+              "markup": "HTML",
+              "webc": "WebC",
+              "njk": "Nunjucks",
+              "xml": "XML",
+              "svg": "SVG",
+              "js": "JavaScript",
+              "javascript": "JavaScript",
+              "jsx": "JSX",
+              "ts": "TypeScript",
+              "typescript": "TypeScript",
+              "json": "JSON",
+              "md": "Markdown",
+              "markdown": "Markdown",
+              "php": "PHP",
+              "py": "Python",
+              "python": "Python",
+              "java": "Java",
+              "sql": "SQL",
+              "http": "HTTP",
+              "yaml": "YAML",
+              "yml": "YAML",
+              "text": "Text"
+            }
+          },
+          "home": {
+            "heading": "Where the course is",
+            "todayLabel": "Today's class",
+            "nextLabel": "Next class",
+            "firstLabel": "First class",
+            "when": "Week {week} · {weekday}, {date}",
+            "openSlides": "Open the slides",
+            "seeWeek": "See the week",
+            "comingUp": "Coming up",
+            "fullSchedule": "Full schedule",
+            "nothingDue": "Nothing else is due this term.",
+            "dueToday": "Today",
+            "dueTomorrow": "Tomorrow",
+            "dueInDays_one": "In {count} day",
+            "dueInDays_other": "In {count} days",
+            "progress": "Progress",
+            "weeksDone": "{done} of {total} weeks done",
+            "week": "Week {week}",
+            "stateDone": "Done",
+            "stateNow": "Now"
+          },
+          "schedule": {
+            "thisWeek": "This week",
+            "upNext": "Up next",
+            "read": "Read",
+            "dueThisWeek": "Due this week",
+            "today": "Today",
+            "next": "Next",
+            "stateDone": "Done",
+            "stateNow": "Now",
+            "hidePast": "Hide past weeks",
+            "weeksDone": "{done} of {total} weeks done.",
+            "pastHidden_one": "{count} finished week hidden.",
+            "pastHidden_other": "{count} finished weeks hidden.",
+            "weekHeading": "Week {week}",
+            "colClass": "Class",
+            "colTopics": "Topics",
+            "colFor": "For this class",
+            "readBefore": "Read before class",
+            "due": "Due",
+            "dueOn": "due {when}",
+            "materials": "Materials",
+            "slides": "Slides",
+            "addendum": "Addendum",
+            "weekResources": "This week’s resources",
+            "noClass": "No class — {reason}",
+            "substitution": "Runs a {weekday} schedule",
+            "dueKeyLabel": "Key to due items",
+            "graded": "graded",
+            "notGraded": "not graded",
+            "dueKindTest": "Test",
+            "dueKindGraded": "Graded",
+            "dueKindReading": "Reading check",
+            "dueKindPractice": "Practice",
+            "finalExam": "Final exam"
+          },
+          "glossary": {
+            "groupBy": "Group by",
+            "byAz": "A to Z",
+            "byTest": "Test",
+            "byMeeting": "Class meeting",
+            "mode": "Mode",
+            "review": "Review",
+            "flashcards": "Flashcards",
+            "search": "Search terms",
+            "clear": "Clear",
+            "clearSearch": "Clear search",
+            "filterSummary": "Filter by test or {reading}",
+            "filtersOn": "({count} on)",
+            "count": "{shown} of {total} terms",
+            "clearFilters": "Clear filters",
+            "removeFilter": "Remove {kind} filter: {label}",
+            "meetingChip": "Class meeting: {label}",
+            "taughtIn": "Taught in",
+            "slideRef": "Week {week} · {weekday}, slide {slide}",
+            "example": "Example",
+            "known": "✓ known",
+            "noMatch": "No terms match.",
+            "noMatchHint": "Clear the search or a filter to see more.",
+            "noMatchStudy": "Clear the search or a filter to study more.",
+            "terms_one": "{count} term",
+            "terms_other": "{count} terms",
+            "card": "Card {n} of {total}",
+            "toStudy": "{count} to study",
+            "knownOf": "{known} of {total} known",
+            "shuffle": "Shuffle",
+            "defFirst": "Definition first",
+            "resetKnown": "Reset known",
+            "knownMeter": "Known terms",
+            "allKnown": "You know every card in this set.",
+            "markedKnown": "{known} of {total} marked known.",
+            "startOver": "Start over with the ones I know",
+            "showDefinition": "Show definition",
+            "showTerm": "Show term",
+            "iKnow": "I know this",
+            "later": "Show me again later",
+            "prev": "← Previous",
+            "next": "Next →",
+            "hint": "Space reveals · arrows move",
+            "defShown": "Definition shown for {term}",
+            "symbols": "Symbols",
+            "glossary": "Glossary",
+            "courseGlossary": "Course glossary",
+            "slidesOnly": "Slides only",
+            "finalExam": "Final exam",
+            "reading": "Reading",
+            "chapter": "Chapter",
+            "section": "Section",
+            "unit": "Unit",
+            "module": "Module",
+            "lesson": "Lesson",
+            "termsFromClassEach": "terms from class. Each carries tags for its test, its {reading} and the meeting that taught it. Group by any of them, search, or narrow the list to what you are studying."
+          },
+          "practice": { "colSheet": "Practice sheet", "colFor": "For", "caption": "Every practice sheet, with what it is for", "empty": "No practice sheets posted yet." },
+          "syllabus": {
+            "due": "Due:",
+            "projectDue": "{date}, {time}",
+            "projectPage": "Full requirements, milestone dates, and the grading rubric are on {link}.",
+            "projectPageLink": "the project page",
+            "syllabus": "Syllabus",
+            "learningOutcomes": "Learning outcomes",
+            "uponCompletingThisCourse": "Upon completing this course students will be able to:",
+            "additionalOutcomesInThis": "Additional outcomes in this section",
+            "text": "Text",
+            "noTextIsRequired": "No text is required.",
+            "required": "Required:",
+            "technology": "Technology",
+            "bringALaptopMeeting": "Bring a laptop meeting the minimum specifications specified by {institution} to class every day.",
+            "theCollege": "the college",
+            "accessIsRequired": "{lms} access is required.",
+            "coursework": "Coursework",
+            "exam": "Exam:",
+            "points": "{display}, {points} points",
+            "atTheLastClassMeeting": "at the last class meeting, {lastMeeting}",
+            "grading": "Grading",
+            "keyDates": "Key dates",
+            "thisSectionsFinalExam": "This section's final exam",
+            "classStart": "{days} at {time}"
+          },
+          "courseSummary": {
+            "projectDue": "The final project is due {when}; its milestones and rubric are on {link}.",
+            "projectDueShort": "The final project is due {when}.",
+            "projectPageLink": "the project page",
+            "howThisSectionIs": "How this section is taught",
+            "scheduleClassResources": "Schedule &amp; class resources",
+            "prerequisites": "Prerequisites:",
+            "thisIsAProposed": "This is a proposed outline of topics and is subject to change. Any changes will be announced in class.",
+            "eachWeekListsWhatTo": "Each week lists what to read before its first meeting and the resources posted after class.",
+            "allAssignmentsWillBe": "All assignments will be posted in {lms}.",
+            "theFinalExamFalls": "The final exam falls in the exam period ({period}); the exact date and time will be announced in class.",
+            "thisSectionsFinalExamIs": "This section's final exam is {slot} — see the {link} section.",
+            "coursework": "Coursework",
+            "thisDocumentOmitsTheWeekbyweek": "This document omits the week-by-week schedule, which may be adjusted during the term{live}.",
+            "theLiveScheduleIsPublished": "; the live schedule is published at {url}"
+          },
+          "worksheet": {
+            "notice": "Nothing here is recorded or submitted.",
+            "noticeBody": "Your answers are saved in this browser only and go nowhere else. Checking an answer shows you the reasoning and the source it came from.",
+            "termsHeading": "Terms to know",
+            "termsHint": "Select a term for its definition, and a link to the source it comes from.",
+            "termSource": "",
+            "citeHeading": "Where this comes from",
+            "citeLabel": "Where this comes from, question",
+            "chooseOne": "Choose one answer",
+            "checkAll": "See results",
+            "resetAll": "Clear my answers",
+            "checkSection": "Check section",
+            "resetSection": "Clear section",
+            "section": "Section",
+            "wordBank": "Word bank",
+            "answer": "Answer:",
+            "showAnswer": "Show the answer",
+            "checkYourself": "Check yourself",
+            "verdict": "Verdict",
+            "judgeLine": "Select the line that causes the problem",
+            "judgeNoLine": "No line — it is fine as written",
+            "notGraded": "Not graded",
+            "navHeading": "Questions",
+            "resultsHeading": "Results",
+            "retryMissed": "Try missed questions",
+            "scoreOf": "of {total}",
+            "statusRight": "Correct",
+            "statusWrong": "Try again",
+            "statusPartial": "Unfinished",
+            "statusUnattempted": "Unattempted",
+            "statusAnswered": "Not checked",
+            "statusSelf": "Check yourself",
+            "tallyCorrect": "{right} of {total} correct",
+            "tallyWrong": "{count} to try again",
+            "tallyPartial": "{count} unfinished",
+            "tallyUnattempted": "{count} unattempted",
+            "tallySelf": "{count} to check yourself",
+            "feedbackRight": "Correct.",
+            "feedbackRightAll": "Correct: all {total} parts.",
+            "feedbackParts": "{right} of {total} parts correct",
+            "feedbackBlank": "{count} left blank",
+            "feedbackUnattempted": "Unattempted.",
+            "retryCount_one": "{count} question to try again",
+            "retryCount_other": "{count} questions to try again",
+            "confirmClearAll": "Clear every answer on this worksheet? This can't be undone.",
+            "confirmClearSection": "Clear every answer in this section? This can't be undone.",
+            "checkOne": "Check answer",
+            "restored": "Restored your answers from {when}."
+          },
+          "siteFooter": { "pages": "Pages", "policies": "Policies" },
+          "courseDocuments": { "additionalResources": "Additional resources" },
+          "policies": { "policies": "Policies", "readTheFullPolicy": "Read the full policy" },
+          "grading": { "gradeWeighting": "Grade weighting", "category": "Category", "weight": "Weight", "gradingScale": "Grading scale", "grade": "Grade", "weightedAverage": "Weighted average", "andAbove": "{min} and above", "below": "below {max}" },
+          "scheduleOverview": { "schedule": "Schedule", "keyDates": "Key dates", "jumpTo": "Jump to", "tests": "Tests", "finalProject": "Final project", "finalExam": "Final exam", "exam": "Exam", "noClass": "No class" },
+          "slideTimetable": { "everySlideDeckFor": "Every slide deck for this section, one row per week and one column per meeting day", "week": "Week", "noMeeting": "No meeting", "noClass": "No class: {reason}", "noDeck": "No deck", "draftNotInThe": "Draft, not in the student build", "speakerNotes": "Speaker notes", "addendumDraftNotIn": "Addendum draft, not in the student build", "addendumSpeakerNotes": "Addendum speaker notes" },
+          "tableRubric": { "criteria": "Criteria", "points": "Points", "pointsEach": "{points} points", "totalPointsPossible": "Total points possible", "milestone": "Milestone", "due": "Due", "whatIsGraded": "What is graded" },
+          "demoWeeks": { "lessonPlan": "Lesson plan", "shownAgainFirstUsed": "Shown again, first used {date}", "downloadTheHtmlFile": "Download the HTML file", "usedAgain": "Used again {dates}" },
+          "instructor": { "yourInstructor": "Your instructor", "name": "Name", "office": "Office", "officeHours": "Office hours", "email": "Email", "message": "Message", "sendMeAMessage": "Send me a message", "blog": "Blog", "instructor": "Instructor" },
+          "codepenEmbed": { "theCode": "The code", "html": "HTML", "css": "CSS", "javascript": "JavaScript", "htmlSource": "HTML source", "cssSource": "CSS source", "javascriptSource": "JavaScript source" },
+          "base": { "skipToContent": "Skip to content" },
+          "deck": { "skipToFirstSlide": "Skip to first slide", "slides": "Slides", "previousSlide": "Previous slide", "nextSlide": "Next slide", "cycleColorTheme": "Cycle color theme", "toggleFullscreen": "Toggle fullscreen" },
+          "document": { "contents": "Contents" },
+          "lesson": {
+            "lessonPlans": "Lesson plans",
+            "onePlanPerClass": "One plan per class meeting ({time}), generated from the course schedule and the academic calendar. Holidays are shown in sequence so the term reads day by day.",
+            "slideIndex": "Slide index",
+            "everyDeckInMeeting": "{link} — every deck in meeting order. Speaker notes are on a separate printable sheet per deck, linked as \"Notes\" below.",
+            "exercises": "Exercises",
+            "theBriefAndStarter": "{link} — the brief and starter for each. Exercises due on a meeting are linked from its row below.",
+            "instructorDeadlines": "Instructor deadlines",
+            "dueDate": "Due date",
+            "everyClassMeetingOf": "Every class meeting of the term, in order",
+            "date": "Date",
+            "links": "Links",
+            "topics": "Topics",
+            "runsASchedule": "(runs a {weekday} schedule)",
+            "noClass": "No class — {reason}",
+            "lessonPlan": "Lesson&nbsp;plan",
+            "slides": "Slides",
+            "addendum": "Addendum",
+            "notes": "Notes",
+            "addendumNotes": "Addendum notes",
+            "due": "Due:"
+          },
+          "lessonDay": { "weekDayLesson": "Week {week}, Day {day} — Lesson Plan" },
+          "lessonDetail": {
+            "week": "Week {week}",
+            "weekDay": "Week {week}, Day {day}",
+            "noClass": "No class",
+            "lessonNavigation": "Lesson navigation",
+            "allLessons": "All lessons",
+            "previousDay": "Previous day",
+            "nextDay": "Next day",
+            "classMeetingOfThe": "Class meeting #{meeting} of the term",
+            "noClassOn": "No class on {reason}. Use this day to prep the next lesson or catch up on grading.",
+            "focus": "Focus:",
+            "thisMeetingRunsA": "This meeting runs a {weekday} schedule (college-wide) — plan the substituted day's session, not this weekday's usual rhythm.",
+            "aTestIsScheduledThis": "A test is scheduled this week — confirm day, reserve class time, and remind students at least one meeting ahead.",
+            "thisWeeksTopics": "This week's topics",
+            "beforeClass": "Before class",
+            "reviewTheReadingsSee": "Review the readings (see materials below)",
+            "prepareupdateSlidesAndLivedemo": "Prepare/update slides and live-demo code",
+            "printOrOpenThe": "Print or open the {link}",
+            "speakerNotesSheet": "speaker notes sheet",
+            "stageStarterFilesOr": "Stage starter files or lab handout if needed",
+            "checkForStudentQuestions": "Check {lms} for student questions or submissions",
+            "lessonOutline": "Lesson outline",
+            "lessonOutlineMinutes": "Lesson outline ({minutes} minutes)",
+            "time": "Time",
+            "segment": "Segment",
+            "min": "{minutes} min",
+            "afterClass": "After class",
+            "postHandoutsToAnd": "Post handouts to {resources} and link them in {schedule}'s {list} for the week; the slide deck publishes itself from {slides}, so it only needs a link there if students should see it from the schedule",
+            "noteAnythingNotCovered": "Note anything not covered and roll it into the next lesson",
+            "postOrGradeLabhomework": "Post or grade lab/homework in {lms} as needed",
+            "lessonTools": "Lesson tools",
+            "onThisPage": "On this page",
+            "materialsLinks": "Materials &amp; links"
+          },
+          "lessonMaterials": { "slidesForThisMeeting": "Slides for this meeting", "speakerNotes": "speaker notes", "printable": "(printable)", "demosFromThisMeeting": "Demos from this meeting", "exercisesDue": "Exercises due", "readingForThisMeeting": "Reading for this meeting", "due": "due {when}", "deadlinesToAnnounce": "Deadlines to announce", "assignedBeforeThisWeek": "Assigned before this week", "postedForTheClass": "Posted for the class", "nothingPostedForThis": "Nothing posted for this week yet." },
+          "lessons": {
+            "welcomeRecapThePrevious": "Welcome, recap the previous class, open questions",
+            "welcomeIntroductionsHowThe": "Welcome, introductions, how the course runs",
+            "instructionThisWeeksTopics": "Instruction: this week's topics (see above)",
+            "guidedPracticeLabWork": "Guided practice / lab work",
+            "wrapupRecapPreviewNext": "Wrap-up: recap, preview next class, assignment reminders",
+            "buffer": "Buffer",
+            "collegeHoliday": "College holiday",
+            "introduceThisWeeksMaterial": "Introduce this week's material",
+            "continuePracticeAndLab": "Continue, practice, and lab work",
+            "tbd": "TBD"
+          },
+          "term": { "classesBegin": "Classes begin", "collegeHoliday": "College holiday", "lastDayOfClasses": "Last day of classes", "readingDaysNoClasses": "Reading days (no classes or exams)", "finalExaminationPeriod": "Final examination period", "preregistrationForTheNext": "Pre-registration for the next term opens" },
+          "deckNotes": { "speakerNotes": "Speaker notes", "speakerNotesTitle": "Speaker notes: {title}", "weekDay": "Week {week}, Day {day}", "speakerNotesInstructorOnly": "Speaker notes · instructor only", "slideOpenInThe": "Slide {number}, open in the deck", "untitledSlide": "Untitled slide" },
+          "lessonPlans": { "lessonPlans": "Lesson plans", "navTitle": "Lesson Plans" },
+          "markdown": { "permalinkToThisHeading": "Permalink to this heading" },
+          "pdf": { "footer": "{course}: {name} — {term} syllabus · Generated {generated} ({version}) · Page {page} of {pages}" },
+          "themePanel": {
+            "brand": "Brand",
+            "brandColor": "Brand color",
+            "brandColorForText": "Brand color for text",
+            "textOnBrandColor": "Text on brand color",
+            "wayfindingColor": "Wayfinding color",
+            "textOnWayfindingColor": "Text on wayfinding color",
+            "page": "Page",
+            "pageBackground": "Page background",
+            "cardsAndPanels": "Cards and panels",
+            "linesAndBorders": "Lines and borders",
+            "text": "Text",
+            "bodyText": "Body text",
+            "secondaryText": "Secondary text",
+            "links": "Links",
+            "theme": "Theme",
+            "unsavedChanges": "Unsaved changes",
+            "preview": "Preview",
+            "light": "Light",
+            "dark": "Dark",
+            "everyColor": "Every color",
+            "allTokens": "All tokens",
+            "gradient": "Gradient",
+            "addAColor": "Add a color",
+            "undo": "Undo",
+            "reset": "Reset",
+            "save": "Save",
+            "download": "Download",
+            "hideTheThemePanel": "Hide the theme panel",
+            "notACssColor": "Not a CSS color",
+            "cssValue": "{name}, CSS value",
+            "backToTheSaved": "Back to the saved theme.",
+            "thePage": "the page",
+            "theBrandColor": "the brand color",
+            "passes": "passes",
+            "below": "below {minimum} : 1",
+            "contrast": "{ratio} : 1 on {ground}, {verdict}",
+            "color": "Color {n}",
+            "removeColor": "Remove color {n}",
+            "saving": "Saving…",
+            "savedToThe": "Saved to {file}. The site is rebuilding.",
+            "notSaved": "Not saved: {message}",
+            "downloadedPutItIn": "Downloaded. Put it in {folder} to keep it."
+          },
+          "promptCopy": { "copyThisPrompt": "Copy this prompt", "promptCopied": "Prompt copied", "promptCopiedToThe": "Prompt copied to the clipboard.", "promptSelectedPressYour": "Prompt selected — press your copy shortcut." }
+        }
+      </script>
+      <script type="module">
+        /**
+         * <course-now>: the home page's class card, the next due items and the
+         * week-by-week progress track. Everything comes from the schedule data
+         * already on the page; dates compare in the campus zone, as
+         * <today-marker> does. Hidden without the script.
+         */
+        (() => {
+          try {
+            const root = document.querySelector("[data-course-now]");
+            if (!root) return;
+            /** Today in the campus zone, as "YYYY-MM-DD". */
+            const campusToday = () => new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone });
+            const COPY = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
+            /** `t("home", "weeksDone", { done: 3, total: 16 })`; a key with `_one`/`_other` variants is picked by `count`. */
+            const t = (ns, key, vars = {}) => {
+              const table = COPY[ns] ?? {};
+              let text = table[key];
+              if ("count" in vars && `${key}_other` in table) {
+                text = table[`${key}_${new Intl.PluralRules(document.documentElement.lang || "en-US").select(vars.count)}`] ?? table[`${key}_other`];
+              }
+              return String(text ?? "").replace(/\{(\w+)\}/g, (_, name) => String(vars[name] ?? ""));
+            };
+            const today = campusToday();
+            const { meetings, deadlines } = JSON.parse(root.querySelector("[data-course-now-data]").textContent);
+            const DAY_MS = 86_400_000;
+            const day = (iso) => Date.parse(`${iso}T00:00:00Z`);
+            const inDays = (iso) => Math.round((day(iso) - day(today)) / DAY_MS);
+
+            // The class card: today's class, else the next, else (before the term) the first.
+            const next = meetings.find((meeting) => meeting.iso >= today);
+            const card = root.querySelector("[data-now-card]");
+            if (next) {
+              const label = next.iso === today ? "todayLabel" : meetings.some((meeting) => meeting.iso < today) ? "nextLabel" : "firstLabel";
+              root.querySelector("[data-now-label]").textContent = t("home", label);
+              root.querySelector("[data-now-when]").textContent = t("home", "when", { week: next.week, weekday: next.weekday, date: next.date });
+              root.querySelector("[data-now-title]").textContent = next.title;
+              root.querySelector("[data-now-week]").href = `/schedule/#week-${next.week}`;
+              const slides = root.querySelector("[data-now-slides]");
+              if (next.slides) {
+                slides.href = next.slides;
+                slides.hidden = false;
+              }
+              card.hidden = false;
+            }
+
+            // Coming up: a week ahead, at least three, and always the next test.
+            const up = deadlines.filter((item) => item.iso >= today);
+            let shown = up.filter((item) => inDays(item.iso) <= 7);
+            if (shown.length < 3) shown = up.slice(0, 3);
+            shown = shown.slice(0, 6);
+            if (!shown.some((item) => item.kind === "test")) {
+              const test = up.find((item) => item.kind === "test");
+              if (test) shown = [...shown.slice(0, 5), test];
+            }
+            const list = root.querySelector("[data-coming-list]");
+            for (const item of shown) {
+              const row = document.createElement("li");
+              row.dataset.kind = item.kind;
+              const chip = document.createElement("span");
+              chip.className = "due-chip";
+              chip.dataset.kind = item.kind;
+              chip.textContent = t("schedule", `dueKind${item.kind.charAt(0).toUpperCase()}${item.kind.slice(1)}`);
+              const name = document.createElement(item.href ? "a" : "span");
+              if (item.href) name.href = item.href;
+              name.className = "what";
+              name.textContent = item.title;
+              const days = inDays(item.iso);
+              const relative = days <= 0 ? t("home", "dueToday") : days === 1 ? t("home", "dueTomorrow") : t("home", "dueInDays", { count: days });
+              const when = document.createElement("span");
+              when.className = "due";
+              when.textContent = `${item.label}${t("common", "sep")}${relative}`;
+              row.append(chip, " ", name, " ", when);
+              list.append(row);
+            }
+            root.querySelector("[data-coming-empty]").hidden = shown.length > 0;
+
+            // Progress: one bar per week, from each week's class dates.
+            const weeks = [...root.querySelectorAll("[data-progress] li")];
+            let done = 0;
+            for (const week of weeks) {
+              const dates = week.dataset.weekDates.split(/\s+/).filter(Boolean).sort();
+              const state = !dates.length ? "" : dates.at(-1) < today ? "done" : dates[0] <= today ? "now" : "";
+              if (state) week.dataset.state = state;
+              if (state === "done") done += 1;
+              week.querySelector("[data-state]").textContent = state === "done" ? t("home", "stateDone") : state === "now" ? t("home", "stateNow") : "";
+              if (state === "now") week.querySelector("a").setAttribute("aria-current", "step");
+            }
+            root.querySelector("[data-progress-count]").textContent = t("home", "weeksDone", { done, total: weeks.length });
+            root.hidden = false;
+            // The track scrolls sideways when the weeks don't fit: open it
+            // with the current week (or the last finished one) centered.
+            const track = root.querySelector("[data-progress] ol");
+            const active = weeks.find((week) => week.dataset.state === "now") ?? weeks.filter((week) => week.dataset.state === "done").at(-1);
+            if (active && track.scrollWidth > track.clientWidth) {
+              track.scrollLeft = active.offsetLeft - (track.clientWidth - active.offsetWidth) / 2;
+            }
+          } catch {
+            // Never let the card break the scripts bundled after this one.
+          }
+        })();
+        for (const link of document.querySelectorAll("a[data-email]")) {
+          const email = atob(link.dataset.email);
+          link.href = `mailto:${email}`;
+          link.textContent = email;
+        }
+        /**
+         * <today-marker>: flag today's [data-date] elements and give one of them
+         * id="today". See the notes in this component's setup script.
+         */
+        (() => {
+          try {
+            /** Today in the campus zone, as "YYYY-MM-DD". */
+            const campusToday = () => new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone });
+            const COPY = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
+            const t = (ns, key, vars = {}) => {
+              const table = COPY[ns] ?? {};
+              let text = table[key];
+              if ("count" in vars && `${key}_other` in table) {
+                text = table[`${key}_${new Intl.PluralRules(document.documentElement.lang || "en-US").select(vars.count)}`] ?? table[`${key}_other`];
+              }
+              return String(text ?? "").replace(/\{(\w+)\}/g, (_, name) => String(vars[name] ?? ""));
+            };
+            const today = campusToday();
+
+            /** The node that can hold a flag or an anchor: a table row can't, its first cell can. */
+            const holder = (el) => (el instanceof HTMLTableRowElement ? el.cells[0] : el);
+
+            const dated = [...document.querySelectorAll("[data-date]")].map((el) => ({
+              el,
+              dates: (el.dataset.date ?? "").split(/\s+/).filter(Boolean).sort(),
+            }));
+
+            for (const { el, dates } of dated) {
+              if (!dates.includes(today) || el.hasAttribute("data-today")) continue;
+              el.dataset.today = "";
+              el.setAttribute("aria-current", "date");
+              const flag = document.createElement("strong");
+              flag.className = "today-flag";
+              flag.textContent = el.dataset.todayLabel ?? t("schedule", "today");
+              holder(el)?.prepend(flag);
+            }
+
+            if (document.getElementById("today")) return;
+
+            /** Jump target: today's, else the next; the first before the term, the last after it. */
+            const candidates = dated
+              .filter(({ dates }) => dates.length)
+              .map((item) => ({ ...item, scope: item.el.closest("[data-today-scope]") ?? item.el }))
+              .filter(({ scope }) => !scope.matches(".no-class") && !scope.querySelector(".no-class"))
+              .map((item) => ({ ...item, when: item.dates.find((d) => d >= today) ?? item.dates.at(-1) }));
+            if (!candidates.length) return;
+
+            const upcoming = candidates.filter(({ when }) => when >= today);
+            const pool = upcoming.length ? upcoming : candidates;
+            const target = pool.reduce((best, item) => ((upcoming.length ? item.when < best.when : item.when > best.when) ? item : best)).scope;
+
+            if (target.id) {
+              const anchor = document.createElement("span");
+              anchor.id = "today";
+              holder(target)?.prepend(anchor);
+            } else {
+              target.id = "today";
+            }
+
+            // Opened as /page/#today before the target existed: the browser has already missed it.
+            if (location.hash === "#today") document.getElementById("today")?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+          } catch {
+            // Never let the marker break the scripts bundled after it.
+          }
+        })();
+        /**
+         * <schedule-weeks>: mark finished weeks "Done" and the current one "Now",
+         * fill the "This week" card from that week's meetings, and let readers
+         * hide past weeks (every visit starts with all weeks shown). Dates compare
+         * in the campus zone, as <today-marker> does. Without the script every
+         * week shows and the tools stay hidden.
+         */
+        (() => {
+          try {
+            /** Today in the campus zone, as "YYYY-MM-DD". */
+            const campusToday = () => new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone });
+            const COPY = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
+            const t = (ns, key, vars = {}) => {
+              const table = COPY[ns] ?? {};
+              let text = table[key];
+              if ("count" in vars && `${key}_other` in table) {
+                text = table[`${key}_${new Intl.PluralRules(document.documentElement.lang || "en-US").select(vars.count)}`] ?? table[`${key}_other`];
+              }
+              return String(text ?? "").replace(/\{(\w+)\}/g, (_, name) => String(vars[name] ?? ""));
+            };
+            const root = document.querySelector(".schedule-weeks");
+            const tools = root?.querySelector("[data-schedule-tools]");
+            if (!root || !tools) return;
+            const today = campusToday();
+            const weeks = [...root.querySelectorAll(".week[data-week-dates]")].map((el) => ({ el, dates: el.dataset.weekDates.split(/\s+/).filter(Boolean).sort() })).filter(({ dates }) => dates.length);
+            const make = (tag, className, text) => {
+              const el = document.createElement(tag);
+              if (className) el.className = className;
+              if (text) el.textContent = text;
+              return el;
+            };
+            const flag = (el, text, kind) => el.querySelector(".week-head h3")?.after(make("span", `week-flag ${kind}`, text));
+            const current = weeks.find(({ dates }) => dates.at(-1) >= today);
+            for (const week of weeks) {
+              if (week.dates.at(-1) < today) {
+                week.el.dataset.past = "";
+                flag(week.el, t("schedule", "stateDone"), "done");
+              }
+            }
+            const started = Boolean(current && current.dates[0] <= today);
+            if (started) {
+              current.el.dataset.current = "";
+              flag(current.el, t("schedule", "stateNow"), "now");
+            }
+
+            const card = root.querySelector("[data-this-week]");
+            if (current && card) {
+              if (!started) card.querySelector("[data-this-label]").textContent = t("schedule", "upNext");
+              const link = card.querySelector("[data-this-link]");
+              link.href = `#${current.el.id}`;
+              link.textContent = current.el.querySelector(".week-head h3")?.textContent.trim() ?? "";
+              card.querySelector("[data-this-dates]").textContent = current.el.querySelector(".week-of")?.textContent.trim() ?? "";
+
+              // One column per meeting: when, a Today or Next flag, its first topics, its slides.
+              const days = card.querySelector("[data-this-days]");
+              const meetings = [...current.el.querySelectorAll(".meeting")];
+              const isos = meetings.map((meeting) => meeting.querySelector("[data-date]")?.dataset.date ?? "");
+              const next = isos.includes(today) ? "" : isos.filter((iso) => iso > today).sort()[0];
+              meetings.forEach((meeting, index) => {
+                const day = make("li", "this-day");
+                const when = make("p", "when");
+                when.append(make("span", "weekday", meeting.querySelector(".weekday")?.textContent), " ", make("span", "date", meeting.querySelector(".date")?.textContent));
+                if (isos[index] === today) when.append(" ", make("span", "day-flag", t("schedule", "today")));
+                else if (isos[index] && isos[index] === next) when.append(" ", make("span", "day-flag", t("schedule", "next")));
+                day.append(when);
+                const none = meeting.querySelector(".no-class");
+                if (none) day.append(make("p", "no-class", none.textContent.trim()));
+                const topics = [...meeting.querySelectorAll(".topics > li")].slice(0, 2);
+                if (topics.length) {
+                  const list = make("ul", "topics");
+                  list.setAttribute("role", "list");
+                  for (const topic of topics) list.append(make("li", "", topic.textContent.trim()));
+                  day.append(list);
+                }
+                const slides = meeting.querySelector("a[data-slides]");
+                if (slides) {
+                  const line = make("p", "slides");
+                  const copy = slides.cloneNode(true);
+                  copy.removeAttribute("data-slides");
+                  line.append(copy);
+                  day.append(line);
+                }
+                days.append(day);
+              });
+
+              // The week's reading and due items, copied with their labels and chips.
+              const fill = (group, sources) => {
+                const list = group.querySelector("ul");
+                for (const source of sources) list.append(source.cloneNode(true));
+                group.hidden = sources.length === 0;
+                return sources.length;
+              };
+              const read = fill(card.querySelector("[data-this-read]"), [...current.el.querySelectorAll('[data-group="read"] li, .week-resources li[data-reading]')]);
+              const due = fill(card.querySelector("[data-this-due]"), [...current.el.querySelectorAll('[data-group="due"] li')]);
+              card.querySelector("[data-this-groups]").hidden = read + due === 0;
+              card.hidden = false;
+            }
+
+            // One label, "Hide past weeks"; the state is aria-pressed. Not saved: every visit starts with all weeks shown.
+            const button = tools.querySelector("[data-hide-past]");
+            const status = tools.querySelector("[data-schedule-status]");
+            const past = weeks.filter(({ el }) => el.hasAttribute("data-past"));
+            const apply = (hide) => {
+              button.setAttribute("aria-pressed", String(hide));
+              for (const { el } of past) el.hidden = hide;
+              status.textContent = hide ? t("schedule", "pastHidden", { count: past.length }) : t("schedule", "weeksDone", { done: past.length, total: weeks.length });
+            };
+            if (past.length) {
+              apply(false);
+              button.addEventListener("click", () => apply(button.getAttribute("aria-pressed") !== "true"));
+              tools.hidden = false;
+            }
+          } catch {
+            // Never let the marks break the scripts bundled after this one.
+          }
+        })();
+        // Print every disclosure expanded, then restore the reader's own
+        // state (tracked per element — bundle scripts share one module
+        // scope, so no top-level variables).
+        window.addEventListener("beforeprint", () => {
+          for (const details of document.querySelectorAll("details:not([open])")) {
+            details.open = true;
+            details.dataset.printOpened = "";
+          }
+        });
+        window.addEventListener("afterprint", () => {
+          for (const details of document.querySelectorAll("details[data-print-opened]")) {
+            details.open = false;
+            delete details.dataset.printOpened;
+          }
+        });
+      </script>
+    </footer>
+    <script type="module" src="/course-kit/preview/25/components/js/email.js"></script>
+    <script type="module" src="/course-kit/preview/25/components/js/code-copy.js"></script>
+    <theme-panel context="site"></theme-panel>
+    <script type="module" src="/course-kit/preview/25/components/js/theme-panel.js"></script>
+  </body>
+</html>

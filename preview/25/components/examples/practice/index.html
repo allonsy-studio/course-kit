@@ -1,0 +1,2394 @@
+<!doctype html>
+<html lang="en-US" data-timezone="America/New_York">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="color-scheme" content="light dark" />
+
+    <title>Practice worksheet | CS101: Introduction to Web Publishing</title>
+    <meta name="description" content="Course content for Example College." />
+    <meta name="keywords" content="Example College, CS101, Introduction to Web Publishing, syllabus, course schedule, class resources" />
+    <meta name="author" content="Cassondra Roberts" />
+    <meta name="generator" content="Eleventy v3.1.7" />
+
+    <meta name="robots" content="noindex, nofollow" />
+
+    <meta property="og:locale" content="en-US" />
+    <meta property="og:title" content="Practice worksheet" />
+    <meta property="og:url" content="/examples/practice/" />
+    <meta property="og:description" content="Course content for Example College." />
+    <meta property="og:site_name" content="CS101: Introduction to Web Publishing" />
+    <meta name="fediverse:creator" content="@castastrophe@front-end.social" />
+    <meta property="og:type" content="website" />
+
+    <link rel="icon" href="/course-kit/preview/25/components/favicon.svg" type="image/svg+xml" />
+
+    <link rel="preload" href="/course-kit/preview/25/components/fonts/instrument-sans-var.woff2" as="font" type="font/woff2" crossorigin="" />
+
+    <link rel="stylesheet" href="/course-kit/preview/25/components/styles/prism-light.css" media="(prefers-color-scheme: light)" data-prism-theme="light" />
+    <link rel="stylesheet" href="/course-kit/preview/25/components/styles/prism-dark.css" media="(prefers-color-scheme: dark)" data-prism-theme="dark" />
+
+    <link rel="stylesheet" href="/course-kit/preview/25/components/styles/base.css" />
+
+    <style>
+      .eyebrow {
+        font-size: var(--font-size-6);
+        text-transform: uppercase;
+        text-decoration: none;
+        letter-spacing: 0.08em;
+        font-weight: var(--font-weight--semi-bold);
+        color: var(--color-text-muted);
+        margin-block: 0;
+      }
+      .wqbs6of9x {
+        .drag-hint {
+          color: var(--color-text-muted);
+          font-size: 0.9em;
+          margin-block: 0 0.6em;
+        }
+
+        .term-bank {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.4em;
+          list-style: none;
+          margin-block: var(--content-space);
+          padding-inline-start: 0;
+
+          li {
+            font-size: 0.85em;
+          }
+        }
+
+        button {
+          background: var(--color-surface);
+          border: var(--thin-border-width) solid transparent;
+          border-radius: var(--pill-border-radius);
+          color: inherit;
+          cursor: pointer;
+          font: inherit;
+          padding: 0.25em 0.8em;
+
+          &:is(:hover, :focus-visible) {
+            border-color: var(--color-accent);
+          }
+        }
+
+        [popover] {
+          background: var(--color-surface-overlay);
+          border: var(--thin-border-width) solid var(--color-border);
+          border-radius: var(--standard-border-radius);
+          box-shadow: var(--box-shadow);
+          color: var(--color-text);
+          inline-size: min(32rem, calc(100vw - 2 * var(--container-space)));
+          padding: 0.8em 1em;
+
+          p {
+            margin-block: 0 0.5em;
+          }
+
+          .term-name {
+            font-weight: var(--font-weight--semi-bold);
+          }
+
+          a {
+            font-size: 0.9em;
+          }
+        }
+
+        /* A popover opened by a popovertarget button takes that button as its
+		   implicit anchor, so no anchor-name is needed — position-area alone
+		   pins the definition under its own term. Engines without anchor
+		   positioning skip this block and keep the UA's centered popover, which
+		   still works. Week 2's lesson, applied to the page that teaches it. */
+        @supports (position-area: block-end) {
+          [popover]:popover-open {
+            margin: 0.4em 0 0;
+            position: absolute;
+            position-area: block-end span-inline-end;
+            position-try-fallbacks:
+              block-start span-inline-end,
+              block-end span-inline-start,
+              block-start span-inline-start;
+          }
+        }
+      }
+      .wpbhrol4s {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8em;
+        margin-block: var(--content-space);
+        p {
+          color: var(--color-text-muted);
+          margin-block: 0;
+        }
+
+        button {
+          min-block-size: var(--target-min);
+          padding-inline: 1.2em;
+          margin: 0;
+          border-radius: var(--radius-pill);
+          font-weight: var(--font-weight--semi-bold);
+          cursor: pointer;
+        }
+
+        [data-check] {
+          border: var(--border-width) solid var(--color-accent);
+          background-color: var(--color-accent);
+          color: var(--color-on-accent);
+        }
+
+        [data-reset] {
+          border: var(--border-width) solid var(--color-border-strong);
+          background-color: transparent;
+          color: var(--color-text);
+        }
+      }
+      .weowl7-ac {
+        flex: none;
+        details {
+          background: none;
+          border: 0;
+          margin-block: 0;
+          padding: 0;
+          position: relative;
+
+          &[open] summary {
+            background: var(--color-accent);
+            color: var(--color-on-accent);
+            --color-focus-ring: var(--color-on-accent);
+          }
+        }
+
+        summary {
+          background: var(--color-surface);
+          block-size: var(--target-min);
+          border: var(--thin-border-width) solid var(--color-border-strong);
+          border-radius: var(--circle-border-radius);
+          cursor: pointer;
+          font-weight: var(--font-weight--bold);
+          display: grid;
+          inline-size: var(--target-min);
+          place-items: center;
+          line-height: 1;
+          list-style: none;
+          padding: 0;
+          text-align: center;
+
+          &::-webkit-details-marker {
+            display: none;
+          }
+        }
+
+        .cite-body {
+          background: var(--color-surface-overlay);
+          border: var(--thin-border-width) solid var(--color-border);
+          border-radius: var(--standard-border-radius);
+          box-shadow: var(--box-shadow);
+          font-size: 0.9em;
+          inline-size: min(34rem, 80vw);
+          inset-block-start: calc(var(--target-min) + 0.25em);
+          inset-inline-end: 0;
+          padding: 0.8em 1em;
+          position: absolute;
+          z-index: 10;
+
+          p {
+            font-weight: var(--font-weight--semi-bold);
+            margin-block: 0 0.4em;
+          }
+
+          ul {
+            list-style: none;
+            margin-block: 0;
+            padding-inline-start: 0;
+          }
+
+          li + li {
+            margin-block-start: 0.6em;
+          }
+
+          q {
+            color: var(--color-text-muted);
+            display: block;
+            font-style: italic;
+          }
+        }
+
+        @media print {
+          .cite-body {
+            box-shadow: none;
+            inline-size: auto;
+            position: static;
+          }
+        }
+      }
+      .w7lezdw8n {
+        .drag-hint {
+          color: var(--color-text-muted);
+          font-size: 0.9em;
+          margin-block: 0 0.6em;
+        }
+
+        .answer-key {
+          color: var(--color-error);
+          font-size: 0.85em;
+
+          &:not([hidden]) {
+            display: block;
+          }
+
+          a {
+            color: inherit;
+          }
+        }
+
+        .letter {
+          background: var(--color-surface);
+          border-radius: var(--standard-border-radius);
+          display: inline-block;
+          font-family: var(--mono-font);
+          font-weight: var(--font-weight--semi-bold);
+          min-inline-size: 1.7em;
+          padding: 0.05em 0.35em;
+          text-align: center;
+          text-transform: uppercase;
+        }
+
+        .bank {
+          background: var(--color-surface);
+          border-radius: var(--standard-border-radius);
+          list-style: none;
+          padding: 0.6em 0.9em;
+
+          li {
+            display: flex;
+            gap: 0.6em;
+            margin-block: 0.25em;
+
+            &[draggable="true"] {
+              background: var(--color-page);
+              border: var(--thin-border-width) dashed var(--color-border);
+              border-radius: var(--standard-border-radius);
+              cursor: grab;
+              margin-block: 0;
+              padding: 0.15em 0.5em;
+
+              &:active {
+                cursor: grabbing;
+              }
+            }
+
+            &[data-dragging] {
+              opacity: 0.45;
+            }
+          }
+
+          /* With chips to drag, the bank reads better as a wrapped row of
+			   tokens than as a stacked list. */
+          &:has(li[draggable="true"]) {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5em;
+          }
+        }
+
+        .match-items {
+          padding-inline-start: 1.2em;
+
+          label {
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6em;
+          }
+
+          /* The situation gets the room, up to a readable line, with the
+			   select right after it; on a phone they still share a row. */
+          .match-text {
+            flex: 1 1 12em;
+            max-inline-size: 36em;
+          }
+
+          select {
+            flex: none;
+            inline-size: 5em;
+            margin-block: 0.2em;
+          }
+
+          li {
+            &[data-drop] {
+              border: var(--thin-border-width) dashed transparent;
+              border-radius: var(--standard-border-radius);
+              padding-inline: 0.4em;
+
+              &[data-over] {
+                background: var(--color-drop-target);
+                border-color: var(--color-accent);
+              }
+            }
+
+            &[data-dropped] select {
+              border-color: var(--color-accent);
+            }
+
+            &[data-mark="wrong"] .match-text {
+              color: var(--color-error);
+            }
+          }
+        }
+      }
+      .wz9o12pan {
+        .answer-key {
+          color: var(--color-error);
+          font-size: 0.85em;
+
+          &:not([hidden]) {
+            display: block;
+          }
+        }
+
+        .tree-question {
+          display: grid;
+          gap: var(--content-space);
+          grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+        }
+
+        .dom-tree {
+          font-family: var(--mono-font);
+          list-style: none;
+          margin-block: 0;
+          padding-inline-start: 0;
+
+          input {
+            font-family: var(--mono-font);
+          }
+
+          li {
+            margin-block: 0.25em;
+            padding-inline-start: calc(var(--depth, 0) * 1.4em);
+          }
+
+          .node {
+            border: var(--thin-border-width) solid var(--color-border);
+            border-radius: var(--standard-border-radius);
+            display: inline-block;
+            padding: 0.1em 0.6em;
+          }
+
+          .node-blank {
+            border-color: var(--color-accent);
+            border-style: dashed;
+            padding: 0.1em 0.3em;
+
+            input {
+              background: none;
+              border: 0;
+              inline-size: 7em;
+              padding: 0;
+            }
+
+            li[data-mark="wrong"] & {
+              border-color: var(--color-error);
+            }
+          }
+        }
+      }
+      .wkj77wpsu {
+        display: block;
+        max-inline-size: 100%;
+        overflow-x: auto;
+        .answer-key {
+          color: var(--color-error);
+          font-size: 0.85em;
+
+          &:not([hidden]) {
+            display: block;
+          }
+        }
+
+        th[scope="row"] {
+          font-weight: var(--font-weight);
+          text-align: start;
+
+          tr[data-mark="wrong"] & {
+            color: var(--color-error);
+          }
+        }
+      }
+      .wybay1fzy {
+        fieldset {
+          border: 0;
+          margin: 0;
+          padding: 0;
+        }
+
+        legend {
+          font-weight: var(--font-weight--semi-bold);
+          padding-inline: 0;
+        }
+
+        .letter {
+          background: var(--color-surface);
+          border-radius: var(--standard-border-radius);
+          display: inline-block;
+          font-family: var(--mono-font);
+          font-weight: var(--font-weight--semi-bold);
+          min-inline-size: 1.7em;
+          padding: 0.05em 0.35em;
+          text-align: center;
+          text-transform: uppercase;
+        }
+
+        label {
+          align-items: baseline;
+          border-radius: var(--standard-border-radius);
+          cursor: pointer;
+          display: flex;
+          gap: 0.5em;
+          padding: 0.25em 0.4em;
+
+          &:hover {
+            background: var(--color-accent-hover);
+          }
+
+          &[data-mark="right"] .letter {
+            background: var(--color-success);
+            color: var(--color-on-success);
+          }
+
+          &[data-mark="wrong"] .letter {
+            background: var(--color-error);
+            color: var(--color-on-error);
+          }
+        }
+      }
+      .w4i9fw-bp {
+        .drag-hint {
+          color: var(--color-text-muted);
+          font-size: 0.9em;
+          margin-block: 0 0.6em;
+        }
+
+        .answer-key {
+          color: var(--color-error);
+          font-size: 0.85em;
+
+          &:not([hidden]) {
+            display: block;
+          }
+        }
+
+        .word-bank {
+          align-items: baseline;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.4em;
+
+          .word-bank-label {
+            color: var(--color-text-muted);
+            font-size: 0.85em;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+          }
+
+          .word {
+            background: var(--color-surface);
+            border-radius: var(--standard-border-radius);
+            font-family: var(--mono-font);
+            padding: 0.1em 0.5em;
+
+            &[draggable="true"] {
+              border: var(--thin-border-width) dashed var(--color-border);
+              cursor: grab;
+
+              &:active {
+                cursor: grabbing;
+              }
+            }
+
+            &[data-dragging] {
+              opacity: 0.45;
+            }
+
+            &[data-used] {
+              opacity: 0.5;
+              text-decoration: line-through;
+            }
+          }
+        }
+
+        .blanks {
+          list-style: none;
+          padding-inline-start: 0;
+
+          label {
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6em;
+            margin-block: 0.4em;
+          }
+
+          .blank-label {
+            flex: 0 1 24em;
+          }
+
+          input {
+            flex: 0 1 14em;
+            font-family: var(--mono-font);
+          }
+
+          li {
+            &[data-drop] {
+              border: var(--thin-border-width) dashed transparent;
+              border-radius: var(--standard-border-radius);
+
+              &[data-over] {
+                background: var(--color-drop-target);
+                border-color: var(--color-accent);
+              }
+            }
+
+            &[data-mark="wrong"] .blank-label {
+              color: var(--color-error);
+            }
+          }
+        }
+      }
+      .whc6ijbve {
+        legend {
+          color: var(--color-text-muted);
+          font-size: 0.85em;
+          letter-spacing: 0.06em;
+          padding-inline: 0;
+          text-transform: uppercase;
+        }
+
+        .code-lines {
+          border: 0;
+          margin: 0;
+          margin-block-start: var(--content-space);
+          /* A fieldset defaults to min-content, which defeats the code's scroll. */
+          min-inline-size: 0;
+          padding: 0;
+        }
+
+        /* One label per line inside a <pre>, with nothing between the labels:
+		   the HTML minifier leaves <pre> alone, which is what keeps the
+		   snippet's indentation. */
+        .lines {
+          --token-string: color-mix(in oklab, var(--color-success) 60%, var(--color-text));
+          background: var(--color-surface);
+          border-radius: var(--standard-border-radius);
+          font-size: 0.9em;
+          margin: 0;
+          overflow-x: auto;
+          padding: 0.35em 0;
+
+          /* A grid drops the whitespace-only text WebC leaves between the
+			   looped labels, which a <pre> would otherwise show as blank lines. */
+          code {
+            background: none;
+            display: grid;
+            inline-size: max-content;
+            min-inline-size: 100%;
+            padding: 0;
+          }
+
+          .token:is(.comment, .prolog, .doctype, .cdata) {
+            color: var(--color-text-muted);
+            font-style: italic;
+          }
+
+          .token:is(.keyword, .builtin, .important, .atrule) {
+            color: var(--color-accent-text);
+            font-weight: var(--font-weight--semi-bold);
+          }
+
+          .token:is(.string, .char, .regex, .number, .boolean) {
+            color: var(--token-string);
+          }
+
+          .token:is(.punctuation, .operator) {
+            color: var(--color-text-muted);
+          }
+        }
+
+        .code-line {
+          align-items: center;
+          border-inline-start: var(--thick-border-width) solid transparent;
+          cursor: pointer;
+          display: flex;
+          gap: 0.6em;
+          padding: 0.1em 0.6em;
+
+          input {
+            flex: none;
+          }
+
+          /* A blank line still gets a row the height of its neighbors. */
+          .line-code {
+            min-block-size: 1lh;
+            white-space: pre;
+          }
+
+          &:hover {
+            background: var(--color-accent-hover);
+          }
+
+          /* The chosen line lights up in the code itself. */
+          &:has(input:checked) {
+            background: color-mix(in srgb, var(--color-accent-text) 16%, transparent);
+            border-inline-start-color: var(--color-accent-text);
+          }
+
+          &:has(input:focus-visible) {
+            outline: var(--focus-ring-width) solid var(--color-focus-ring);
+            outline-offset: calc(var(--focus-ring-width) * -1);
+          }
+
+          &.no-line {
+            font-size: 0.9em;
+            margin-block-start: 0.3em;
+          }
+
+          &[data-mark="right"],
+          &[data-mark="right"]:has(input:checked) {
+            background: color-mix(in srgb, var(--color-success) 22%, var(--color-page));
+            border-inline-start-color: var(--color-success);
+          }
+
+          &[data-mark="wrong"],
+          &[data-mark="wrong"]:has(input:checked) {
+            background: color-mix(in srgb, var(--color-error) 22%, var(--color-page));
+            border-inline-start-color: var(--color-error);
+          }
+        }
+      }
+      .wsom_l55h {
+        .check-title {
+          font-weight: var(--font-weight--semi-bold);
+          margin-block-end: 0.2em;
+        }
+
+        .reveal {
+          font-family: var(--mono-font);
+        }
+      }
+      .wnxj-xsx9 {
+        .question {
+          background: var(--color-surface-subtle);
+          border-inline-start: var(--thick-border-width) solid var(--color-border);
+          border-radius: var(--standard-border-radius);
+          margin-block: var(--practice-gap);
+          padding: 0.9em 1em;
+
+          &[data-state="right"] {
+            border-inline-start-color: var(--color-success);
+
+            .feedback {
+              color: var(--color-success);
+
+              &::before {
+                content: "✓ ";
+              }
+            }
+          }
+
+          &:is([data-state="wrong"], [data-state="partial"]) {
+            border-inline-start-color: var(--color-error);
+
+            .feedback {
+              color: var(--color-error);
+
+              &::before {
+                content: "✕ ";
+              }
+            }
+          }
+
+          &[data-state="partial"] {
+            border-inline-start-style: dashed;
+          }
+        }
+
+        .question-head {
+          align-items: start;
+          display: flex;
+          gap: 0.5em;
+          justify-content: space-between;
+        }
+
+        .question-prompt {
+          margin-block: 0 0.6em;
+        }
+
+        .q-number {
+          color: var(--color-accent-text);
+          font-variant-numeric: tabular-nums;
+          font-weight: var(--font-weight--bold);
+          margin-inline-end: 0.3em;
+        }
+
+        .snippet {
+          font-size: 0.9em;
+
+          .token:is(.comment, .prolog, .doctype, .cdata) {
+            color: var(--color-code-comment);
+            font-style: italic;
+          }
+
+          .token:is(.keyword, .builtin, .important, .atrule) {
+            color: var(--color-code-keyword);
+            font-weight: var(--font-weight--semi-bold);
+          }
+
+          .token:is(.string, .char, .regex, .number, .boolean) {
+            color: var(--color-code-string);
+          }
+
+          .token:is(.punctuation, .operator) {
+            color: var(--color-text-muted);
+          }
+        }
+
+        .check-one {
+          min-block-size: var(--target-min);
+          margin-block-start: 0.8em;
+          padding-inline: 1.2em;
+          border: var(--thin-border-width) solid var(--color-border-strong);
+          border-radius: var(--radius-pill);
+          background: transparent;
+          color: var(--color-text);
+          font-weight: var(--font-weight--semi-bold);
+          cursor: pointer;
+        }
+
+        .feedback {
+          font-weight: var(--font-weight--semi-bold);
+          margin-block: 0.8em 0;
+        }
+
+        .why {
+          background: var(--color-surface);
+          border-radius: var(--standard-border-radius);
+          margin-block-start: 0.5em;
+          padding: 0.6em 0.9em;
+
+          p {
+            margin-block: 0;
+          }
+        }
+      }
+      .wwmqat2ky {
+        --practice-gap: 1.5em;
+        --color-drop-target: color-mix(in srgb, var(--color-accent) 12%, var(--color-page));
+        .practice-section {
+          border-block-start: var(--thin-border-width) solid var(--color-border);
+          padding-block-start: var(--content-space);
+
+          > header h2 {
+            margin-block-end: 0.2em;
+          }
+        }
+
+        .section-number {
+          color: var(--color-accent-text);
+          font-variant-numeric: tabular-nums;
+        }
+
+        .blurb {
+          color: var(--color-text-muted);
+          margin-block-start: 0;
+        }
+
+        .legend {
+          list-style: none;
+          padding-inline-start: 0;
+
+          li {
+            margin-block: 0.3em;
+          }
+        }
+
+        .letter {
+          background: var(--color-surface);
+          border-radius: var(--standard-border-radius);
+          display: inline-block;
+          font-family: var(--mono-font);
+          font-weight: var(--font-weight--semi-bold);
+          min-inline-size: 1.7em;
+          padding: 0.05em 0.35em;
+          text-align: center;
+          text-transform: uppercase;
+        }
+
+        .not-graded {
+          display: inline-block;
+          margin-block: 0;
+          padding: 0.1em 0.75em;
+          border: var(--thin-border-width) solid var(--color-border);
+          border-radius: 999px;
+          color: var(--color-text-muted);
+          font-size: max(var(--base-font-size), 0.875em);
+        }
+
+        /* The question list: one tile per question, its status mirrored from
+		   the question by practice.js. The word carries the state; color only
+		   reinforces it. */
+        .question-nav {
+          margin-block: var(--content-space);
+
+          h2 {
+            margin-block: 0 0.5em;
+            font-size: max(var(--base-font-size), 0.875em);
+            font-weight: var(--font-weight--medium);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
+          }
+
+          ol {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+            gap: 0.5em;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+          }
+
+          a[href] {
+            display: flex;
+            text-decoration: none;
+            align-items: center;
+            gap: 0.6em;
+            min-block-size: var(--target-min);
+            padding: 0.35em 0.6em;
+            border: var(--thin-border-width) solid var(--color-border-strong);
+            border-radius: var(--standard-border-radius);
+            color: var(--color-text);
+            text-decoration: none;
+
+            &:is(:hover, :focus-visible) {
+              border-color: var(--color-text);
+            }
+          }
+
+          .nav-badge {
+            display: grid;
+            flex: none;
+            place-items: center;
+            min-inline-size: 2em;
+            block-size: 2em;
+            padding-inline: 0.3em;
+            border-radius: 999px;
+            background: var(--color-surface);
+            font-family: var(--mono-font);
+            font-size: 0.875em;
+            font-weight: var(--font-weight--bold);
+          }
+
+          .nav-status {
+            font-size: max(var(--base-font-size), 0.875em);
+            color: var(--color-text-muted);
+          }
+
+          [data-state="right"] a {
+            border-color: var(--color-success);
+
+            .nav-badge {
+              background: color-mix(in oklab, var(--color-success) 16%, var(--color-page));
+            }
+
+            .nav-status::before {
+              content: "✓ ";
+            }
+          }
+
+          [data-state="wrong"] a {
+            border-color: var(--color-error);
+
+            .nav-badge {
+              background: color-mix(in oklab, var(--color-error) 14%, var(--color-page));
+            }
+
+            .nav-status::before {
+              content: "✕ ";
+            }
+          }
+
+          [data-state="partial"] a {
+            border-color: var(--color-border-strong);
+            border-style: dashed;
+
+            .nav-status::before {
+              content: "✕ ";
+            }
+          }
+
+          /* Not yet looked at is not wrong: no color, only the word. */
+          [data-state="unattempted"] a {
+            border-color: var(--color-border);
+          }
+        }
+
+        .practice-summary {
+          .score {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            inline-size: 5.5rem;
+            block-size: 5.5rem;
+            box-sizing: border-box;
+            margin: 0;
+            border: 0.4rem solid var(--color-accent-secondary);
+            border-radius: 50%;
+            line-height: var(--font-height--dense);
+
+            strong {
+              font-size: var(--font-size-3);
+            }
+
+            span {
+              color: var(--color-text-muted);
+              font-size: max(var(--base-font-size), 0.85em);
+            }
+          }
+
+          h2 {
+            flex: 1 1 12rem;
+            margin: 0;
+            font-size: var(--font-size-4);
+          }
+
+          flex-basis: 100%;
+          display: flex;
+
+          &[hidden] {
+            display: none;
+          }
+
+          flex-wrap: wrap;
+          align-items: center;
+          gap: var(--content-space);
+          padding: 0.8em 1em;
+          border: var(--thin-border-width) solid var(--color-border);
+          border-radius: var(--standard-border-radius);
+          background-color: var(--color-surface);
+
+          ol {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4em;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+          }
+
+          li {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35em;
+            padding: 0.15em 0.6em;
+            border-radius: var(--radius-pill);
+            border: var(--thin-border-width) solid var(--color-border);
+            font-size: max(var(--base-font-size), 0.9em);
+
+            a {
+              font-family: var(--mono-font);
+              font-weight: var(--font-weight--bold);
+            }
+          }
+
+          [data-status="right"] {
+            border-color: var(--color-success);
+            color: var(--color-success);
+          }
+
+          [data-status="wrong"] {
+            border-color: var(--color-error);
+            color: var(--color-error);
+          }
+
+          [data-status="partial"] {
+            border-style: dashed;
+            border-color: var(--color-border-strong);
+          }
+
+          [data-status="unattempted"] {
+            border-style: dashed;
+            color: var(--color-text-muted);
+          }
+
+          button {
+            min-block-size: var(--target-min);
+            padding-inline: 1.2em;
+            margin: 0;
+            border: var(--border-width) solid var(--color-accent);
+            border-radius: var(--radius-pill);
+            background-color: var(--color-accent);
+            color: var(--color-on-accent);
+            font-weight: var(--font-weight--semi-bold);
+            cursor: pointer;
+          }
+        }
+
+        .restore-note {
+          margin-block: 0 var(--content-space);
+          color: var(--color-text-muted);
+
+          &[hidden] {
+            display: none;
+          }
+        }
+
+        .practice-foot {
+          border-block-start: var(--thin-border-width) solid var(--color-border);
+          margin-block-start: var(--section-space);
+          padding-block-start: var(--content-space);
+        }
+
+        .foot-links {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1em;
+          list-style: none;
+          padding-inline-start: 0;
+        }
+
+        @media print {
+          check-controls,
+          .restore-note,
+          .question-nav,
+          .practice-summary,
+          .check-one,
+          .feedback,
+          .why {
+            display: none;
+          }
+        }
+      }
+      .waz1ptg-h {
+        display: flex;
+        gap: calc(var(--container-space) * 3.5);
+        ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+
+          display: inline-flex;
+          flex-wrap: wrap;
+          justify-content: space-evenly;
+          inline-size: 100%;
+          gap: calc(var(--content-space) * 1.6);
+
+          @media screen and (width <= 612px) {
+            justify-content: flex-start;
+            column-gap: calc(var(--content-space) * 0.75);
+            row-gap: calc(var(--content-space) * 0.25);
+          }
+        }
+
+        li {
+          font-size: 1em;
+        }
+
+        /* `a[href]` outranks the page's underline for links in lists. A menu is
+       not a sentence: it carries no underline until you point at it, and the
+       current page keeps an accent one. */
+        a[href] {
+          /* Inline padding is left alone; the block padding lifts each link to
+           the 24px minimum target size without changing the row rhythm. */
+          display: inline-flex;
+          align-items: center;
+          min-block-size: var(--target-min);
+          min-inline-size: var(--target-min);
+          padding-block: 0.2em;
+          font-size: max(var(--base-font-size), 0.95em);
+          color: inherit;
+          text-decoration: none;
+
+          /* The current page keeps an underline here; the hero menu fills it (below). */
+          &[aria-current="page"] {
+            text-decoration: underline;
+            text-decoration-color: var(--color-accent-text);
+            text-decoration-thickness: var(--border-width);
+            text-underline-offset: 0.4ex;
+          }
+
+          &:not([aria-current="page"]):is(:hover, :focus-visible) {
+            color: var(--color-link-hover);
+            text-decoration: underline;
+            text-decoration-thickness: var(--thin-border-width);
+            text-underline-offset: 0.4ex;
+          }
+
+          @media screen and (width <= 612px) {
+            font-size: max(var(--base-font-size), 0.875em);
+          }
+        }
+      }
+      .waz1ptg-h[stacked] ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+        align-items: baseline;
+        column-gap: calc(var(--content-space) * 2);
+        row-gap: calc(var(--content-space) * 0.35);
+      }
+      .waz1ptg-h[column] {
+        padding: 0;
+        line-height: inherit;
+      }
+      .waz1ptg-h[column] ul {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: start;
+        inline-size: auto;
+        gap: calc(var(--content-space) * 0.35);
+        @media screen and (width <= 768px) {
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-items: baseline;
+          column-gap: calc(var(--content-space) * 1.25);
+          row-gap: calc(var(--content-space) * 0.25);
+        }
+      }
+      .waz1ptg-h[column] li {
+        display: block;
+      }
+      .waz1ptg-h[column] a,
+      .waz1ptg-h[column] a:visited {
+        margin: 0;
+        padding-inline: var(--link-pad, 0);
+        border: none;
+        border-radius: 0;
+        line-height: inherit;
+        font-size: max(var(--base-font-size), 1em);
+        color: inherit;
+        .waz1ptg-h &[aria-current="page"] {
+          padding-inline: var(--link-pad, 0);
+          background: none;
+          color: var(--color-accent-text);
+        }
+      }
+      .waz1ptg-h[data-context="hero"][column] {
+        --link-pad: 0.85em;
+      }
+      .waz1ptg-h[data-context="hero"][column] a[href] {
+        border-radius: var(--radius-pill);
+      }
+      .waz1ptg-h[data-context="hero"][column] a[href][aria-current="page"] {
+        background-color: var(--color-accent-secondary);
+        color: var(--color-on-accent-secondary);
+        text-decoration: none;
+        font-weight: var(--font-weight--semi-bold);
+        --color-focus-ring: var(--color-on-accent-secondary);
+      }
+      .waz1ptg-h[data-context="hero"][column] a[href]:not([aria-current="page"]):hover {
+        background-color: color-mix(in oklab, var(--color-accent-secondary) 10%, transparent);
+      }
+      @media (forced-colors: active) {
+        .waz1ptg-h[data-context="hero"][column] a[href][aria-current="page"] {
+          forced-color-adjust: none;
+          background: SelectedItem;
+          color: SelectedItemText;
+        }
+      }
+      .woorkyj9o {
+        text-align: start;
+        padding: 0;
+        background: linear-gradient(to bottom, color-mix(in sRGB, var(--color-accent) 7%, var(--color-page)), var(--color-page));
+        @media print {
+          display: none;
+        }
+        > .container {
+          box-sizing: border-box;
+          /* Match the content column (`--page-column`, set on body). */
+          inline-size: var(--page-column);
+          margin-inline: auto;
+          margin-block: 0;
+          padding-inline: 0;
+          padding-block: calc(var(--section-space) * 1.25) var(--section-space);
+
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) auto;
+          column-gap: calc(var(--section-space) * 2);
+          row-gap: var(--content-space);
+          align-items: start;
+
+          @media screen and (width <= 768px) {
+            grid-template-columns: minmax(0, 1fr);
+            padding-block: var(--section-space) calc(var(--section-space) * 0.75);
+          }
+        }
+
+        .identity {
+          display: grid;
+          gap: calc(var(--content-space) * 0.6);
+
+          > * {
+            margin: 0;
+            max-inline-size: none;
+          }
+        }
+
+        .course-title {
+          margin: 0;
+          max-inline-size: none;
+          font-family: var(--display-font);
+          font-size: clamp(1.75rem, 1.1rem + 2.4vw, 2.75rem);
+          font-weight: var(--font-weight--semi-bold);
+          line-height: 1.1;
+          letter-spacing: -0.01em;
+          text-wrap: balance;
+
+          a {
+            color: var(--color-text);
+            text-decoration: none;
+
+            &:is(:hover, :focus-visible) .name {
+              text-decoration: underline;
+              text-decoration-thickness: 0.06em;
+              text-underline-offset: 0.12em;
+              text-decoration-color: var(--color-accent);
+            }
+          }
+
+          .code {
+            display: block;
+            font-size: 0.5em;
+            font-weight: var(--font-weight--semi-bold);
+            letter-spacing: 0.06em;
+            color: var(--color-accent-text);
+            margin-block-end: 0.2em;
+          }
+        }
+
+        .meta {
+          margin: 0;
+          color: var(--color-text-muted);
+          font-size: max(var(--base-font-size), 0.95em);
+        }
+
+        .links {
+          display: flex;
+          align-items: start;
+          gap: calc(var(--content-space) * 1.5);
+          padding-inline-start: calc(var(--section-space) * 1.25);
+          border-inline-start: var(--thin-border-width) solid var(--color-border);
+
+          @media screen and (width <= 768px) {
+            inline-size: 100%;
+            justify-content: space-between;
+            padding-inline-start: 0;
+            padding-block-start: var(--content-space);
+            border-inline-start: none;
+            border-block-start: var(--thin-border-width) solid var(--color-border);
+          }
+        }
+      }
+      .wwkwz-tyb {
+        display: inline-block;
+        font-size: max(var(--base-font-size), 0.85em);
+        color: var(--color-text-muted);
+      }
+      .wqox_maih {
+        --context: footer;
+        text-align: start;
+        display: grid;
+        grid-template-columns: minmax(0, 1.6fr) repeat(2, minmax(0, 1fr));
+        gap: var(--section-space) calc(var(--section-space) * 1.5);
+        align-items: start;
+        @media screen and (width <= 768px) {
+          grid-template-columns: minmax(0, 1fr);
+          gap: var(--section-space);
+        }
+        .brand {
+          display: grid;
+          gap: calc(var(--content-space) * 0.4);
+        }
+
+        .course {
+          margin: 0;
+          max-inline-size: none;
+          font-weight: var(--font-weight--semi-bold);
+
+          a {
+            color: var(--color-text);
+            text-decoration: none;
+
+            &:is(:hover, :focus-visible) {
+              color: var(--color-link-hover);
+            }
+          }
+        }
+
+        .meta {
+          margin: 0;
+          color: var(--color-text-muted);
+          font-size: max(var(--base-font-size), 0.85em);
+        }
+
+        .label {
+          margin: 0 0 calc(var(--content-space) * 0.5);
+          font-size: var(--font-size-6);
+          font-weight: var(--font-weight--semi-bold);
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: var(--color-text-muted);
+        }
+
+        ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+
+          display: flex;
+          flex-direction: column;
+          align-items: start;
+          gap: calc(var(--content-space) * 0.35);
+
+          @media screen and (width <= 768px) {
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: baseline;
+            column-gap: calc(var(--content-space) * 1.25);
+            row-gap: calc(var(--content-space) * 0.25);
+          }
+        }
+
+        li {
+          font-size: 1em;
+        }
+
+        nav.group a {
+          display: inline-block;
+          padding-block: 0.2em;
+          font-size: max(var(--base-font-size), 1em);
+          color: inherit;
+          text-decoration: none;
+
+          &:is(:hover, :focus-visible) {
+            color: var(--color-link-hover);
+          }
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <a href="#main-content" id="to-content" class="sr-only">Skip to content</a>
+
+    <header id="header" class="woorkyj9o">
+      <div class="container">
+        <div class="identity">
+          <p class="eyebrow separators">
+            <span>Example College</span>
+            <span>Fall 2026</span>
+          </p>
+
+          <p class="course-title">
+            <a href="/course-kit/preview/25/components/"><span class="code">CS101</span> <span class="name">Introduction to Web Publishing</span></a>
+          </p>
+          <p class="meta separators">
+            <span>Tuesday &amp; Thursday</span>
+            <span>10:00AM–11:15AM</span>
+            <span>Science Hall 210</span>
+          </p>
+        </div>
+        <div class="links">
+          <nav data-context="hero" column="" aria-label="Site" class="waz1ptg-h">
+            <ul role="list">
+              <li>
+                <a href="/course-kit/preview/25/components/#syllabus">Syllabus</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+      <article class="content-column">
+        <practice-worksheet class="wwmqat2ky">
+          <article id="worksheet" data-worksheet="" data-storage-id="cs101/practice" class="content-column practice">
+            <header class="practice-head">
+              <p class="eyebrow separators">
+                <span>Fall 2026</span>
+                <span>CS101</span>
+                <span>Practice</span>
+              </p>
+
+              <h1>Sample worksheet</h1>
+              <p class="not-graded">Not graded</p>
+              <p class="lede">One question of every kind.</p>
+              <p>Every question here is checked in the browser, and nothing is sent anywhere.</p>
+
+              <div class="callout">
+                <p><strong>Nothing here is recorded or submitted.</strong> <span>Your answers are saved in this browser only and go nowhere else. Checking an answer shows you the reasoning and the source it came from.</span></p>
+              </div>
+
+              <h2 id="terms">Terms to know</h2>
+              <practice-terms class="wqbs6of9x">
+                <p class="drag-hint">Select a term for its definition, and a link to the source it comes from.</p>
+                <ul class="term-bank">
+                  <li>
+                    <button type="button" popovertarget="term-1" class="term">landmark</button>
+                    <div id="term-1" popover="" class="term-def">
+                      <p class="term-name">landmark</p>
+                      <p>A page region with a role and a name, such as `header` or `nav`.</p>
+                      <a href="/course-kit/preview/25/components/slides/week-1-day-1/#s2">Week 1 slide 2</a>
+                    </div>
+                  </li>
+                </ul>
+              </practice-terms>
+
+              <check-controls class="wpbhrol4s">
+                <button type="button" data-check="#worksheet" hidden="">See results</button>
+                <button type="button" data-reset="#worksheet" data-confirm="Clear every answer on this worksheet? This can't be undone." hidden="">Clear my answers</button>
+                <p data-tally="#worksheet" role="status"></p>
+              </check-controls>
+              <p data-restore-note="" role="status" hidden="" class="restore-note"></p>
+
+              <section data-summary="#worksheet" aria-labelledby="practice-summary-heading" hidden="" class="practice-summary">
+                <h2 id="practice-summary-heading">Results</h2>
+                <p class="score"><strong data-score=""></strong> <span data-score-of=""></span></p>
+                <ol role="list" data-summary-list=""></ol>
+                <button type="button" data-retry="#worksheet" hidden="">Try missed questions</button>
+              </section>
+
+              <nav aria-labelledby="question-nav-heading" data-question-nav="" class="question-nav">
+                <h2 id="question-nav-heading">Questions</h2>
+                <ol role="list">
+                  <li data-nav-for="1.1" data-state="unattempted">
+                    <a href="#q-1.1">
+                      <span class="nav-badge">1.1</span>
+                      <span class="nav-status">Unattempted</span>
+                    </a>
+                  </li>
+                  <li data-nav-for="1.2" data-state="unattempted">
+                    <a href="#q-1.2">
+                      <span class="nav-badge">1.2</span>
+                      <span class="nav-status">Unattempted</span>
+                    </a>
+                  </li>
+
+                  <li data-nav-for="2.1" data-state="unattempted">
+                    <a href="#q-2.1">
+                      <span class="nav-badge">2.1</span>
+                      <span class="nav-status">Unattempted</span>
+                    </a>
+                  </li>
+                  <li data-nav-for="2.2" data-state="unattempted">
+                    <a href="#q-2.2">
+                      <span class="nav-badge">2.2</span>
+                      <span class="nav-status">Unattempted</span>
+                    </a>
+                  </li>
+                  <li data-nav-for="2.3" data-state="unattempted">
+                    <a href="#q-2.3">
+                      <span class="nav-badge">2.3</span>
+                      <span class="nav-status">Unattempted</span>
+                    </a>
+                  </li>
+
+                  <li data-nav-for="3.1" data-state="unattempted">
+                    <a href="#q-3.1">
+                      <span class="nav-badge">3.1</span>
+                      <span class="nav-status">Unattempted</span>
+                    </a>
+                  </li>
+                  <li data-nav-for="3.2" data-state="unattempted">
+                    <a href="#q-3.2">
+                      <span class="nav-badge">3.2</span>
+                      <span class="nav-status">Unattempted</span>
+                    </a>
+                  </li>
+                </ol>
+              </nav>
+            </header>
+
+            <section id="section-1" class="practice-section">
+              <header>
+                <h2><span class="section-number">Section 1:</span> <span>Choice and match</span></h2>
+                <p class="blurb"></p>
+              </header>
+
+              <practice-question class="wnxj-xsx9">
+                <div id="q-1.1" data-question="1.1" data-kind="choice" data-answers='{"answer":1}' class="question">
+                  <div class="question-head">
+                    <p class="question-prompt"><span class="q-number">1.1</span> <span>Which element holds the page's main content?</span></p>
+                    <cite-panel class="weowl7-ac">
+                      <details name="cite" class="cite">
+                        <summary aria-label="Where this comes from, question 1.1">
+                          <span aria-hidden="true">?</span>
+                        </summary>
+                        <div class="cite-body">
+                          <p>Where this comes from</p>
+                          <ul>
+                            <li>
+                              <a href="/course-kit/preview/25/components/slides/week-1-day-1/#s2">Week 1 slide 2</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </details>
+                    </cite-panel>
+                  </div>
+
+                  <choice-list class="wybay1fzy">
+                    <fieldset>
+                      <legend class="sr-only">Choose one answer</legend>
+
+                      <label class="choice">
+                        <input type="radio" name="1.1-choice" value="0" />
+                        <span class="letter">a</span>
+                        <span>`div`</span>
+                      </label>
+                      <label class="choice">
+                        <input type="radio" name="1.1-choice" value="1" />
+                        <span class="letter">b</span>
+                        <span>`main`</span>
+                      </label>
+                      <label class="choice">
+                        <input type="radio" name="1.1-choice" value="2" />
+                        <span class="letter">c</span>
+                        <span>`section`</span>
+                      </label>
+                    </fieldset>
+                  </choice-list>
+
+                  <p role="status" hidden="" class="feedback"></p>
+                  <div hidden="" class="why">
+                    <p>`main` is the landmark for the content that is unique to the page.</p>
+                  </div>
+                </div>
+              </practice-question>
+              <practice-question class="wnxj-xsx9">
+                <div id="q-1.2" data-question="1.2" data-kind="match" data-answers='{"items":["A","B"]}' class="question">
+                  <div class="question-head">
+                    <p class="question-prompt"><span class="q-number">1.2</span> <span>Match each element to what it is.</span></p>
+                    <cite-panel class="weowl7-ac">
+                      <details name="cite" class="cite">
+                        <summary aria-label="Where this comes from, question 1.2">
+                          <span aria-hidden="true">?</span>
+                        </summary>
+                        <div class="cite-body">
+                          <p>Where this comes from</p>
+                          <ul></ul>
+                        </div>
+                      </details>
+                    </cite-panel>
+                  </div>
+
+                  <practice-match class="w7lezdw8n">
+                    <div class="matching">
+                      <ol class="bank">
+                        <li data-letter="A">
+                          <span class="letter">A</span>
+                          <span>A list of links</span>
+                        </li>
+                        <li data-letter="B">
+                          <span class="letter">B</span>
+                          <span>The page's footer</span>
+                        </li>
+                      </ol>
+                      <ol class="match-items">
+                        <li>
+                          <label>
+                            <span class="match-text">`nav`</span>
+                            <select name="1.2-match-0" data-blank="0">
+                              <option value="">—</option>
+                              <option value="A">A</option>
+                              <option value="B">B</option>
+                            </select>
+                          </label>
+                          <span hidden="" data-answer="A" class="answer-key">
+                            <span>Answer: A</span>
+                          </span>
+                        </li>
+                        <li>
+                          <label>
+                            <span class="match-text">`footer`</span>
+                            <select name="1.2-match-1" data-blank="1">
+                              <option value="">—</option>
+                              <option value="A">A</option>
+                              <option value="B">B</option>
+                            </select>
+                          </label>
+                          <span hidden="" data-answer="B" class="answer-key">
+                            <span>Answer: B</span>
+                          </span>
+                        </li>
+                      </ol>
+                    </div>
+                  </practice-match>
+
+                  <p role="status" hidden="" class="feedback"></p>
+                  <div hidden="" class="why">
+                    <p>Each element names one kind of content.</p>
+                  </div>
+                </div>
+              </practice-question>
+
+              <check-controls class="wpbhrol4s">
+                <button type="button" data-check="#section-1" hidden="">Check section 1</button>
+                <button type="button" data-reset="#section-1" data-confirm="Clear every answer in this section? This can't be undone." hidden="">Clear section</button>
+                <p data-tally="#section-1" role="status"></p>
+              </check-controls>
+            </section>
+            <section id="section-2" class="practice-section">
+              <header>
+                <h2><span class="section-number">Section 2:</span> <span>Fill, grid and tree</span></h2>
+                <p class="blurb"></p>
+              </header>
+
+              <practice-question class="wnxj-xsx9">
+                <div id="q-2.1" data-question="2.1" data-kind="fill" data-answers='{"blanks":[["ul"],["li"]]}' class="question">
+                  <div class="question-head">
+                    <p class="question-prompt"><span class="q-number">2.1</span> <span>Complete the markup.</span></p>
+                    <cite-panel class="weowl7-ac">
+                      <details name="cite" class="cite">
+                        <summary aria-label="Where this comes from, question 2.1">
+                          <span aria-hidden="true">?</span>
+                        </summary>
+                        <div class="cite-body">
+                          <p>Where this comes from</p>
+                          <ul></ul>
+                        </div>
+                      </details>
+                    </cite-panel>
+                  </div>
+
+                  <pre class="snippet"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span>One<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span></code></pre>
+
+                  <practice-fill class="w4i9fw-bp">
+                    <div class="filling">
+                      <ol class="blanks">
+                        <li>
+                          <label>
+                            <span class="blank-label">The list's tag</span>
+                            <input type="text" autocomplete="off" spellcheck="false" name="2.1-blank-0" data-blank="0" placeholder="" />
+                          </label>
+                          <span hidden="" data-answer="ul" class="answer-key">Answer: ul</span>
+                        </li>
+                        <li>
+                          <label>
+                            <span class="blank-label">The child's tag</span>
+                            <input type="text" autocomplete="off" spellcheck="false" name="2.1-blank-1" data-blank="1" placeholder="" />
+                          </label>
+                          <span hidden="" data-answer="li" class="answer-key">Answer: li</span>
+                        </li>
+                      </ol>
+                    </div>
+                  </practice-fill>
+
+                  <p role="status" hidden="" class="feedback"></p>
+                  <div hidden="" class="why">
+                    <p>A list's only valid child is `li`.</p>
+                  </div>
+                </div>
+              </practice-question>
+              <practice-question class="wnxj-xsx9">
+                <div id="q-2.2" data-question="2.2" data-kind="grid" data-answers='{"rows":[0,1]}' class="question">
+                  <div class="question-head">
+                    <p class="question-prompt"><span class="q-number">2.2</span> <span>Which column does each element belong in?</span></p>
+                    <cite-panel class="weowl7-ac">
+                      <details name="cite" class="cite">
+                        <summary aria-label="Where this comes from, question 2.2">
+                          <span aria-hidden="true">?</span>
+                        </summary>
+                        <div class="cite-body">
+                          <p>Where this comes from</p>
+                          <ul></ul>
+                        </div>
+                      </details>
+                    </cite-panel>
+                  </div>
+
+                  <practice-grid class="wkj77wpsu">
+                    <table class="grid">
+                      <thead>
+                        <tr>
+                          <th scope="col">Element</th>
+                          <th scope="col">Block</th>
+                          <th scope="col">Inline</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr data-row="0">
+                          <th scope="row">
+                            <span>`p`</span>
+                            <span hidden="" data-answer="Block" class="answer-key">Answer: Block</span>
+                          </th>
+                          <td>
+                            <label>
+                              <span class="sr-only">Block</span>
+                              <input type="radio" name="2.2-row-0" value="0" />
+                            </label>
+                          </td>
+                          <td>
+                            <label>
+                              <span class="sr-only">Inline</span>
+                              <input type="radio" name="2.2-row-0" value="1" />
+                            </label>
+                          </td>
+                        </tr>
+                        <tr data-row="1">
+                          <th scope="row">
+                            <span>`span`</span>
+                            <span hidden="" data-answer="Inline" class="answer-key">Answer: Inline</span>
+                          </th>
+                          <td>
+                            <label>
+                              <span class="sr-only">Block</span>
+                              <input type="radio" name="2.2-row-1" value="0" />
+                            </label>
+                          </td>
+                          <td>
+                            <label>
+                              <span class="sr-only">Inline</span>
+                              <input type="radio" name="2.2-row-1" value="1" />
+                            </label>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </practice-grid>
+
+                  <p role="status" hidden="" class="feedback"></p>
+                  <div hidden="" class="why">
+                    <p>Block elements start a new line.</p>
+                  </div>
+                </div>
+              </practice-question>
+              <practice-question class="wnxj-xsx9">
+                <div id="q-2.3" data-question="2.3" data-kind="tree" data-answers='{"blanks":[["li"]]}' class="question">
+                  <div class="question-head">
+                    <p class="question-prompt"><span class="q-number">2.3</span> <span>Fill in the tree for this markup.</span></p>
+                    <cite-panel class="weowl7-ac">
+                      <details name="cite" class="cite">
+                        <summary aria-label="Where this comes from, question 2.3">
+                          <span aria-hidden="true">?</span>
+                        </summary>
+                        <div class="cite-body">
+                          <p>Where this comes from</p>
+                          <ul></ul>
+                        </div>
+                      </details>
+                    </cite-panel>
+                  </div>
+
+                  <practice-tree class="wz9o12pan">
+                    <div class="tree-question">
+                      <pre class="snippet"><code>&lt;ul&gt;&lt;li&gt;One&lt;/li&gt;&lt;/ul&gt;</code></pre>
+                      <ul class="dom-tree">
+                        <li style="--depth: 0">
+                          <span class="node">ul</span>
+                        </li>
+                        <li style="--depth: 1">
+                          <label class="node node-blank">
+                            <span class="sr-only">Blank 1 — the list item</span>
+                            <input type="text" autocomplete="off" spellcheck="false" size="8" name="2.3-blank-0" data-blank="0" />
+                          </label>
+                          <span hidden="" data-answer="li" class="answer-key">Answer: li</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </practice-tree>
+
+                  <p role="status" hidden="" class="feedback"></p>
+                  <div hidden="" class="why">
+                    <p>A tree shows each element inside its parent.</p>
+                  </div>
+                </div>
+              </practice-question>
+
+              <check-controls class="wpbhrol4s">
+                <button type="button" data-check="#section-2" hidden="">Check section 2</button>
+                <button type="button" data-reset="#section-2" data-confirm="Clear every answer in this section? This can't be undone." hidden="">Clear section</button>
+                <p data-tally="#section-2" role="status"></p>
+              </check-controls>
+            </section>
+            <section id="section-3" class="practice-section">
+              <header>
+                <h2><span class="section-number">Section 3:</span> <span>Judge and self-check</span></h2>
+                <p class="blurb"></p>
+                <ul class="legend">
+                  <li><span class="letter">A</span> <span>Valid and correct</span></li>
+                  <li><span class="letter">B</span> <span>Invalid</span></li>
+                </ul>
+              </header>
+
+              <practice-question class="wnxj-xsx9">
+                <div id="q-3.1" data-question="3.1" data-kind="judge" data-answers='{"answer":1,"lines":[1]}' class="question">
+                  <div class="question-head">
+                    <p class="question-prompt"><span class="q-number">3.1</span> <span>Is this markup valid and correct?</span></p>
+                    <cite-panel class="weowl7-ac">
+                      <details name="cite" class="cite">
+                        <summary aria-label="Where this comes from, question 3.1">
+                          <span aria-hidden="true">?</span>
+                        </summary>
+                        <div class="cite-body">
+                          <p>Where this comes from</p>
+                          <ul></ul>
+                        </div>
+                      </details>
+                    </cite-panel>
+                  </div>
+
+                  <practice-judge class="whc6ijbve">
+                    <div class="judging">
+                      <div class="verdicts">
+                        <choice-list class="wybay1fzy">
+                          <fieldset>
+                            <legend>Verdict</legend>
+                            <label class="choice">
+                              <input type="radio" name="3.1-choice" value="0" />
+                              <span class="letter">A</span>
+                              <span>Valid and correct</span>
+                            </label>
+                            <label class="choice">
+                              <input type="radio" name="3.1-choice" value="1" />
+                              <span class="letter">B</span>
+                              <span>Invalid</span>
+                            </label>
+                          </fieldset>
+                        </choice-list>
+                      </div>
+                      <fieldset class="code-lines">
+                        <legend>Select the line that causes the problem</legend>
+                        <pre class="lines"><code><label class="code-line"><input type="radio" name="3.1-line" value="0"><span class="line-code"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">></span></span></span></label>
+<label class="code-line"><input type="radio" name="3.1-line" value="1"><span class="line-code"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>One<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span></span></label>
+<label class="code-line"><input type="radio" name="3.1-line" value="2"><span class="line-code"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span></span></label></code></pre>
+                        <label class="code-line no-line">
+                          <input type="radio" name="3.1-line" value="none" />
+                          <span>No line — it is fine as written</span>
+                        </label>
+                      </fieldset>
+                    </div>
+                  </practice-judge>
+
+                  <p role="status" hidden="" class="feedback"></p>
+                  <div hidden="" class="why">
+                    <p>A list may only hold `li` elements.</p>
+                  </div>
+                </div>
+              </practice-question>
+              <practice-question class="wnxj-xsx9">
+                <div id="q-3.2" data-question="3.2" data-kind="selfcheck" data-answers="{}" class="question">
+                  <div class="question-head">
+                    <p class="question-prompt"><span class="q-number">3.2</span> <span>Explain why a heading level should not be chosen for its size.</span></p>
+                    <cite-panel class="weowl7-ac">
+                      <details name="cite" class="cite">
+                        <summary aria-label="Where this comes from, question 3.2">
+                          <span aria-hidden="true">?</span>
+                        </summary>
+                        <div class="cite-body">
+                          <p>Where this comes from</p>
+                          <ul></ul>
+                        </div>
+                      </details>
+                    </cite-panel>
+                  </div>
+
+                  <practice-selfcheck class="wsom_l55h">
+                    <div class="selfcheck">
+                      <div class="disclosures">
+                        <details data-reveal="">
+                          <summary>Show the answer</summary>
+                          <ul class="reveal">
+                            <li>Headings are an outline; the level says where the section sits in it.</li>
+                          </ul>
+                          <p class="check-title">Check yourself</p>
+                          <ul class="checklist">
+                            <li>I mentioned the outline.</li>
+                          </ul>
+                        </details>
+                      </div>
+                    </div>
+                  </practice-selfcheck>
+
+                  <p role="status" hidden="" class="feedback"></p>
+                  <div hidden="" class="why">
+                    <p></p>
+                  </div>
+                </div>
+              </practice-question>
+
+              <check-controls class="wpbhrol4s">
+                <button type="button" data-check="#section-3" hidden="">Check section 3</button>
+                <button type="button" data-reset="#section-3" data-confirm="Clear every answer in this section? This can't be undone." hidden="">Clear section</button>
+                <p data-tally="#section-3" role="status"></p>
+              </check-controls>
+            </section>
+          </article>
+        </practice-worksheet>
+      </article>
+    </main>
+
+    <footer>
+      <div class="wqox_maih">
+        <div class="brand">
+          <p class="course">
+            <a href="/course-kit/preview/25/components/"><span>CS101</span>: <span>Introduction to Web Publishing</span></a>
+          </p>
+          <p class="meta separators">
+            <span>Example College</span>
+            <span>Fall 2026</span>
+          </p>
+
+          <span class="wwkwz-tyb">©&nbsp;<span>2026</span> <span class="no-wrap">Cassondra Roberts</span></span>
+        </div>
+        <div class="group">
+          <p id="footer-pages" class="label">Pages</p>
+
+          <nav data-context="footer" column="" aria-labelledby="footer-pages" class="waz1ptg-h">
+            <ul role="list">
+              <li>
+                <a href="/course-kit/preview/25/components/lessons/">Lesson Plans</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <nav aria-labelledby="footer-policies" class="group">
+          <p id="footer-policies" class="label">Policies</p>
+          <ul role="list">
+            <li>
+              <a href="/course-kit/preview/25/components/#policy-$schema"></a>
+            </li>
+            <li>
+              <a href="/course-kit/preview/25/components/#policy-attendance">Attendance</a>
+            </li>
+            <li>
+              <a href="/course-kit/preview/25/components/#policy-honorCode">Honor Code</a>
+            </li>
+            <li>
+              <a href="/course-kit/preview/25/components/#policy-dei">Diversity, Equity, and Inclusion</a>
+            </li>
+            <li>
+              <a href="/course-kit/preview/25/components/#policy-disabilities">Accessibility</a>
+            </li>
+            <li>
+              <a href="/course-kit/preview/25/components/#policy-titleIX">Title IX</a>
+            </li>
+            <li>
+              <a href="/course-kit/preview/25/components/#policy-inclementWeather">Inclement Weather</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <script type="application/json" id="copy-data">
+        {
+          "common": { "sep": " · " },
+          "nav": { "site": "Site", "syllabus": "Syllabus", "contact": "Contact", "openSource": "Open source" },
+          "code": {
+            "copy": "Copy code",
+            "copied": "Copied",
+            "selected": "Code selected. Press your copy shortcut.",
+            "plain": "Code",
+            "languages": {
+              "bash": "Terminal",
+              "sh": "Terminal",
+              "shell": "Terminal",
+              "zsh": "Terminal",
+              "console": "Terminal",
+              "shellsession": "Terminal",
+              "css": "CSS",
+              "scss": "SCSS",
+              "html": "HTML",
+              "markup": "HTML",
+              "webc": "WebC",
+              "njk": "Nunjucks",
+              "xml": "XML",
+              "svg": "SVG",
+              "js": "JavaScript",
+              "javascript": "JavaScript",
+              "jsx": "JSX",
+              "ts": "TypeScript",
+              "typescript": "TypeScript",
+              "json": "JSON",
+              "md": "Markdown",
+              "markdown": "Markdown",
+              "php": "PHP",
+              "py": "Python",
+              "python": "Python",
+              "java": "Java",
+              "sql": "SQL",
+              "http": "HTTP",
+              "yaml": "YAML",
+              "yml": "YAML",
+              "text": "Text"
+            }
+          },
+          "home": {
+            "heading": "Where the course is",
+            "todayLabel": "Today's class",
+            "nextLabel": "Next class",
+            "firstLabel": "First class",
+            "when": "Week {week} · {weekday}, {date}",
+            "openSlides": "Open the slides",
+            "seeWeek": "See the week",
+            "comingUp": "Coming up",
+            "fullSchedule": "Full schedule",
+            "nothingDue": "Nothing else is due this term.",
+            "dueToday": "Today",
+            "dueTomorrow": "Tomorrow",
+            "dueInDays_one": "In {count} day",
+            "dueInDays_other": "In {count} days",
+            "progress": "Progress",
+            "weeksDone": "{done} of {total} weeks done",
+            "week": "Week {week}",
+            "stateDone": "Done",
+            "stateNow": "Now"
+          },
+          "schedule": {
+            "thisWeek": "This week",
+            "upNext": "Up next",
+            "read": "Read",
+            "dueThisWeek": "Due this week",
+            "today": "Today",
+            "next": "Next",
+            "stateDone": "Done",
+            "stateNow": "Now",
+            "hidePast": "Hide past weeks",
+            "weeksDone": "{done} of {total} weeks done.",
+            "pastHidden_one": "{count} finished week hidden.",
+            "pastHidden_other": "{count} finished weeks hidden.",
+            "weekHeading": "Week {week}",
+            "colClass": "Class",
+            "colTopics": "Topics",
+            "colFor": "For this class",
+            "readBefore": "Read before class",
+            "due": "Due",
+            "dueOn": "due {when}",
+            "materials": "Materials",
+            "slides": "Slides",
+            "addendum": "Addendum",
+            "weekResources": "This week’s resources",
+            "noClass": "No class — {reason}",
+            "substitution": "Runs a {weekday} schedule",
+            "dueKeyLabel": "Key to due items",
+            "graded": "graded",
+            "notGraded": "not graded",
+            "dueKindTest": "Test",
+            "dueKindGraded": "Graded",
+            "dueKindReading": "Reading check",
+            "dueKindPractice": "Practice",
+            "finalExam": "Final exam"
+          },
+          "glossary": {
+            "groupBy": "Group by",
+            "byAz": "A to Z",
+            "byTest": "Test",
+            "byMeeting": "Class meeting",
+            "mode": "Mode",
+            "review": "Review",
+            "flashcards": "Flashcards",
+            "search": "Search terms",
+            "clear": "Clear",
+            "clearSearch": "Clear search",
+            "filterSummary": "Filter by test or {reading}",
+            "filtersOn": "({count} on)",
+            "count": "{shown} of {total} terms",
+            "clearFilters": "Clear filters",
+            "removeFilter": "Remove {kind} filter: {label}",
+            "meetingChip": "Class meeting: {label}",
+            "taughtIn": "Taught in",
+            "slideRef": "Week {week} · {weekday}, slide {slide}",
+            "example": "Example",
+            "known": "✓ known",
+            "noMatch": "No terms match.",
+            "noMatchHint": "Clear the search or a filter to see more.",
+            "noMatchStudy": "Clear the search or a filter to study more.",
+            "terms_one": "{count} term",
+            "terms_other": "{count} terms",
+            "card": "Card {n} of {total}",
+            "toStudy": "{count} to study",
+            "knownOf": "{known} of {total} known",
+            "shuffle": "Shuffle",
+            "defFirst": "Definition first",
+            "resetKnown": "Reset known",
+            "knownMeter": "Known terms",
+            "allKnown": "You know every card in this set.",
+            "markedKnown": "{known} of {total} marked known.",
+            "startOver": "Start over with the ones I know",
+            "showDefinition": "Show definition",
+            "showTerm": "Show term",
+            "iKnow": "I know this",
+            "later": "Show me again later",
+            "prev": "← Previous",
+            "next": "Next →",
+            "hint": "Space reveals · arrows move",
+            "defShown": "Definition shown for {term}",
+            "symbols": "Symbols",
+            "glossary": "Glossary",
+            "courseGlossary": "Course glossary",
+            "slidesOnly": "Slides only",
+            "finalExam": "Final exam",
+            "reading": "Reading",
+            "chapter": "Chapter",
+            "section": "Section",
+            "unit": "Unit",
+            "module": "Module",
+            "lesson": "Lesson",
+            "termsFromClassEach": "terms from class. Each carries tags for its test, its {reading} and the meeting that taught it. Group by any of them, search, or narrow the list to what you are studying."
+          },
+          "practice": { "colSheet": "Practice sheet", "colFor": "For", "caption": "Every practice sheet, with what it is for", "empty": "No practice sheets posted yet." },
+          "syllabus": {
+            "due": "Due:",
+            "projectDue": "{date}, {time}",
+            "projectPage": "Full requirements, milestone dates, and the grading rubric are on {link}.",
+            "projectPageLink": "the project page",
+            "syllabus": "Syllabus",
+            "learningOutcomes": "Learning outcomes",
+            "uponCompletingThisCourse": "Upon completing this course students will be able to:",
+            "additionalOutcomesInThis": "Additional outcomes in this section",
+            "text": "Text",
+            "noTextIsRequired": "No text is required.",
+            "required": "Required:",
+            "technology": "Technology",
+            "bringALaptopMeeting": "Bring a laptop meeting the minimum specifications specified by {institution} to class every day.",
+            "theCollege": "the college",
+            "accessIsRequired": "{lms} access is required.",
+            "coursework": "Coursework",
+            "exam": "Exam:",
+            "points": "{display}, {points} points",
+            "atTheLastClassMeeting": "at the last class meeting, {lastMeeting}",
+            "grading": "Grading",
+            "keyDates": "Key dates",
+            "thisSectionsFinalExam": "This section's final exam",
+            "classStart": "{days} at {time}"
+          },
+          "courseSummary": {
+            "projectDue": "The final project is due {when}; its milestones and rubric are on {link}.",
+            "projectDueShort": "The final project is due {when}.",
+            "projectPageLink": "the project page",
+            "howThisSectionIs": "How this section is taught",
+            "scheduleClassResources": "Schedule &amp; class resources",
+            "prerequisites": "Prerequisites:",
+            "thisIsAProposed": "This is a proposed outline of topics and is subject to change. Any changes will be announced in class.",
+            "eachWeekListsWhatTo": "Each week lists what to read before its first meeting and the resources posted after class.",
+            "allAssignmentsWillBe": "All assignments will be posted in {lms}.",
+            "theFinalExamFalls": "The final exam falls in the exam period ({period}); the exact date and time will be announced in class.",
+            "thisSectionsFinalExamIs": "This section's final exam is {slot} — see the {link} section.",
+            "coursework": "Coursework",
+            "thisDocumentOmitsTheWeekbyweek": "This document omits the week-by-week schedule, which may be adjusted during the term{live}.",
+            "theLiveScheduleIsPublished": "; the live schedule is published at {url}"
+          },
+          "worksheet": {
+            "notice": "Nothing here is recorded or submitted.",
+            "noticeBody": "Your answers are saved in this browser only and go nowhere else. Checking an answer shows you the reasoning and the source it came from.",
+            "termsHeading": "Terms to know",
+            "termsHint": "Select a term for its definition, and a link to the source it comes from.",
+            "termSource": "",
+            "citeHeading": "Where this comes from",
+            "citeLabel": "Where this comes from, question",
+            "chooseOne": "Choose one answer",
+            "checkAll": "See results",
+            "resetAll": "Clear my answers",
+            "checkSection": "Check section",
+            "resetSection": "Clear section",
+            "section": "Section",
+            "wordBank": "Word bank",
+            "answer": "Answer:",
+            "showAnswer": "Show the answer",
+            "checkYourself": "Check yourself",
+            "verdict": "Verdict",
+            "judgeLine": "Select the line that causes the problem",
+            "judgeNoLine": "No line — it is fine as written",
+            "notGraded": "Not graded",
+            "navHeading": "Questions",
+            "resultsHeading": "Results",
+            "retryMissed": "Try missed questions",
+            "scoreOf": "of {total}",
+            "statusRight": "Correct",
+            "statusWrong": "Try again",
+            "statusPartial": "Unfinished",
+            "statusUnattempted": "Unattempted",
+            "statusAnswered": "Not checked",
+            "statusSelf": "Check yourself",
+            "tallyCorrect": "{right} of {total} correct",
+            "tallyWrong": "{count} to try again",
+            "tallyPartial": "{count} unfinished",
+            "tallyUnattempted": "{count} unattempted",
+            "tallySelf": "{count} to check yourself",
+            "feedbackRight": "Correct.",
+            "feedbackRightAll": "Correct: all {total} parts.",
+            "feedbackParts": "{right} of {total} parts correct",
+            "feedbackBlank": "{count} left blank",
+            "feedbackUnattempted": "Unattempted.",
+            "retryCount_one": "{count} question to try again",
+            "retryCount_other": "{count} questions to try again",
+            "confirmClearAll": "Clear every answer on this worksheet? This can't be undone.",
+            "confirmClearSection": "Clear every answer in this section? This can't be undone.",
+            "checkOne": "Check answer",
+            "restored": "Restored your answers from {when}."
+          },
+          "siteFooter": { "pages": "Pages", "policies": "Policies" },
+          "courseDocuments": { "additionalResources": "Additional resources" },
+          "policies": { "policies": "Policies", "readTheFullPolicy": "Read the full policy" },
+          "grading": { "gradeWeighting": "Grade weighting", "category": "Category", "weight": "Weight", "gradingScale": "Grading scale", "grade": "Grade", "weightedAverage": "Weighted average", "andAbove": "{min} and above", "below": "below {max}" },
+          "scheduleOverview": { "schedule": "Schedule", "keyDates": "Key dates", "jumpTo": "Jump to", "tests": "Tests", "finalProject": "Final project", "finalExam": "Final exam", "exam": "Exam", "noClass": "No class" },
+          "slideTimetable": { "everySlideDeckFor": "Every slide deck for this section, one row per week and one column per meeting day", "week": "Week", "noMeeting": "No meeting", "noClass": "No class: {reason}", "noDeck": "No deck", "draftNotInThe": "Draft, not in the student build", "speakerNotes": "Speaker notes", "addendumDraftNotIn": "Addendum draft, not in the student build", "addendumSpeakerNotes": "Addendum speaker notes" },
+          "tableRubric": { "criteria": "Criteria", "points": "Points", "pointsEach": "{points} points", "totalPointsPossible": "Total points possible", "milestone": "Milestone", "due": "Due", "whatIsGraded": "What is graded" },
+          "demoWeeks": { "lessonPlan": "Lesson plan", "shownAgainFirstUsed": "Shown again, first used {date}", "downloadTheHtmlFile": "Download the HTML file", "usedAgain": "Used again {dates}" },
+          "instructor": { "yourInstructor": "Your instructor", "name": "Name", "office": "Office", "officeHours": "Office hours", "email": "Email", "message": "Message", "sendMeAMessage": "Send me a message", "blog": "Blog", "instructor": "Instructor" },
+          "codepenEmbed": { "theCode": "The code", "html": "HTML", "css": "CSS", "javascript": "JavaScript", "htmlSource": "HTML source", "cssSource": "CSS source", "javascriptSource": "JavaScript source" },
+          "base": { "skipToContent": "Skip to content" },
+          "deck": { "skipToFirstSlide": "Skip to first slide", "slides": "Slides", "previousSlide": "Previous slide", "nextSlide": "Next slide", "cycleColorTheme": "Cycle color theme", "toggleFullscreen": "Toggle fullscreen" },
+          "document": { "contents": "Contents" },
+          "lesson": {
+            "lessonPlans": "Lesson plans",
+            "onePlanPerClass": "One plan per class meeting ({time}), generated from the course schedule and the academic calendar. Holidays are shown in sequence so the term reads day by day.",
+            "slideIndex": "Slide index",
+            "everyDeckInMeeting": "{link} — every deck in meeting order. Speaker notes are on a separate printable sheet per deck, linked as \"Notes\" below.",
+            "exercises": "Exercises",
+            "theBriefAndStarter": "{link} — the brief and starter for each. Exercises due on a meeting are linked from its row below.",
+            "instructorDeadlines": "Instructor deadlines",
+            "dueDate": "Due date",
+            "everyClassMeetingOf": "Every class meeting of the term, in order",
+            "date": "Date",
+            "links": "Links",
+            "topics": "Topics",
+            "runsASchedule": "(runs a {weekday} schedule)",
+            "noClass": "No class — {reason}",
+            "lessonPlan": "Lesson&nbsp;plan",
+            "slides": "Slides",
+            "addendum": "Addendum",
+            "notes": "Notes",
+            "addendumNotes": "Addendum notes",
+            "due": "Due:"
+          },
+          "lessonDay": { "weekDayLesson": "Week {week}, Day {day} — Lesson Plan" },
+          "lessonDetail": {
+            "week": "Week {week}",
+            "weekDay": "Week {week}, Day {day}",
+            "noClass": "No class",
+            "lessonNavigation": "Lesson navigation",
+            "allLessons": "All lessons",
+            "previousDay": "Previous day",
+            "nextDay": "Next day",
+            "classMeetingOfThe": "Class meeting #{meeting} of the term",
+            "noClassOn": "No class on {reason}. Use this day to prep the next lesson or catch up on grading.",
+            "focus": "Focus:",
+            "thisMeetingRunsA": "This meeting runs a {weekday} schedule (college-wide) — plan the substituted day's session, not this weekday's usual rhythm.",
+            "aTestIsScheduledThis": "A test is scheduled this week — confirm day, reserve class time, and remind students at least one meeting ahead.",
+            "thisWeeksTopics": "This week's topics",
+            "beforeClass": "Before class",
+            "reviewTheReadingsSee": "Review the readings (see materials below)",
+            "prepareupdateSlidesAndLivedemo": "Prepare/update slides and live-demo code",
+            "printOrOpenThe": "Print or open the {link}",
+            "speakerNotesSheet": "speaker notes sheet",
+            "stageStarterFilesOr": "Stage starter files or lab handout if needed",
+            "checkForStudentQuestions": "Check {lms} for student questions or submissions",
+            "lessonOutline": "Lesson outline",
+            "lessonOutlineMinutes": "Lesson outline ({minutes} minutes)",
+            "time": "Time",
+            "segment": "Segment",
+            "min": "{minutes} min",
+            "afterClass": "After class",
+            "postHandoutsToAnd": "Post handouts to {resources} and link them in {schedule}'s {list} for the week; the slide deck publishes itself from {slides}, so it only needs a link there if students should see it from the schedule",
+            "noteAnythingNotCovered": "Note anything not covered and roll it into the next lesson",
+            "postOrGradeLabhomework": "Post or grade lab/homework in {lms} as needed",
+            "lessonTools": "Lesson tools",
+            "onThisPage": "On this page",
+            "materialsLinks": "Materials &amp; links"
+          },
+          "lessonMaterials": { "slidesForThisMeeting": "Slides for this meeting", "speakerNotes": "speaker notes", "printable": "(printable)", "demosFromThisMeeting": "Demos from this meeting", "exercisesDue": "Exercises due", "readingForThisMeeting": "Reading for this meeting", "due": "due {when}", "deadlinesToAnnounce": "Deadlines to announce", "assignedBeforeThisWeek": "Assigned before this week", "postedForTheClass": "Posted for the class", "nothingPostedForThis": "Nothing posted for this week yet." },
+          "lessons": {
+            "welcomeRecapThePrevious": "Welcome, recap the previous class, open questions",
+            "welcomeIntroductionsHowThe": "Welcome, introductions, how the course runs",
+            "instructionThisWeeksTopics": "Instruction: this week's topics (see above)",
+            "guidedPracticeLabWork": "Guided practice / lab work",
+            "wrapupRecapPreviewNext": "Wrap-up: recap, preview next class, assignment reminders",
+            "buffer": "Buffer",
+            "collegeHoliday": "College holiday",
+            "introduceThisWeeksMaterial": "Introduce this week's material",
+            "continuePracticeAndLab": "Continue, practice, and lab work",
+            "tbd": "TBD"
+          },
+          "term": { "classesBegin": "Classes begin", "collegeHoliday": "College holiday", "lastDayOfClasses": "Last day of classes", "readingDaysNoClasses": "Reading days (no classes or exams)", "finalExaminationPeriod": "Final examination period", "preregistrationForTheNext": "Pre-registration for the next term opens" },
+          "deckNotes": { "speakerNotes": "Speaker notes", "speakerNotesTitle": "Speaker notes: {title}", "weekDay": "Week {week}, Day {day}", "speakerNotesInstructorOnly": "Speaker notes · instructor only", "slideOpenInThe": "Slide {number}, open in the deck", "untitledSlide": "Untitled slide" },
+          "lessonPlans": { "lessonPlans": "Lesson plans", "navTitle": "Lesson Plans" },
+          "markdown": { "permalinkToThisHeading": "Permalink to this heading" },
+          "pdf": { "footer": "{course}: {name} — {term} syllabus · Generated {generated} ({version}) · Page {page} of {pages}" },
+          "themePanel": {
+            "brand": "Brand",
+            "brandColor": "Brand color",
+            "brandColorForText": "Brand color for text",
+            "textOnBrandColor": "Text on brand color",
+            "wayfindingColor": "Wayfinding color",
+            "textOnWayfindingColor": "Text on wayfinding color",
+            "page": "Page",
+            "pageBackground": "Page background",
+            "cardsAndPanels": "Cards and panels",
+            "linesAndBorders": "Lines and borders",
+            "text": "Text",
+            "bodyText": "Body text",
+            "secondaryText": "Secondary text",
+            "links": "Links",
+            "theme": "Theme",
+            "unsavedChanges": "Unsaved changes",
+            "preview": "Preview",
+            "light": "Light",
+            "dark": "Dark",
+            "everyColor": "Every color",
+            "allTokens": "All tokens",
+            "gradient": "Gradient",
+            "addAColor": "Add a color",
+            "undo": "Undo",
+            "reset": "Reset",
+            "save": "Save",
+            "download": "Download",
+            "hideTheThemePanel": "Hide the theme panel",
+            "notACssColor": "Not a CSS color",
+            "cssValue": "{name}, CSS value",
+            "backToTheSaved": "Back to the saved theme.",
+            "thePage": "the page",
+            "theBrandColor": "the brand color",
+            "passes": "passes",
+            "below": "below {minimum} : 1",
+            "contrast": "{ratio} : 1 on {ground}, {verdict}",
+            "color": "Color {n}",
+            "removeColor": "Remove color {n}",
+            "saving": "Saving…",
+            "savedToThe": "Saved to {file}. The site is rebuilding.",
+            "notSaved": "Not saved: {message}",
+            "downloadedPutItIn": "Downloaded. Put it in {folder} to keep it."
+          },
+          "promptCopy": { "copyThisPrompt": "Copy this prompt", "promptCopied": "Prompt copied", "promptCopiedToThe": "Prompt copied to the clipboard.", "promptSelectedPressYour": "Prompt selected — press your copy shortcut." }
+        }
+      </script>
+      <script type="module">
+        // Print every disclosure expanded, then restore the reader's own
+        // state (tracked per element — bundle scripts share one module
+        // scope, so no top-level variables).
+        window.addEventListener("beforeprint", () => {
+          for (const details of document.querySelectorAll("details:not([open])")) {
+            details.open = true;
+            details.dataset.printOpened = "";
+          }
+        });
+        window.addEventListener("afterprint", () => {
+          for (const details of document.querySelectorAll("details[data-print-opened]")) {
+            details.open = false;
+            delete details.dataset.printOpened;
+          }
+        });
+      </script>
+    </footer>
+    <script type="module" src="/course-kit/preview/25/components/js/email.js"></script>
+    <script type="module" src="/course-kit/preview/25/components/js/code-copy.js"></script>
+    <theme-panel context="site"></theme-panel>
+    <script type="module" src="/course-kit/preview/25/components/js/theme-panel.js"></script>
+  </body>
+</html>

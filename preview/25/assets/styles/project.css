@@ -1,0 +1,99 @@
+/* Project styles: the accent & fonts. Edit freely; the scaffold never overwrites this file. */
+:root {
+	/* The kit's default accent, the Course Reader magenta. */
+	--norn-ui-accent: #8b1e5e;
+	/* Secondary text: the default dark value is 6.3:1 on a card; AAA needs 7:1. */
+	--norn-text-muted: light-dark(#4b5160, #c0c6d2);
+	/* Fonts: Instrument Sans is bundled; uncomment it, or load your own (@font-face or @import) & put the family first.
+	--norn-font-body: "Instrument Sans", "Instrument Sans Fallback", ui-sans-serif, system-ui, sans-serif; */
+}
+
+/* Quick start: numbered steps, each a heading over a code block. */
+.steps {
+	display: grid;
+	gap: 1.5rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	counter-reset: step;
+
+	li {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: 0.5rem;
+		counter-increment: step;
+	}
+
+	h3 {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		margin: 0;
+		font-size: 1.1rem;
+
+		&::before {
+			content: counter(step);
+			display: grid;
+			place-items: center;
+			inline-size: 1.8rem;
+			block-size: 1.8rem;
+			border-radius: 50%;
+			background: var(--norn-ui-accent);
+			color: #fff;
+			font-size: 0.95rem;
+		}
+	}
+}
+
+/* Feature cards: the icon leads the card. */
+norn-card > norn-icon {
+	color: var(--norn-ui-accent);
+}
+
+/* The gallery: each starter page live in a scaled, inert frame. */
+.examples {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+	gap: 1.25rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	article {
+		display: grid;
+		gap: 0.5rem;
+	}
+
+	h3 {
+		margin: 0;
+		font-size: 1rem;
+	}
+}
+
+.example-frame {
+	position: relative;
+	aspect-ratio: 16 / 10;
+	overflow: hidden;
+	border: 1px solid color-mix(in oklab, currentcolor 25%, transparent);
+	border-radius: 6px;
+
+	iframe {
+		position: absolute;
+		inset: 0;
+		inline-size: 400%;
+		block-size: 400%;
+		border: 0;
+		scale: 0.25;
+		transform-origin: 0 0;
+		pointer-events: none;
+	}
+}
+
+.inline-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 1.5rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
