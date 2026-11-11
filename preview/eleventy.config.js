@@ -11,6 +11,7 @@ import { codeBlock, tokenRanges } from "@allons-y/webc-code-sample";
 
 import courseKit from "../index.js";
 
+import { minifyInline } from "../lib/minify.js";
 import { TOKENS } from "../lib/theme.js";
 
 import { withPreview } from "../website/lib/chrome.js";
@@ -99,6 +100,8 @@ export default async function (config) {
 	config.addWatchTarget("components/**");
 	config.addWatchTarget("preview/stories/**");
 	config.addWatchTarget("lib/theme.js");
+	// MINIFY=1 builds the preview as a course that minifies its inline code would: the audit then runs against that output.
+	if (process.env.MINIFY && process.env.MINIFY !== "0") config.addTransform("minify-inline", minifyInline({ production: false }));
 
 	return { pathPrefix: process.env.PATH_PREFIX || "/" };
 }

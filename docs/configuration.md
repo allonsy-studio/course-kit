@@ -105,6 +105,25 @@ A key that is not a copy key stops the build with `strings.json: "schedule.nope"
 
 A course with components the kit does not have gives their wording its own namespaces, passed as the `copy` option: `courseKit(config, { copy: { phpLab: { run: "Run", reset: "Reset" } } })`. They sit beside the shared ones (`$data.copy.phpLab.run`, and `COPY.phpLab` in scripts), and `_data/strings.json` can override them like any other. A name the kit already uses is refused, so a course can never change what a kit component reads.
 
+## Minifying inline code
+
+The kit does not minify. A page carries its component styles and scripts inline, in readable form, and the course decides whether that is worth shrinking. `ELEVENTY_ENV=production` already minifies the HTML (whitespace and comments) through dashly's `htmlmin`; it leaves inline JavaScript and CSS alone.
+
+To shrink them, register the kit's `minifyInline` transform in the course's `eleventy.config.js`. It runs esbuild over each inline `<script>` and `<style>`, and by default only when `ELEVENTY_ENV` is `production`:
+
+```js
+import courseKit, { minifyInline } from "@allons-y/course-kit";
+
+export default function (config) {
+	config.addPlugin(courseKit, { institution: { name: "Meredith College", timezone: "America/New_York" } });
+	config.addTransform("minify-inline", minifyInline()); // after the plugin, so it sees the final page
+}
+```
+
+Pass `{ production: false }` to run it in every build. It is safe for what the kit emits, and the audit proves it: names inside a script are shortened but no property or string is ever renamed (a copy key or a `data-*` selector looked up by name survives); a script with no `src` and a JSON, `py-editor` or other non-JavaScript type, a `<pre>`, and every attribute are left as they are; a script that cannot be parsed fails the build and names the page. The kit's bundled component scripts share one module scope, so each wraps its code in a function; keep that in any script you add to a component. The component preview is built minified for `yarn docs:test` (set `MINIFY=0` to turn it off), so a change that a minifier breaks fails the audit.
+
+It is a separate export, not an option of `courseKit`, because the transform's place in the order matters (it should run after the HTML minifier's registration or before it, by the course's choice) and a course that wants a different minifier registers its own and loses nothing. This is a close call; a `minify` option would be one line shorter for a course that wants the default.
+
 ## For developers
 
 The package's other exports:

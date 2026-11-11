@@ -47,7 +47,8 @@ export default defineConfig({
 			const built = spawnSync(process.execPath, [join(ROOT, "node_modules/@11ty/eleventy/cmd.cjs"), "--config=preview/eleventy.config.js", "--quiet"], {
 				cwd: ROOT,
 				stdio: "inherit",
-				env: { ...process.env, PATH_PREFIX: "/components/", PREVIEW_OUTPUT: "website/_a11y/components" },
+				// The preview is built minified, as a course that opts in would ship it, so a change that a minifier breaks fails the audit (MINIFY=0 turns it off).
+				env: { ...process.env, PATH_PREFIX: "/components/", PREVIEW_OUTPUT: "website/_a11y/components", MINIFY: process.env.MINIFY ?? "1" },
 			});
 			if (built.status !== 0) throw new Error("The component preview did not build for the audit.");
 
