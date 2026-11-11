@@ -21,19 +21,23 @@ A link with a trailing arrow. The label is the slot; `href` and any other attrib
 
 ### `<assigned-list>`
 
-A labelled list of readings or deadlines. Renders nothing when empty.
+A labelled list of readings or deadlines. Renders nothing when empty. Give it the `items` array, or write the list as a `<dl>` in the default slot: each `<dt>` holds the title or its link (give it `data-kind` and, before the title, `<span class="due-chip" data-kind="test">Test</span>` for a chip), each `<dd>` only the check or due detail. The array wins when it has items; when it is missing or empty the slot is rendered instead, so the list still shows if the data does not load.
 
 | Prop | Type | |
 |---|---|---|
 | `label` | `string` | the heading above the list |
 | `items` | `{ title: string, href?: string, check?: string, dueLabel?: string, kind?: string }[]` | the readings or deadlines to list |
 | `[dueOn]` | `string` | how a due date reads after the check, with `{when}`: `copy.schedule.dueOn` ("due {when}"); without it the date stands alone |
-| `[chips]` | `boolean` | put a `.due-chip` for the item's `kind` before its title |
+| `[chips]` | `boolean` | put a `.due-chip` for the item's `kind` before its title; a bare `@chips` turns them on |
 | `[kinds]` | `Record<string, string>` | the chip words by kind, from `copy.schedule.dueKind*`; needed with `chips` |
 
 ### `<callout>`
 
 A highlighted aside. The content is the slot.
+
+| Prop | Type | |
+|---|---|---|
+| `[type]` | `'success' \| 'warn' \| 'error'` | the color of the edge and wash; none is the brand color |
 
 ### `<card-list>`
 
@@ -194,7 +198,7 @@ One glossary term as a `<dt>`/`<dd>` pair: the term, its definition, an optional
 
 ### `<glossary-panel>`
 
-The glossary's element: the plain list it wraps (the slot) stays when scripts do not run, and `scripts/glossary.js` replaces it with Review and Flashcards. One stylesheet covers both, since the script renders the same markup the server does.
+The glossary's element: the grouped list it wraps (the slot), which the script at the foot of this file replaces with Review and Flashcards. One stylesheet covers both, since the script renders the same markup the server does.
 
 | Prop | Type | |
 |---|---|---|
@@ -206,7 +210,7 @@ Slots:
 
 ### `<glossary>`
 
-The course glossary page: every `vocab` and `api` slide as one tagged term, listed A to Z for readers without scripts and enhanced into Review and Flashcards by `<glossary-panel>`. Reads the `glossary` global.
+The course glossary page: every `vocab` and `api` slide as one tagged term, listed A to Z and enhanced into Review and Flashcards by `<glossary-panel>`. Reads the `glossary` global.
 
 ### `<grading>`
 

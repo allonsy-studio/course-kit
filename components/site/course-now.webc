@@ -67,7 +67,7 @@
      * <course-now>: the home page's class card, the next due items and the
      * week-by-week progress track. Everything comes from the schedule data
      * already on the page; dates compare in the campus zone, as
-     * <today-marker> does. Hidden without the script.
+     * <today-marker> does. Screen only.
      */
     (() => {
         try {
@@ -167,9 +167,9 @@
 
 <style webc:scoped>
     /* The home page's opening band: a filled card for the next class beside
-       what is due, then one bar per week. Script-revealed, screen only. */
-    /* `hidden` has to win outside the :host nesting too, or the unscripted
-       page shows an empty card. */
+       what is due, then one bar per week. Screen only. */
+    /* `hidden` has to win outside the :host nesting too, or an empty card shows.
+       The band is for the screen; its own `display` would beat `.screen-only`, so print hides it here. */
     :host[hidden],
     .course-now[hidden] {
         display: none;
@@ -384,6 +384,13 @@
 
         .progress [data-state="done"] .bar {
             background: CanvasText;
+        }
+    }
+
+    @media print {
+        :host,
+        .course-now {
+            display: none;
         }
     }
 </style>

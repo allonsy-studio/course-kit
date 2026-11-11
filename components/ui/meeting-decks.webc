@@ -6,11 +6,11 @@
 	 * @prop {string} slidesLabel the slides link's text, `copy.schedule.slides`
 	 * @prop {string} addendumLabel the addendum link's text, `copy.schedule.addendum`
 	 */
-	/* Each link loops over its own href: a prop does not reach a nested component's attribute (docs/internals.md). */
+	/* Each link loops over its own href and label: a prop does not reach a nested component's attribute or slot (docs/internals.md). */
 </script>
 <div webc:root="override" class="decks" webc:if="meeting.slides || meeting.addendum">
-	<p webc:if="meeting.slides"><arrow-link webc:for="href of [meeting.slides]" :href="href"><span @text="slidesLabel"></span></arrow-link></p>
-	<p webc:if="meeting.addendum"><arrow-link webc:for="href of [meeting.addendum]" :href="href"><span @text="addendumLabel"></span></arrow-link></p>
+	<p webc:if="meeting.slides"><arrow-link webc:for="link of [{ href: meeting.slides, label: slidesLabel }]" :href="link.href"><span @text="link.label"></span></arrow-link></p>
+	<p webc:if="meeting.addendum"><arrow-link webc:for="link of [{ href: meeting.addendum, label: addendumLabel }]" :href="link.href"><span @text="link.label"></span></arrow-link></p>
 </div>
 
 <style webc:scoped>

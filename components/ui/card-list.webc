@@ -6,7 +6,7 @@
 </script>
 <ul role="list" webc:root="override" webc:if="items">
     <li webc:for="item of items">
-        <a :href="item.page.url" webc:if="item.page.url" aria-labelledby="slugify(item.data.name)"></a>
+        <a :href="item.page.url" webc:if="item.page.url" :aria-labelledby="slugify(item.data.name)"></a>
         <slot :@item="item">
             <eyebrow @text="item.data.code"></eyebrow>
             <h3 @text="item.data.name" :id="slugify(item.data.name)"></h3>

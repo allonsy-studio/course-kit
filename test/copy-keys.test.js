@@ -36,7 +36,7 @@ const used = (text) => {
 	for (const match of text.matchAll(/\bt\(\s*"(\w+)"\s*,\s*"(\w+)"/g)) found.push([match[1], match[2]]);
 	for (const match of text.matchAll(/\bcopy\.(\w+)\.(\w+)/g)) found.push([match[1], match[2]]);
 	for (const match of text.matchAll(/\b(\w+)\s*=\s*(?:\$data\.)?copy\.(\w+)\s*[;,\n)]/g)) {
-		for (const use of text.matchAll(new RegExp(`(?<![\\w.])${match[1]}\\.(\\w+)`, "g"))) found.push([match[2], use[1]]);
+		for (const use of text.matchAll(new RegExp(`(?<![\\w.\\-/])${match[1]}\\.(\\w+)`, "g"))) found.push([match[2], use[1]]);
 	}
 	return found;
 };

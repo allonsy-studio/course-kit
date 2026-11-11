@@ -414,6 +414,12 @@ a {
 	align-self: center;
 }
 
+/* The 2.5em floor and full width are for a figure or logo standing on its own. An icon inside a control or an icon component is sized by that component. */
+:where(norn-icon, [data-icon], button, [role="button"]) svg {
+	inline-size: auto;
+	min-block-size: 0;
+}
+
 :where(label) {
     text-wrap: stable;
     padding-block-start: var(--content-space);
@@ -1256,7 +1262,7 @@ figure > :where(table) {
 	}
 
 	/* The examples to recognize and not use: same shape, dashed and muted,
-	   and prompt-copy.js gives them no copy control. */
+	   and copy.js gives them no copy control. */
 	&.prompt-avoid {
 		border-style: dashed;
 		background-color: transparent;
@@ -1517,7 +1523,7 @@ blockquote {
 /* ---- Code blocks ----
    A fenced sample (lib/markdown.js): a bar in the language's color inside the
    top border, a title bar (language, then file name, then the copy button
-   added by /js/code-copy.js), and the lines. Line numbers are CSS counters, so
+   added by /js/copy.js), and the lines. Line numbers are CSS counters, so
    selecting or copying never takes them. */
 .code-block {
 	--code-edge: var(--color-code-edge-neutral);
@@ -2043,3 +2049,21 @@ legend.switch-label {
 
 	.due-chip { border-color: CanvasText; }
 }
+
+/* Prism code outside a `.code-block` (a worksheet figure, a glossary example) wears the same tokens, so every token keeps 7:1 on the same ground. */
+pre[class*="language-"],
+code[class*="language-"] {
+	color: var(--color-code-text);
+	text-shadow: none;
+}
+
+pre[class*="language-"] {
+	background: var(--color-code-surface);
+}
+
+pre .token:is(.keyword, .atrule, .rule, .important, .selector) { color: var(--color-code-keyword); }
+pre .token:is(.string, .attr-value, .char, .regex, .url) { color: var(--color-code-string); }
+pre .token:is(.function, .class-name, .tag, .property, .attr-name, .builtin) { color: var(--color-code-function); }
+pre .token:is(.number, .boolean, .constant, .unit) { color: var(--color-code-number); }
+pre .token:is(.comment, .prolog, .doctype) { color: var(--color-code-comment); font-style: italic; }
+pre .token:is(.punctuation, .operator) { color: var(--color-code-text); }

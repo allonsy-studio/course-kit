@@ -25,7 +25,7 @@
                         </template>
                     </li>
                 </ul>
-                <meeting-decks :@meeting="meeting" :@slidesLabel="$data.copy.schedule.slides" :@addendumLabel="$data.copy.schedule.addendum"></meeting-decks>
+                <meeting-decks :@meeting="meeting" :@slides-label="$data.copy.schedule.slides" :@addendum-label="$data.copy.schedule.addendum"></meeting-decks>
             </meeting-card>
         </ol>
     </week-block>

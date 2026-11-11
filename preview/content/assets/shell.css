@@ -348,6 +348,17 @@ main#main {
 		border-block-end: 1px solid var(--p-line);
 		font-size: 0.875rem;
 
+		/* Norn's styles sit in a layer, so the kit's unlayered label padding and grid win over them. Each option is a 44px square target with its icon centered. */
+		norn-segmented-control label {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			min-block-size: 2.75rem;
+			min-inline-size: 2.75rem;
+			padding-block: 0;
+			margin: 0;
+		}
+
 		button {
 			display: inline-flex;
 			align-items: center;

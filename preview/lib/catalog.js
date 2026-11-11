@@ -3,6 +3,7 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 
 import { readHeader } from "../../scripts/component-docs.js";
+import { markdown } from "../../lib/markdown.js";
 import { TOKENS } from "../../lib/theme.js";
 import { matrixCells, PROPS, renderMatrix, renderStory, SLOTS } from "./render-story.js";
 
@@ -130,5 +131,8 @@ export async function buildCatalog() {
 			});
 		}
 	}
+	// A code fence is Markdown, not a component, so it has a frame of its own: the figure the renderer writes, with its copy button.
+	const fences = '```js title="tag-filter.js"\nconst tags = ["html", "css"];\nconst first = tags[0];\nconsole.log(first);\n```\n\n```bash\n$ yarn install\n```\n';
+	frames.push({ groupId: "ui", url: "/frames/ui/code-block/default/", title: "code-block: sample", source: markdown.render(fences, { page: { inputPath: "./content/guide.md" } }) });
 	return { groups: GROUPS.map((group) => ({ ...group, components: components.filter((c) => c.group === group.id) })), components, frames };
 }

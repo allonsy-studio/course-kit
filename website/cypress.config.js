@@ -1,5 +1,6 @@
 // Named .js in "type": "module" projects; .mjs loads as ESM elsewhere.
 
+import { spawnSync } from "node:child_process";
 import { existsSync, readdirSync } from "node:fs";
 import { join, sep } from "node:path";
 
@@ -7,6 +8,7 @@ import Eleventy from "@11ty/eleventy";
 import { defineConfig } from "cypress";
 
 const PORT = 8080;
+const ROOT = join(import.meta.dirname, "..");
 const BUILD_DIR = join(import.meta.dirname, "_a11y");
 
 const toUrl = (file) => `/${file.split(sep).join("/").replace(/(^|\/)index\.html$/, "$1")}`;
@@ -40,6 +42,14 @@ export default defineConfig({
 			}
 			await eleventy.serve(PORT);
 			on("after:run", () => eleventy.stopWatch());
+
+			// The component preview, built beside the landing page under /components/: every component and story frame is audited too.
+			const built = spawnSync(process.execPath, [join(ROOT, "node_modules/@11ty/eleventy/cmd.cjs"), "--config=preview/eleventy.config.js", "--quiet"], {
+				cwd: ROOT,
+				stdio: "inherit",
+				env: { ...process.env, PATH_PREFIX: "/components/", PREVIEW_OUTPUT: "website/_a11y/components" },
+			});
+			if (built.status !== 0) throw new Error("The component preview did not build for the audit.");
 
 			// Every built page.
 			config.env.pages = readdirSync(BUILD_DIR, { recursive: true })

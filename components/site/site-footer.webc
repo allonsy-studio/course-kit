@@ -19,7 +19,7 @@
     <nav class="group" aria-labelledby="footer-policies" webc:if="$data.policies">
         <p class="label" id="footer-policies" @text="$data.copy.siteFooter.policies"></p>
         <ul role="list">
-            <li webc:for="(key, policy) in $data.policies">
+            <li webc:for="(key, policy) in Object.fromEntries(Object.entries($data.policies).filter(([name]) => name !== '$schema'))">
                 <a :href="policy.href?.startsWith('/') ? policy.href : `/#policy-${key}`" @text="policy.title"></a>
             </li>
         </ul>

@@ -185,7 +185,7 @@
             flex: none;
             padding: 0.1em 0.6em;
             border-radius: var(--pill-border-radius);
-            background-color: color-mix(in oklab, var(--color-accent) 24%, transparent);
+            background-color: var(--color-surface-accent);
             color: var(--color-accent-text);
             font-size: var(--font-size-6);
             font-weight: var(--font-weight--semi-bold);

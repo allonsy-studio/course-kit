@@ -66,6 +66,7 @@ When you choose your own, keep these rules:
 - `accent-text` and `link` are for small text, so each must be dark enough on `page` (light) and light enough (dark). `accent` is for fills and rules; `on-accent` is the text on it. `link` follows `accent-text` by default; set it only to make links a different color.
 - `accent-secondary` is the wayfinding color. Set it to your accent if you want one color, as the starter does.
 - Check every pair at 7:1 for text (4.5:1 only for large text) and 3:1 for lines and fills. [Color tokens](tokens.md) lists every token and what it colors.
+- The bar for every component is WCAG 2.2 AAA, and [Accessibility](accessibility.md) says what is checked and what a new component ships with.
 - Keep the second accent for wayfinding. Any other color earns its place only when it carries meaning, such as a test or a deadline.
 
 ## Code samples

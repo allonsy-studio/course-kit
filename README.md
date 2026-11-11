@@ -54,6 +54,7 @@ You need [Node.js](https://nodejs.org) 22 or newer, and a terminal.
 | Look up a component | [Component reference](docs/components-reference.md) |
 | See every component rendered | [Component preview](docs/preview.md) (`yarn preview`) |
 | Make a test, its key and a practice worksheet | [Test generator skill](skills/test-generator/SKILL.md) |
+| Make a component accessible, and know what is checked | [Accessibility](docs/accessibility.md) |
 | Fix an error message | [Troubleshooting](docs/troubleshooting.md) |
 
 ## Words used here

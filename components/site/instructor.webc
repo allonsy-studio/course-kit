@@ -194,7 +194,7 @@
         block-size: 2.75em;
         margin: 0;
 
-        background-color: color-mix(in sRGB, var(--color-accent) 14%, transparent);
+        background-color: var(--color-surface-accent);
         border-radius: 50%;
         color: var(--color-accent-text);
         font-weight: var(--font-weight--semi-bold);
