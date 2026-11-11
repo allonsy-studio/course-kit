@@ -11,10 +11,12 @@
     <link rel="stylesheet" href="/course-kit/preview/24/components/styles/prism-dark.css" media="(prefers-color-scheme: dark)" data-prism-theme="dark" />
     <link rel="stylesheet" href="/course-kit/preview/24/components/styles/base.css" />
     <style>
-      .wvc8dbgo0:not(:has(li, dt)) {
+      .wghwyjtfd:not(:has(li, dt)) {
         display: none;
       }
-      .wvc8dbgo0 :is(:host, :host > ul, :host > dl) {
+      .wghwyjtfd,
+      .wghwyjtfd > ul,
+      .wghwyjtfd > dl {
         list-style: none;
         margin: 0;
         padding: 0;
@@ -41,7 +43,8 @@
           }
         }
       }
-      .wvc8dbgo0 :is(:host([cards]), :host([cards]) > ul) {
+      .wghwyjtfd[cards],
+      .wghwyjtfd[cards] > ul {
         grid-template-columns: repeat(auto-fill, minmax(min(100%, 15em), 1fr));
         gap: var(--content-space);
         @supports (grid-template-rows: subgrid) {
@@ -109,7 +112,7 @@
     <main id="main-content" tabindex="-1" style="margin: 0; padding: 1rem; min-block-size: 0">
       <h1 class="sr-only">link-list: Default</h1>
 
-      <ul role="list" class="wvc8dbgo0">
+      <ul role="list" class="wghwyjtfd">
         <li>
           <h4><a href="/course-kit/preview/24/components/slides/week-1-day-1/">Welcome</a></h4>
           <p>What we build, and how the course runs.</p>
