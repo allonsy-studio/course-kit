@@ -1,0 +1,10 @@
+---
+layout: base
+title: Practice worksheet
+permalink: /examples/practice/index.html
+example: true
+---
+
+<article class="content-column">
+	<practice-worksheet></practice-worksheet>
+</article>

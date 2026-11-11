@@ -20,12 +20,12 @@
 			<label title="Tablet, 768px"><input type="radio" name="width" value="768" /><norn-icon @name="tablet" @size="m"></norn-icon><span>Tablet, 768px</span></label>
 			<label title="Desktop, 1024px"><input type="radio" name="width" value="1024" /><norn-icon @name="desktop" @size="m"></norn-icon><span>Desktop, 1024px</span></label>
 		</norn-segmented-control>
-		<button type="button" data-axe data-state="idle">
-			<norn-icon @name="accessibility" data-for="idle"></norn-icon>
-			<norn-icon @name="loading" data-for="running"></norn-icon>
-			<norn-icon @name="success" data-for="pass"></norn-icon>
-			<norn-icon @name="error" data-for="fail"></norn-icon>
-			Check accessibility
+		<button type="button" data-axe data-state="idle" title="Check accessibility">
+			<norn-icon @name="accessibility" @size="m" data-for="idle"></norn-icon>
+			<norn-icon @name="loading" @size="m" data-for="running"></norn-icon>
+			<norn-icon @name="success" @size="m" data-for="pass"></norn-icon>
+			<norn-icon @name="error" @size="m" data-for="fail"></norn-icon>
+			<span class="sr-only">Check accessibility</span>
 		</button>
 	</form>
 	<div class="stage"><iframe :src="story.frameUrl" :title="story.name" loading="lazy" :style="story.height ? 'min-block-size: ' + story.height + 'px' : ''"></iframe></div>

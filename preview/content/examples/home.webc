@@ -1,0 +1,11 @@
+---
+layout: base
+title: Home
+permalink: /examples/home/index.html
+example: true
+---
+
+<course-now></course-now>
+<course-summary></course-summary>
+<policies></policies>
+<course-documents></course-documents>

@@ -9,6 +9,7 @@ import { HtmlBasePlugin } from "@11ty/eleventy";
 import norn, { fillHooks, reset } from "@allons-y/webc-patterns/plugin";
 import oss, { ossEnabled, ossProps } from "@allons-y/webc-oss-site";
 
+import { codeCss, copyData, kitCode } from "./lib/code.js";
 import { withPreview } from "./lib/chrome.js";
 
 // Anchored to this file so the build runs from the repository root or the site directory.
@@ -28,13 +29,23 @@ export default function (config) {
 		}),
 		// Components of the project's own go in _includes/. Give them a prefix other than norn- & oss-.
 		components: [at("_includes/*.webc")],
+		icons: at("content/assets/icons/*.svg"),
 	});
+	config.addJavaScriptFunction("kitCode", kitCode);
 	fillHooks(config, {
-		head: [`<style>${fs.readFileSync(reset, "utf8")}</style>`, '<link rel="stylesheet" href="/assets/styles/project.css" webc:keep />'].join("\n"),
+		head: [
+			`<style>${fs.readFileSync(reset, "utf8")}</style>`,
+			`<style>${codeCss()}</style>`,
+			'<link rel="stylesheet" href="/assets/styles/project.css" webc:keep />',
+			`<script type="application/json" id="copy-data" webc:keep>${copyData()}</script>`,
+			'<script src="/assets/scripts/code-copy.js" defer webc:keep></script>',
+		].join("\n"),
 	});
 	config.addPlugin(HtmlBasePlugin);
 
 	config.addPassthroughCopy({ [at("content/assets")]: "assets" });
+	// The kit's own copy button for its code blocks.
+	config.addPassthroughCopy({ [path.resolve(import.meta.dirname, "../assets/scripts/code-copy.js")]: "assets/scripts/code-copy.js" });
 
 	return {
 		pathPrefix: process.env.PATH_PREFIX || "/",

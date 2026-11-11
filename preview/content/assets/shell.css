@@ -49,7 +49,7 @@ body.preview {
 	outline-offset: 2px;
 }
 
-:is(.nav, .story details) {
+.story details {
 	border: 0;
 	border-radius: 0;
 	background: none;
@@ -71,10 +71,6 @@ body.preview {
 	padding: 0;
 }
 
-details.nav {
-	padding: 1rem 1.5rem 2rem;
-	border-inline-end: 1px solid var(--p-line);
-}
 
 .overrides {
 	display: flex;
@@ -106,22 +102,66 @@ details.nav {
 	border-inline-end: 1px solid var(--p-line);
 	font-size: 0.9rem;
 
-	summary {
-		font-weight: 700;
-		padding-block: 0.25rem;
+	/* One disclosure per group: the summary is the group's small-caps label, with a 44px target. */
+	details {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		border-radius: 0;
+		background: none;
 	}
 
-	h2 {
-		all: unset;
-		display: block;
-		margin-block: 1.25rem 0.25rem;
+	details + details {
+		margin-block-start: 0.5rem;
+	}
+
+	summary {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		min-block-size: 44px;
+		padding-block: 0;
 		font-size: 0.75rem;
 		font-weight: 700;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
 		color: var(--p-muted);
+		list-style: none;
+		cursor: pointer;
+
+		&:focus-visible {
+			outline: 2px solid var(--p-link);
+			outline-offset: 2px;
+		}
+
+		&::-webkit-details-marker {
+			display: none;
+		}
+
+		&::before {
+			content: "";
+			inline-size: 0.45em;
+			block-size: 0.45em;
+			border-block-end: 2px solid currentcolor;
+			border-inline-end: 2px solid currentcolor;
+			rotate: -45deg;
+			transition: rotate 0.15s;
+		}
+
+		&:dir(rtl)::before {
+			rotate: 135deg;
+		}
 	}
 
+	details[open] > summary::before {
+		rotate: 45deg;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		summary::before {
+			transition: none;
+		}
+	}
 }
 
 /* Norn's table header text reads 6.5:1 on the shell's grounds; the shell's own token reads 7.9:1 or better. */
@@ -377,9 +417,11 @@ main#main {
 		button {
 			display: inline-flex;
 			align-items: center;
-			gap: 0.4em;
+			justify-content: center;
 			margin-inline-start: auto;
-			padding: 0.3rem 0.75rem;
+			inline-size: 44px;
+			block-size: 44px;
+			padding: 0;
 			font: inherit;
 			color: var(--p-text);
 			background: transparent;
@@ -463,24 +505,13 @@ main#main {
 		display: block;
 	}
 
-	/* The list of components is a closed disclosure above the page. Touch targets are 44px. */
-	body.preview details.nav {
+	/* The groups sit above the page; only the current one starts open (canvas.js). Touch targets are 44px. */
+	body.preview .nav {
 		position: static;
 		max-block-size: none;
-		padding-block: 0.25rem;
+		padding-block: 0.5rem;
 		border-inline-end: 0;
 		border-block-end: 1px solid var(--p-line);
-
-		&[open] {
-			padding-block-end: 1rem;
-		}
-
-		> summary {
-			display: list-item;
-			box-sizing: border-box;
-			min-block-size: 44px;
-			padding-block: 0.6rem;
-		}
 
 		a[href] {
 			display: flex;
@@ -512,7 +543,6 @@ main#main {
 		}
 
 		button {
-			min-block-size: 44px;
 			margin-inline-start: 0;
 		}
 	}
@@ -570,4 +600,65 @@ main#main {
 oss-bar a,
 oss-credit a {
 	aspect-ratio: auto;
+}
+
+/* "What you can build": a card per starter page, the page itself live in a scaled, inert frame. */
+.examples {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+	gap: 1.5rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	article {
+		position: relative;
+		display: grid;
+		gap: 0.5rem;
+		block-size: 100%;
+		align-content: start;
+	}
+
+	h3 {
+		margin: 0.25rem 0 0;
+		font-size: 1.1rem;
+	}
+
+	p {
+		margin: 0;
+	}
+}
+
+/* The frame renders at three times the card's width and is scaled down to fit. */
+.example-frame {
+	position: relative;
+	aspect-ratio: 16 / 10;
+	overflow: hidden;
+	border: 1px solid var(--p-line);
+	border-radius: 6px;
+	background: var(--p-bg);
+
+	iframe {
+		position: absolute;
+		inset: 0;
+		inline-size: 300%;
+		block-size: 300%;
+		border: 0;
+		scale: calc(1 / 3);
+		transform-origin: 0 0;
+		pointer-events: none;
+	}
+}
+
+.example-uses {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem 0.75rem;
+	font-size: 0.85rem;
+
+	a[href] {
+		display: inline-flex;
+		align-items: center;
+		min-block-size: 24px;
+	}
 }
