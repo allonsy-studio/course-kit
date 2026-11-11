@@ -406,15 +406,19 @@ a {
 	}
 }
 
-:where(svg) {
+/* The 2.5em floor and full width are for a figure or logo that sets no size of its own. An svg with a `width` or `height` keeps it, and one with a `fill` keeps that. */
+:where(svg:not([width], [height])) {
 	inline-size: 100%;
 	block-size: auto;
 	min-block-size: 2.5em;
-	fill: currentColor;
 	align-self: center;
 }
 
-/* The 2.5em floor and full width are for a figure or logo standing on its own. An icon inside a control or an icon component is sized by that component. */
+:where(svg:not([fill])) {
+	fill: currentColor;
+}
+
+/* An icon inside a control or an icon component is sized by that component. */
 :where(norn-icon, [data-icon], button, [role="button"]) svg {
 	inline-size: auto;
 	min-block-size: 0;
