@@ -552,43 +552,6 @@
 			}
 		}
 
-		/* ---- A to Z jump bar ---- */
-		.jump ul {
-			display: flex;
-			flex-wrap: wrap;
-			gap: calc(var(--gutter) * 1.5);
-			margin: 0 0 var(--content-space);
-			padding: 0;
-			list-style: none;
-		}
-
-		.jump :is(a, span) {
-			display: grid;
-			place-items: center;
-			min-inline-size: 2.75rem;
-			block-size: 2.75rem;
-			padding-inline: 0.5em;
-			border-radius: var(--standard-border-radius);
-			font-family: var(--mono-font);
-			font-weight: var(--font-weight--bold);
-		}
-
-		.jump a {
-			border: var(--thin-border-width) solid var(--color-text-muted);
-			color: var(--color-text);
-			text-decoration: none;
-
-			&:is(:hover, :focus-visible) {
-				border-color: var(--color-accent-secondary);
-				background-color: color-mix(in srgb, var(--color-accent-secondary) 14%, transparent);
-			}
-		}
-
-		.jump span {
-			border: var(--thin-border-width) dashed var(--color-border);
-			color: var(--color-text-muted);
-		}
-
 		.empty {
 			display: grid;
 			justify-items: center;
