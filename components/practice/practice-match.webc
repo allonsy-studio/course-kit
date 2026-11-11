@@ -146,3 +146,33 @@
 		}
 	}
 </style>
+
+<script>
+(() => {
+	const registry = (window.ckPractice ??= { kinds: {} });
+	registry.kinds.match = {
+		/** Mark this kind's controls and report what was found. */
+		grade(question, key, _id, { mark }) {
+			let right = 0;
+			let blank = 0;
+			let answered = false;
+			for (const [index, expected] of key.items.entries()) {
+				const select = question.querySelector(`select[data-blank="${index}"]`);
+				if (!select.value) {
+					blank += 1;
+					continue;
+				}
+				answered = true;
+				const correct = select.value === expected;
+				if (correct) right += 1;
+				mark(select.closest("li"), correct);
+			}
+			return { answered, right, total: key.items.length, blank };
+		},
+		/** Drag a bank entry onto a row. */
+		enhance(question, { dragDrop }) {
+			dragDrop(question);
+		},
+	};
+})();
+</script>

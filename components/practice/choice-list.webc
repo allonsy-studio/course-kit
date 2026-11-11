@@ -65,3 +65,22 @@
 		}
 	}
 </style>
+
+<script>
+(() => {
+	const registry = (window.ckPractice ??= { kinds: {} });
+	registry.kinds.choice = {
+		/** Mark this kind's controls and report what was found. */
+		grade(question, key, id, { mark, checkedValue }) {
+			const picked = checkedValue(question, `${id}-choice`);
+			if (picked === null) return { answered: false, right: 0, total: 1, blank: 1 };
+			for (const label of question.querySelectorAll(".choice")) {
+				const value = Number(label.querySelector("input").value);
+				if (value === key.answer) mark(label, true);
+				else if (value === Number(picked)) mark(label, false);
+			}
+			return { answered: true, right: Number(picked) === key.answer ? 1 : 0, total: 1, blank: 0 };
+		},
+	};
+})();
+</script>

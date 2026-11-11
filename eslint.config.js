@@ -20,6 +20,6 @@ export default [
 	{
 		// The landing site's accessibility check runs in Cypress.
 		files: ["website/cypress/**/*.js"],
-		languageOptions: { globals: { cy: "readonly", Cypress: "readonly", describe: "readonly", it: "readonly", expect: "readonly", beforeEach: "readonly" } },
+		languageOptions: { globals: { cy: "readonly", Cypress: "readonly", describe: "readonly", it: "readonly", expect: "readonly", window: "readonly", beforeEach: "readonly" } },
 	},
 ];

@@ -130,3 +130,36 @@
 		}
 	}
 </style>
+
+<script>
+(() => {
+	const registry = (window.ckPractice ??= { kinds: {} });
+	registry.kinds.judge = {
+		/** Mark this kind's controls and report what was found. */
+		grade(question, key, id, { mark, checkedValue }) {
+			const verdict = checkedValue(question, `${id}-choice`);
+			const line = checkedValue(question, `${id}-line`);
+			if (verdict === null && line === null) return { answered: false, right: 0, total: 2, blank: 2 };
+			let right = 0;
+
+			for (const label of question.querySelectorAll(".verdicts .choice")) {
+				const value = Number(label.querySelector("input").value);
+				if (value === key.answer) mark(label, true);
+				else if (value === Number(verdict)) mark(label, false);
+			}
+			if (Number(verdict) === key.answer) right += 1;
+
+			// A snippet with no offending line makes "none" the right pick.
+			const expected = key.lines.length ? key.lines.map(String) : ["none"];
+			for (const label of question.querySelectorAll(".code-lines .code-line")) {
+				const value = label.querySelector("input").value;
+				if (expected.includes(value)) mark(label, true);
+				else if (value === line) mark(label, false);
+			}
+			if (line !== null && expected.includes(line)) right += 1;
+
+			return { answered: true, right, total: 2, blank: (verdict === null ? 1 : 0) + (line === null ? 1 : 0) };
+		},
+	};
+})();
+</script>

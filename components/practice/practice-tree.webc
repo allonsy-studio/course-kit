@@ -78,3 +78,14 @@
 		}
 	}
 </style>
+
+<script>
+(() => {
+	const registry = (window.ckPractice ??= { kinds: {} });
+	// A tree is a fill whose blanks are laid out as a diagram: it grades and enhances as a fill does.
+	registry.kinds.tree = {
+		grade: (...args) => registry.kinds.fill.grade(...args),
+		enhance: (...args) => registry.kinds.fill.enhance(...args),
+	};
+})();
+</script>

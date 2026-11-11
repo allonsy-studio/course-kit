@@ -58,106 +58,13 @@ const clearMarks = (question) => {
 };
 
 /**
- * One grader per question kind, keyed by `data-kind`. Each marks its own
- * controls and reports what it found; a kind with no entry here is left to the
- * student, like `selfcheck`.
- * @type {Record<string, (question: HTMLElement, key: object, id: string) => {answered: boolean, right: number, total: number, blank: number}>}
+ * Question kinds register themselves: each kind's component carries a script that sets
+ * `window.ckPractice.kinds[kind] = { grade(question, key, id, helpers), enhance?(question, helpers) }`.
+ * This script reads the registry when it needs it (at an event, and once the page has loaded), so it does not matter which script loads first.
+ * A kind with no `grade`, like `selfcheck`, is left to the student.
  */
-const GRADERS = {
-	choice(question, key, id) {
-		const picked = checkedValue(question, `${id}-choice`);
-		if (picked === null) return { answered: false, right: 0, total: 1, blank: 1 };
-		for (const label of question.querySelectorAll(".choice")) {
-			const value = Number(label.querySelector("input").value);
-			if (value === key.answer) mark(label, true);
-			else if (value === Number(picked)) mark(label, false);
-		}
-		return { answered: true, right: Number(picked) === key.answer ? 1 : 0, total: 1, blank: 0 };
-	},
-
-	match(question, key) {
-		let right = 0;
-		let blank = 0;
-		let answered = false;
-		for (const [index, expected] of key.items.entries()) {
-			const select = question.querySelector(`select[data-blank="${index}"]`);
-			if (!select.value) {
-				blank += 1;
-				continue;
-			}
-			answered = true;
-			const correct = select.value === expected;
-			if (correct) right += 1;
-			mark(select.closest("li"), correct);
-		}
-		return { answered, right, total: key.items.length, blank };
-	},
-
-	fill(question, key) {
-		let right = 0;
-		let blank = 0;
-		let answered = false;
-		for (const [index, accepted] of key.blanks.entries()) {
-			const input = question.querySelector(`input[data-blank="${index}"]`);
-			if (!input.value.trim()) {
-				blank += 1;
-				continue;
-			}
-			answered = true;
-			const typed = normalize(input.value);
-			const correct = accepted.some((option) => normalize(option) === typed);
-			if (correct) right += 1;
-			mark(input.closest("li"), correct);
-		}
-		return { answered, right, total: key.blanks.length, blank };
-	},
-
-	grid(question, key, id) {
-		let right = 0;
-		let blank = 0;
-		let answered = false;
-		for (const [index, expected] of key.rows.entries()) {
-			const picked = checkedValue(question, `${id}-row-${index}`);
-			if (picked === null) {
-				blank += 1;
-				continue;
-			}
-			answered = true;
-			const correct = Number(picked) === expected;
-			if (correct) right += 1;
-			mark(question.querySelector(`tr[data-row="${index}"]`), correct);
-		}
-		return { answered, right, total: key.rows.length, blank };
-	},
-
-	judge(question, key, id) {
-		const verdict = checkedValue(question, `${id}-choice`);
-		const line = checkedValue(question, `${id}-line`);
-		if (verdict === null && line === null) return { answered: false, right: 0, total: 2, blank: 2 };
-		let right = 0;
-
-		for (const label of question.querySelectorAll(".verdicts .choice")) {
-			const value = Number(label.querySelector("input").value);
-			if (value === key.answer) mark(label, true);
-			else if (value === Number(verdict)) mark(label, false);
-		}
-		if (Number(verdict) === key.answer) right += 1;
-
-		// A snippet with no offending line makes "none" the right pick.
-		const expected = key.lines.length ? key.lines.map(String) : ["none"];
-		for (const label of question.querySelectorAll(".code-lines .code-line")) {
-			const value = label.querySelector("input").value;
-			if (expected.includes(value)) mark(label, true);
-			else if (value === line) mark(label, false);
-		}
-		if (line !== null && expected.includes(line)) right += 1;
-
-		return { answered: true, right, total: 2, blank: (verdict === null ? 1 : 0) + (line === null ? 1 : 0) };
-	},
-};
-
-/* A tree is a fill whose blanks are laid out as a diagram. */
-GRADERS.tree = GRADERS.fill;
+const registry = (window.ckPractice ??= { kinds: {} });
+const kinds = () => registry.kinds;
 
 /* ---- Status ------------------------------------------------------------
  * unattempted | answered | right | wrong | partial | self, on `data-state`
@@ -172,7 +79,7 @@ const STATUS_KEY = {
 	self: "statusSelf",
 };
 
-const isGradable = (question) => question.dataset.kind in GRADERS;
+const isGradable = (question) => typeof kinds()[question.dataset.kind]?.grade === "function";
 
 /** Whether any part of the question holds a value. */
 const hasValue = (question) =>
@@ -207,7 +114,7 @@ function check(question) {
 	}
 	const { kind, question: id } = question.dataset;
 	clearMarks(question);
-	const { answered, right, total, blank } = GRADERS[kind](question, JSON.parse(question.dataset.answers ?? "{}"), id);
+	const { answered, right, total, blank } = kinds()[kind].grade(question, JSON.parse(question.dataset.answers ?? "{}"), id, helpers);
 	const feedback = question.querySelector(".feedback");
 	const why = question.querySelector(".why");
 	feedback.hidden = false;
@@ -554,14 +461,37 @@ function markUsedWords(question) {
 	}
 }
 
-for (const chip of document.querySelectorAll('[draggable="true"][data-letter], [draggable="true"][data-word]')) {
-	const payload = chip.dataset.letter ?? chip.dataset.word;
-	chip.addEventListener("dragstart", (event) => {
-		event.dataTransfer.setData("text/plain", payload);
-		event.dataTransfer.effectAllowed = "copy";
-		chip.dataset.dragging = "";
-	});
-	chip.addEventListener("dragend", () => delete chip.dataset.dragging);
+/* The bank entries and rows of one question that take drops: a match and a fill share this. */
+function dragDrop(question) {
+	for (const chip of question.querySelectorAll('[draggable="true"][data-letter], [draggable="true"][data-word]')) {
+		const payload = chip.dataset.letter ?? chip.dataset.word;
+		chip.addEventListener("dragstart", (event) => {
+			event.dataTransfer.setData("text/plain", payload);
+			event.dataTransfer.effectAllowed = "copy";
+			chip.dataset.dragging = "";
+		});
+		chip.addEventListener("dragend", () => delete chip.dataset.dragging);
+	}
+	for (const row of question.querySelectorAll("[data-drop]")) {
+		// The drop only lands if dragover cancels the default.
+		row.addEventListener("dragover", (event) => {
+			event.preventDefault();
+			event.dataTransfer.dropEffect = "copy";
+			row.dataset.over = "";
+		});
+		row.addEventListener("dragleave", (event) => {
+			if (!row.contains(event.relatedTarget)) delete row.dataset.over;
+		});
+		row.addEventListener("drop", (event) => {
+			event.preventDefault();
+			delete row.dataset.over;
+			const dropped = event.dataTransfer.getData("text/plain");
+			if (!dropped || !applyDrop(row, dropped)) return;
+			row.dataset.dropped = "";
+			setTimeout(() => delete row.dataset.dropped, DROPPED_MS);
+			markUsedWords(row.closest(".question"));
+		});
+	}
 }
 
 /**
@@ -588,46 +518,28 @@ function applyDrop(row, dropped) {
 	return true;
 }
 
-for (const row of document.querySelectorAll("[data-drop]")) {
-	// The drop only lands if dragover cancels the default.
-	row.addEventListener("dragover", (event) => {
-		event.preventDefault();
-		event.dataTransfer.dropEffect = "copy";
-		row.dataset.over = "";
-	});
-	row.addEventListener("dragleave", (event) => {
-		if (!row.contains(event.relatedTarget)) delete row.dataset.over;
-	});
-	row.addEventListener("drop", (event) => {
-		event.preventDefault();
-		delete row.dataset.over;
-		const dropped = event.dataTransfer.getData("text/plain");
-		if (!dropped || !applyDrop(row, dropped)) return;
-		row.dataset.dropped = "";
-		setTimeout(() => delete row.dataset.dropped, DROPPED_MS);
-		markUsedWords(row.closest(".question"));
-	});
+/** What a kind's script gets to use: the grader's tools and the shared drag and drop. */
+const helpers = { mark, checkedValue, normalize, markUsedWords, dragDrop };
+
+/* On load, once every kind's script has registered: let each kind enhance its questions, restore saved answers, start the question list. */
+function init() {
+	for (const question of document.querySelectorAll(".question")) kinds()[question.dataset.kind]?.enhance?.(question, helpers);
+	prune();
+	for (const root of document.querySelectorAll("[data-worksheet]")) {
+		for (const question of questionsIn(root, "#worksheet")) {
+			if (!isGradable(question)) setState(question, "self");
+			else if (!question.dataset.state) setState(question, "unattempted");
+		}
+		const newest = restore(root);
+		const note = root.querySelector("[data-restore-note]");
+		if (newest && note) {
+			const when = new Intl.DateTimeFormat(document.documentElement.lang || "en-US", { weekday: "short", hour: "numeric", minute: "2-digit" }).format(newest);
+			note.textContent = t("worksheet", "restored", { when });
+			note.hidden = false;
+		}
+		syncNav(root);
+	}
 }
 
-/* Typing by hand keeps the word bank honest too. */
-for (const question of document.querySelectorAll(".question[data-kind='fill']")) {
-	question.addEventListener("input", () => markUsedWords(question));
-	markUsedWords(question);
-}
-
-/* On load: restore saved answers and start the question list. */
-prune();
-for (const root of document.querySelectorAll("[data-worksheet]")) {
-	for (const question of questionsIn(root, "#worksheet")) {
-		if (!isGradable(question)) setState(question, "self");
-		else if (!question.dataset.state) setState(question, "unattempted");
-	}
-	const newest = restore(root);
-	const note = root.querySelector("[data-restore-note]");
-	if (newest && note) {
-		const when = new Intl.DateTimeFormat(document.documentElement.lang || "en-US", { weekday: "short", hour: "numeric", minute: "2-digit" }).format(newest);
-		note.textContent = t("worksheet", "restored", { when });
-		note.hidden = false;
-	}
-	syncNav(root);
-}
+if (document.readyState === "loading" || document.readyState === "interactive") document.addEventListener("DOMContentLoaded", init, { once: true });
+else init();
