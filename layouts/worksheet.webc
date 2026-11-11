@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html :lang="site.language ?? 'en-US'">
+<html :lang="site.language ?? 'en-US'" :data-timezone="site.timezone">
 
 <head>
 	<meta charset="UTF-8">
@@ -42,6 +42,7 @@
 	</script>
 
 	<template webc:nokeep @raw="bundleFile('js', 'content/scripts/practice.js', $data)"></template>
+	<script type="application/json" id="copy-data" webc:keep @raw="copyJson($data)"></script>
 	<script type="module" webc:keep @raw="getBundle('js')"></script>
 	<theme-panel webc:if="$data.themePanel" context="site"></theme-panel>
 	<script type="module" src="/js/theme-panel.js" webc:keep webc:if="$data.themePanel"></script>

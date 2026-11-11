@@ -107,8 +107,8 @@
 			}
 
 			&:has(input:focus-visible) {
-				outline: 2px solid var(--color-accent-text);
-				outline-offset: -2px;
+				outline: var(--focus-ring-width) solid var(--color-focus-ring);
+				outline-offset: calc(var(--focus-ring-width) * -1);
 			}
 
 			&.no-line {

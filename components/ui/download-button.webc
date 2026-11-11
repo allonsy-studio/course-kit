@@ -37,13 +37,6 @@
 			color: var(--color-accent-text);
 		}
 
-		/* Focus gets the site's outline on top of the hover wash, so a
-		   keyboard user can tell the two apart. */
-		&:focus-visible {
-			outline: var(--outline-width) solid var(--color-accent);
-			outline-offset: var(--outline-offset);
-		}
-
 		.download-icon {
 			min-block-size: 1em;
 		}

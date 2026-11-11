@@ -18,7 +18,7 @@
 <style webc:scoped>
 	:host {
 		display: block;
-		--chip-size: 2.5rem;
+		--chip-size: var(--target-min);
 		--count-gap: 0.65rem;
 
 		/* ---- Tag palette: one hue per kind of tag ----
@@ -41,9 +41,9 @@
 
 		[data-kind] {
 			--k-bg: color-mix(in oklab, var(--k-mark) 14%, var(--color-page));
-			--k-fg: color-mix(in oklab, var(--k-mark) 38%, var(--color-text));
+			--k-fg: color-mix(in oklab, var(--k-mark) 25%, var(--color-text));
 			--k-border: var(--k-mark);
-			--k-on-bg: color-mix(in oklab, var(--k-mark) 65%, var(--color-text));
+			--k-on-bg: color-mix(in oklab, var(--k-mark) 40%, var(--color-text));
 			--k-on-fg: var(--color-page);
 		}
 
@@ -57,6 +57,11 @@
 			margin-block: calc(var(--content-space) * 1.5) var(--content-space);
 			padding-block: var(--content-space);
 			border-block: var(--thin-border-width) solid var(--color-border);
+
+			@media (width <= 600px) {
+				flex-direction: column;
+				align-items: flex-start;
+			}
 		}
 
 		.bar-group {
@@ -74,127 +79,21 @@
 			color: var(--color-text-muted);
 		}
 
-		button {
+		button:not(.switch-option) {
 			margin: 0;
 			min-block-size: var(--chip-size);
 			color: var(--color-text);
 			background-color: var(--color-surface);
-			border: var(--thin-border-width) solid var(--color-border);
+			border: var(--thin-border-width) solid var(--color-border-strong);
 			font-weight: var(--font-weight--medium);
 			cursor: pointer;
 			line-height: var(--font-height--dense);
 
-			&:focus-visible {
-				outline: var(--outline-width) solid var(--color-accent-text);
-				outline-offset: var(--outline-offset);
-			}
 
 			&:disabled {
 				opacity: 0.45;
 				cursor: default;
 			}
-		}
-
-		/* Group by and the Review / Flashcards tabs: the castastrophe segmented
-		   switch. One pill track; the checked radio or selected tab fills with
-		   the accent. Where anchor positioning exists, one pill slides to it
-		   and squishes toward its center on the way; it jumps under reduced
-		   motion. */
-		.seg {
-			display: inline-flex;
-			flex-wrap: wrap;
-			gap: var(--gutter);
-			padding: var(--gutter);
-			border: var(--thin-border-width) solid var(--color-text-muted);
-			border-radius: 999px;
-
-			button {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				min-block-size: 2.25rem;
-				padding: 0.3em 0.9em;
-				border: 0;
-				border-radius: 999px;
-				background: none;
-				color: var(--color-text);
-				font-size: max(var(--base-font-size), 0.875em);
-				font-weight: var(--font-weight);
-
-				&:is([aria-checked="true"], [aria-selected="true"]) {
-					background-color: var(--color-accent);
-					color: var(--color-on-accent);
-					font-weight: var(--font-weight--semi-bold);
-				}
-
-				&:focus-visible {
-					outline: var(--border-width) solid var(--color-text);
-					outline-offset: 2px;
-				}
-			}
-		}
-
-		@supports (anchor-name: --seg-on) {
-			.seg {
-				position: relative;
-				isolation: isolate;
-				anchor-scope: --seg-on;
-
-				button {
-					position: relative;
-					z-index: 1;
-
-					&:is([aria-checked="true"], [aria-selected="true"]) {
-						anchor-name: --seg-on;
-						background-color: transparent;
-					}
-				}
-
-				&::before {
-					content: "";
-					position: absolute;
-					z-index: 0;
-					position-anchor: --seg-on;
-					inset-block-start: anchor(start);
-					inset-block-end: anchor(end);
-					inset-inline-start: anchor(start);
-					inline-size: anchor-size(inline);
-					border-radius: 999px;
-					background-color: var(--color-accent);
-				}
-			}
-
-			@media (prefers-reduced-motion: no-preference) {
-				.seg {
-					--squish: cubic-bezier(0.65, 0, 0.35, 1);
-
-					&::before {
-						transform-origin: center;
-						transition:
-							inset-inline-start 300ms var(--squish),
-							inline-size 340ms var(--squish) 90ms;
-					}
-
-					button {
-						transition: color 200ms ease-out;
-					}
-
-					/* A keyframes copy per option, so each change restarts the squish. */
-					&:has(button:nth-of-type(1):is([aria-checked="true"], [aria-selected="true"]))::before { animation: seg-squish-a 340ms var(--squish); }
-					&:has(button:nth-of-type(2):is([aria-checked="true"], [aria-selected="true"]))::before { animation: seg-squish-b 340ms var(--squish); }
-					&:has(button:nth-of-type(3):is([aria-checked="true"], [aria-selected="true"]))::before { animation: seg-squish-c 340ms var(--squish); }
-					&:has(button:nth-of-type(4):is([aria-checked="true"], [aria-selected="true"]))::before { animation: seg-squish-d 340ms var(--squish); }
-				}
-
-				@keyframes seg-squish-a { 45% { scale: 0.88 0.8; } }
-				@keyframes seg-squish-b { 45% { scale: 0.88 0.8; } }
-				@keyframes seg-squish-c { 45% { scale: 0.88 0.8; } }
-				@keyframes seg-squish-d { 45% { scale: 0.88 0.8; } }
-			}
-		}
-
-		.modes button {
-			min-inline-size: 6.5em;
 		}
 
 		.filters[open] summary::before {
@@ -225,10 +124,6 @@
 					color: var(--color-accent-text);
 				}
 
-				&:focus-visible {
-					outline: var(--outline-width) solid var(--color-accent-text);
-					outline-offset: var(--outline-offset);
-				}
 			}
 		}
 
@@ -359,10 +254,6 @@
 				border-radius: var(--standard-border-radius);
 				font: inherit;
 
-				&:focus-visible {
-					outline: var(--outline-width) solid var(--color-accent-text);
-					outline-offset: var(--outline-offset);
-				}
 
 				&::-webkit-search-cancel-button {
 					display: none;
@@ -620,10 +511,6 @@
 			border-radius: calc(var(--standard-border-radius) * 3);
 			background-color: var(--color-surface);
 
-			&:focus-visible {
-				outline: var(--outline-width) solid var(--color-accent-text);
-				outline-offset: var(--outline-offset);
-			}
 
 			.top {
 				display: flex;

@@ -5,12 +5,12 @@
 	 * @prop {'footer' | 'hero'} [context] adds the instructor's contact link in the footer and the hero
 	 */
 </script>
-<nav webc:root="override" webc:if="navigation?.length">
+<nav webc:root="override" :data-context="context" webc:if="navigation?.length">
     <ul role="list">
         <li webc:for="item of navigation">
             <a :href="item?.url" @attributes="({ 'aria-current': item?.url === $data?.page?.url ? 'page' : undefined })" @text="item?.title"></a>
         </li>
-        <li webc:if="$data.instructor?.contact && (context === 'footer' || context === 'hero')"><a :href="$data.instructor.contact">Contact</a></li>
+        <li webc:if="$data.instructor?.contact && (context === 'footer' || context === 'hero')"><a :href="$data.instructor.contact" @text="$data.copy.nav.contact"></a></li>
     </ul>
 </nav>
 <style webc:scoped>
@@ -46,20 +46,21 @@
     a[href] {
         /* Inline padding is left alone; the block padding lifts each link to
            the 24px minimum target size without changing the row rhythm. */
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        min-block-size: var(--target-min);
+        min-inline-size: var(--target-min);
         padding-block: 0.2em;
         font-size: max(var(--base-font-size), 0.95em);
         color: inherit;
         text-decoration: none;
 
-        /* The current page is a filled pill, so it reads as "you are here"
-           without relying on an underline. */
+        /* The current page keeps an underline here; the hero menu fills it (below). */
         &[aria-current="page"] {
-            padding-inline: 0.85em;
-            border-radius: 9999px;
-            background-color: var(--color-text);
-            color: var(--color-page);
-            font-weight: var(--font-weight--semi-bold);
+            text-decoration: underline;
+            text-decoration-color: var(--color-accent-text);
+            text-decoration-thickness: var(--border-width);
+            text-underline-offset: 0.4ex;
         }
 
         &:not([aria-current="page"]):is(:hover, :focus-visible) {
@@ -120,7 +121,7 @@
 :host([column]) a,
 :host([column]) a:visited {
     margin: 0;
-    padding-inline: 0;
+    padding-inline: var(--link-pad, 0);
     border: none;
     border-radius: 0;
     line-height: inherit;
@@ -128,9 +129,40 @@
     color: inherit;
 
     &[aria-current="page"] {
-        padding-inline: 0;
+        padding-inline: var(--link-pad, 0);
         background: none;
         color: var(--color-accent-text);
+    }
+}
+
+/* The hero menu: the current page is a filled pill, so it reads as "you are
+   here" without relying on an underline. Links are 44px targets. Flat
+   selectors: webc:scoped does not rewrite a nested `&` under `:host()`. */
+:host([data-context="hero"][column]) {
+    --link-pad: 0.85em;
+}
+
+:host([data-context="hero"][column]) a[href] {
+    border-radius: var(--radius-pill);
+}
+
+:host([data-context="hero"][column]) a[href][aria-current="page"] {
+    background-color: var(--color-accent-secondary);
+    color: var(--color-on-accent-secondary);
+    text-decoration: none;
+    font-weight: var(--font-weight--semi-bold);
+    --color-focus-ring: var(--color-on-accent-secondary);
+}
+
+:host([data-context="hero"][column]) a[href]:not([aria-current="page"]):hover {
+    background-color: color-mix(in oklab, var(--color-accent-secondary) 10%, transparent);
+}
+
+@media (forced-colors: active) {
+    :host([data-context="hero"][column]) a[href][aria-current="page"] {
+        forced-color-adjust: none;
+        background: SelectedItem;
+        color: SelectedItemText;
     }
 }
 </style>

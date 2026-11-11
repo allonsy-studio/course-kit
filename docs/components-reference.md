@@ -26,8 +26,10 @@ A labelled list of readings or deadlines. Renders nothing when empty.
 | Prop | Type | |
 |---|---|---|
 | `label` | `string` | the heading above the list |
-| `items` | `{ title: string, href?: string, check?: string, dueLabel?: string }[]` | the readings or deadlines to list |
-| `[prefix]` | `string` | put before an item's due label ("due ") |
+| `items` | `{ title: string, href?: string, check?: string, dueLabel?: string, kind?: string }[]` | the readings or deadlines to list |
+| `[dueOn]` | `string` | how a due date reads after the check, with `{when}`: `copy.schedule.dueOn` ("due {when}"); without it the date stands alone |
+| `[chips]` | `boolean` | put a `.due-chip` for the item's `kind` before its title |
+| `[kinds]` | `Record<string, string>` | the chip words by kind, from `copy.schedule.dueKind*`; needed with `chips` |
 
 ### `<callout>`
 
@@ -47,11 +49,12 @@ A live code sample: a header with actions, then the CodePen embed prefilled with
 
 | Prop | Type | |
 |---|---|---|
-| `[heading]` | `string` | the header, default "The code" |
+| `[heading]` | `string` | the header, default `copy.theCode` |
 | `label` | `string` | the pen's title |
 | `summary` | `string` | the pen's description |
 | `[height]` | `number` | embed height in pixels, default 800 |
 | `[tags]` | `string[]` | tags added to the pen |
+| `copy` | `Record<string, string>` | the pane labels: `copy.codepenEmbed` (`theCode`, `html`, `css`, `javascript`, `htmlSource`, `cssSource`, `javascriptSource`) |
 
 Slots:
 
@@ -108,6 +111,8 @@ A meeting's deck links, each on its own line: the slides, then any addendum. Ren
 | Prop | Type | |
 |---|---|---|
 | `meeting` | `{ slides?: string, addendum?: string }` | one meeting from `scheduleWeeks` |
+| `slidesLabel` | `string` | the slides link's text, `copy.schedule.slides` |
+| `addendumLabel` | `string` | the addendum link's text, `copy.schedule.addendum` |
 
 ### `<table-rubric>`
 
@@ -119,10 +124,15 @@ A grading rubric as a table: criteria down, performance levels or a due date and
 | `[levels]` | `string[]` | level names across the top |
 | `[caption]` | `string` | a screen-reader caption |
 | `[total]` | `number` | the points the rubric adds up to, shown in the footer |
+| `copy` | `Record<string, string>` | the table's wording: `copy.tableRubric` (`criteria`, `points`, `pointsEach`, `totalPointsPossible`, `milestone`, `due`, `whatIsGraded`) |
 
 ### `<today-link>`
 
 The page's Today shortcut: a button that jumps to the `#today` element `<today-marker>` picks. Hidden until there is one, and in print.
+
+| Prop | Type | |
+|---|---|---|
+| `label` | `string` | the link's text, `copy.schedule.today` |
 
 ### `<today-marker>`
 
@@ -134,7 +144,8 @@ One bordered block per week: a tinted header band, then the slot.
 
 | Prop | Type | |
 |---|---|---|
-| `number` | `number` | the week number (not `week`: slot content sees a component's props, and a host loops over `week`) |
+| `number` | `number` | the week number, for the anchor (not `week`: slot content sees a component's props, and a host loops over `week`) |
+| `label` | `string` | the heading, "Week 3" (`copy.schedule.weekHeading` filled in) |
 | `dates` | `string` | the week's date range, shown beside the heading |
 | `[level=3]` | `2 \| 3` | the heading level |
 
@@ -154,11 +165,12 @@ The "Additional resources" list: the entries of `course.documents`, each a link 
 
 ### `<course-now>`
 
-Where the course is now, for the home page: the current or next class, what is due soon, and a week-by-week track of the term. Built from the schedule, not from anything a student has done. The script fills it in by campus date; without it the section stays hidden.
+The home page's opening band: the next class, what is due soon and the week-by-week progress. Hidden until its script has judged "today" in the campus zone. Wording comes from `copy.home` and `copy.schedule`.
 
 | Prop | Type | |
 |---|---|---|
-| `[schedule="/schedule/"]` | `string` | the schedule page's URL, which the links point at |
+| `[weeks]` | `object[]` | `scheduleWeeks` output; built from the page's lessons, schedule, decks and demos when left out |
+| `[scheduleUrl]` | `string` | where the schedule lives, default `/schedule/` |
 
 ### `<course-summary>`
 
@@ -210,7 +222,7 @@ The instructor's details: photo, office, contact and hours. Reads `instructor`.
 
 ### `<masthead>`
 
-The page header: institution, term, course title and the navigation. Reads `site`, `term` and `course`.
+The page header: institution, term, course title and the navigation. Reads `site`, `term` and `course`. The menu is Home, Syllabus, then every page of the site menu that has not set `menu: false`.
 
 ### `<nav-links>`
 
@@ -225,6 +237,10 @@ The site navigation as a list of links, marking the current page.
 
 The policies section: one disclosure per entry in `policies.json`, open by default, each with an optional link to the full policy. Renders nothing without `policies`.
 
+### `<practice-index>`
+
+The practice page's table: every practice sheet in `collections.practice`, by its worksheet `order` (then its URL), with what each is for. Says so when there are none. The page's own intro stays page content. Wording comes from `copy.practice`.
+
 ### `<schedule-overview>`
 
 The schedule page's header: the meeting line, the key dates, and a row of jump links (Today, then one per month). Props are read in the template, since a setup script cannot see them.
@@ -236,7 +252,7 @@ The schedule page's header: the meeting line, the key dates, and a row of jump l
 
 ### `<schedule-weeks>`
 
-Every week of the term as a bordered block: its meetings (topics, readings, deadlines, deck and demos) beside the week's materials.
+Every week of the term as a bordered block: one row per class meeting (when, topics, and what that class needs: reading, due items, materials) and a footer for the week's own resources. A "This week" card, the hide-past toggle and the Now and Done flags are added by the script. Deadlines carry a chip for their `kind`; the key above the weeks lists the kinds in use. Wording comes from `copy.schedule`.
 
 | Prop | Type | |
 |---|---|---|
@@ -271,8 +287,7 @@ The Check and Reset buttons and the score line for one worksheet scope. `practic
 | `scope` | `string` | ties the buttons and tally to a question or section |
 | `label` | `string` | the check button's text |
 | `reset` | `string` | the reset button's text |
-| `[note]` | `string` | text shown with the tally |
-| `[retry="Try]` | `string` | missed questions"] the text of the button that clears only the questions marked wrong |
+| `confirm` | `string` | the question Reset asks before it clears anything |
 
 ### `<choice-list>`
 
@@ -338,7 +353,7 @@ A match question: a lettered bank and items that each take a letter.
 
 ### `<practice-question>`
 
-One worksheet question: its prompt, sources, snippet and figure, then the control its kind needs.
+One worksheet question: its prompt, sources, snippet and figure, then the control its kind needs, then the feedback and the reasoning. `practice.js` grades it.
 
 | Prop | Type | |
 |---|---|---|
@@ -372,4 +387,4 @@ A tree question: a snippet and its DOM tree with blanks to fill in.
 
 ### `<practice-worksheet>`
 
-The practice worksheet page: heading, sections of questions, and the check controls. Reads the `worksheet` data a worksheet's `.11tydata.js` supplies.
+The practice worksheet page: heading, results summary, question list, sections of questions and the check controls. Reads the `worksheet` data a worksheet's `.11tydata.js` supplies; `practice.js` grades, saves and restores the answers in this browser. With `checkMode: "question"` (front matter, or `worksheets.checkMode` in the course config) each gradable question also has a Check answer button; the default, `"end"`, checks only from See results at the end.

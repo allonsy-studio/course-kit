@@ -5,79 +5,81 @@
 	 * no props.
 	 */
 	const course = $data.course ?? {};
+	const copy = $data.copy.syllabus;
+	/** The project's due date and time: "Thursday, December 3, 2026, 11:59PM". */
+	const projectWhen = (project) => (project.dueTime ? fill(copy.projectDue, { date: fullDate(project.due), time: timeOfDay(project.dueTime) }) : fullDate(project.due));
+	const escape = (text) => String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+	/** "Full requirements, milestone dates, and the grading rubric are on the project page." with the link in place. */
+	const projectPage = (project) => fill(copy.projectPage, { link: `<a href="${escape(project?.url ?? "/projects/final/")}">${escape(copy.projectPageLink)}</a>` });
 </script>
 <section id="syllabus" aria-labelledby="syllabus-heading" webc:root="override">
-    <h2 id="syllabus-heading">Syllabus</h2>
+    <h2 id="syllabus-heading" @text="copy.syllabus"></h2>
 
     <article>
-        <h3>Learning outcomes</h3>
-        <p>Upon completing this course students will be able to:</p>
+        <h3 @text="copy.learningOutcomes"></h3>
+        <p @text="copy.uponCompletingThisCourse"></p>
         <ul>
             <li webc:for="outcome of course.outcomes" @text="outcome"></li>
         </ul>
     </article>
 
     <article webc:if="course.additionalOutcomes?.length">
-        <h3 id="additional-outcomes">Additional outcomes in this section</h3>
+        <h3 id="additional-outcomes" @text="copy.additionalOutcomesInThis"></h3>
         <ul>
             <li webc:for="outcome of course.additionalOutcomes" @text="outcome"></li>
         </ul>
     </article>
 
     <article>
-        <h3>Text</h3>
-        <p webc:if="!course.textbook?.required">No text is required.</p>
-        <p webc:if="course.textbook?.required"><strong>Required:</strong> <span @text="course.textbook.required"></span></p>
+        <h3 @text="copy.text"></h3>
+        <p webc:if="!course.textbook?.required" @text="copy.noTextIsRequired"></p>
+        <p webc:if="course.textbook?.required"><strong @text="copy.required"></strong> <span @text="course.textbook.required"></span></p>
         <ol webc:if="course.textbook?.access?.length">
             <li webc:for="step of course.textbook.access" @raw="step"></li>
         </ol>
     </article>
 
     <article>
-        <h3>Technology</h3>
-        <p>Bring a laptop meeting the minimum specifications specified by <span @text="$data.site.institution || 'the college'"></span> to class every day. <span webc:for="req of course.requirements ?? []" @text="req"></span> <span webc:if="$data.grading?.homework"><span @text="$data.site.lms"></span> access is required.</span></p>
+        <h3 @text="copy.technology"></h3>
+        <p><span @text="fill(copy.bringALaptopMeeting, { institution: $data.site.institution || copy.theCollege })"></span> <span webc:for="req of course.requirements ?? []" @text="req"></span> <span webc:if="$data.grading?.homework" @text="fill(copy.accessIsRequired, { lms: $data.site.lms })"></span></p>
     </article>
 
     <article webc:if="$data.grading">
-        <h3 id="coursework">Coursework</h3>
+        <h3 id="coursework" @text="copy.coursework"></h3>
         <div class="course-item" webc:for="entry of Object.entries($data.grading).filter(([key]) => key !== '$schema')">
             <h4><span @text="entry[1].title"></span> <span class="weight screen-only" webc:if="entry[1].weight" @text="entry[1].weight"></span></h4>
-            <p @text="entry[1].body"></p>
+            <p @text="expandTokens(entry[1].body, $data)"></p>
             <template webc:nokeep webc:if="entry[0] === 'final' && $data.schedule?.finalExam">
-                <p><strong>Exam:</strong> <span @text="examSlot($data.schedule.finalExam)"></span></p>
+                <p><strong @text="copy.exam"></strong> <span @text="examSlot($data.schedule.finalExam)"></span></p>
                 <callout :type="'warn'" webc:if="$data.schedule.finalExam?.note">
                     <p @text="$data.schedule.finalExam.note"></p>
                 </callout>
             </template>
-            <template webc:nokeep webc:if="entry[0] === 'project' && $data.project && $data.projectStages">
+            <template webc:nokeep webc:if="entry[0] === 'project'">
                 <p>
-                    <strong>Due:</strong>
-                    <span @text="$data.projectStages.due"></span><span webc:if="$data.project.dueTime" @text="`, ${timeOfDay($data.project.dueTime)}`"></span>.
+                    <strong @text="copy.due"></strong>
+                    <span webc:if="$data.project?.due" @text="`${projectWhen($data.project)}.`"></span><span webc:if="!$data.project?.due" @text="`${fill(copy.atTheLastClassMeeting, { lastMeeting: lastMeeting($data.lessons) })}.`"></span>
                 </p>
-                <p>Full requirements, milestone dates, and the grading rubric are on <a :href="$data.project.url">the project page</a>.</p>
-                <ul class="print-only">
+                <p @raw="projectPage($data.project)"></p>
+                <ul class="print-only" webc:if="$data.projectStages">
                     <li webc:for="stage of $data.projectStages.components">
-                        <strong @text="stage.name"></strong> — <span @text="`${stage.display}, ${stage.points} points`"></span>
+                        <strong @text="stage.name"></strong> — <span @text="fill(copy.points, { display: stage.display, points: stage.points })"></span>
                     </li>
                 </ul>
-            </template>
-            <template webc:nokeep webc:if="entry[0] === 'project' && !($data.project && $data.projectStages)">
-                <p><strong>Due:</strong> at the last class meeting, <span @text="lastMeeting($data.lessons)"></span>.</p>
-                <p>Full requirements, milestone dates, and the grading rubric are on <a href="/projects/final/">the project page</a>.</p>
             </template>
         </div>
     </article>
 
     <article webc:if="$data.grading">
-        <h3 id="grading">Grading</h3>
+        <h3 id="grading" @text="copy.grading"></h3>
         <grading></grading>
     </article>
 
     <article webc:if="$data.term.keyDates?.length">
-        <h3 id="key-dates">Key dates</h3>
+        <h3 id="key-dates" @text="copy.keyDates"></h3>
         <ul>
             <li webc:for="item of $data.term.keyDates"><strong @text="item.label"></strong><span class="print-only"> — </span><span @text="item.display"></span></li>
-            <li webc:if="$data.schedule?.finalExam"><strong>This section's final exam</strong><span class="print-only"> — </span><span @text="examSlot($data.schedule.finalExam)"></span></li>
+            <li webc:if="$data.schedule?.finalExam"><strong @text="copy.thisSectionsFinalExam"></strong><span class="print-only"> — </span><span @text="examSlot($data.schedule.finalExam)"></span></li>
         </ul>
     </article>
 </section>

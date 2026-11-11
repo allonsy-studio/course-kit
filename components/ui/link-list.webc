@@ -69,8 +69,8 @@
 
             &:has(a:focus-visible) {
                 border-color: var(--color-accent);
-                outline: var(--outline-width) solid var(--color-accent);
-                outline-offset: 2px;
+                outline: var(--focus-ring-width) solid var(--color-focus-ring);
+                outline-offset: var(--focus-ring-offset);
             }
 
             a {

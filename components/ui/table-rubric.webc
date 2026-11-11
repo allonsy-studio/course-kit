@@ -5,6 +5,7 @@
 	 * @prop {string[]} [levels] level names across the top
 	 * @prop {string} [caption] a screen-reader caption
 	 * @prop {number} [total] the points the rubric adds up to, shown in the footer
+	 * @prop {Record<string, string>} copy the table's wording: `copy.tableRubric` (`criteria`, `points`, `pointsEach`, `totalPointsPossible`, `milestone`, `due`, `whatIsGraded`)
 	 */
 </script>
 <table webc:root="override" webc:if="criteria?.length">
@@ -12,7 +13,7 @@
 
     <thead webc:if="criteria[0]?.levels?.length">
         <tr>
-            <th scope="col" class="criteria">Criteria</th>
+            <th scope="col" class="criteria" @text="copy.criteria"></th>
             <th scope="col" webc:for="level of levels" @text="level"></th>
         </tr>
     </thead>
@@ -22,22 +23,22 @@
                 <th scope="row" @text="criterion.title" rowspan="2"></th>
                 <td webc:for="level of criterion.levels" @text="level.description"></td>
             </tr>
-            <tr class="points"><td webc:for="level of criterion.levels" @text="`${level.points} points`"></td></tr>
+            <tr class="points"><td webc:for="level of criterion.levels" @text="copy.pointsEach.replace('{points}', level.points)"></td></tr>
         </template>
     </tbody>
     <tfoot webc:if="criteria[0]?.levels?.length">
         <tr>
-            <th scope="row" :colspan="levels?.length ?? 1">Total points possible</th>
+            <th scope="row" :colspan="levels?.length ?? 1" @text="copy.totalPointsPossible"></th>
             <td class="num" @text="total"></td>
         </tr>
     </tfoot>
 
     <thead webc:if="!criteria[0]?.levels?.length">
         <tr>
-            <th scope="col">Milestone</th>
-            <th scope="col">Due</th>
-            <th scope="col" class="num">Points</th>
-            <th scope="col">What is graded</th>
+            <th scope="col" @text="copy.milestone"></th>
+            <th scope="col" @text="copy.due"></th>
+            <th scope="col" class="num" @text="copy.points"></th>
+            <th scope="col" @text="copy.whatIsGraded"></th>
         </tr>
     </thead>
     <tbody webc:if="!criteria[0]?.levels?.length">
@@ -53,7 +54,7 @@
     </tbody>
     <tfoot webc:if="!criteria[0]?.levels?.length">
         <tr>
-            <th scope="row" colspan="2">Total points possible</th>
+            <th scope="row" colspan="2" @text="copy.totalPointsPossible"></th>
             <td class="num" @text="total"></td>
             <td></td>
         </tr>

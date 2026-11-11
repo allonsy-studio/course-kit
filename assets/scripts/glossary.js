@@ -40,6 +40,18 @@
  * @property {Place[]} taught
  */
 
+/** The page's wording, from the `#copy-data` block the layout renders. */
+const COPY = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
+/** `t("glossary", "terms", { count: 3 })`; a key with `_one`/`_other` variants is picked by `count`. */
+const t = (ns, key, vars = {}) => {
+	const table = COPY[ns] ?? {};
+	let text = table[key];
+	if ("count" in vars && (`${key}_other` in table)) {
+		text = table[`${key}_${new Intl.PluralRules(document.documentElement.lang || "en-US").select(vars.count)}`] ?? table[`${key}_other`];
+	}
+	return String(text ?? "").replace(/\{(\w+)\}/g, (_, name) => String(vars[name] ?? ""));
+};
+
 const KINDS = ["test", "chapter", "meeting", "topic"];
 /** The two kinds with a chip row. */
 const FILTERS = ["test", "chapter"];
@@ -91,11 +103,13 @@ function mount(root, signal) {
 
 	const data = JSON.parse(source.textContent);
 	const label = data.readingLabel;
+	/** Two instances on a page never share an id: every id starts with the mount element's. */
+	const prefix = root.id || "glossary";
 	const dims = [
-		["az", "A to Z"],
-		["test", "Test"],
+		["az", t("glossary", "byAz")],
+		["test", t("glossary", "byTest")],
 		["chapter", label],
-		["meeting", "Class meeting"],
+		["meeting", t("glossary", "byMeeting")],
 	];
 
 	const tagsOf = Object.fromEntries(KINDS.map((kind) => [kind, new Map(data.tags[kind].map((tag) => [tag.key, tag]))]));
@@ -164,20 +178,25 @@ function mount(root, signal) {
 
 	app.innerHTML = `
 		<div class="bar">
-			<div class="bar-group">
-				<span class="label" id="glossary-by">Group by</span>
-				<div class="seg" role="radiogroup" aria-labelledby="glossary-by" data-by></div>
-			</div>
-			<div class="seg modes" role="tablist" aria-label="Mode" data-modes>
-				<button type="button" role="tab" id="glossary-tab-review" aria-controls="glossary-panel-review" data-mode="review">Review</button>
-				<button type="button" role="tab" id="glossary-tab-study" aria-controls="glossary-panel-study" data-mode="study">Flashcards</button>
+			<fieldset class="switch" data-switch="radio" data-by>
+				<legend class="switch-label">${esc(t("glossary", "groupBy"))}</legend>
+				<div class="switch-track">${dims
+					.map(([dim, text]) => `<label class="switch-option"><input type="radio" name="${prefix}-by" value="${dim}"> ${esc(text)}</label>`)
+					.join("")}</div>
+			</fieldset>
+			<div class="switch" data-switch="tabs" data-modes>
+				<span class="switch-label" id="${prefix}-mode-label">${esc(t("glossary", "mode"))}</span>
+				<div class="switch-track" role="tablist" aria-labelledby="${prefix}-mode-label">
+					<button type="button" class="switch-option" role="tab" id="${prefix}-tab-review" aria-controls="${prefix}-panel-review" aria-selected="true" tabindex="0" data-mode="review">${esc(t("glossary", "review"))}</button>
+					<button type="button" class="switch-option" role="tab" id="${prefix}-tab-study" aria-controls="${prefix}-panel-study" aria-selected="false" tabindex="-1" data-mode="study">${esc(t("glossary", "flashcards"))}</button>
+				</div>
 			</div>
 		</div>
 		<div class="search">
-			<label class="label" for="glossary-q">Search terms</label>
+			<label class="label" for="${prefix}-q">${esc(t("glossary", "search"))}</label>
 			<div class="field">
-				<input type="search" id="glossary-q" name="q" autocomplete="off" spellcheck="false" data-q>
-				<button type="button" class="clear-search" data-clear-q hidden>Clear<span class="sr-only"> search</span></button>
+				<input type="search" id="${prefix}-q" name="q" autocomplete="off" spellcheck="false" data-q>
+				<button type="button" class="clear-search" data-clear-q aria-label="${esc(t("glossary", "clearSearch"))}" hidden>${esc(t("glossary", "clear"))}</button>
 			</div>
 		</div>
 		<details class="filters" data-filters>
@@ -185,25 +204,26 @@ function mount(root, signal) {
 			<div class="filter-rows">
 				${FILTERS.map(
 					(kind) => `<div class="filter-row">
-					<span class="label" id="glossary-f-${kind}">${esc(kind === "test" ? "Test" : label)}</span>
-					<div class="chips" role="group" aria-labelledby="glossary-f-${kind}" data-chips="${kind}"></div>
+					<span class="label" id="${prefix}-f-${kind}">${esc(kind === "test" ? t("glossary", "byTest") : label)}</span>
+					<div class="chips" role="group" aria-labelledby="${prefix}-f-${kind}" data-chips="${kind}"></div>
 				</div>`,
 				).join("")}
 				<div class="filter-row" data-pills-row hidden>
-					<span class="label" id="glossary-f-meeting">Class meeting</span>
-					<div class="chips" role="group" aria-labelledby="glossary-f-meeting" data-pills></div>
+					<span class="label" id="${prefix}-f-meeting">${esc(t("glossary", "byMeeting"))}</span>
+					<div class="chips" role="group" aria-labelledby="${prefix}-f-meeting" data-pills></div>
 				</div>
 			</div>
 		</details>
 		<p class="status" aria-live="polite" data-status></p>
-		<div role="tabpanel" id="glossary-panel-review" aria-labelledby="glossary-tab-review" data-review></div>
-		<div role="tabpanel" id="glossary-panel-study" aria-labelledby="glossary-tab-study" class="study" data-study hidden></div>
+		<div role="tabpanel" id="${prefix}-panel-review" aria-labelledby="${prefix}-tab-review" data-review></div>
+		<div role="tabpanel" id="${prefix}-panel-study" aria-labelledby="${prefix}-tab-study" class="study" data-study hidden></div>
 		<p class="sr-only" role="status" data-announce></p>`;
 
 	const q = (selector) => app.querySelector(selector);
 	const els = {
-		by: q("[data-by]"),
-		modes: q("[data-modes]"),
+		by: q('[data-switch="radio"]'),
+		modes: q('[data-switch="tabs"]'),
+		tabs: q('[data-switch="tabs"] [role="tablist"]'),
 		summary: q("[data-summary]"),
 		details: q("[data-filters]"),
 		q: q("[data-q]"),
@@ -409,23 +429,19 @@ function mount(root, signal) {
 
 	// ---- Controls, built once and updated in place so focus stays put ----
 
-	els.by.innerHTML = dims.map(([dim, text]) => `<button type="button" role="radio" data-by="${dim}">${esc(text)}</button>`).join("");
-	els.by.addEventListener("click", (event) => {
-		const button = event.target.closest("[data-by]");
-		if (button) selectBy(button);
+	// Group by is native radios: the browser does the arrow keys, and `change` follows them.
+	els.by.addEventListener("change", (event) => {
+		if (event.target.matches('input[type="radio"]')) {
+			state.by = event.target.value;
+			render();
+		}
 	});
-	roving(els.by, "[data-by]", (button) => selectBy(button));
-	els.modes.addEventListener("click", (event) => {
+	// Review / Flashcards are tabs: a roving tabindex, arrows and Home / End with wrap, activating as they move.
+	els.tabs.addEventListener("click", (event) => {
 		const button = event.target.closest("[data-mode]");
 		if (button) setMode(button.dataset.mode);
 	});
-	roving(els.modes, "[data-mode]", (button) => setMode(button.dataset.mode), false);
-
-	/** @param {HTMLElement} button */
-	function selectBy(button) {
-		state.by = button.dataset.by;
-		render();
-	}
+	roving(els.tabs, "[data-mode]", (button) => setMode(button.dataset.mode));
 
 	/** @type {Map<string, HTMLButtonElement>} */
 	const chips = new Map();
@@ -489,12 +505,8 @@ function mount(root, signal) {
 	}
 
 	function renderControls() {
-		for (const button of els.by.children) {
-			const on = button.dataset.by === state.by;
-			button.setAttribute("aria-checked", String(on));
-			button.tabIndex = on ? 0 : -1;
-		}
-		for (const button of els.modes.children) {
+		for (const input of els.by.querySelectorAll('input[type="radio"]')) input.checked = input.value === state.by;
+		for (const button of els.tabs.children) {
 			const on = button.dataset.mode === state.mode;
 			button.setAttribute("aria-selected", String(on));
 			button.tabIndex = on ? 0 : -1;
@@ -511,12 +523,12 @@ function mount(root, signal) {
 		const pills = [...state.filters.meeting].map((key) => tagsOf.meeting.get(key));
 		els.pillsRow.hidden = !pills.length;
 		els.pills.innerHTML = pills
-			.map((tag) => `<button type="button" class="chip pill" data-kind="meeting" data-key="${esc(tag.key)}" aria-label="Remove class meeting filter: ${esc(tag.label)}">Class meeting: ${esc(tag.label)}</button>`)
+			.map((tag) => `<button type="button" class="chip pill" data-kind="meeting" data-key="${esc(tag.key)}" aria-label="${esc(t("glossary", "removeFilter", { kind: t("glossary", "byMeeting").toLowerCase(), label: tag.label }))}">${esc(t("glossary", "meetingChip", { label: tag.label }))}</button>`)
 			.join("");
 		els.clearQ.hidden = !state.q;
 		const active = FILTERED.reduce((sum, kind) => sum + state.filters[kind].size, 0);
-		els.summary.textContent = `Filter by test or ${label.toLowerCase()}${active ? ` (${active} on)` : ""}`;
-		els.status.innerHTML = `${active ? `Showing ${filtered().length} of ${terms.length} terms` : `${terms.length} terms`}${active ? " · <button type=\"button\" data-clear>Clear filters</button>" : ""}`;
+		els.summary.textContent = [t("glossary", "filterSummary", { reading: label.toLowerCase() }), active ? t("glossary", "filtersOn", { count: active }) : ""].filter(Boolean).join(" ");
+		els.status.innerHTML = `${esc(active ? t("glossary", "count", { shown: filtered().length, total: terms.length }) : t("glossary", "terms", { count: terms.length }))}${active ? `${esc(t("common", "sep"))}<button type="button" data-clear>${esc(t("glossary", "clearFilters"))}</button>` : ""}`;
 		els.review.hidden = state.mode !== "review";
 		els.study.hidden = state.mode !== "study";
 	}
@@ -525,7 +537,7 @@ function mount(root, signal) {
 
 	/** @param {Term} term */
 	const slideLinks = (term) =>
-		term.taught.map((place) => `<a href="${esc(BASE + place.href.slice(1))}">Week ${place.week} · ${esc(place.weekday)}, slide ${place.slide}</a>`).join("") +
+		term.taught.map((place) => `<a href="${esc(BASE + place.href.slice(1))}">${esc(t("glossary", "slideRef", { week: place.week, weekday: place.weekday, slide: place.slide }))}</a>`).join("") +
 		(term.ref ? `<a href="${esc(term.ref.href)}">${esc(term.ref.label)}</a>` : "");
 
 	/** @param {Term} term */
@@ -535,7 +547,7 @@ function mount(root, signal) {
 	function renderReview() {
 		const list = filtered();
 		if (!list.length) {
-			els.review.innerHTML = "<div class=\"empty\"><strong>No terms match.</strong><span>Clear the search or a filter to see more.</span></div>";
+			els.review.innerHTML = `<div class="empty"><strong>${esc(t("glossary", "noMatch"))}</strong><span>${esc(t("glossary", "noMatchHint"))}</span></div>`;
 			return;
 		}
 		const sets = groups(list);
@@ -543,12 +555,12 @@ function mount(root, signal) {
 		els.review.innerHTML = sets
 			.map(
 				(set) => `<section class="group" id="${id(set)}"${state.by === "az" ? "" : ` data-kind="${state.by}"`} aria-labelledby="${id(set)}-h">
-				<h2 class="heading" id="${id(set)}-h"><span class="name">${esc(set.label)}</span><span class="aside">${set.when ? `<span class="when">${esc(set.when)}</span>` : ""}${state.by === "meeting" ? `<span class="deck">${esc(set.deck)}</span>` : ""}<span class="count">${set.items.length} ${set.items.length === 1 ? "term" : "terms"}</span></span></h2>
+				<h2 class="heading" id="${id(set)}-h"><span class="name">${esc(set.label)}</span><span class="aside">${set.when ? `<span class="when">${esc(set.when)}</span>` : ""}${state.by === "meeting" ? `<span class="deck">${esc(set.deck)}</span>` : ""}<span class="count">${esc(t("glossary", "terms", { count: set.items.length }))}</span></span></h2>
 				<dl>${set.items
 					.map(
 						(term) => `<div class="entry">
-					<dt><span class="term">${highlight(term, hits?.get(term.id)?.marks)}</span>${term.group ? `<span class="api-group">${esc(term.group)}</span>` : ""}${state.known.has(term.id) ? "<span class=\"known\">✓ known</span>" : ""}</dt>
-					<dd>${term.sig ? `<p class="sig">${term.sig}</p>` : ""}<p class="definition">${term.definition}</p>${term.meta ? `<p class="meta">${term.meta}</p>` : ""}${term.example ? `<p class="example"><span class="label">Example</span> ${term.example}</p>` : ""}${tagList(term)}<p class="links">${term.taught.length || term.ref ? "<span class=\"label\">Taught in</span>" : ""}${slideLinks(term)}</p></dd>
+					<dt><span class="term">${highlight(term, hits?.get(term.id)?.marks)}</span>${term.group ? `<span class="api-group">${esc(term.group)}</span>` : ""}${state.known.has(term.id) ? `<span class="known">${esc(t("glossary", "known"))}</span>` : ""}</dt>
+					<dd>${term.sig ? `<p class="sig">${term.sig}</p>` : ""}<p class="definition">${term.definition}</p>${term.meta ? `<p class="meta">${term.meta}</p>` : ""}${term.example ? `<p class="example"><span class="label">${esc(t("glossary", "example"))}</span> ${term.example}</p>` : ""}${tagList(term)}<p class="links">${term.taught.length || term.ref ? `<span class="label">${esc(t("glossary", "taughtIn"))}</span>` : ""}${slideLinks(term)}</p></dd>
 				</div>`,
 					)
 					.join("")}</dl>
@@ -566,7 +578,7 @@ function mount(root, signal) {
 	const definitionPart = (term) => `<div class="back"><p class="definition">${term.definition}</p></div>`;
 	/** @param {Term} term */
 	const restPart = (term) =>
-		`<div class="back">${term.meta ? `<p class="meta">${term.meta}</p>` : ""}${term.example ? `<p class="example"><span class="label">Example</span> ${term.example}</p>` : ""}<p class="links">${slideLinks(term)}</p></div>`;
+		`<div class="back">${term.meta ? `<p class="meta">${term.meta}</p>` : ""}${term.example ? `<p class="example"><span class="label">${esc(t("glossary", "example"))}</span> ${term.example}</p>` : ""}<p class="links">${slideLinks(term)}</p></div>`;
 
 	/** Visible, in Review order, one card per term, minus the ones known. */
 	function startStudy() {
@@ -599,19 +611,19 @@ function mount(root, signal) {
 		const total = filtered().length;
 		const knownCount = filtered().filter((term) => state.known.has(term.id)).length;
 		const card = state.deck[state.idx];
-		const top = `<div class="study-top"><span>${card ? `Card ${state.idx + 1} of ${state.deck.length}` : `${state.deck.length} to study`} · ${knownCount} of ${total} known</span>
+		const top = `<div class="study-top"><span>${esc([card ? t("glossary", "card", { n: state.idx + 1, total: state.deck.length }) : t("glossary", "toStudy", { count: state.deck.length }), t("glossary", "knownOf", { known: knownCount, total })].join(t("common", "sep")))}</span>
 			<div class="opts">
-				<button type="button" class="chip" data-act="shuffle" aria-pressed="${state.shuffle}">Shuffle</button>
-				<button type="button" class="chip" data-act="direction" aria-pressed="${state.direction === "def"}">Definition first</button>
-				${knownCount && card ? "<button type=\"button\" class=\"chip\" data-act=\"reset\">Reset known</button>" : ""}
+				<button type="button" class="chip" data-act="shuffle" aria-pressed="${state.shuffle}">${esc(t("glossary", "shuffle"))}</button>
+				<button type="button" class="chip" data-act="direction" aria-pressed="${state.direction === "def"}">${esc(t("glossary", "defFirst"))}</button>
+				${knownCount && card ? `<button type="button" class="chip" data-act="reset">${esc(t("glossary", "resetKnown"))}</button>` : ""}
 			</div></div>
-			<div class="meter" role="progressbar" aria-label="Known terms" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${knownCount}"><i style="inline-size:${total ? Math.round((knownCount / total) * 100) : 0}%"></i></div>`;
+			<div class="meter" role="progressbar" aria-label="${esc(t("glossary", "knownMeter"))}" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${knownCount}"><i style="inline-size:${total ? Math.round((knownCount / total) * 100) : 0}%"></i></div>`;
 
 		let html;
 		if (!total) {
-			html = `${top}<div class="empty"><strong>No terms match.</strong><span>Clear the search or a filter to study more.</span></div>`;
+			html = `${top}<div class="empty"><strong>${esc(t("glossary", "noMatch"))}</strong><span>${esc(t("glossary", "noMatchStudy"))}</span></div>`;
 		} else if (!card) {
-			html = `${top}<div class="done"><h2 class="heading">You know every card in this set.</h2><p>${knownCount} of ${total} marked known.</p><div class="verdict"><button type="button" data-act="again" class="primary">Start over with the ones I know</button></div></div>`;
+			html = `${top}<div class="done"><h2 class="heading">${esc(t("glossary", "allKnown"))}</h2><p>${esc(t("glossary", "markedKnown", { known: knownCount, total }))}</p><div class="verdict"><button type="button" data-act="again" class="primary">${esc(t("glossary", "startOver"))}</button></div></div>`;
 		} else {
 			const termFirst = state.direction === "term";
 			const front = termFirst ? termPart(card) : definitionPart(card);
@@ -622,10 +634,10 @@ function mount(root, signal) {
 				<div class="card" tabindex="-1">
 					<div class="top"><span data-kind="test">${tests}</span><span data-kind="chapter">${chapters}</span></div>
 					<div class="content">${state.revealed ? front + back + restPart(card) : front}</div>
-					<div class="foot">${state.revealed ? "" : `<button type="button" class="reveal primary" data-act="reveal">Show ${termFirst ? "definition" : "term"}</button>`}</div>
+					<div class="foot">${state.revealed ? "" : `<button type="button" class="reveal primary" data-act="reveal">${esc(t("glossary", termFirst ? "showDefinition" : "showTerm"))}</button>`}</div>
 				</div>
-				${state.revealed ? "<div class=\"verdict\"><button type=\"button\" class=\"yes\" data-act=\"know\">I know this</button><button type=\"button\" data-act=\"later\">Show me again later</button></div>" : ""}
-				<div class="nav"><button type="button" data-act="prev" ${state.idx === 0 ? "disabled" : ""}>← Previous</button><span class="hint">Space reveals · arrows move</span><button type="button" data-act="next" ${state.idx >= state.deck.length - 1 ? "disabled" : ""}>Next →</button></div>`;
+				${state.revealed ? `<div class="verdict"><button type="button" class="yes" data-act="know">${esc(t("glossary", "iKnow"))}</button><button type="button" data-act="later">${esc(t("glossary", "later"))}</button></div>` : ""}
+				<div class="nav"><button type="button" data-act="prev" ${state.idx === 0 ? "disabled" : ""}>${esc(t("glossary", "prev"))}</button><span class="hint">${esc(t("glossary", "hint"))}</span><button type="button" data-act="next" ${state.idx >= state.deck.length - 1 ? "disabled" : ""}>${esc(t("glossary", "next"))}</button></div>`;
 		}
 		els.study.innerHTML = html;
 
@@ -637,8 +649,8 @@ function mount(root, signal) {
 		els.announce.textContent = !card
 			? ""
 			: state.revealed
-				? `Definition shown for ${card.plain}`
-				: `Card ${state.idx + 1} of ${state.deck.length}`;
+				? t("glossary", "defShown", { term: card.plain })
+				: t("glossary", "card", { n: state.idx + 1, total: state.deck.length });
 	}
 
 	/** @param {string} act */

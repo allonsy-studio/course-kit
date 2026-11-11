@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-US">
+<html lang="en-US" :data-timezone="$data.site.timezone">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="/styles/prism-light.css" webc:keep media="(prefers-color-scheme: light)" data-prism-theme="light" />
 		<link rel="stylesheet" href="/styles/prism-dark.css" webc:keep media="(prefers-color-scheme: dark)" data-prism-theme="dark" />
 		<link rel="stylesheet" href="/styles/base.css" webc:keep />
+		<style webc:keep @raw="getBundle('css')"></style>
 		<script src="/preview-assets/tokens.js" webc:keep></script>
 	</head>
 	<body>
@@ -17,5 +18,8 @@
 			<h1 class="sr-only" @text="$data.title"></h1>
 			<template webc:nokeep @raw="content"></template>
 		</main>
+		<script type="application/json" id="copy-data" webc:keep @raw="copyJson($data)"></script>
+		<template webc:nokeep @raw="bundleFile('js', 'preview/content/scripts/practice.js', $data)"></template>
+		<script type="module" webc:keep @raw="getBundle('js')"></script>
 	</body>
 </html>

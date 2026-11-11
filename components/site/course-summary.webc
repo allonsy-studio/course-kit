@@ -5,6 +5,18 @@
 	 * and `term` data; it takes no props.
 	 */
 	const course = $data.course ?? {};
+	const copy = $data.copy.courseSummary;
+	const escape = (text) => String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+	/** When the final project is due, from `project.json`: "Thursday, December 3, 2026, 11:59PM". */
+	const projectWhen = () => {
+		const project = $data.project;
+		if (!project?.due) return fill($data.copy.syllabus.atTheLastClassMeeting, { lastMeeting: lastMeeting($data.lessons) });
+		return project.dueTime ? fill($data.copy.syllabus.projectDue, { date: fullDate(project.due), time: timeOfDay(project.dueTime) }) : fullDate(project.due);
+	};
+	/** "This section's final exam is …, see the Coursework section." with the link in place. */
+	const finalExamLine = () => fill(copy.thisSectionsFinalExamIs, { slot: escape(examSlot($data.schedule.finalExam)), link: `<a href="#coursework">${escape(copy.coursework)}</a>` });
+	/** "The final project is due …; its milestones and rubric are on the project page." with the link in place. */
+	const projectDue = () => fill(copy.projectDue, { when: escape(projectWhen()), link: `<a href="${escape($data.project?.url ?? "/projects/final/")}">${escape(copy.projectPageLink)}</a>` });
 </script>
 <article class="content-column wide" webc:root="override" webc:if="$data.course">
 	<header class="course-header">
@@ -12,13 +24,13 @@
 		<h1 class="print-only"><span @text="course.code"></span>: <span @text="course.name"></span></h1>
 		<p class="lede" @text="course.description"></p>
 		<p webc:if="course.prerequisites?.length">
-			<strong>Prerequisites:</strong>
+			<strong @text="copy.prerequisites"></strong>
 			<span @text="course.prerequisites.join(', ')"></span><span webc:if="course.prerequisiteNote">, <span @text="course.prerequisiteNote"></span></span>
 		</p>
 	</header>
 
 	<section id="approach" aria-labelledby="approach-heading" webc:if="course.approach">
-		<h2 id="approach-heading">How this section is taught</h2>
+		<h2 id="approach-heading" @text="copy.howThisSectionIs"></h2>
 		<p @text="course.approach"></p>
 	</section>
 
@@ -27,21 +39,19 @@
 	<syllabus></syllabus>
 
 	<section id="schedule" aria-labelledby="schedule-heading">
-		<h2 id="schedule-heading">Schedule &amp; class resources</h2>
+		<h2 id="schedule-heading" @text="copy.scheduleClassResources"></h2>
 		<p>
-			<span>This is a proposed outline of topics and is subject to change. Any changes will be announced in class.</span>
-			<span>Each week lists what to read before its first meeting and the resources posted after class.</span>
-			<span webc:if="$data.grading?.homework">All assignments will be posted in <span @text="$data.site.lms"></span>.</span>
-			<span webc:if="$data.grading?.project">The final project is due at this section's last class meeting, <span @text="lastMeeting($data.lessons)"></span>; its milestones and rubric are on <a href="/projects/final/">the project page</a>.</span>
-			<span webc:if="$data.grading?.final && !$data.schedule?.finalExam">The final exam falls in the exam period (<span @text="$data.term.finalExamsDisplay"></span>); the exact date and time will be announced in class.</span>
-			<span webc:if="$data.grading?.final && $data.schedule?.finalExam">This section's final exam is <span @text="examSlot($data.schedule.finalExam)"></span> — see the <a href="#coursework">Coursework</a> section.</span>
+			<span @text="copy.thisIsAProposed"></span>
+			<span @text="copy.eachWeekListsWhatTo"></span>
+			<span webc:if="$data.grading?.homework" @text="fill(copy.allAssignmentsWillBe, { lms: $data.site.lms })"></span>
+			<span webc:if="$data.grading?.project" @raw="projectDue()"></span>
+			<span webc:if="$data.grading?.final && !$data.schedule?.finalExam" @text="fill(copy.theFinalExamFalls, { period: $data.term.finalExamsDisplay })"></span>
+			<span webc:if="$data.grading?.final && $data.schedule?.finalExam" @raw="finalExamLine()"></span>
 		</p>
 		<div class="print-only">
 			<p>
-				This document omits the week-by-week schedule, which may be adjusted
-				during the term<span webc:if="$data.site?.url">; the live schedule is published at
-				<span @text="`${$data.site.url}${$data.page.url}#schedule`"></span></span>.
-				<span webc:if="$data.grading?.project">The final project is due at the last class meeting, <span @text="lastMeeting($data.lessons)"></span>.</span>
+				<span @text="fill(copy.thisDocumentOmitsTheWeekbyweek, { live: $data.site?.url ? fill(copy.theLiveScheduleIsPublished, { url: `${$data.site.url}${$data.page.url}#schedule` }) : '' })"></span>
+				<span webc:if="$data.grading?.project" @text="fill(copy.projectDueShort, { when: projectWhen() })"></span>
 			</p>
 		</div>
 		<schedule-weeks></schedule-weeks>

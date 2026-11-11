@@ -98,7 +98,7 @@ test("the instructor's email is encoded in the page, never written out", () => {
 
 test("the home page carries the schedule for the where-we-are panel", () => {
 	const html = pages["/"];
-	for (const text of ["data-course-now", "data-weeks=", "Term progress", "/schedule/#week-1"]) {
+	for (const text of ["data-course-now", "data-course-now-data", "data-now-card", "Coming up", "/schedule/#week-1"]) {
 		assert.ok(html.includes(text), `home page is missing "${text}"`);
 	}
 });
@@ -108,4 +108,50 @@ test("a lesson plan sits between the week's outline and its materials", () => {
 	for (const text of ["lesson-outline", "aria-current=\"page\"", "On this page", "Materials &amp; links"]) {
 		assert.ok(html.includes(text), `lesson plan is missing "${text}"`);
 	}
+});
+
+test("every page carries the campus time zone and the copy block the scripts read", () => {
+	const home = pages["/"];
+	assert.match(home, /<html[^>]*data-timezone="America\/New_York"/);
+	const json = JSON.parse(/<script type="application\/json" id="copy-data">([\s\S]*?)<\/script>/.exec(home)[1]);
+	assert.equal(json.home.todayLabel, "Today's class");
+	assert.equal(json.schedule.hidePast, "Hide past weeks");
+	assert.ok(!home.includes("data-course-now hidden></section>") || home.includes('aria-labelledby="course-now-heading"'));
+});
+
+test("no component or script holds the campus time zone as a literal", () => {
+	const offenders = [];
+	for (const dir of ["components", "assets/scripts", "layouts", "lib"]) {
+		for (const file of fs.readdirSync(path.join(root, dir), { recursive: true })) {
+			const full = path.join(root, dir, file);
+			if (fs.statSync(full).isFile() && fs.readFileSync(full, "utf8").includes("America/New_York") && !full.endsWith("check.js") && !full.endsWith("plugin.js")) offenders.push(path.join(dir, file));
+		}
+	}
+	assert.deepEqual(offenders, []);
+});
+
+test("the schedule gives a test a chip, a key above the weeks and a Hide past weeks button with one label", () => {
+	const html = pages["/schedule/"];
+	assert.match(html, /<span data-kind="test" class="due-chip">Test<\/span>/);
+	assert.match(html, /<ul aria-label="Key to due items"[^>]*class="due-key"/);
+	assert.ok(html.indexOf('class="due-key"') < html.indexOf('id="week-1"'));
+	assert.match(html, /<button[^>]*data-hide-past[^>]*aria-pressed="false"[^>]*>Hide past weeks<\/button>/);
+	assert.ok(!html.includes("Show past weeks"));
+	for (const gone of ["data-week-tools", "data-past-toggle", "past-toggle", "due-kind"]) assert.ok(!html.includes(gone), `still has ${gone}`);
+});
+
+test("the top menu starts with Home and Syllabus, and the footer lists the instructor's lesson plans", () => {
+	const html = pages["/"];
+	const header = /<header id="header"[\s\S]*?<\/header>/.exec(html)[0];
+	const labels = [...header.matchAll(/<a href="[^"]*"[^>]*>([^<]+)<\/a>/g)].map((match) => match[1]).filter((text) => !text.includes(":"));
+	assert.deepEqual(labels.slice(0, 3), ["Home", "Syllabus", "Schedule"]);
+	assert.ok(!header.includes("Lesson Plans"));
+	assert.ok(/<footer>[\s\S]*Lesson Plans/.test(html));
+	assert.match(header, /aria-label="Site"/);
+});
+
+test("a fence in a page is a code block with its edge, and the script finds its copy strings in the copy block", () => {
+	const source = fs.readFileSync(path.join(root, "assets", "scripts", "code-copy.js"), "utf8");
+	assert.ok(source.includes('t("code", "copy")'));
+	assert.ok(!/"Copy code"|"Copied"/.test(source));
 });

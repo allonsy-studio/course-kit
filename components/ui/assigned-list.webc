@@ -2,35 +2,23 @@
 	/**
 	 * A labelled list of readings or deadlines. Renders nothing when empty.
 	 * @prop {string} label the heading above the list
-	 * @prop {{ title: string, href?: string, check?: string, dueLabel?: string }[]} items the readings or deadlines to list
-	 * @prop {string} [prefix] put before an item's due label ("due ")
+	 * @prop {{ title: string, href?: string, check?: string, dueLabel?: string, kind?: string }[]} items the readings or deadlines to list
+	 * @prop {string} [dueOn] how a due date reads after the check, with `{when}`: `copy.schedule.dueOn` ("due {when}"); without it the date stands alone
+	 * @prop {boolean} [chips] put a `.due-chip` for the item's `kind` before its title
+	 * @prop {Record<string, string>} [kinds] the chip words by kind, from `copy.schedule.dueKind*`; needed with `chips`
 	 */
 
-	/** The muted line under an item: its check, then when it is due. Props are not in scope here, so the template passes `prefix`. */
-	const detail = (item, lead = "") => [item.check, item.dueLabel && `${lead ?? ""}${item.dueLabel}`].filter(Boolean).join(", ");
-
-	/** A deadline's kind, from its title, for the chip beside it: "test", "lab" or "practice"; "" for anything else. */
-	const kindOf = (item) => {
-		const title = String(item?.title ?? "").toLowerCase();
-		if (/\b(test|exam|quiz|midterm|final)\b/.test(title)) return "test";
-		if (/\b(lab|project|assignment|milestone)\b/.test(title)) return "lab";
-		if (/\b(practice|worksheet|exercise)\b/.test(title)) return "practice";
-		return "";
-	};
-	/** The chip's word: the one the title uses ("Quiz", "Lab"), so the chip never renames the work. */
-	const kindLabel = (item) => {
-		const word = String(item?.title ?? "").toLowerCase().match(/\b(test|exam|quiz|midterm|final|lab|project|assignment|milestone|practice|worksheet|exercise)\b/)?.[1] ?? "";
-		return word.charAt(0).toUpperCase() + word.slice(1);
-	};
+	/** The muted line under an item: its check, then when it is due. Props are not in scope here, so the template passes `dueOn`. */
+	const detail = (item, dueOn) => [item.check, item.dueLabel && (dueOn ? dueOn.replace("{when}", item.dueLabel) : item.dueLabel)].filter(Boolean).join(", ");
 </script>
 <div webc:root="override" class="assigned" webc:if="items?.length">
 	<p class="label" @text="label"></p>
 	<ul role="list">
-		<li webc:for="item of items">
-			<span class="due-kind" webc:if="label === 'Due' && kindOf(item)" :data-kind="kindOf(item)" @text="kindLabel(item)"></span>
+		<li webc:for="item of items" @attributes="chips && item.kind ? { class: 'due-item', 'data-kind': item.kind } : {}">
+			<span class="due-chip" webc:if="chips && item.kind" :data-kind="item.kind" @text="kinds?.[item.kind]"></span>
 			<a webc:if="item.href" :href="item.href" @text="item.title"></a>
 			<span webc:if="!item.href" @text="item.title"></span>
-			<span class="check" webc:if="detail(item, prefix)" @text="detail(item, prefix)"></span>
+			<span class="check" webc:if="detail(item, dueOn)" @text="detail(item, dueOn)"></span>
 		</li>
 	</ul>
 </div>
@@ -54,24 +42,6 @@
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
 		font-size: var(--font-size-6);
-	}
-
-	/* A deadline's kind as a small chip: tests outlined in the accent, graded
-	   work on an accent wash, practice dashed (not graded). */
-	.due-kind {
-		display: inline-block;
-		margin-inline-end: 0.4em;
-		padding: 0 0.55em;
-		border: var(--thin-border-width) solid transparent;
-		border-radius: 9999px;
-		font-size: max(var(--base-font-size), 0.8em);
-		font-weight: var(--font-weight--semi-bold);
-		color: var(--color-text);
-		vertical-align: 0.1em;
-
-		&[data-kind="test"] { border: var(--border-width) solid var(--color-accent); }
-		&[data-kind="lab"] { background-color: var(--color-surface-accent); }
-		&[data-kind="practice"] { border-style: dashed; border-color: var(--color-text-muted); font-weight: var(--font-weight); }
 	}
 
 	.check {

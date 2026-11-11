@@ -35,7 +35,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   /* tokens:deck */
 
   --font-sans: "Instrument Sans", "Instrument Sans Fallback", ui-sans-serif, system-ui, "Segoe UI", roboto, "Helvetica Neue", arial, sans-serif;
-  --vocab-bg: light-dark(#c6dfe6, #0f2c36);
+  --vocab-bg: light-dark(#D7F1F8, #0B2933);
   --api-bg: light-dark(#2d3550, #1b2033);
   --api-ink: #f2f0f6;
   --api-muted: #b7bcd0;
@@ -338,7 +338,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
     .slide-body { align-content: safe center; }
 
     /* Mixed toward the ink: the plain accent misses 4.5:1 on this ground. */
-    .eyebrow { color: color-mix(in oklab, var(--color-accent-text) 65%, var(--color-text)); }
+    .eyebrow { color: color-mix(in oklab, var(--color-accent-text) 50%, var(--color-text)); }
 
     h1 {
       font-family: var(--font-serif);

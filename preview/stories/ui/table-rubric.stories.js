@@ -1,3 +1,5 @@
+import { COPY_DEFAULTS } from "../../../lib/copy.js";
+
 export default { title: "Building blocks/table-rubric" };
 
 const levels = ["Exceeds", "Meets", "Not yet"];
@@ -6,6 +8,7 @@ const row = (title, texts, points) => ({ title, levels: texts.map((description, 
 export const Levels = {
 	name: "Performance levels",
 	args: {
+		copy: COPY_DEFAULTS.tableRubric,
 		caption: "Project rubric",
 		levels,
 		total: 20,
@@ -15,6 +18,7 @@ export const Levels = {
 
 export const Milestones = {
 	args: {
+		copy: COPY_DEFAULTS.tableRubric,
 		caption: "Project milestones",
 		criteria: [
 			{ id: "M1", title: "Proposal", due: "Sep 15", points: 10, graded: "A one-page plan." },

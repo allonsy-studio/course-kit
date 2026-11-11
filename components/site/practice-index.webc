@@ -1,0 +1,31 @@
+<script webc:setup>
+	/**
+	 * The practice page's table: every practice sheet in `collections.practice`,
+	 * by its worksheet `order` (then its URL), with what each is for. Says so when
+	 * there are none. The page's own intro stays page content. Wording comes
+	 * from `copy.practice`.
+	 */
+	const sheets = (collection) => [...(collection ?? [])].sort((a, b) => (a.data.worksheet?.order ?? 99) - (b.data.worksheet?.order ?? 99) || a.url.localeCompare(b.url));
+</script>
+<div webc:root="override" class="practice-index">
+	<p class="muted" webc:if="!$data.collections?.practice?.length" @text="$data.copy.practice.empty"></p>
+	<table class="table-light" webc:if="$data.collections?.practice?.length" data-practice>
+		<caption class="sr-only" @text="$data.copy.practice.caption"></caption>
+		<thead>
+			<tr>
+				<th scope="col" @text="$data.copy.practice.colSheet"></th>
+				<th scope="col" @text="$data.copy.practice.colFor"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr webc:for="entry of sheets($data.collections.practice)">
+				<th scope="row">
+					<a :href="entry.url" @text="entry.data.worksheet?.heading ?? entry.data.title"></a>
+				</th>
+				<td>
+					<span @text="entry.data.worksheet?.lede"></span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

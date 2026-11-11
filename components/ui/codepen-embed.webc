@@ -1,18 +1,19 @@
 <script webc:setup>
 	/**
 	 * A live code sample: a header with actions, then the CodePen embed prefilled with the code.
-	 * @prop {string} [heading] the header, default "The code"
+	 * @prop {string} [heading] the header, default `copy.theCode`
 	 * @prop {string} label the pen's title
 	 * @prop {string} summary the pen's description
 	 * @prop {number} [height] embed height in pixels, default 800
 	 * @prop {string[]} [tags] tags added to the pen
+	 * @prop {Record<string, string>} copy the pane labels: `copy.codepenEmbed` (`theCode`, `html`, `css`, `javascript`, `htmlSource`, `cssSource`, `javascriptSource`)
 	 * @slot actions buttons beside the header
 	 * @slot default extra content under the code
 	 */
 </script>
 <figure webc:root="override" class="codepen-embed">
 	<div class="embed-header">
-		<h2 @text="heading ?? 'The code'"></h2>
+		<h2 @text="heading ?? copy.theCode"></h2>
 		<slot name="actions"></slot>
 	</div>
 
@@ -22,12 +23,12 @@
 		data-default-tab="html,result"
 		data-editable="true"
 		data-preview="true">
-		<p class="pane-label" webc:if="markup">HTML</p>
-		<pre data-lang="html" webc:if="markup" tabindex="0" aria-label="HTML source" @text="markup"></pre>
-		<p class="pane-label" webc:if="styles">CSS</p>
-		<pre data-lang="css" webc:if="styles" tabindex="0" aria-label="CSS source" @text="styles"></pre>
-		<p class="pane-label" webc:if="script">JavaScript</p>
-		<pre data-lang="js" webc:if="script" tabindex="0" aria-label="JavaScript source" @text="script"></pre>
+		<p class="pane-label" webc:if="markup" @text="copy.html"></p>
+		<pre data-lang="html" webc:if="markup" tabindex="0" :aria-label="copy.htmlSource" @text="markup"></pre>
+		<p class="pane-label" webc:if="styles" @text="copy.css"></p>
+		<pre data-lang="css" webc:if="styles" tabindex="0" :aria-label="copy.cssSource" @text="styles"></pre>
+		<p class="pane-label" webc:if="script" @text="copy.javascript"></p>
+		<pre data-lang="js" webc:if="script" tabindex="0" :aria-label="copy.javascriptSource" @text="script"></pre>
 	</div>
 
 	<script webc:keep>
@@ -108,8 +109,8 @@
 		tab-size: 2;
 
 		&:focus-visible {
-			outline: var(--outline-width) solid var(--color-accent);
-			outline-offset: calc(var(--outline-width) * -1);
+			outline: var(--focus-ring-width) solid var(--color-focus-ring);
+			outline-offset: calc(var(--focus-ring-width) * -1);
 		}
 	}
 

@@ -11,13 +11,12 @@
 		<eyebrow class="separators">
 			<span @text="$data.term.label"></span>
 			<span @text="$data.course.code"></span>
-			<span>Glossary</span>
+			<span @text="$data.copy.glossary.glossary"></span>
 		</eyebrow>
-		<h1>Course glossary</h1>
+		<h1 @text="$data.copy.glossary.courseGlossary"></h1>
 		<p class="intro">
-			<strong @text="$data.glossary.terms.length"></strong> terms from class. Each carries tags for its test,
-			its <span @text="$data.glossary.readingLabel.toLowerCase()"></span> and the meeting that taught it.
-			Group by any of them, search, or narrow the list to what you are studying.
+			<strong @text="$data.glossary.terms.length"></strong>
+			<span @text="fill($data.copy.glossary.termsFromClassEach, { reading: $data.glossary.readingLabel.toLowerCase() })"></span>
 		</p>
 	</header>
 
@@ -27,7 +26,7 @@
 				<h2 class="heading" :id="`g-az-${group.key}-h`">
 					<span class="name" @text="group.label"></span>
 					<span class="aside">
-						<span class="count"><span @text="group.terms.length"></span> <span @text="group.terms.length === 1 ? 'term' : 'terms'"></span></span>
+						<span class="count" @text="fill(plural($data.copy.glossary, 'terms', group.terms.length, $data.site.language), { count: group.terms.length })"></span>
 					</span>
 				</h2>
 				<dl>

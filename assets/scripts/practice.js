@@ -1,5 +1,5 @@
 /*
- * Grading for a practice worksheet page (see docs/worksheets.md).
+ * Grading for a practice worksheet page (see docs/components.md).
  *
  * Progressive enhancement: the page is a complete, printable worksheet with
  * the script off — every control is a real input, and the answers sit behind
@@ -9,6 +9,18 @@
  * copy of the data: each question's `data-answers` attribute is written by the
  * template from the same object the questions come from.
  */
+
+/** Student-facing wording, rendered by the layout as one JSON block. */
+const COPY = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
+/** `t("home", "weeksDone", { done: 3, total: 16 })`; a key with `_one`/`_other` variants is picked by `count`. */
+const t = (ns, key, vars = {}) => {
+	const table = COPY[ns] ?? {};
+	let text = table[key];
+	if ("count" in vars && (`${key}_other` in table)) {
+		text = table[`${key}_${new Intl.PluralRules(document.documentElement.lang || "en-US").select(vars.count)}`] ?? table[`${key}_other`];
+	}
+	return String(text ?? "").replace(/\{(\w+)\}/g, (_, name) => String(vars[name] ?? ""));
+};
 
 /** Strip the decoration students may or may not type: tags, punctuation, case. */
 const normalize = (value) =>
@@ -23,8 +35,18 @@ const normalize = (value) =>
    compare the way the page does. One copy of the rule, exercised by both. */
 window.practice = { normalize };
 
-/** @param {string} scope a CSS selector for the region to grade */
-const questionsIn = (scope) => [...(document.querySelector(scope)?.querySelectorAll(".question") ?? [])];
+/** The worksheet a control or question belongs to. */
+const rootOf = (element) => element.closest("[data-worksheet]");
+
+/**
+ * @param {HTMLElement} root a `[data-worksheet]` element
+ * @param {string} scope a CSS selector for the region to grade
+ */
+const questionsIn = (root, scope) => {
+	// The whole-worksheet scope names the root itself, which querySelector never returns.
+	const region = root.matches(scope) ? root : root.querySelector(scope);
+	return [...(region?.querySelectorAll(".question") ?? [])];
+};
 
 /** The checked radio in a group, or null. */
 const checkedValue = (question, name) => {
@@ -49,67 +71,79 @@ const clearMarks = (question) => {
  * One grader per question kind, keyed by `data-kind`. Each marks its own
  * controls and reports what it found; a kind with no entry here is left to the
  * student, like `selfcheck`.
- * @type {Record<string, (question: HTMLElement, key: object, id: string) => {answered: boolean, right: number, total: number}>}
+ * @type {Record<string, (question: HTMLElement, key: object, id: string) => {answered: boolean, right: number, total: number, blank: number}>}
  */
 const GRADERS = {
 	choice(question, key, id) {
 		const picked = checkedValue(question, `${id}-choice`);
-		if (picked === null) return { answered: false, right: 0, total: 1 };
+		if (picked === null) return { answered: false, right: 0, total: 1, blank: 1 };
 		for (const label of question.querySelectorAll(".choice")) {
 			const value = Number(label.querySelector("input").value);
 			if (value === key.answer) mark(label, true);
 			else if (value === Number(picked)) mark(label, false);
 		}
-		return { answered: true, right: Number(picked) === key.answer ? 1 : 0, total: 1 };
+		return { answered: true, right: Number(picked) === key.answer ? 1 : 0, total: 1, blank: 0 };
 	},
 
 	match(question, key) {
 		let right = 0;
+		let blank = 0;
 		let answered = false;
 		for (const [index, expected] of key.items.entries()) {
 			const select = question.querySelector(`select[data-blank="${index}"]`);
-			if (!select.value) continue;
+			if (!select.value) {
+				blank += 1;
+				continue;
+			}
 			answered = true;
 			const correct = select.value === expected;
 			if (correct) right += 1;
 			mark(select.closest("li"), correct);
 		}
-		return { answered, right, total: key.items.length };
+		return { answered, right, total: key.items.length, blank };
 	},
 
 	fill(question, key) {
 		let right = 0;
+		let blank = 0;
 		let answered = false;
 		for (const [index, accepted] of key.blanks.entries()) {
 			const input = question.querySelector(`input[data-blank="${index}"]`);
-			if (!input.value.trim()) continue;
+			if (!input.value.trim()) {
+				blank += 1;
+				continue;
+			}
 			answered = true;
 			const typed = normalize(input.value);
 			const correct = accepted.some((option) => normalize(option) === typed);
 			if (correct) right += 1;
 			mark(input.closest("li"), correct);
 		}
-		return { answered, right, total: key.blanks.length };
+		return { answered, right, total: key.blanks.length, blank };
 	},
 
 	grid(question, key, id) {
 		let right = 0;
+		let blank = 0;
 		let answered = false;
 		for (const [index, expected] of key.rows.entries()) {
 			const picked = checkedValue(question, `${id}-row-${index}`);
-			if (picked === null) continue;
+			if (picked === null) {
+				blank += 1;
+				continue;
+			}
 			answered = true;
 			const correct = Number(picked) === expected;
 			if (correct) right += 1;
 			mark(question.querySelector(`tr[data-row="${index}"]`), correct);
 		}
-		return { answered, right, total: key.rows.length };
+		return { answered, right, total: key.rows.length, blank };
 	},
 
 	judge(question, key, id) {
 		const verdict = checkedValue(question, `${id}-choice`);
 		const line = checkedValue(question, `${id}-line`);
-		if (verdict === null && line === null) return { answered: false, right: 0, total: 2 };
+		if (verdict === null && line === null) return { answered: false, right: 0, total: 2, blank: 2 };
 		let right = 0;
 
 		for (const label of question.querySelectorAll(".verdicts .choice")) {
@@ -128,62 +162,90 @@ const GRADERS = {
 		}
 		if (line !== null && expected.includes(line)) right += 1;
 
-		return { answered: true, right, total: 2 };
+		return { answered: true, right, total: 2, blank: (verdict === null ? 1 : 0) + (line === null ? 1 : 0) };
 	},
 };
 
 /* A tree is a fill whose blanks are laid out as a diagram. */
 GRADERS.tree = GRADERS.fill;
 
-/**
- * Grade one question.
- * @param {HTMLElement} question
- * @returns {{answered: boolean, right: number, total: number}}
- */
-function grade(question) {
-	const { kind, question: id } = question.dataset;
+/* ---- Status ------------------------------------------------------------
+ * unattempted | answered | right | wrong | partial | self, on `data-state`
+ * of the question and of its entry in the question list. */
+
+const STATUS_KEY = {
+	unattempted: "statusUnattempted",
+	answered: "statusAnswered",
+	right: "statusRight",
+	wrong: "statusWrong",
+	partial: "statusPartial",
+	self: "statusSelf",
+};
+
+const isGradable = (question) => question.dataset.kind in GRADERS;
+
+/** Whether any part of the question holds a value. */
+const hasValue = (question) =>
+	[...question.querySelectorAll("input[type='radio']")].some((input) => input.checked) ||
+	[...question.querySelectorAll("input[type='text'], select")].some((control) => control.value.trim() !== "");
+
+/** @param {HTMLElement} question @param {string} state */
+const setState = (question, state) => {
+	question.dataset.state = state;
+};
+
+/** Remove the feedback line, marks and revealed reasoning of a question. */
+function clearFeedback(question) {
 	clearMarks(question);
-	const grader = GRADERS[kind];
-	if (!grader) return { answered: false, right: 0, total: 0 };
-	return grader(question, JSON.parse(question.dataset.answers ?? "{}"), id);
+	const feedback = question.querySelector(".feedback");
+	feedback.hidden = true;
+	feedback.textContent = "";
+	question.querySelector(".why").hidden = true;
 }
 
-/** Grade one question and write its feedback line. */
+/**
+ * Grade one question: mark its controls, write its feedback line, set its
+ * status. Questions with no grader are left to the student.
+ * @param {HTMLElement} question
+ * @returns {"right"|"wrong"|"partial"|"unattempted"|"self"}
+ */
 function check(question) {
-	if (!GRADERS[question.dataset.kind]) {
+	if (!isGradable(question)) {
 		const reveal = question.querySelector("[data-reveal]");
 		if (reveal) reveal.open = true;
-		return null;
+		return "self";
 	}
-
-	const { answered, right, total } = grade(question);
+	const { kind, question: id } = question.dataset;
+	clearMarks(question);
+	const { answered, right, total, blank } = GRADERS[kind](question, JSON.parse(question.dataset.answers ?? "{}"), id);
 	const feedback = question.querySelector(".feedback");
 	const why = question.querySelector(".why");
+	feedback.hidden = false;
 
 	if (!answered) {
-		question.removeAttribute("data-state");
-		feedback.hidden = false;
-		feedback.textContent = "Not answered yet.";
+		setState(question, "unattempted");
+		feedback.textContent = t("worksheet", "feedbackUnattempted");
 		why.hidden = true;
-		return { right: 0, total };
+		return "unattempted";
 	}
 
-	const perfect = right === total;
-	question.dataset.state = perfect ? "right" : "wrong";
-	feedback.hidden = false;
-	feedback.textContent = perfect
-		? total > 1
-			? `Correct — all ${total}.`
-			: "Correct."
-		: `Try again: ${right} of ${total} correct.`;
+	const wrong = total - right - blank > 0;
+	const state = right === total ? "right" : wrong ? "wrong" : "partial";
+	setState(question, state);
+	feedback.textContent =
+		state === "right"
+			? total > 1
+				? t("worksheet", "feedbackRightAll", { total })
+				: t("worksheet", "feedbackRight")
+			: t("worksheet", "feedbackParts", { right, total }) +
+				(blank > 0 ? t("common", "sep") + t("worksheet", "feedbackBlank", { count: blank }) : "");
 	why.hidden = false;
-	return { right, total };
+	return state;
 }
 
-/** Clear one question back to unanswered. */
+/** Clear one question back to unattempted. */
 function reset(question) {
-	clearMarks(question);
-	question.removeAttribute("data-state");
+	clearFeedback(question);
 	for (const input of question.querySelectorAll("input[type='radio']")) input.checked = false;
 	for (const input of question.querySelectorAll("input[type='text']")) input.value = "";
 	for (const select of question.querySelectorAll("select")) select.value = "";
@@ -193,114 +255,284 @@ function reset(question) {
 	}
 	markUsedWords(question);
 	for (const details of question.querySelectorAll("[data-reveal]")) details.open = false;
-	const feedback = question.querySelector(".feedback");
-	feedback.hidden = true;
-	feedback.textContent = "";
-	question.querySelector(".why").hidden = true;
+	setState(question, isGradable(question) ? "unattempted" : "self");
 }
 
-/** A question's status for the question list and the results: checked right, checked wrong, or not checked. */
-const STATUS = { right: "Correct", wrong: "Try again", open: "Not checked" };
-const stateOf = (question) => question.dataset.state ?? "open";
-const gradable = () => [...document.querySelectorAll(".question")].filter((question) => GRADERS[question.dataset.kind]);
-
-const questionNav = document.querySelector("[data-question-nav]");
-const results = document.querySelector("[data-results]");
-
-/** One row per gradable question: its number badge (or a mark once checked) and its status, linked to it. */
-const statusRows = () =>
-	gradable()
-		.map((question) => {
-			const state = stateOf(question);
-			const badge = state === "right" ? "✓" : state === "wrong" ? "✕" : question.dataset.question;
-			return `<li data-state="${state}"><a href="#${question.id}"><span class="badge" aria-hidden="true">${badge}</span><span>Question ${question.dataset.question}</span> <span class="status">${STATUS[state]}</span></a></li>`;
-		})
-		.join("");
-
-/** Redraw the question list and, when it is showing, the results. */
-function refreshStatus() {
-	if (questionNav) questionNav.querySelector("ol").innerHTML = statusRows();
-	if (!results || results.hidden) return;
-	const questions = gradable();
-	const right = questions.filter((question) => stateOf(question) === "right").length;
-	results.querySelector("[data-score]").textContent = String(right);
-	results.querySelector("[data-score-of]").textContent = `of ${questions.length}`;
-	results.querySelector(".result-rows").innerHTML = statusRows();
-	results.querySelector("[data-retry-results]").hidden = right === questions.length;
+/** Mirror each question's status onto its entry in the question list. */
+function syncNav(root) {
+	for (const question of questionsIn(root, "#worksheet")) {
+		const item = root.querySelector(`[data-nav-for="${question.dataset.question}"]`);
+		if (!item) continue;
+		const state = question.dataset.state ?? "unattempted";
+		item.dataset.state = state;
+		const status = item.querySelector(".nav-status");
+		if (status) status.textContent = t("worksheet", STATUS_KEY[state]);
+	}
 }
 
-const tallyFor = (scope) => document.querySelector(`[data-tally="${scope}"]`);
-const retryFor = (scope) => document.querySelector(`[data-retry="${scope}"]`);
+/* ---- Saved answers ------------------------------------------------------
+ * localStorage, one key per question: `ck-ws:v1:<storage-id>:<question-id>`.
+ * Every access is in try/catch; with storage unavailable (a private window,
+ * a file:// copy, an upload to Brightspace) the page works and saves nothing. */
+
+const PREFIX = "ck-ws:v1:";
+
+/** djb2, base 36: enough to notice that a question's key changed. */
+const hashOf = (text) => {
+	let hash = 5381;
+	for (const char of text) hash = ((hash << 5) + hash + char.codePointAt(0)) | 0;
+	return (hash >>> 0).toString(36);
+};
+
+const storageKey = (root, question) => `${PREFIX}${root.dataset.storageId}:${question.dataset.question}`;
+
+const storageGet = (key) => {
+	try {
+		return localStorage.getItem(key);
+	} catch {
+		return null;
+	}
+};
+const storageSet = (key, value) => {
+	try {
+		localStorage.setItem(key, value);
+	} catch {
+		// Storage is unavailable or full: nothing is saved.
+	}
+};
+const storageRemove = (key) => {
+	try {
+		localStorage.removeItem(key);
+	} catch {
+		// Nothing to remove.
+	}
+};
+
+/** The question's current answers: radios by `name`, selects and texts by blank. */
+function collect(question) {
+	const answers = {};
+	for (const input of question.querySelectorAll("input[type='radio']:checked")) answers[input.name] = input.value;
+	for (const [tag, selector] of [
+		["select", "select"],
+		["text", "input[type='text']"],
+	]) {
+		for (const [index, control] of [...question.querySelectorAll(selector)].entries()) {
+			if (control.value.trim() !== "") answers[`${tag}:${control.dataset.blank ?? index}`] = control.value;
+		}
+	}
+	return answers;
+}
+
+/** Put saved answers back into the question's controls. */
+function apply(question, answers) {
+	for (const [key, value] of Object.entries(answers)) {
+		const [tag, blank] = key.split(":");
+		if (blank === undefined) {
+			const input = [...question.querySelectorAll("input[type='radio']")].find((item) => item.name === key && item.value === value);
+			if (input) input.checked = true;
+			continue;
+		}
+		const selector = tag === "select" ? "select" : "input[type='text']";
+		const controls = [...question.querySelectorAll(selector)];
+		const control = controls.find((item) => item.dataset.blank === blank) ?? controls[Number(blank)];
+		if (control) control.value = value;
+	}
+	markUsedWords(question);
+}
+
+/** Save a question, or drop its key when it is empty. */
+function save(root, question, checked = false) {
+	const answers = collect(question);
+	const key = storageKey(root, question);
+	if (!Object.keys(answers).length) return storageRemove(key);
+	storageSet(key, JSON.stringify({ v: 1, h: hashOf(question.dataset.answers ?? ""), t: Date.now(), checked, a: answers }));
+}
+
+/** Restore a worksheet's saved answers. @returns {number} the newest save time, or 0 */
+function restore(root) {
+	let newest = 0;
+	for (const question of questionsIn(root, "#worksheet")) {
+		if (!isGradable(question)) continue;
+		const key = storageKey(root, question);
+		const raw = storageGet(key);
+		if (raw === null) continue;
+		let saved;
+		try {
+			saved = JSON.parse(raw);
+		} catch {
+			saved = null;
+		}
+		if (saved?.v !== 1 || saved.h !== hashOf(question.dataset.answers ?? "") || typeof saved.a !== "object") {
+			storageRemove(key);
+			continue;
+		}
+		apply(question, saved.a);
+		newest = Math.max(newest, saved.t ?? 0);
+		if (saved.checked) check(question);
+		else setState(question, hasValue(question) ? "answered" : "unattempted");
+	}
+	return newest;
+}
+
+/** Old-shape keys are ignored and pruned. */
+function prune() {
+	try {
+		for (const key of Object.keys(localStorage)) {
+			if (key.startsWith("ck-ws:") && !key.startsWith(PREFIX)) localStorage.removeItem(key);
+		}
+	} catch {
+		// No storage, nothing to prune.
+	}
+}
+
+/* ---- Scores and summary -------------------------------------------------- */
+
+const tallyFor = (root, scope) => root.querySelector(`[data-tally="${scope}"]`);
+
+/** @param {HTMLElement[]} questions */
+function counts(questions) {
+	const found = { right: 0, wrong: 0, partial: 0, unattempted: 0, self: 0, total: 0 };
+	for (const question of questions) {
+		if (!isGradable(question)) {
+			found.self += 1;
+			continue;
+		}
+		found.total += 1;
+		const state = question.dataset.state;
+		if (state in found) found[state] += 1;
+		else found.unattempted += 1;
+	}
+	return found;
+}
+
+/** `2 of 23 correct · 1 to try again · 20 unattempted` */
+function tallyText(found) {
+	const parts = [t("worksheet", "tallyCorrect", { right: found.right, total: found.total })];
+	if (found.wrong) parts.push(t("worksheet", "tallyWrong", { count: found.wrong }));
+	if (found.partial) parts.push(t("worksheet", "tallyPartial", { count: found.partial }));
+	if (found.unattempted) parts.push(t("worksheet", "tallyUnattempted", { count: found.unattempted }));
+	if (found.self) parts.push(t("worksheet", "tallySelf", { count: found.self }));
+	return parts.join(t("common", "sep"));
+}
+
+/** Fill and show the results panel with every question. */
+function summarize(root, found, questions) {
+	const panel = root.querySelector("[data-summary]");
+	if (!panel) return;
+	panel.querySelector("[data-score]").textContent = String(found.right);
+	panel.querySelector("[data-score-of]").textContent = t("worksheet", "scoreOf", { total: found.total });
+	const list = panel.querySelector("[data-summary-list]");
+	list.replaceChildren();
+	for (const question of questions) {
+		const status = isGradable(question) ? (question.dataset.state ?? "unattempted") : "self";
+		const item = document.createElement("li");
+		item.dataset.status = status;
+		const link = document.createElement("a");
+		link.href = `#q-${question.dataset.question}`;
+		link.textContent = question.dataset.question;
+		const label = document.createElement("span");
+		label.textContent = t("worksheet", STATUS_KEY[status]);
+		item.append(link, " ", label);
+		list.append(item);
+	}
+	panel.querySelector("[data-retry]").hidden = !(found.wrong || found.partial || found.unattempted);
+	panel.hidden = false;
+	const heading = panel.querySelector("h2");
+	heading.tabIndex = -1;
+	heading.focus();
+}
+
+const hideSummary = (root) => {
+	const panel = root.querySelector("[data-summary]");
+	if (panel) panel.hidden = true;
+};
+
+const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 document.addEventListener("click", (event) => {
-	const oneButton = event.target.closest("[data-check-one]");
-	if (oneButton) {
-		check(oneButton.closest(".question"));
-		refreshStatus();
-		return;
-	}
-
-	if (event.target.closest("[data-see-results]") && results) {
-		for (const question of gradable()) if (stateOf(question) === "open") check(question);
-		results.hidden = false;
-		refreshStatus();
-		results.focus();
-		return;
-	}
-
 	const checkButton = event.target.closest("[data-check]");
 	if (checkButton) {
+		const root = rootOf(checkButton);
 		const scope = checkButton.dataset.check;
-		let right = 0;
-		let total = 0;
-		let selfMarked = 0;
-		for (const question of questionsIn(scope)) {
-			const result = check(question);
-			if (!result) {
-				selfMarked += 1;
-				continue;
-			}
-			right += result.right;
-			total += result.total;
+		const questions = questionsIn(root, scope);
+		for (const question of questions) {
+			check(question);
+			if (isGradable(question)) save(root, question, true);
 		}
-		const tally = tallyFor(scope);
-		if (tally) {
-			const note = selfMarked ? ` · ${selfMarked} ${tally.dataset.note || "self-marked"}` : "";
-			tally.textContent = total ? `${right} of ${total}${note}` : "";
-		}
-		const retry = retryFor(scope);
-		if (retry) retry.hidden = !questionsIn(scope).some((question) => question.dataset.state === "wrong");
-		refreshStatus();
+		const found = counts(questions);
+		const tally = tallyFor(root, scope);
+		if (tally) tally.textContent = tallyText(found);
+		if (scope === "#worksheet") summarize(root, found, questions);
+		syncNav(root);
+		return;
+	}
+
+	const oneButton = event.target.closest("[data-check-one]");
+	if (oneButton) {
+		const root = rootOf(oneButton);
+		const question = oneButton.closest(".question");
+		check(question);
+		if (isGradable(question)) save(root, question, true);
+		syncNav(root);
 		return;
 	}
 
 	const retryButton = event.target.closest("[data-retry]");
 	if (retryButton) {
-		const scope = retryButton.dataset.retry;
-		const missed = questionsIn(scope).filter((question) => question.dataset.state === "wrong");
-		for (const question of missed) reset(question);
-		retryButton.hidden = true;
-		const tally = tallyFor(scope);
-		if (tally) tally.textContent = "";
-		if (results) results.hidden = true;
-		refreshStatus();
-		const first = missed[0]?.querySelector("input, select, textarea, button");
-		first?.focus();
+		const root = rootOf(retryButton);
+		const questions = questionsIn(root, retryButton.dataset.retry);
+		const found = counts(questions);
+		for (const question of questions) {
+			if (question.dataset.state !== "wrong" && question.dataset.state !== "partial") continue;
+			reset(question);
+			storageRemove(storageKey(root, question));
+		}
+		hideSummary(root);
+		const tally = tallyFor(root, retryButton.dataset.retry);
+		if (tally) tally.textContent = t("worksheet", "retryCount", { count: found.wrong + found.partial + found.unattempted });
+		syncNav(root);
+		const first = questions.find((question) => isGradable(question) && question.dataset.state !== "right");
+		const control = first?.querySelector("input, select, textarea");
+		if (control) {
+			control.focus();
+			control.scrollIntoView({ block: "center", behavior: prefersReducedMotion() ? "auto" : "smooth" });
+		}
 		return;
 	}
 
 	const resetButton = event.target.closest("[data-reset]");
 	if (resetButton) {
+		if (!window.confirm(resetButton.dataset.confirm)) return;
+		const root = rootOf(resetButton);
 		const scope = resetButton.dataset.reset;
-		for (const question of questionsIn(scope)) reset(question);
-		const tally = tallyFor(scope);
+		for (const question of questionsIn(root, scope)) {
+			reset(question);
+			storageRemove(storageKey(root, question));
+		}
+		const tally = tallyFor(root, scope);
 		if (tally) tally.textContent = "";
-		const retry = retryFor(scope);
-		if (retry) retry.hidden = true;
-		if (results) results.hidden = true;
-		refreshStatus();
+		hideSummary(root);
+		if (scope === "#worksheet") {
+			const note = root.querySelector("[data-restore-note]");
+			if (note) note.hidden = true;
+		}
+		syncNav(root);
 	}
 });
+
+/* Editing an answer: the old verdict no longer applies. Nothing is regraded. */
+const onEdit = (event) => {
+	const question = event.target.closest?.(".question");
+	if (!question || !isGradable(question)) return;
+	const root = rootOf(question);
+	if (!root) return;
+	clearFeedback(question);
+	setState(question, hasValue(question) ? "answered" : "unattempted");
+	save(root, question, false);
+	syncNav(root);
+};
+document.addEventListener("input", onEdit);
+document.addEventListener("change", onEdit);
 
 /* Citation panels are an exclusive group through `<details name>`; Escape
    closes whichever is open. */
@@ -393,18 +625,21 @@ for (const question of document.querySelectorAll(".question[data-kind='fill']"))
 	markUsedWords(question);
 }
 
-/* The buttons ship hidden so a no-JS reader is never offered a dead control. */
-for (const button of document.querySelectorAll("[data-check], [data-reset]")) {
-	button.hidden = false;
-}
-
-/* Self-marked questions have nothing to check, so they get no button. */
-for (const question of gradable()) {
-	const button = question.querySelector("[data-check-one]");
-	if (button) button.hidden = false;
-}
-
-if (questionNav && gradable().length) {
-	questionNav.hidden = false;
-	refreshStatus();
+/* On load: unhide the buttons (they ship hidden so a no-JS reader is never
+   offered a dead control), restore saved answers, start the question list. */
+prune();
+for (const root of document.querySelectorAll("[data-worksheet]")) {
+	for (const button of root.querySelectorAll("[data-check], [data-reset], [data-check-one]")) button.hidden = false;
+	for (const question of questionsIn(root, "#worksheet")) {
+		if (!isGradable(question)) setState(question, "self");
+		else if (!question.dataset.state) setState(question, "unattempted");
+	}
+	const newest = restore(root);
+	const note = root.querySelector("[data-restore-note]");
+	if (newest && note) {
+		const when = new Intl.DateTimeFormat(document.documentElement.lang || "en-US", { weekday: "short", hour: "numeric", minute: "2-digit" }).format(newest);
+		note.textContent = t("worksheet", "restored", { when });
+		note.hidden = false;
+	}
+	syncNav(root);
 }

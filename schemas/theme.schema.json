@@ -27,7 +27,11 @@
 		},
 		"surface-accent": {
 			"$ref": "#/$defs/color",
-			"description": "Accent-tinted wash. CSS: --color-surface-accent"
+			"description": "Accent-tinted wash, light enough for muted and accent text to stay at 7:1. CSS: --color-surface-accent"
+		},
+		"surface-accent-secondary": {
+			"$ref": "#/$defs/color",
+			"description": "Wayfinding wash: today, the current week. CSS: --color-surface-accent-secondary"
 		},
 		"table-header": {
 			"$ref": "#/$defs/color",
@@ -68,6 +72,10 @@
 		"on-accent": {
 			"$ref": "#/$defs/color",
 			"description": "Text on a brand-color fill. CSS: --color-on-accent"
+		},
+		"accent-fill-hover": {
+			"$ref": "#/$defs/color",
+			"description": "Solid brand fill, hovered, under on-accent text. CSS: --color-accent-fill-hover"
 		},
 		"accent-hover": {
 			"$ref": "#/$defs/color",
@@ -129,6 +137,18 @@
 			"$ref": "#/$defs/color",
 			"description": "Highlighted (marked) text. CSS: --color-highlight"
 		},
+		"on-highlight": {
+			"$ref": "#/$defs/color",
+			"description": "Text on a highlight fill. CSS: --color-on-highlight"
+		},
+		"focus-ring": {
+			"$ref": "#/$defs/color",
+			"description": "Focus outline (solid, 2.4.13). CSS: --color-focus-ring"
+		},
+		"border-strong": {
+			"$ref": "#/$defs/color",
+			"description": "Edges of anything operable (at least 3:1). CSS: --color-border-strong"
+		},
 		"tag-test": {
 			"$ref": "#/$defs/color",
 			"description": "Glossary tag hue for tests; its tints derive from it. CSS: --color-tag-test"
@@ -144,6 +164,58 @@
 		"code": {
 			"$ref": "#/$defs/color",
 			"description": "Preformatted code text and its border. CSS: --color-code"
+		},
+		"code-surface": {
+			"$ref": "#/$defs/color",
+			"description": "Code block ground. CSS: --color-code-surface"
+		},
+		"code-text": {
+			"$ref": "#/$defs/color",
+			"description": "Code text. CSS: --color-code-text"
+		},
+		"code-keyword": {
+			"$ref": "#/$defs/color",
+			"description": "Code keywords, and the copy button. CSS: --color-code-keyword"
+		},
+		"code-string": {
+			"$ref": "#/$defs/color",
+			"description": "Code strings. CSS: --color-code-string"
+		},
+		"code-function": {
+			"$ref": "#/$defs/color",
+			"description": "Code functions. CSS: --color-code-function"
+		},
+		"code-number": {
+			"$ref": "#/$defs/color",
+			"description": "Code numbers. CSS: --color-code-number"
+		},
+		"code-comment": {
+			"$ref": "#/$defs/color",
+			"description": "Code comments. CSS: --color-code-comment"
+		},
+		"code-edge-css": {
+			"$ref": "#/$defs/color",
+			"description": "Decorative language bar: CSS. CSS: --color-code-edge-css"
+		},
+		"code-edge-js": {
+			"$ref": "#/$defs/color",
+			"description": "Decorative language bar: JavaScript. CSS: --color-code-edge-js"
+		},
+		"code-edge-html": {
+			"$ref": "#/$defs/color",
+			"description": "Decorative language bar: HTML. CSS: --color-code-edge-html"
+		},
+		"code-edge-shell": {
+			"$ref": "#/$defs/color",
+			"description": "Decorative language bar: terminal. CSS: --color-code-edge-shell"
+		},
+		"code-edge-neutral": {
+			"$ref": "#/$defs/color",
+			"description": "Decorative language bar: anything else. CSS: --color-code-edge-neutral"
+		},
+		"highlight-line": {
+			"$ref": "#/$defs/color",
+			"description": "Highlighted code line wash. CSS: --color-highlight-line"
 		},
 		"gradient": {
 			"type": "array",
@@ -176,7 +248,11 @@
 				},
 				"surface-accent": {
 					"$ref": "#/$defs/color",
-					"description": "Accent-tinted wash. CSS: --color-surface-accent"
+					"description": "Accent-tinted wash, light enough for muted and accent text to stay at 7:1. CSS: --color-surface-accent"
+				},
+				"surface-accent-secondary": {
+					"$ref": "#/$defs/color",
+					"description": "Wayfinding wash: today, the current week. CSS: --color-surface-accent-secondary"
 				},
 				"table-header": {
 					"$ref": "#/$defs/color",
@@ -217,6 +293,10 @@
 				"on-accent": {
 					"$ref": "#/$defs/color",
 					"description": "Text on a brand-color fill. CSS: --color-on-accent"
+				},
+				"accent-fill-hover": {
+					"$ref": "#/$defs/color",
+					"description": "Solid brand fill, hovered, under on-accent text. CSS: --color-accent-fill-hover"
 				},
 				"accent-hover": {
 					"$ref": "#/$defs/color",
@@ -278,6 +358,18 @@
 					"$ref": "#/$defs/color",
 					"description": "Highlighted (marked) text. CSS: --color-highlight"
 				},
+				"on-highlight": {
+					"$ref": "#/$defs/color",
+					"description": "Text on a highlight fill. CSS: --color-on-highlight"
+				},
+				"focus-ring": {
+					"$ref": "#/$defs/color",
+					"description": "Focus outline (solid, 2.4.13). CSS: --color-focus-ring"
+				},
+				"border-strong": {
+					"$ref": "#/$defs/color",
+					"description": "Edges of anything operable (at least 3:1). CSS: --color-border-strong"
+				},
 				"tag-test": {
 					"$ref": "#/$defs/color",
 					"description": "Glossary tag hue for tests; its tints derive from it. CSS: --color-tag-test"
@@ -293,6 +385,58 @@
 				"code": {
 					"$ref": "#/$defs/color",
 					"description": "Preformatted code text and its border. CSS: --color-code"
+				},
+				"code-surface": {
+					"$ref": "#/$defs/color",
+					"description": "Code block ground. CSS: --color-code-surface"
+				},
+				"code-text": {
+					"$ref": "#/$defs/color",
+					"description": "Code text. CSS: --color-code-text"
+				},
+				"code-keyword": {
+					"$ref": "#/$defs/color",
+					"description": "Code keywords, and the copy button. CSS: --color-code-keyword"
+				},
+				"code-string": {
+					"$ref": "#/$defs/color",
+					"description": "Code strings. CSS: --color-code-string"
+				},
+				"code-function": {
+					"$ref": "#/$defs/color",
+					"description": "Code functions. CSS: --color-code-function"
+				},
+				"code-number": {
+					"$ref": "#/$defs/color",
+					"description": "Code numbers. CSS: --color-code-number"
+				},
+				"code-comment": {
+					"$ref": "#/$defs/color",
+					"description": "Code comments. CSS: --color-code-comment"
+				},
+				"code-edge-css": {
+					"$ref": "#/$defs/color",
+					"description": "Decorative language bar: CSS. CSS: --color-code-edge-css"
+				},
+				"code-edge-js": {
+					"$ref": "#/$defs/color",
+					"description": "Decorative language bar: JavaScript. CSS: --color-code-edge-js"
+				},
+				"code-edge-html": {
+					"$ref": "#/$defs/color",
+					"description": "Decorative language bar: HTML. CSS: --color-code-edge-html"
+				},
+				"code-edge-shell": {
+					"$ref": "#/$defs/color",
+					"description": "Decorative language bar: terminal. CSS: --color-code-edge-shell"
+				},
+				"code-edge-neutral": {
+					"$ref": "#/$defs/color",
+					"description": "Decorative language bar: anything else. CSS: --color-code-edge-neutral"
+				},
+				"highlight-line": {
+					"$ref": "#/$defs/color",
+					"description": "Highlighted code line wash. CSS: --color-highlight-line"
 				}
 			},
 			"description": "Overrides that apply to the site only, not the slide decks"
@@ -319,7 +463,11 @@
 				},
 				"surface-accent": {
 					"$ref": "#/$defs/color",
-					"description": "Accent-tinted wash. CSS: --color-surface-accent"
+					"description": "Accent-tinted wash, light enough for muted and accent text to stay at 7:1. CSS: --color-surface-accent"
+				},
+				"surface-accent-secondary": {
+					"$ref": "#/$defs/color",
+					"description": "Wayfinding wash: today, the current week. CSS: --color-surface-accent-secondary"
 				},
 				"table-header": {
 					"$ref": "#/$defs/color",
@@ -360,6 +508,10 @@
 				"on-accent": {
 					"$ref": "#/$defs/color",
 					"description": "Text on a brand-color fill. CSS: --color-on-accent"
+				},
+				"accent-fill-hover": {
+					"$ref": "#/$defs/color",
+					"description": "Solid brand fill, hovered, under on-accent text. CSS: --color-accent-fill-hover"
 				},
 				"accent-hover": {
 					"$ref": "#/$defs/color",
@@ -421,6 +573,18 @@
 					"$ref": "#/$defs/color",
 					"description": "Highlighted (marked) text. CSS: --color-highlight"
 				},
+				"on-highlight": {
+					"$ref": "#/$defs/color",
+					"description": "Text on a highlight fill. CSS: --color-on-highlight"
+				},
+				"focus-ring": {
+					"$ref": "#/$defs/color",
+					"description": "Focus outline (solid, 2.4.13). CSS: --color-focus-ring"
+				},
+				"border-strong": {
+					"$ref": "#/$defs/color",
+					"description": "Edges of anything operable (at least 3:1). CSS: --color-border-strong"
+				},
 				"tag-test": {
 					"$ref": "#/$defs/color",
 					"description": "Glossary tag hue for tests; its tints derive from it. CSS: --color-tag-test"
@@ -436,6 +600,58 @@
 				"code": {
 					"$ref": "#/$defs/color",
 					"description": "Preformatted code text and its border. CSS: --color-code"
+				},
+				"code-surface": {
+					"$ref": "#/$defs/color",
+					"description": "Code block ground. CSS: --color-code-surface"
+				},
+				"code-text": {
+					"$ref": "#/$defs/color",
+					"description": "Code text. CSS: --color-code-text"
+				},
+				"code-keyword": {
+					"$ref": "#/$defs/color",
+					"description": "Code keywords, and the copy button. CSS: --color-code-keyword"
+				},
+				"code-string": {
+					"$ref": "#/$defs/color",
+					"description": "Code strings. CSS: --color-code-string"
+				},
+				"code-function": {
+					"$ref": "#/$defs/color",
+					"description": "Code functions. CSS: --color-code-function"
+				},
+				"code-number": {
+					"$ref": "#/$defs/color",
+					"description": "Code numbers. CSS: --color-code-number"
+				},
+				"code-comment": {
+					"$ref": "#/$defs/color",
+					"description": "Code comments. CSS: --color-code-comment"
+				},
+				"code-edge-css": {
+					"$ref": "#/$defs/color",
+					"description": "Decorative language bar: CSS. CSS: --color-code-edge-css"
+				},
+				"code-edge-js": {
+					"$ref": "#/$defs/color",
+					"description": "Decorative language bar: JavaScript. CSS: --color-code-edge-js"
+				},
+				"code-edge-html": {
+					"$ref": "#/$defs/color",
+					"description": "Decorative language bar: HTML. CSS: --color-code-edge-html"
+				},
+				"code-edge-shell": {
+					"$ref": "#/$defs/color",
+					"description": "Decorative language bar: terminal. CSS: --color-code-edge-shell"
+				},
+				"code-edge-neutral": {
+					"$ref": "#/$defs/color",
+					"description": "Decorative language bar: anything else. CSS: --color-code-edge-neutral"
+				},
+				"highlight-line": {
+					"$ref": "#/$defs/color",
+					"description": "Highlighted code line wash. CSS: --color-highlight-line"
 				}
 			},
 			"description": "Overrides that apply to slide decks only"

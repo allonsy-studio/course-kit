@@ -25,8 +25,18 @@
 	 */
 	(() => {
 		try {
-			/** @type {string} today on campus (not the reader's zone), as YYYY-MM-DD; <html data-timezone> comes from `site.timezone` */
-			const today = new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone || undefined });
+			/** Today in the campus zone, as "YYYY-MM-DD". */
+			const campusToday = () => new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone });
+			const COPY = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
+			const t = (ns, key, vars = {}) => {
+				const table = COPY[ns] ?? {};
+				let text = table[key];
+				if ("count" in vars && (`${key}_other` in table)) {
+					text = table[`${key}_${new Intl.PluralRules(document.documentElement.lang || "en-US").select(vars.count)}`] ?? table[`${key}_other`];
+				}
+				return String(text ?? "").replace(/\{(\w+)\}/g, (_, name) => String(vars[name] ?? ""));
+			};
+			const today = campusToday();
 
 			/** The node that can hold a flag or an anchor: a table row can't, its first cell can. */
 			const holder = (el) => (el instanceof HTMLTableRowElement ? el.cells[0] : el);
@@ -42,7 +52,7 @@
 				el.setAttribute("aria-current", "date");
 				const flag = document.createElement("strong");
 				flag.className = "today-flag";
-				flag.textContent = el.dataset.todayLabel ?? "Today";
+				flag.textContent = el.dataset.todayLabel ?? t("schedule", "today");
 				holder(el)?.prepend(flag);
 			}
 
@@ -71,7 +81,7 @@
 			}
 
 			// Opened as /page/#today before the target existed: the browser has already missed it.
-			if (location.hash === "#today") document.getElementById("today")?.scrollIntoView();
+			if (location.hash === "#today") document.getElementById("today")?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
 		} catch {
 			// Never let the marker break the scripts bundled after it.
 		}
@@ -84,7 +94,7 @@
 	   look per host. */
 
 	[data-today] {
-		background-color: color-mix(in srgb, var(--color-accent-secondary) 10%, transparent);
+		background-color: var(--color-surface-accent-secondary);
 		box-shadow: inset var(--border-width) 0 0 var(--color-accent-secondary);
 	}
 
@@ -94,7 +104,7 @@
 		box-shadow: none;
 
 		> :is(th, td) {
-			background-color: color-mix(in srgb, var(--color-accent-secondary) 10%, transparent);
+			background-color: var(--color-surface-accent-secondary);
 		}
 
 		> :first-child {
@@ -116,7 +126,7 @@
 		}
 
 		[data-today-scope]:has([data-today]) {
-			background-color: color-mix(in srgb, var(--color-accent-secondary) 10%, transparent);
+			background-color: var(--color-surface-accent-secondary);
 			box-shadow: inset var(--border-width) 0 0 var(--color-accent-secondary);
 		}
 

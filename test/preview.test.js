@@ -33,7 +33,7 @@ test("every story has a frame that rendered with no leftover error", () => {
 
 test("a component page lists its props, slots and examples", () => {
 	const html = pages["/components/ui/assigned-list/"];
-	for (const text of ["&lt;assigned-list&gt;", "label", "items", "prefix", "data-canvas"]) assert.ok(html.includes(text), `the assigned-list page is missing "${text}"`);
+	for (const text of ["&lt;assigned-list&gt;", "label", "items", "dueOn", "data-canvas"]) assert.ok(html.includes(text), `the assigned-list page is missing "${text}"`);
 });
 
 test("the theme page lists every color token", () => {

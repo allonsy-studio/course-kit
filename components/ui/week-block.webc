@@ -1,15 +1,16 @@
 <script webc:setup>
 	/**
 	 * One bordered block per week: a tinted header band, then the slot.
-	 * @prop {number} number the week number (not `week`: slot content sees a component's props, and a host loops over `week`)
+	 * @prop {number} number the week number, for the anchor (not `week`: slot content sees a component's props, and a host loops over `week`)
+	 * @prop {string} label the heading, "Week 3" (`copy.schedule.weekHeading` filled in)
 	 * @prop {string} dates the week's date range, shown beside the heading
 	 * @prop {2 | 3} [level=3] the heading level
 	 */
 </script>
 <section webc:root="override" class="week" :id="`week-${number}`" :aria-labelledby="`week-${number}-heading`">
 	<header class="week-head">
-		<h2 webc:if="level == 2" class="week-title" :id="`week-${number}-heading`">Week <span @text="number"></span></h2>
-		<h3 webc:if="level != 2" class="week-title" :id="`week-${number}-heading`">Week <span @text="number"></span></h3>
+		<h2 webc:if="level == 2" class="week-title" :id="`week-${number}-heading`" @text="label"></h2>
+		<h3 webc:if="level != 2" class="week-title" :id="`week-${number}-heading`" @text="label"></h3>
 		<p class="week-of" @text="dates"></p>
 	</header>
 	<slot></slot>

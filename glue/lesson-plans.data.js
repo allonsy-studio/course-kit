@@ -5,5 +5,6 @@ export default {
 	indexed: false,
 	instructorOnly: true,
 	tags: ["lesson-plans"],
-	eleventyNavigation: { title: "Lesson Plans", order: 8 },
+	// Instructor-only: in the footer, never the top menu.
+	eleventyNavigation: { title: "Lesson Plans", order: 9, menu: false },
 };

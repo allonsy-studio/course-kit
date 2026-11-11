@@ -1,6 +1,6 @@
 <script webc:setup>
 	/**
-	 * One worksheet question: its prompt, sources, snippet and figure, then the control its kind needs.
+	 * One worksheet question: its prompt, sources, snippet and figure, then the control its kind needs, then the feedback and the reasoning. `practice.js` grades it.
 	 * @prop {object} q a prepared question; `q.kind` picks the control
 	 */
 </script>
@@ -24,11 +24,10 @@
 	<practice-judge webc:if="q.kind === 'judge'" :@q="q"></practice-judge>
 	<practice-selfcheck webc:if="q.kind === 'selfcheck'" :@q="q"></practice-selfcheck>
 
-	<button type="button" class="check-one" data-check-one hidden @text="$data.worksheet.copy.checkOne"></button>
+	<button type="button" class="check-one" data-check-one hidden webc:if="$data.worksheet.checkMode === 'question' && q.kind !== 'selfcheck'" @text="$data.worksheet.copy.checkOne"></button>
 	<p class="feedback" role="status" hidden></p>
 	<div class="why" hidden>
 		<p @text="q.why"></p>
-		<p class="review" webc:if="q.sources?.[0]?.href"><a :href="q.sources[0].href"><span @text="$data.worksheet.copy.review"></span> <span @text="q.sources[0].label"></span></a></p>
 	</div>
 </div>
 
@@ -46,15 +45,27 @@
 
 				.feedback {
 					color: var(--color-success);
+
+					&::before {
+						content: "✓ ";
+					}
 				}
 			}
 
-			&[data-state="wrong"] {
+			&:is([data-state="wrong"], [data-state="partial"]) {
 				border-inline-start-color: var(--color-error);
 
 				.feedback {
 					color: var(--color-error);
+
+					&::before {
+						content: "✕ ";
+					}
 				}
+			}
+
+			&[data-state="partial"] {
+				border-inline-start-style: dashed;
 			}
 		}
 
@@ -77,21 +88,20 @@
 		}
 
 		.snippet {
-			--token-string: color-mix(in oklab, var(--color-success) 60%, var(--color-text));
 			font-size: 0.9em;
 
 			.token:is(.comment, .prolog, .doctype, .cdata) {
-				color: var(--color-text-muted);
+				color: var(--color-code-comment);
 				font-style: italic;
 			}
 
 			.token:is(.keyword, .builtin, .important, .atrule) {
-				color: var(--color-accent-text);
+				color: var(--color-code-keyword);
 				font-weight: var(--font-weight--semi-bold);
 			}
 
 			.token:is(.string, .char, .regex, .number, .boolean) {
-				color: var(--token-string);
+				color: var(--color-code-string);
 			}
 
 			.token:is(.punctuation, .operator) {
@@ -100,12 +110,15 @@
 		}
 
 		.check-one {
+			min-block-size: var(--target-min);
 			margin-block-start: 0.8em;
-		}
-
-		.review {
-			margin-block-start: 0.4em;
+			padding-inline: 1.2em;
+			border: var(--thin-border-width) solid var(--color-border-strong);
+			border-radius: var(--radius-pill);
+			background: transparent;
+			color: var(--color-text);
 			font-weight: var(--font-weight--semi-bold);
+			cursor: pointer;
 		}
 
 		.feedback {

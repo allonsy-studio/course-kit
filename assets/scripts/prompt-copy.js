@@ -3,6 +3,10 @@
 // prohibited examples get no copy control.
 const RESET_MS = 2000;
 
+/** The page's wording, from the `#copy-data` block the layout renders. */
+const COPY = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
+const t = (key) => COPY.promptCopy?.[key] ?? "";
+
 // Each icon is wrapped in a <span> so `hidden` alone can switch them ([hidden]
 // doesn't apply to SVG).
 const ICON = {
@@ -14,8 +18,8 @@ for (const figure of document.querySelectorAll(".prompt[data-copyable]")) {
 	const button = document.createElement("button");
 	button.type = "button";
 	button.className = "prompt-copy";
-	button.title = "Copy this prompt";
-	button.setAttribute("aria-label", "Copy this prompt");
+	button.title = t("copyThisPrompt");
+	button.setAttribute("aria-label", t("copyThisPrompt"));
 	button.innerHTML = `<span data-icon="copy">${ICON.copy}</span><span data-icon="done" hidden>${ICON.done}</span>`;
 	const icons = {
 		copy: button.querySelector('[data-icon="copy"]'),
@@ -37,8 +41,8 @@ for (const figure of document.querySelectorAll(".prompt[data-copyable]")) {
 		try {
 			await navigator.clipboard.writeText(text);
 			showIcon("done");
-			button.setAttribute("aria-label", "Prompt copied");
-			status.textContent = "Prompt copied to the clipboard.";
+			button.setAttribute("aria-label", t("promptCopied"));
+			status.textContent = t("promptCopiedToThe");
 		} catch {
 			// Clipboard denied (or an insecure context): select the text so the
 			// keyboard shortcut still works.
@@ -47,13 +51,13 @@ for (const figure of document.querySelectorAll(".prompt[data-copyable]")) {
 			const selection = getSelection();
 			selection.removeAllRanges();
 			selection.addRange(range);
-			button.setAttribute("aria-label", "Prompt selected — press your copy shortcut");
-			status.textContent = "Prompt selected — press your copy shortcut.";
+			button.setAttribute("aria-label", t("promptSelectedPressYour"));
+			status.textContent = t("promptSelectedPressYour");
 		}
 		clearTimeout(timer);
 		timer = setTimeout(() => {
 			showIcon("copy");
-			button.setAttribute("aria-label", "Copy this prompt");
+			button.setAttribute("aria-label", t("copyThisPrompt"));
 			status.textContent = "";
 		}, RESET_MS);
 	});

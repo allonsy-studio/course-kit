@@ -27,13 +27,14 @@ Every option is optional.
 | Option | Default | What it does |
 |---|---|---|
 | `institution.name` | none | The college's name, shown in the header, the footer and the page metadata. |
-| `institution.timezone` | the build computer's | The time zone "today" is judged in, such as `America/New_York`. Set it so the schedule marks the right day for your campus whatever time zone a student is in. |
+| `institution.timezone` | `UTC` | The time zone "today" is judged in, such as `America/New_York`. Set it: without it the schedule marks UTC's day, which is the wrong day for a campus in the evening. The build never reads the computer's own zone, so a CI build and a laptop agree. |
 | `institution.lms` | `Brightspace` | The name of your learning management system, used in the syllabus and lesson plans. |
 | `site` | derived from your course | `{ description, keywords, language }` for the page metadata. |
 | `lessons` | built in | `{ segments, defaultDays }`: how a class meeting's time is divided in the lesson plan, and the meeting days used when `schedule.json` names none. |
 | `pdf` | on in production builds | `false` skips the syllabus PDF. Without it, a production build needs the `puppeteer` package installed. |
 | `demos.runtime` | `none` | How runnable demos are served: `codepen` or `pyscript`. `pyscript` needs `@pyscript/core` and `pyodide` installed in your course. |
 | `slides.decks` | `content/slides` | Where your slide decks are, if not the default. |
+| `worksheets.checkMode` | `end` | How students check a practice worksheet: `end` shows only See results at the end; `question` also puts a Check answer button on every gradable question. A worksheet's own `checkMode` front matter wins. |
 | `components` | none | Extra component file patterns, beyond your `_includes` folder. |
 | `theme` | `{}` | Color overrides, in the shape of `_data/theme.json`, which wins over them. See [color tokens](tokens.md). |
 | `inputDir`, `outputDir`, `dataDir` | `content`, `public`, `_data` | Where your pages, the built site and your data files live. |
@@ -86,7 +87,18 @@ The kit builds these from your data files and gives them to every page and compo
 - `term` is your term's label and calendar, from `course.json` and `dates.json`.
 - `lessons` is one entry per class meeting. Project milestones land on the last meeting on or before their date.
 - `glossary` is every `vocab` and `api` slide in your decks as one term, tagged by test, reading and meeting. A `::: tags` block on a slide overrides the tags. It is empty if you have no slides.
-- `site.timezone` is `institution.timezone`; the page carries it so the today marker uses your campus's date.
+- `site.timezone` is `institution.timezone` (`UTC` when unset); every layout carries it on `<html data-timezone>`, and every script that compares dates reads it there.
+- `copy` is every student-facing string; see below.
+
+### Changing the wording
+
+The kit's English lives in `lib/copy.js` (`COPY_DEFAULTS`, one namespace per component or script). To say something differently, add `_data/strings.json` with the same shape; it is partial:
+
+```json
+{ "schedule": { "dueKindReading": "Homework" } }
+```
+
+A key that is not a copy key stops the build with `strings.json: "schedule.nope" is not a copy key`, and a value must be a string (`code.languages` is a map of language names to labels). A key with `_one` and `_other` variants is picked by a count. Scripts read the same table from the `#copy-data` block each page carries. A worksheet overrides only its own `worksheet` keys, with `copy:` in its front matter.
 
 ## For developers
 

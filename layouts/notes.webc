@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html :lang="site.language ?? 'en-US'">
+<html :lang="site.language ?? 'en-US'" :data-timezone="site.timezone">
 
 <head>
 	<meta charset="UTF-8">

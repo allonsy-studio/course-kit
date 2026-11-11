@@ -1,305 +1,389 @@
 <script webc:setup>
-	/**
-	 * Where the course is now, for the home page: the current or next class,
-	 * what is due soon, and a week-by-week track of the term. Built from the
-	 * schedule, not from anything a student has done. The script fills it in
-	 * by campus date; without it the section stays hidden.
-	 * @prop {string} [schedule="/schedule/"] the schedule page's URL, which the links point at
-	 */
-	const nowWeeks = scheduleWeeks($data.lessons, $data.schedule?.weeks, $data.collections?.deck, $data.demos);
-	const plain = (html) => String(html ?? "").replace(/<[^>]+>/g, "").trim();
-	/** The meetings the script reads, as the JSON in `data-weeks`: dates, plain-text topics and due items. */
-	const nowData = JSON.stringify(
-			(nowWeeks ?? []).map((week) => ({
-				week: week.week,
-				dates: week.dates,
-				meetings: week.meetings.map((meeting) => ({
-					iso: meeting.iso,
-					display: meeting.display,
-					noClass: Boolean(meeting.noClass),
-					topics: (meeting.topics ?? []).map(plain),
-					due: (meeting.due ?? []).map((item) => ({ title: item.title, href: item.href, dueLabel: item.dueLabel })),
-				})),
-			})),
-		);
+    /**
+     * The home page's opening band: the next class, what is due soon and the
+     * week-by-week progress. Hidden until its script has judged "today" in the
+     * campus zone. Wording comes from `copy.home` and `copy.schedule`.
+     * @prop {object[]} [weeks] `scheduleWeeks` output; built from the page's lessons, schedule, decks and demos when left out
+     * @prop {string} [scheduleUrl] where the schedule lives, default `/schedule/`
+     */
+    const defaultWeeks = scheduleWeeks($data.lessons, $data.schedule?.weeks, $data.collections?.deck, $data.demos);
+    /** A meeting's first topic as plain text, for the card's title. */
+    const firstTopic = (meeting) => String(meeting?.topics?.[0] ?? "").replace(/<[^>]+>/g, "").trim();
+    /** Every meeting that holds class, flat. */
+    const flatMeetings = (weeks) =>
+        (weeks ?? []).flatMap((week) =>
+            (week.meetings ?? [])
+                .filter((meeting) => !meeting.noClass && meeting.iso)
+                .map((meeting) => ({
+                    iso: meeting.iso,
+                    week: week.week,
+                    weekday: meeting.weekday,
+                    date: meeting.date,
+                    title: firstTopic(meeting),
+                    slides: meeting.slides ?? "",
+                })),
+        );
+    /** The script's data: meetings and deadlines, safe inside a <script> element. */
+    const nowData = (weeks, schedule, copy) =>
+        JSON.stringify({ meetings: flatMeetings(weeks), deadlines: courseDeadlines(weeks, schedule, copy) }).replaceAll("<", "\\u003c");
+    /** Every class date in a week, for the progress track. */
+    const datesOf = (week) => (week?.meetings ?? []).map((meeting) => meeting.iso).filter(Boolean).join(" ");
 </script>
-<section webc:root="override" class="course-now" data-course-now hidden aria-labelledby="course-now-heading" :data-schedule="schedule ?? '/schedule/'" :data-weeks="nowData" webc:if="nowWeeks?.length">
-	<div class="now-row">
-		<div class="next-class" data-next hidden>
-			<p class="now-label" data-next-label>Pick up where you left off</p>
-			<p class="next-when" data-next-when></p>
-			<h2 id="course-now-heading" data-next-title></h2>
-			<ul class="next-topics" role="list" data-next-topics></ul>
-			<a class="next-link" data-next-link :href="schedule ?? '/schedule/'">Open this class on the schedule</a>
-		</div>
-		<div class="coming-up" data-coming hidden>
-			<h2>Coming up</h2>
-			<ul role="list" data-coming-list></ul>
-			<a :href="schedule ?? '/schedule/'">Full schedule</a>
-		</div>
-	</div>
-	<div class="track">
-		<p class="now-label" id="course-now-track">Term progress <span class="track-count" data-track-count></span></p>
-		<ol role="list" aria-labelledby="course-now-track">
-			<li webc:for="week of nowWeeks" :data-week-number="week.week">
-				<a :href="`${schedule ?? '/schedule/'}#week-${week.week}`">
-					<span class="bar" aria-hidden="true"></span>
-					<span class="name">Week <span @text="week.week"></span></span>
-					<span class="state" data-state-text>Upcoming</span>
-				</a>
-			</li>
-		</ol>
-	</div>
+<section webc:root="override" class="course-now screen-only" aria-labelledby="course-now-heading" data-course-now webc:if="(weeks ?? defaultWeeks)?.length" hidden>
+    <h2 id="course-now-heading" class="sr-only" @text="$data.copy.home.heading"></h2>
+    <div class="now-card on-accent" data-now-card hidden>
+        <p class="label" data-now-label></p>
+        <p class="when" data-now-when></p>
+        <p class="topic" data-now-title></p>
+        <p class="actions">
+            <a class="primary" data-now-slides hidden><span @text="$data.copy.home.openSlides"></span> <span aria-hidden="true">→</span></a>
+            <a class="secondary" data-now-week @text="$data.copy.home.seeWeek"></a>
+        </p>
+    </div>
+    <div class="coming-up" data-coming-up>
+        <h2 @text="$data.copy.home.comingUp"></h2>
+        <ul role="list" data-coming-list></ul>
+        <p class="empty" data-coming-empty hidden @text="$data.copy.home.nothingDue"></p>
+        <p><a :href="scheduleUrl ?? '/schedule/'"><span @text="$data.copy.home.fullSchedule"></span> <span aria-hidden="true">→</span></a></p>
+    </div>
+    <div class="progress" data-progress>
+        <h2 @text="$data.copy.home.progress"></h2>
+        <p class="count" data-progress-count role="status"></p>
+        <ol role="list">
+            <li webc:for="week of (weeks ?? defaultWeeks)" :data-week-dates="datesOf(week)">
+                <a :href="`/schedule/#week-${week.week}`">
+                    <span class="bar" aria-hidden="true"></span>
+                    <span class="name" @text="fill($data.copy.home.week, { week: week.week })"></span>
+                    <span class="state" data-state></span>
+                </a>
+            </li>
+        </ol>
+    </div>
+    <script type="application/json" data-course-now-data webc:keep @raw="nowData(weeks ?? defaultWeeks, $data.schedule, $data.copy)"></script>
 </section>
 
 <script>
-	/**
-	 * <course-now>: pick the current or next class by campus date, list the
-	 * next due items, and mark each week of the track done, now or upcoming.
-	 */
-	(() => {
-		try {
-			const today = new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone || undefined });
-			for (const host of document.querySelectorAll("[data-course-now]")) {
-				const weeks = JSON.parse(host.dataset.weeks);
-				const meetings = weeks.flatMap((week) => week.meetings.map((meeting) => ({ ...meeting, week: week.week })));
-				if (!meetings.length) continue;
-				const schedule = host.dataset.schedule;
+    /**
+     * <course-now>: the home page's class card, the next due items and the
+     * week-by-week progress track. Everything comes from the schedule data
+     * already on the page; dates compare in the campus zone, as
+     * <today-marker> does. Hidden without the script.
+     */
+    (() => {
+        try {
+            const root = document.querySelector("[data-course-now]");
+            if (!root) return;
+            /** Today in the campus zone, as "YYYY-MM-DD". */
+            const campusToday = () => new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone });
+            const COPY = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
+            /** `t("home", "weeksDone", { done: 3, total: 16 })`; a key with `_one`/`_other` variants is picked by `count`. */
+            const t = (ns, key, vars = {}) => {
+                const table = COPY[ns] ?? {};
+                let text = table[key];
+                if ("count" in vars && (`${key}_other` in table)) {
+                    text = table[`${key}_${new Intl.PluralRules(document.documentElement.lang || "en-US").select(vars.count)}`] ?? table[`${key}_other`];
+                }
+                return String(text ?? "").replace(/\{(\w+)\}/g, (_, name) => String(vars[name] ?? ""));
+            };
+            const today = campusToday();
+            const { meetings, deadlines } = JSON.parse(root.querySelector("[data-course-now-data]").textContent);
+            const DAY_MS = 86_400_000;
+            const day = (iso) => Date.parse(`${iso}T00:00:00Z`);
+            const inDays = (iso) => Math.round((day(iso) - day(today)) / DAY_MS);
 
-				const next = meetings.find((meeting) => !meeting.noClass && meeting.iso >= today);
-				if (next) {
-					const box = host.querySelector("[data-next]");
-					if (next.iso !== today) box.querySelector("[data-next-label]").textContent = "Next class";
-					box.querySelector("[data-next-when]").textContent = `Week ${next.week}`;
-					box.querySelector("[data-next-title]").textContent = next.iso === today ? `Today, ${next.display}` : next.display;
-					const topics = box.querySelector("[data-next-topics]");
-					for (const topic of next.topics.slice(0, 3)) topics.append(Object.assign(document.createElement("li"), { textContent: topic }));
-					box.querySelector("[data-next-link]").href = `${schedule}#week-${next.week}`;
-					box.hidden = false;
-				}
+            // The class card: today's class, else the next, else (before the term) the first.
+            const next = meetings.find((meeting) => meeting.iso >= today);
+            const card = root.querySelector("[data-now-card]");
+            if (next) {
+                const label = next.iso === today ? "todayLabel" : meetings.some((meeting) => meeting.iso < today) ? "nextLabel" : "firstLabel";
+                root.querySelector("[data-now-label]").textContent = t("home", label);
+                root.querySelector("[data-now-when]").textContent = t("home", "when", { week: next.week, weekday: next.weekday, date: next.date });
+                root.querySelector("[data-now-title]").textContent = next.title;
+                root.querySelector("[data-now-week]").href = `/schedule/#week-${next.week}`;
+                const slides = root.querySelector("[data-now-slides]");
+                if (next.slides) {
+                    slides.href = next.slides;
+                    slides.hidden = false;
+                }
+                card.hidden = false;
+            }
 
-				const due = meetings.filter((meeting) => meeting.iso >= today).flatMap((meeting) => meeting.due.map((item) => ({ ...item, week: meeting.week }))).slice(0, 3);
-				if (due.length) {
-					const list = host.querySelector("[data-coming-list]");
-					for (const item of due) {
-						const li = document.createElement("li");
-						const title = Object.assign(document.createElement(item.href ? "a" : "span"), { textContent: item.title });
-						if (item.href) title.href = item.href;
-						title.className = "due-title";
-						li.append(title);
-						if (item.dueLabel) li.append(Object.assign(document.createElement("span"), { className: "due-when", textContent: item.dueLabel }));
-						list.append(li);
-					}
-					host.querySelector("[data-coming]").hidden = false;
-				}
+            // Coming up: a week ahead, at least three, and always the next test.
+            const up = deadlines.filter((item) => item.iso >= today);
+            let shown = up.filter((item) => inDays(item.iso) <= 7);
+            if (shown.length < 3) shown = up.slice(0, 3);
+            shown = shown.slice(0, 6);
+            if (!shown.some((item) => item.kind === "test")) {
+                const test = up.find((item) => item.kind === "test");
+                if (test) shown = [...shown.slice(0, 5), test];
+            }
+            const list = root.querySelector("[data-coming-list]");
+            for (const item of shown) {
+                const row = document.createElement("li");
+                row.dataset.kind = item.kind;
+                const chip = document.createElement("span");
+                chip.className = "due-chip";
+                chip.dataset.kind = item.kind;
+                chip.textContent = t("schedule", `dueKind${item.kind.charAt(0).toUpperCase()}${item.kind.slice(1)}`);
+                const name = document.createElement(item.href ? "a" : "span");
+                if (item.href) name.href = item.href;
+                name.className = "what";
+                name.textContent = item.title;
+                const days = inDays(item.iso);
+                const relative = days <= 0 ? t("home", "dueToday") : days === 1 ? t("home", "dueTomorrow") : t("home", "dueInDays", { count: days });
+                const when = document.createElement("span");
+                when.className = "due";
+                when.textContent = `${item.label}${t("common", "sep")}${relative}`;
+                row.append(chip, " ", name, " ", when);
+                list.append(row);
+            }
+            root.querySelector("[data-coming-empty]").hidden = shown.length > 0;
 
-				const currentWeek = (weeks.find((week) => week.meetings.some((meeting) => meeting.iso >= today)) ?? {}).week;
-				let done = 0;
-				for (const li of host.querySelectorAll("[data-week-number]")) {
-					const number = Number(li.dataset.weekNumber);
-					const state = number === currentWeek ? "now" : currentWeek === undefined || number < currentWeek ? "done" : "";
-					if (!state) continue;
-					if (state === "done") done += 1;
-					li.dataset.week = state;
-					li.querySelector("[data-state-text]").textContent = state === "now" ? "Now" : "Done";
-					if (state === "now") li.querySelector("a").setAttribute("aria-current", "step");
-				}
-				host.querySelector("[data-track-count]").textContent = `${done} of ${weeks.length} weeks done`;
-				host.hidden = false;
-			}
-		} catch {
-			// Never let the home panel break the scripts bundled after it.
-		}
-	})();
+            // Progress: one bar per week, from each week's class dates.
+            const weeks = [...root.querySelectorAll("[data-progress] li")];
+            let done = 0;
+            for (const week of weeks) {
+                const dates = week.dataset.weekDates.split(/\s+/).filter(Boolean).sort();
+                const state = !dates.length ? "" : dates.at(-1) < today ? "done" : dates[0] <= today ? "now" : "";
+                if (state) week.dataset.state = state;
+                if (state === "done") done += 1;
+                week.querySelector("[data-state]").textContent = state === "done" ? t("home", "stateDone") : state === "now" ? t("home", "stateNow") : "";
+                if (state === "now") week.querySelector("a").setAttribute("aria-current", "step");
+            }
+            root.querySelector("[data-progress-count]").textContent = t("home", "weeksDone", { done, total: weeks.length });
+            root.hidden = false;
+            // The track scrolls sideways when the weeks don't fit: open it
+            // with the current week (or the last finished one) centered.
+            const track = root.querySelector("[data-progress] ol");
+            const active = weeks.find((week) => week.dataset.state === "now") ?? weeks.filter((week) => week.dataset.state === "done").at(-1);
+            if (active && track.scrollWidth > track.clientWidth) {
+                track.scrollLeft = active.offsetLeft - (track.clientWidth - active.offsetWidth) / 2;
+            }
+        } catch {
+            // Never let the card break the scripts bundled after this one.
+        }
+    })();
 </script>
 
 <style webc:scoped>
-	:host {
-		display: grid;
-		gap: var(--section-space);
-		padding-block: var(--section-space);
+    /* The home page's opening band: a filled card for the next class beside
+       what is due, then one bar per week. Script-revealed, screen only. */
+    /* `hidden` has to win outside the :host nesting too, or the unscripted
+       page shows an empty card. */
+    :host[hidden],
+    .course-now[hidden] {
+        display: none;
+    }
 
-		&[hidden] {
-			display: none;
-		}
+    :host {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
+        gap: var(--content-space);
+        margin-block-end: var(--section-space);
 
-		@media print {
-			display: none;
-		}
-	}
+        @media (width <= 768px) {
+            grid-template-columns: minmax(0, 1fr);
+        }
 
-	.now-row {
-		display: grid;
-		grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-		gap: var(--content-space);
+        h2:not(.sr-only) {
+            margin: 0;
+            font-size: var(--font-size-4);
+        }
+    }
 
-		@media screen and (width <= 800px) {
-			grid-template-columns: minmax(0, 1fr);
-		}
-	}
+    .now-card {
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--gutter) * 2);
+        padding: calc(var(--content-space) * 1.75);
+        border-radius: calc(var(--standard-border-radius) * 4);
+        background-color: var(--color-accent);
+        color: var(--color-on-accent);
 
-	.now-label {
-		margin: 0;
-		font-size: var(--font-size-6);
-		font-weight: var(--font-weight--medium);
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-	}
+        &[hidden] {
+            display: none;
+        }
 
-	/* The one accent block on the page: the class to open next. */
-	.next-class {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5em;
-		padding: calc(var(--content-space) * 2);
-		border-radius: calc(var(--standard-border-radius) * 5);
-		background-color: var(--color-accent);
-		color: var(--color-on-accent);
+        p {
+            margin: 0;
+        }
 
-		&[hidden] {
-			display: none;
-		}
+        .label {
+            font-size: max(var(--base-font-size), 0.875em);
+            font-weight: var(--font-weight--medium);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
 
-		h2 {
-			margin: 0;
-			color: inherit;
-			font-size: var(--font-size-2);
-		}
+        .topic {
+            color: inherit;
+            text-transform: none;
+            font-size: var(--font-size-2, 1.9em);
+            font-weight: var(--font-weight--semi-bold);
+            line-height: 1.15;
+            text-wrap: balance;
+        }
 
-		p {
-			margin: 0;
-		}
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: calc(var(--gutter) * 2.5);
+            /* Pinned to the card's bottom edge when the card is stretched. */
+            margin-block-start: auto;
+            padding-block-start: calc(var(--gutter) * 2);
+        }
 
-		.next-topics {
-			margin: 0;
-			padding: 0;
-			list-style: none;
-		}
+        a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5em;
+            min-block-size: var(--target-min);
+            min-inline-size: var(--target-min);
+            justify-content: center;
+            padding-inline: 1.25em;
+            border: var(--border-width) solid var(--color-on-accent);
+            border-radius: var(--radius-pill);
+            color: var(--color-on-accent);
+            font-weight: var(--font-weight--semi-bold);
+            text-decoration: none;
 
-		.next-link {
-			align-self: start;
-			display: inline-grid;
-			place-items: center;
-			min-block-size: 2.75rem;
-			/* Pinned to the card's bottom edge when the card is stretched. */
-			margin-block-start: auto;
-			padding-inline: 1.4em;
-			border-radius: 9999px;
-			background-color: var(--color-on-accent);
-			color: var(--color-accent);
-			font-weight: var(--font-weight--bold);
-			text-decoration: none;
+            &[hidden] {
+                display: none;
+            }
 
-			&:is(:hover, :focus-visible) {
-				text-decoration: underline;
-			}
+            &.primary {
+                background-color: var(--color-on-accent);
+                color: var(--color-accent);
+            }
+        }
+    }
 
-			&:focus-visible {
-				outline-color: var(--color-on-accent);
-			}
-		}
-	}
+    .coming-up {
+        display: grid;
+        gap: calc(var(--gutter) * 3);
+        align-content: start;
+        padding: calc(var(--content-space) * 1.4);
+        border: var(--thin-border-width) solid var(--color-border);
+        border-radius: calc(var(--standard-border-radius) * 4);
+        background-color: var(--color-surface);
 
-	.coming-up {
-		display: grid;
-		align-content: start;
-		gap: 0.6em;
-		padding: calc(var(--content-space) * 1.5);
-		border: var(--thin-border-width) solid var(--color-border);
-		border-radius: calc(var(--standard-border-radius) * 5);
-		background-color: var(--color-surface);
+        &[hidden] {
+            display: none;
+        }
 
-		&[hidden] {
-			display: none;
-		}
+        ul {
+            display: grid;
+            gap: calc(var(--gutter) * 2);
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
 
-		h2 {
-			margin: 0;
-			font-size: var(--font-size-4);
-		}
+        li {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.25em 0.6em;
+            padding: 0.6em 0.8em;
+        }
 
-		ul {
-			display: grid;
-			gap: 0.5em;
-			margin: 0;
-			padding: 0;
-			list-style: none;
-		}
+        .what {
+            font-weight: var(--font-weight--semi-bold);
+        }
 
-		li {
-			display: grid;
-			padding: 0.6em 0.8em;
-			border: var(--thin-border-width) solid var(--color-text-muted);
-			border-radius: calc(var(--standard-border-radius) * 3);
-			background-color: var(--color-page);
-		}
+        .due {
+            flex-basis: 100%;
+            color: var(--color-text-muted);
+            font-size: max(var(--base-font-size), 0.875em);
+        }
 
-		.due-title {
-			font-weight: var(--font-weight--semi-bold);
-		}
+        p {
+            margin: 0;
+            font-weight: var(--font-weight--semi-bold);
 
-		.due-when {
-			color: var(--color-text-muted);
-			font-size: max(var(--base-font-size), 0.9em);
-		}
-	}
+            &[hidden] {
+                display: none;
+            }
+        }
 
-	.track {
-		display: grid;
-		gap: 0.6em;
+        .empty {
+            color: var(--color-text-muted);
+            font-weight: var(--font-weight);
+        }
+    }
 
-		.track-count {
-			margin-inline-start: 0.6em;
-			color: var(--color-text-muted);
-			letter-spacing: 0;
-			text-transform: none;
-		}
+    .progress {
+        display: grid;
+        grid-column: 1 / -1;
+        grid-template-columns: 1fr auto;
+        gap: calc(var(--gutter) * 3) var(--content-space);
+        align-items: baseline;
 
-		ol {
-			display: grid;
-			grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
-			gap: 0.5em;
-			margin: 0;
-			padding: 0;
-			list-style: none;
-		}
+        .count {
+            margin: 0;
+            color: var(--color-text-muted);
+        }
 
-		a {
-			display: grid;
-			gap: 0.35em;
-			padding-block: 0.25em;
-			color: var(--color-text);
-			text-decoration: none;
+        /* One row that scrolls sideways when the weeks don't fit; the
+           script opens it with the current week centered. */
+        ol {
+            position: relative;
+            display: flex;
+            grid-column: 1 / -1;
+            gap: calc(var(--gutter) * 2);
+            margin: 0;
+            /* Room for the focus ring, so the scroll box never clips it. */
+            padding: calc(var(--focus-ring-width) + var(--focus-ring-offset));
+            overflow-x: auto;
+            list-style: none;
+        }
 
-			&:is(:hover, :focus-visible) .name {
-				text-decoration: underline;
-			}
-		}
+        li {
+            flex: 1 0 5.5rem;
+        }
 
-		.bar {
-			block-size: 0.6em;
-			border-radius: 9999px;
-			background-color: var(--color-border);
-		}
+        a {
+            display: grid;
+            gap: 0.35em;
+            padding-block: 0.25em;
+            color: var(--color-text);
+            font-size: max(var(--base-font-size), 0.875em);
+            text-decoration: none;
+        }
 
-		.name {
-			font-weight: var(--font-weight--semi-bold);
-			font-size: max(var(--base-font-size), 0.9em);
-		}
+        .bar {
+            block-size: 0.6rem;
+            border-radius: var(--radius-pill);
+            background-color: var(--color-border);
+        }
 
-		.state {
-			color: var(--color-text-muted);
-			font-size: max(var(--base-font-size), 0.9em);
-		}
+        .name {
+            font-weight: var(--font-weight--semi-bold);
+        }
 
-		[data-week="done"] .bar {
-			background-color: var(--color-text);
-		}
+        .state {
+            min-block-size: 1.5em;
+            color: var(--color-text-muted);
+        }
 
-		[data-week="now"] .bar {
-			background-color: var(--color-accent-secondary);
-			outline: var(--border-width) solid var(--color-accent-secondary);
-			outline-offset: 2px;
-		}
-	}
+        [data-state="done"] .bar {
+            background-color: var(--color-text);
+        }
+
+        [data-state="now"] .bar {
+            background-color: var(--color-accent-secondary);
+            outline: var(--border-width) solid var(--color-accent-secondary);
+            outline-offset: 2px;
+        }
+    }
+
+    @media (forced-colors: active) {
+        .progress [data-state="now"] .bar {
+            background: Highlight;
+        }
+
+        .progress [data-state="done"] .bar {
+            background: CanvasText;
+        }
+    }
 </style>

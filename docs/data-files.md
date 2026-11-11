@@ -86,7 +86,8 @@ The college's calendar, keyed by year and then season. You can keep several term
 ```
 
 - Each entry in `weeks` is one week, in order. The kit works out the dates from your calendar and skips holidays.
-- A topic that is exactly `Test 1`, `Test 2` and so on is listed as a test on the schedule and syllabus.
+- A topic that is exactly `Test 1`, `Test 2` and so on is listed as a test on the schedule and syllabus, and gets a Test chip, on the day that meets, at the class's start time.
+- Any item in a `due` list or a `readings` list can carry a `kind`: `test`, `graded`, `practice` or `reading`. It picks the chip beside the item (and the key above the schedule). Leave it out and a due item is `graded`, a reading with a `due` date is `reading`, and a reading without one has no chip. The kit never guesses a kind from a title.
 - To give one meeting its own topics, add `days`: `[{ "day": 1, "topics": ["…"] }]`. Day 1 is the week's first meeting. A day can also carry its own `readings` and `due` list.
 - `readings` are read before the week's first meeting; `check` says what the reading check asks. `resources` are handouts posted after class. Do not list slide decks or demos: each meeting links its own.
 - `finalExam` is your section's exam slot, `{ "date", "start", "end", "note" }`. Leave it out until the registrar publishes it.
@@ -106,6 +107,8 @@ The college's calendar, keyed by year and then season. You can keep several term
 	"final": { "title": "Final exam", "weight": "20%", "body": "In the exam period." }
 }
 ```
+
+In a `body` (and a policy's `body`), `{classStart}` becomes the meeting days and start time, `{lastClass}` the date of the last class meeting and `{finalDue}` the final project's due date and time, all from your data, so a due-time phrase never goes stale.
 
 The weights must add up to 100%; the build warns when they do not. The names `homework`, `project` and `final` switch on matching sentences elsewhere (about where assignments are posted, the project's due date, the exam), so keep those names if you have those parts.
 

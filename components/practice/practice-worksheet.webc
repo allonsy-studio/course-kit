@@ -1,9 +1,10 @@
 <script webc:setup>
 	/**
-	 * The practice worksheet page: heading, sections of questions, and the check controls. Reads the `worksheet` data a worksheet's `.11tydata.js` supplies.
+	 * The practice worksheet page: heading, results summary, question list, sections of questions and the check controls. Reads the `worksheet` data a worksheet's `.11tydata.js` supplies; `practice.js` grades, saves and restores the answers in this browser. With `checkMode: "question"` (front matter, or `worksheets.checkMode` in the course config) each gradable question also has a Check answer button; the default, `"end"`, checks only from See results at the end.
 	 */
 </script>
-<article class="content-column practice" id="worksheet" webc:if="$data.worksheet">
+<article class="content-column practice" id="worksheet" data-worksheet webc:if="$data.worksheet"
+	:data-storage-id="`${$data.course.code.toLowerCase()}/${$data.page.fileSlug}`">
 	<header class="practice-head">
 		<eyebrow class="separators">
 			<span @text="$data.term.label"></span>
@@ -11,7 +12,7 @@
 			<span @text="$data.worksheet.eyebrow"></span>
 		</eyebrow>
 		<h1 @text="$data.worksheet.heading"></h1>
-		<p class="pills"><span @text="$data.worksheet.copy.notGraded"></span></p>
+		<p class="not-graded" @text="$data.worksheet.copy.notGraded"></p>
 		<p class="lede" @text="$data.worksheet.lede"></p>
 		<p webc:for="paragraph of $data.worksheet.intro" @text="paragraph"></p>
 
@@ -24,12 +25,28 @@
 			:@hint="$data.worksheet.copy.termsHint" :@sourceprefix="$data.worksheet.copy.termSource"></practice-terms>
 
 		<check-controls @scope="#worksheet" :@label="$data.worksheet.copy.checkAll"
-			:@reset="$data.worksheet.copy.resetAll" :@note="$data.worksheet.copy.selfMarked"></check-controls>
+			:@reset="$data.worksheet.copy.resetAll" :@confirm="$data.worksheet.copy.confirmClearAll"></check-controls>
+		<p class="restore-note" data-restore-note role="status" hidden></p>
 
-		<nav class="question-nav" data-question-nav hidden :aria-label="$data.worksheet.copy.questions">
-			<h2 class="nav-heading" @text="$data.worksheet.copy.questions"></h2>
-			<ol role="list"></ol>
-			<button type="button" data-see-results @text="$data.worksheet.copy.seeResults"></button>
+		<section class="practice-summary" data-summary="#worksheet" aria-labelledby="practice-summary-heading" hidden>
+			<h2 id="practice-summary-heading" @text="$data.worksheet.copy.resultsHeading"></h2>
+			<p class="score"><strong data-score></strong> <span data-score-of></span></p>
+			<ol role="list" data-summary-list></ol>
+			<button type="button" data-retry="#worksheet" hidden @text="$data.worksheet.copy.retryMissed"></button>
+		</section>
+
+		<nav class="question-nav" aria-labelledby="question-nav-heading" data-question-nav>
+			<h2 id="question-nav-heading" @text="$data.worksheet.copy.navHeading"></h2>
+			<ol role="list">
+				<template webc:nokeep webc:for="section of $data.worksheet.sections">
+					<li webc:for="question of section.questions" :data-nav-for="question.id" data-state="unattempted">
+						<a :href="`#q-${question.id}`">
+							<span class="nav-badge" @text="question.id"></span>
+							<span class="nav-status" @text="$data.worksheet.copy.statusUnattempted"></span>
+						</a>
+					</li>
+				</template>
+			</ol>
 		</nav>
 	</header>
 
@@ -47,14 +64,7 @@
 		<practice-question webc:for="question of section.questions" :@q="question"></practice-question>
 
 		<check-controls :@scope="`#section-${section.n}`" :@label="`${$data.worksheet.copy.checkSection} ${section.n}`"
-			:@reset="$data.worksheet.copy.resetSection" :@note="$data.worksheet.copy.selfMarked"></check-controls>
-	</section>
-
-	<section class="results" id="results" data-results hidden tabindex="-1" aria-labelledby="results-heading">
-		<div class="score"><strong data-score></strong> <span data-score-of></span></div>
-		<h2 id="results-heading" @text="$data.worksheet.copy.results"></h2>
-		<ol class="result-rows" role="list"></ol>
-		<button type="button" data-retry="#worksheet" data-retry-results>Try missed questions</button>
+			:@reset="$data.worksheet.copy.resetSection" :@confirm="$data.worksheet.copy.confirmClearSection"></check-controls>
 	</section>
 
 	<footer class="practice-foot" webc:if="$data.worksheet.footer?.length || $data.worksheet.links?.length">
@@ -110,144 +120,223 @@
 			text-transform: uppercase;
 		}
 
-		.pills {
-			margin-block: 0 var(--content-space);
-
-			span {
-				display: inline-block;
-				padding: 0.1em 0.8em;
-				border: var(--thin-border-width) solid var(--color-border);
-				border-radius: 9999px;
-				color: var(--color-text-muted);
-				font-size: max(var(--base-font-size), 0.9em);
-			}
+		.not-graded {
+			display: inline-block;
+			margin-block: 0;
+			padding: 0.1em 0.75em;
+			border: var(--thin-border-width) solid var(--color-border);
+			border-radius: 999px;
+			color: var(--color-text-muted);
+			font-size: max(var(--base-font-size), 0.875em);
 		}
 
-		/* The question list: one link per question with its status. */
+		/* The question list: one tile per question, its status mirrored from
+		   the question by practice.js. The word carries the state; color only
+		   reinforces it. */
 		.question-nav {
 			margin-block: var(--content-space);
 
-			&[hidden] {
-				display: none;
-			}
-
-			.nav-heading {
+			h2 {
 				margin-block: 0 0.5em;
-				color: var(--color-text-muted);
-				font-size: var(--font-size-6);
+				font-size: max(var(--base-font-size), 0.875em);
 				font-weight: var(--font-weight--medium);
 				letter-spacing: 0.08em;
 				text-transform: uppercase;
+				color: var(--color-text-muted);
 			}
 
 			ol {
 				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
-				gap: 0.4em;
-				margin: 0 0 var(--content-space);
+				grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+				gap: 0.5em;
+				margin: 0;
 				padding: 0;
 				list-style: none;
 			}
 
-			a {
+			a[href] {
 				display: flex;
+				text-decoration: none;
 				align-items: center;
 				gap: 0.6em;
-				min-block-size: 44px;
-				padding: 0.3em 0.7em;
-				border: var(--thin-border-width) solid var(--color-border);
-				border-radius: calc(var(--standard-border-radius) * 3);
+				min-block-size: var(--target-min);
+				padding: 0.35em 0.6em;
+				border: var(--thin-border-width) solid var(--color-border-strong);
+				border-radius: var(--standard-border-radius);
 				color: var(--color-text);
 				text-decoration: none;
 
 				&:is(:hover, :focus-visible) {
-					border-color: var(--color-accent);
-					background-color: var(--color-surface-accent);
+					border-color: var(--color-text);
 				}
 			}
 
-			.badge {
+			.nav-badge {
 				display: grid;
-				place-items: center;
 				flex: none;
-				inline-size: 1.9em;
-				block-size: 1.9em;
-				border: var(--border-width) solid transparent;
-				border-radius: 50%;
-				background-color: var(--color-surface);
+				place-items: center;
+				min-inline-size: 2em;
+				block-size: 2em;
+				padding-inline: 0.3em;
+				border-radius: 999px;
+				background: var(--color-surface);
 				font-family: var(--mono-font);
-				font-size: max(var(--base-font-size), 0.85em);
+				font-size: 0.875em;
 				font-weight: var(--font-weight--bold);
 			}
 
-			.status {
+			.nav-status {
+				font-size: max(var(--base-font-size), 0.875em);
 				color: var(--color-text-muted);
-				font-size: max(var(--base-font-size), 0.9em);
 			}
 
-			[data-state="right"] .badge {
+			[data-state="right"] a {
 				border-color: var(--color-success);
-				color: var(--color-success);
+
+				.nav-badge {
+					background: color-mix(in oklab, var(--color-success) 16%, var(--color-page));
+				}
+
+				.nav-status::before {
+					content: "✓ ";
+				}
 			}
 
-			[data-state="wrong"] .badge {
+			[data-state="wrong"] a {
 				border-color: var(--color-error);
-				color: var(--color-error);
+
+				.nav-badge {
+					background: color-mix(in oklab, var(--color-error) 14%, var(--color-page));
+				}
+
+				.nav-status::before {
+					content: "✕ ";
+				}
+			}
+
+			[data-state="partial"] a {
+				border-color: var(--color-border-strong);
+				border-style: dashed;
+
+				.nav-status::before {
+					content: "✕ ";
+				}
+			}
+
+			/* Not yet looked at is not wrong: no color, only the word. */
+			[data-state="unattempted"] a {
+				border-color: var(--color-border);
 			}
 		}
 
-		.results {
-			margin-block-start: var(--section-space);
-			padding: calc(var(--content-space) * 1.5);
-			border: var(--thin-border-width) solid var(--color-border);
-			border-radius: calc(var(--standard-border-radius) * 4);
-			background-color: var(--color-surface);
+		.practice-summary {
+			.score {
+				display: inline-flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				inline-size: 5.5rem;
+				block-size: 5.5rem;
+				box-sizing: border-box;
+				margin: 0;
+				border: 0.4rem solid var(--color-accent-secondary);
+				border-radius: 50%;
+				line-height: var(--font-height--dense);
+
+				strong {
+					font-size: var(--font-size-3);
+				}
+
+				span {
+					color: var(--color-text-muted);
+					font-size: max(var(--base-font-size), 0.85em);
+				}
+			}
+
+			h2 {
+				flex: 1 1 12rem;
+				margin: 0;
+				font-size: var(--font-size-4);
+			}
+
+			flex-basis: 100%;
+			display: flex;
 
 			&[hidden] {
 				display: none;
 			}
 
-			.score {
-				display: inline-grid;
-				place-items: center;
-				inline-size: 7em;
-				block-size: 7em;
-				border: 0.6em solid var(--color-accent-secondary);
-				border-radius: 50%;
-				line-height: var(--font-height--dense);
+			flex-wrap: wrap;
+			align-items: center;
+			gap: var(--content-space);
+			padding: 0.8em 1em;
+			border: var(--thin-border-width) solid var(--color-border);
+			border-radius: var(--standard-border-radius);
+			background-color: var(--color-surface);
 
-				strong {
-					font-size: var(--font-size-2);
-				}
+			ol {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.4em;
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
 
-				span {
-					color: var(--color-text-muted);
+			li {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.35em;
+				padding: 0.15em 0.6em;
+				border-radius: var(--radius-pill);
+				border: var(--thin-border-width) solid var(--color-border);
+				font-size: max(var(--base-font-size), 0.9em);
+
+				a {
+					font-family: var(--mono-font);
+					font-weight: var(--font-weight--bold);
 				}
 			}
 
-			.result-rows {
-				margin: 0 0 var(--content-space);
-				padding: 0;
-				list-style: none;
-				border-block-start: var(--thin-border-width) solid var(--color-border);
+			[data-status="right"] {
+				border-color: var(--color-success);
+				color: var(--color-success);
+			}
 
-				li {
-					display: flex;
-					flex-wrap: wrap;
-					align-items: center;
-					justify-content: space-between;
-					gap: 0.5em 1em;
-					padding-block: 0.6em;
-					border-block-end: var(--thin-border-width) solid var(--color-border);
-				}
+			[data-status="wrong"] {
+				border-color: var(--color-error);
+				color: var(--color-error);
+			}
 
-				[data-state="right"] .status {
-					color: var(--color-success);
-				}
+			[data-status="partial"] {
+				border-style: dashed;
+				border-color: var(--color-border-strong);
+			}
 
-				[data-state="wrong"] .status {
-					color: var(--color-error);
-				}
+			[data-status="unattempted"] {
+				border-style: dashed;
+				color: var(--color-text-muted);
+			}
+
+			button {
+				min-block-size: var(--target-min);
+				padding-inline: 1.2em;
+				margin: 0;
+				border: var(--border-width) solid var(--color-accent);
+				border-radius: var(--radius-pill);
+				background-color: var(--color-accent);
+				color: var(--color-on-accent);
+				font-weight: var(--font-weight--semi-bold);
+				cursor: pointer;
+			}
+		}
+
+		.restore-note {
+			margin-block: 0 var(--content-space);
+			color: var(--color-text-muted);
+
+			&[hidden] {
+				display: none;
 			}
 		}
 
@@ -267,8 +356,9 @@
 
 		@media print {
 			check-controls,
+			.restore-note,
 			.question-nav,
-			.results,
+			.practice-summary,
 			.check-one,
 			.feedback,
 			.why {

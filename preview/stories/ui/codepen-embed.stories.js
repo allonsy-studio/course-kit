@@ -1,3 +1,5 @@
+import { COPY_DEFAULTS } from "../../../lib/copy.js";
+
 export default {
 	title: "Building blocks/codepen-embed",
 	height: 420,
@@ -6,6 +8,7 @@ export default {
 
 export const Default = {
 	args: {
+		copy: COPY_DEFAULTS.codepenEmbed,
 		heading: "A first page",
 		label: "A first page in HTML",
 		summary: "Open the pen and change the heading.",
