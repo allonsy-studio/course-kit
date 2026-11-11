@@ -695,8 +695,8 @@
         <a rel="home" href="../">course-kit</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-N661t">
-            <span data-label="" id="norn-header-webc-N661t">Primary</span>
+          <nav aria-labelledby="norn-header-webc-4qgv2">
+            <span data-label="" id="norn-header-webc-4qgv2">Primary</span>
 
             <a href="../#install">Install</a>
             <a href="../#usage">Usage</a>
@@ -721,8 +721,8 @@
         <section aria-labelledby="nav-ui">
           <h2 id="nav-ui">Building blocks</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-0PdhE">
-              <span data-label="" id="norn-side-nav-webc-0PdhE"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-evYj7">
+              <span data-label="" id="norn-side-nav-webc-evYj7"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -777,8 +777,8 @@
         <section aria-labelledby="nav-site">
           <h2 id="nav-site">Site sections</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-xzXcC">
-              <span data-label="" id="norn-side-nav-webc-xzXcC"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-CuWaA">
+              <span data-label="" id="norn-side-nav-webc-CuWaA"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -845,8 +845,8 @@
         <section aria-labelledby="nav-practice">
           <h2 id="nav-practice">Practice worksheets</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-C4fWn">
-              <span data-label="" id="norn-side-nav-webc-C4fWn"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-N8Cok">
+              <span data-label="" id="norn-side-nav-webc-N8Cok"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -907,7 +907,10 @@
             </li>
             <li>
               <a href="/course-kit/preview/24/components/components/ui/assigned-list/"><code>assigned-list</code></a>
-              <span>A labelled list of readings or deadlines. Renders nothing when empty.</span>
+              <span
+                >A labelled list of readings or deadlines. Renders nothing when empty. Give it the <code>items</code> array, or write the list as a <code>&lt;dl&gt;</code> in the default slot: each <code>&lt;dt&gt;</code> holds the title or its link (give it <code>data-kind</code> and, before the title, <code>&lt;span class="due-chip" data-kind="test"&gt;Test&lt;/span&gt;</code> for a chip), each <code>&lt;dd&gt;</code> only the check or due detail. The array wins when it has items; when it is missing or
+                empty the slot is rendered instead, so the list still shows if the data does not load.</span
+              >
             </li>
             <li>
               <a href="/course-kit/preview/24/components/components/ui/callout/"><code>callout</code></a>
@@ -915,7 +918,10 @@
             </li>
             <li>
               <a href="/course-kit/preview/24/components/components/ui/card-list/"><code>card-list</code></a>
-              <span>A list of cards, each linking to a page. A card shows the page's code, name and description unless the slot supplies its own content.</span>
+              <span
+                >A list of cards, each linking to a page. A card shows the page's code, name and description unless the slot supplies its own content. Instead of <code>items</code> you can write the cards yourself as a <code>&lt;ul&gt;</code> of <code>&lt;li&gt;</code> cards in the <code>cards</code> slot (the default slot is taken: it is each card's own content); the array wins when it has items, and when it is missing or empty the <code>cards</code> slot is rendered instead. A card written in the slot
+                must name its overlay link, as the items form does: <code>&lt;li&gt;&lt;a href="/x/" aria-labelledby="x-name"&gt;&lt;/a&gt;&lt;h3 id="x-name"&gt;Name&lt;/h3&gt;&lt;/li&gt;</code>.</span
+              >
             </li>
             <li>
               <a href="/course-kit/preview/24/components/components/ui/codepen-embed/"><code>codepen-embed</code></a>
@@ -931,7 +937,7 @@
             </li>
             <li>
               <a href="/course-kit/preview/24/components/components/ui/link-list/"><code>link-list</code></a>
-              <span>A list of links, each with a name and an optional description.</span>
+              <span>A list of links, each with a name and an optional description. Give it the <code>items</code> array, or write the list in the default slot as a <code>&lt;ul&gt;</code> of links, or as a <code>&lt;dl&gt;</code> (<code>&lt;dt&gt;</code> the link, <code>&lt;dd&gt;</code> the description). The array wins when it has items; when it is missing or empty the slot is rendered instead.</span>
             </li>
             <li>
               <a href="/course-kit/preview/24/components/components/ui/link-section/"><code>link-section</code></a>
@@ -996,11 +1002,11 @@
             </li>
             <li>
               <a href="/course-kit/preview/24/components/components/site/glossary-panel/"><code>glossary-panel</code></a>
-              <span>The glossary's element: the plain list it wraps (the slot) stays when scripts do not run, and <code>scripts/glossary.js</code> replaces it with Review and Flashcards. One stylesheet covers both, since the script renders the same markup the server does.</span>
+              <span>The glossary's element: the grouped list it wraps (the slot), which the script at the foot of this file replaces with Review and Flashcards. One stylesheet covers both, since the script renders the same markup the server does.</span>
             </li>
             <li>
               <a href="/course-kit/preview/24/components/components/site/glossary/"><code>glossary</code></a>
-              <span>The course glossary page: every <code>vocab</code> and <code>api</code> slide as one tagged term, listed A to Z for readers without scripts and enhanced into Review and Flashcards by <code>&lt;glossary-panel&gt;</code>. Reads the <code>glossary</code> global.</span>
+              <span>The course glossary page: every <code>vocab</code> and <code>api</code> slide as one tagged term, listed A to Z and enhanced into Review and Flashcards by <code>&lt;glossary-panel&gt;</code>. Reads the <code>glossary</code> global.</span>
             </li>
             <li>
               <a href="/course-kit/preview/24/components/components/site/grading/"><code>grading</code></a>
@@ -1016,7 +1022,7 @@
             </li>
             <li>
               <a href="/course-kit/preview/24/components/components/site/nav-links/"><code>nav-links</code></a>
-              <span>The site navigation as a list of links, marking the current page.</span>
+              <span>The site navigation as a list of links, marking the current page. Give it the <code>navigation</code> array, or write the links in the default slot as a <code>&lt;ul&gt;</code> of <code>&lt;li&gt;&lt;a&gt;</code>; the array wins when it has items, and when it is missing or empty the slot is rendered instead.</span>
             </li>
             <li>
               <a href="/course-kit/preview/24/components/components/site/policies/"><code>policies</code></a>

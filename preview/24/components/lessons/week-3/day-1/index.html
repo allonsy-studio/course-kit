@@ -47,7 +47,10 @@
       .wfb8ab2x1 h3 {
         margin-block-start: calc(var(--content-space) * 1.75);
       }
-      .waz1ptg-h {
+      .wyz4foyhb:not(:has(li)) {
+        display: none;
+      }
+      .wyz4foyhb {
         display: flex;
         gap: calc(var(--container-space) * 3.5);
         ul {
@@ -107,7 +110,7 @@
           }
         }
       }
-      .waz1ptg-h[stacked] ul {
+      .wyz4foyhb[stacked] ul {
         display: flex;
         flex-wrap: wrap;
         justify-content: start;
@@ -115,11 +118,11 @@
         column-gap: calc(var(--content-space) * 2);
         row-gap: calc(var(--content-space) * 0.35);
       }
-      .waz1ptg-h[column] {
+      .wyz4foyhb[column] {
         padding: 0;
         line-height: inherit;
       }
-      .waz1ptg-h[column] ul {
+      .wyz4foyhb[column] ul {
         display: flex;
         flex-direction: column;
         align-items: start;
@@ -134,11 +137,11 @@
           row-gap: calc(var(--content-space) * 0.25);
         }
       }
-      .waz1ptg-h[column] li {
+      .wyz4foyhb[column] li {
         display: block;
       }
-      .waz1ptg-h[column] a,
-      .waz1ptg-h[column] a:visited {
+      .wyz4foyhb[column] a,
+      .wyz4foyhb[column] a:visited {
         margin: 0;
         padding-inline: var(--link-pad, 0);
         border: none;
@@ -146,30 +149,30 @@
         line-height: inherit;
         font-size: max(var(--base-font-size), 1em);
         color: inherit;
-        .waz1ptg-h &[aria-current="page"] {
+        .wyz4foyhb &[aria-current="page"] {
           padding-inline: var(--link-pad, 0);
           background: none;
           color: var(--color-accent-text);
         }
       }
-      .waz1ptg-h[data-context="hero"][column] {
+      .wyz4foyhb[data-context="hero"][column] {
         --link-pad: 0.85em;
       }
-      .waz1ptg-h[data-context="hero"][column] a[href] {
+      .wyz4foyhb[data-context="hero"][column] a[href] {
         border-radius: var(--radius-pill);
       }
-      .waz1ptg-h[data-context="hero"][column] a[href][aria-current="page"] {
+      .wyz4foyhb[data-context="hero"][column] a[href][aria-current="page"] {
         background-color: var(--color-accent-secondary);
         color: var(--color-on-accent-secondary);
         text-decoration: none;
         font-weight: var(--font-weight--semi-bold);
         --color-focus-ring: var(--color-on-accent-secondary);
       }
-      .waz1ptg-h[data-context="hero"][column] a[href]:not([aria-current="page"]):hover {
+      .wyz4foyhb[data-context="hero"][column] a[href]:not([aria-current="page"]):hover {
         background-color: color-mix(in oklab, var(--color-accent-secondary) 10%, transparent);
       }
       @media (forced-colors: active) {
-        .waz1ptg-h[data-context="hero"][column] a[href][aria-current="page"] {
+        .wyz4foyhb[data-context="hero"][column] a[href][aria-current="page"] {
           forced-color-adjust: none;
           background: SelectedItem;
           color: SelectedItemText;
@@ -378,7 +381,7 @@
           </p>
         </div>
         <div class="links">
-          <nav data-context="hero" column="" aria-label="Site" class="waz1ptg-h">
+          <nav data-context="hero" column="" aria-label="Site" class="wyz4foyhb">
             <ul role="list">
               <li>
                 <a href="/course-kit/preview/24/components/#syllabus">Syllabus</a>
@@ -523,7 +526,7 @@
         <div class="group">
           <p id="footer-pages" class="label">Pages</p>
 
-          <nav data-context="footer" column="" aria-labelledby="footer-pages" class="waz1ptg-h">
+          <nav data-context="footer" column="" aria-labelledby="footer-pages" class="wyz4foyhb">
             <ul role="list">
               <li>
                 <a href="/course-kit/preview/24/components/lessons/">Lesson Plans</a>
@@ -534,9 +537,6 @@
         <nav aria-labelledby="footer-policies" class="group">
           <p id="footer-policies" class="label">Policies</p>
           <ul role="list">
-            <li>
-              <a href="/course-kit/preview/24/components/#policy-$schema"></a>
-            </li>
             <li>
               <a href="/course-kit/preview/24/components/#policy-attendance">Attendance</a>
             </li>
@@ -960,7 +960,7 @@
       </script>
     </footer>
     <script type="module" src="/course-kit/preview/24/components/js/email.js"></script>
-    <script type="module" src="/course-kit/preview/24/components/js/code-copy.js"></script>
+    <script type="module" src="/course-kit/preview/24/components/js/copy.js"></script>
     <theme-panel context="site"></theme-panel>
     <script type="module" src="/course-kit/preview/24/components/js/theme-panel.js"></script>
   </body>
