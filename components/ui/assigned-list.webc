@@ -1,6 +1,9 @@
 <script webc:setup>
 	/**
 	 * A labelled list of readings or deadlines. Renders nothing when empty.
+	 * Give it the `items` array, or write the list as a `<dl>` in the default slot: each `<dt>` holds the title or its link (give it `data-kind` and,
+	 * before the title, `<span class="due-chip" data-kind="test">Test</span>` for a chip), each `<dd>` only the check or due detail. The array wins when
+	 * it has items; when it is missing or empty the slot is rendered instead, so the list still shows if the data does not load.
 	 * @prop {string} label the heading above the list
 	 * @prop {{ title: string, href?: string, check?: string, dueLabel?: string, kind?: string }[]} items the readings or deadlines to list
 	 * @prop {string} [dueOn] how a due date reads after the check, with `{when}`: `copy.schedule.dueOn` ("due {when}"); without it the date stands alone
@@ -14,9 +17,10 @@
 
 	const detail = (item, dueOn) => [item.check, item.dueLabel && (dueOn ? dueOn.replace("{when}", item.dueLabel) : item.dueLabel)].filter(Boolean).join(", ");
 </script>
-<div webc:root="override" class="assigned" webc:if="items?.length">
+<div webc:root="override" class="assigned">
 	<p class="label" @text="label"></p>
-	<ul role="list">
+	<slot webc:if="!items?.length"></slot>
+	<ul role="list" webc:if="items?.length">
 		<li webc:for="item of items" @attributes="on(chips) && item.kind ? { class: 'due-item', 'data-kind': item.kind } : {}">
 			<span class="due-chip" webc:if="on(chips) && item.kind" :data-kind="item.kind" @text="kinds?.[item.kind]"></span>
 			<a webc:if="item.href" :href="item.href" @text="item.title"></a>
@@ -29,7 +33,13 @@
 <style webc:scoped>
 	:host {
 		/* Items sit clearly further apart than the lines inside one (WCAG 1.4.8). */
-		ul {
+		/* Nothing to list, in either form: nothing to show. */
+		&:not(:has(li, dt)) {
+			display: none;
+		}
+
+		ul,
+		dl {
 			display: grid;
 			gap: calc(var(--content-space) * 0.75);
 			list-style: none;
@@ -38,11 +48,29 @@
 		}
 
 		/* A chip and its title share a row that wraps, so a long title never runs under the chip. */
-		li {
+		li,
+		dt {
 			display: flex;
 			flex-wrap: wrap;
 			align-items: baseline;
 			gap: 0.25em 0.5em;
+		}
+
+		/* The slot form: a title and its detail stay a pair, and the pairs are spaced like the list's items. */
+		dl {
+			gap: 0;
+			margin: 0;
+		}
+
+		dt:not(:first-child) {
+			margin-block-start: calc(var(--content-space) * 0.75);
+		}
+
+		dd {
+			margin: 0;
+			color: var(--color-text-muted);
+			font-size: max(var(--base-font-size), 0.9em);
+			line-height: var(--font-height);
 		}
 	}
 

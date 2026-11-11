@@ -1,6 +1,7 @@
 <script webc:setup>
 	/**
 	 * A highlighted aside. The content is the slot.
+	 * @prop {'success' | 'warn' | 'error'} [type] the color of the edge and wash; none is the brand color
 	 */
 </script>
 <div webc:root="override" class="callout">

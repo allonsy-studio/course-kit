@@ -50,3 +50,23 @@ test("every component's header has a summary, and every prop and slot a descript
 test("the committed component reference matches the headers (run `yarn docs`)", () => {
 	assert.equal(fs.readFileSync(path.join(packageRoot, "docs", "components-reference.md"), "utf8"), componentsDoc());
 });
+
+test("assigned-list renders the items array, falls back to its slot's <dl> when the array is empty, and shows chips for a bare @chips", async () => {
+	const { WebC } = await import("@11ty/webc");
+	const render = async (markup) => {
+		const page = new WebC();
+		page.defineComponents(path.join(packageRoot, "components", "ui", "assigned-list.webc"));
+		page.setContent(markup);
+		return (await page.compile({ data: {} })).html;
+	};
+	const items = ':@items="[{ title: \'Test 1\', kind: \'test\' }]" :@kinds="{ test: \'Test\' }"';
+	const dl = "<dl><dt>From the slot</dt><dd>Tue</dd></dl>";
+	const withItems = await render(`<assigned-list @label="Due" ${items} @chips>${dl}</assigned-list>`);
+	assert.match(withItems, /<li/);
+	assert.match(withItems, /due-chip/);
+	assert.doesNotMatch(withItems, /From the slot/, "the array wins when it has items");
+	const empty = await render(`<assigned-list @label="Due" :@items="[]">${dl}</assigned-list>`);
+	assert.match(empty, /From the slot/);
+	assert.doesNotMatch(empty, /<li/);
+	assert.match(await render(`<assigned-list @label="Due">${dl}</assigned-list>`), /From the slot/);
+});
