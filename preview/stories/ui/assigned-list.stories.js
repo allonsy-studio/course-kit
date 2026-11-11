@@ -9,10 +9,11 @@ export const Default = {
 	args: {
 		label: "Read before class",
 		dueOn: schedule.dueOn,
+		kinds,
 		items: [
-			{ title: "Chapter 1", href: "#", check: "Answer the review questions", dueLabel: "Tue, Sep 1" },
-			{ title: "MDN: HTML basics", href: "#" },
-			{ title: "Course syllabus" },
+			{ title: "Chapter 1", href: "#", kind: "reading", check: "Answer the review questions", dueLabel: "Tue, Sep 1" },
+			{ title: "MDN: HTML basics", href: "#", kind: "practice" },
+			{ title: "Course syllabus", kind: "graded" },
 		],
 	},
 };
