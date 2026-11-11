@@ -1417,8 +1417,8 @@
         <a rel="home" href="../../../../">course-kit</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-zlq-2">
-            <span data-label="" id="norn-header-webc-zlq-2">Primary</span>
+          <nav aria-labelledby="norn-header-webc-dakXh">
+            <span data-label="" id="norn-header-webc-dakXh">Primary</span>
 
             <a href="../../../../#install">Install</a>
             <a href="../../../../#usage">Usage</a>
@@ -1443,8 +1443,8 @@
         <section aria-labelledby="nav-ui">
           <h2 id="nav-ui">Building blocks</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-q6BWQ">
-              <span data-label="" id="norn-side-nav-webc-q6BWQ"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-3IZAw">
+              <span data-label="" id="norn-side-nav-webc-3IZAw"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -1499,8 +1499,8 @@
         <section aria-labelledby="nav-site">
           <h2 id="nav-site">Site sections</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-t4Xx4">
-              <span data-label="" id="norn-side-nav-webc-t4Xx4"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-UceEY">
+              <span data-label="" id="norn-side-nav-webc-UceEY"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -1543,6 +1543,9 @@
                   <a href="/course-kit/preview/24/components/components/site/policies/"><span>policies</span></a>
                 </li>
                 <li>
+                  <a href="/course-kit/preview/24/components/components/site/practice-index/"><span>practice-index</span></a>
+                </li>
+                <li>
                   <a href="/course-kit/preview/24/components/components/site/schedule-overview/"><span>schedule-overview</span></a>
                 </li>
                 <li>
@@ -1564,8 +1567,8 @@
         <section aria-labelledby="nav-practice">
           <h2 id="nav-practice">Practice worksheets</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-iOwcF">
-              <span data-label="" id="norn-side-nav-webc-iOwcF"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-wxWUY">
+              <span data-label="" id="norn-side-nav-webc-wxWUY"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -1616,7 +1619,7 @@
       <main id="main" tabindex="-1">
         <div class="component">
           <h1><code>&lt;course-now&gt;</code></h1>
-          <p class="lead">Where the course is now, for the home page: the current or next class, what is due soon, and a week-by-week track of the term. Built from the schedule, not from anything a student has done. The script fills it in by campus date; without it the section stays hidden.</p>
+          <p class="lead">The home page's opening band: the next class, what is due soon and the week-by-week progress. Hidden until its script has judged "today" in the campus zone. Wording comes from <code>copy.home</code> and <code>copy.schedule</code>.</p>
           <p class="meta">Site sections</p>
 
           <h2>Examples</h2>
@@ -1722,7 +1725,7 @@
               <norn-code-block>
                 <figure>
                   <norn-copy-button>
-                    <button type="button" hidden="" data-value="<course-now></course-now>" data-strings="norn-code-block-webc-mgOTn" data-compact="" data-surface="code">
+                    <button type="button" hidden="" data-value="<course-now></course-now>" data-strings="norn-code-block-webc-41wrK" data-compact="" data-surface="code">
                       <span data-icons=""
                         ><norn-icon>
                           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1737,8 +1740,8 @@
                     <span role="status"></span>
                   </norn-copy-button>
                   <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;],[0,0,1,1,0,10,0,0,3,1,0,10,0,0,1]]">&lt;course-now&gt;&lt;/course-now&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-mgOTn">
-                    <span data-string="label" id="norn-code-block-webc-mgOTn-copy">Copy {name} to clipboard</span>
+                  <span hidden="" id="norn-code-block-webc-41wrK">
+                    <span data-string="label" id="norn-code-block-webc-41wrK-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -1752,7 +1755,7 @@
           <h2>Props</h2>
           <p>Write them with the <code>@</code> prefix, and <code>:@</code> for an expression. A prop in square brackets is optional.</p>
           <norn-simple-table class="spec"
-            ><span hidden="" id="norn-simple-table-webc--QxCg"></span>
+            ><span hidden="" id="norn-simple-table-webc-V1r5r"></span>
             <div>
               <table>
                 <thead>
@@ -1764,9 +1767,14 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <th scope="row"><code>[schedule="/schedule/"]</code></th>
+                    <th scope="row"><code>[weeks]</code></th>
+                    <td data-label="Type"><code>object[]</code></td>
+                    <td><code>scheduleWeeks</code> output; built from the page's lessons, schedule, decks and demos when left out</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>[scheduleUrl]</code></th>
                     <td data-label="Type"><code>string</code></td>
-                    <td>the schedule page's URL, which the links point at</td>
+                    <td>where the schedule lives, default <code>/schedule/</code></td>
                   </tr>
                 </tbody>
               </table>
@@ -1827,17 +1835,6 @@
                     <label>Light <input type="color" data-token="--color-on-accent" data-scheme="light" aria-label="Light color for --color-on-accent" /></label>
                     <label>Dark <input type="color" data-token="--color-on-accent" data-scheme="dark" aria-label="Dark color for --color-on-accent" /></label>
                     <button type="button" data-token-reset="--color-on-accent" aria-label="Reset --color-on-accent">Reset</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row"><code>--color-page</code></th>
-                <td>Page background</td>
-                <td>
-                  <div class="pickers">
-                    <label>Light <input type="color" data-token="--color-page" data-scheme="light" aria-label="Light color for --color-page" /></label>
-                    <label>Dark <input type="color" data-token="--color-page" data-scheme="dark" aria-label="Dark color for --color-page" /></label>
-                    <button type="button" data-token-reset="--color-page" aria-label="Reset --color-page">Reset</button>
                   </div>
                 </td>
               </tr>

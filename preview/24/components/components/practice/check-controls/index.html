@@ -1417,8 +1417,8 @@
         <a rel="home" href="../../../../">course-kit</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-OGHIY">
-            <span data-label="" id="norn-header-webc-OGHIY">Primary</span>
+          <nav aria-labelledby="norn-header-webc-NfdXT">
+            <span data-label="" id="norn-header-webc-NfdXT">Primary</span>
 
             <a href="../../../../#install">Install</a>
             <a href="../../../../#usage">Usage</a>
@@ -1443,8 +1443,8 @@
         <section aria-labelledby="nav-ui">
           <h2 id="nav-ui">Building blocks</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-4RVx4">
-              <span data-label="" id="norn-side-nav-webc-4RVx4"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-QGbFo">
+              <span data-label="" id="norn-side-nav-webc-QGbFo"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -1499,8 +1499,8 @@
         <section aria-labelledby="nav-site">
           <h2 id="nav-site">Site sections</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-OoAix">
-              <span data-label="" id="norn-side-nav-webc-OoAix"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-v-DzG">
+              <span data-label="" id="norn-side-nav-webc-v-DzG"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -1543,6 +1543,9 @@
                   <a href="/course-kit/preview/24/components/components/site/policies/"><span>policies</span></a>
                 </li>
                 <li>
+                  <a href="/course-kit/preview/24/components/components/site/practice-index/"><span>practice-index</span></a>
+                </li>
+                <li>
                   <a href="/course-kit/preview/24/components/components/site/schedule-overview/"><span>schedule-overview</span></a>
                 </li>
                 <li>
@@ -1564,8 +1567,8 @@
         <section aria-labelledby="nav-practice">
           <h2 id="nav-practice">Practice worksheets</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-Z8Eew">
-              <span data-label="" id="norn-side-nav-webc-Z8Eew"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-UL8li">
+              <span data-label="" id="norn-side-nav-webc-UL8li"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -1722,7 +1725,7 @@
               <norn-code-block>
                 <figure>
                   <norn-copy-button>
-                    <button type="button" hidden="" data-value='<check-controls @scope="#worksheet" @label="Check every section" @reset="Clear my answers" @note="self-marked"></check-controls>' data-strings="norn-code-block-webc-13qDR" data-compact="" data-surface="code">
+                    <button type="button" hidden="" data-value='<check-controls @scope="#worksheet" @label="See results" @reset="Clear my answers" @confirm="Clear every answer on this worksheet? This can&apos;t be undone."></check-controls>' data-strings="norn-code-block-webc-p0qXj" data-compact="" data-surface="code">
                       <span data-icons=""
                         ><norn-icon>
                           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1736,9 +1739,9 @@
                     </button>
                     <span role="status"></span>
                   </norn-copy-button>
-                  <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,14,2,1,6,0,0,1,3,0,12,2,1,6,0,0,1,3,0,21,2,1,6,0,0,1,3,0,18,2,1,5,0,0,1,3,0,13,0,0,3,1,0,14,0,0,1]]">&lt;check-controls @scope="#worksheet" @label="Check every section" @reset="Clear my answers" @note="self-marked"&gt;&lt;/check-controls&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-13qDR">
-                    <span data-string="label" id="norn-code-block-webc-13qDR-copy">Copy {name} to clipboard</span>
+                  <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,14,2,1,6,0,0,1,3,0,12,2,1,6,0,0,1,3,0,13,2,1,6,0,0,1,3,0,18,2,1,8,0,0,1,3,0,61,0,0,3,1,0,14,0,0,1]]">&lt;check-controls @scope="#worksheet" @label="See results" @reset="Clear my answers" @confirm="Clear every answer on this worksheet? This can't be undone."&gt;&lt;/check-controls&gt;</code></pre>
+                  <span hidden="" id="norn-code-block-webc-p0qXj">
+                    <span data-string="label" id="norn-code-block-webc-p0qXj-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -1752,7 +1755,7 @@
           <h2>Props</h2>
           <p>Write them with the <code>@</code> prefix, and <code>:@</code> for an expression. A prop in square brackets is optional.</p>
           <norn-simple-table class="spec"
-            ><span hidden="" id="norn-simple-table-webc-VDR8H"></span>
+            ><span hidden="" id="norn-simple-table-webc-qLL-b"></span>
             <div>
               <table>
                 <thead>
@@ -1779,14 +1782,9 @@
                     <td>the reset button's text</td>
                   </tr>
                   <tr>
-                    <th scope="row"><code>[note]</code></th>
+                    <th scope="row"><code>confirm</code></th>
                     <td data-label="Type"><code>string</code></td>
-                    <td>text shown with the tally</td>
-                  </tr>
-                  <tr>
-                    <th scope="row"><code>[retry="Try]</code></th>
-                    <td data-label="Type"><code>string</code></td>
-                    <td>missed questions"] the text of the button that clears only the questions marked wrong</td>
+                    <td>the question Reset asks before it clears anything</td>
                   </tr>
                 </tbody>
               </table>
@@ -1806,6 +1804,50 @@
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <th scope="row"><code>--color-accent</code></th>
+                <td>Brand color: fills, buttons, rules, the masthead wash</td>
+                <td>
+                  <div class="pickers">
+                    <label>Light <input type="color" data-token="--color-accent" data-scheme="light" aria-label="Light color for --color-accent" /></label>
+                    <label>Dark <input type="color" data-token="--color-accent" data-scheme="dark" aria-label="Dark color for --color-accent" /></label>
+                    <button type="button" data-token-reset="--color-accent" aria-label="Reset --color-accent">Reset</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row"><code>--color-border-strong</code></th>
+                <td>Edges of anything operable (at least 3:1)</td>
+                <td>
+                  <div class="pickers">
+                    <label>Light <input type="color" data-token="--color-border-strong" data-scheme="light" aria-label="Light color for --color-border-strong" /></label>
+                    <label>Dark <input type="color" data-token="--color-border-strong" data-scheme="dark" aria-label="Dark color for --color-border-strong" /></label>
+                    <button type="button" data-token-reset="--color-border-strong" aria-label="Reset --color-border-strong">Reset</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row"><code>--color-on-accent</code></th>
+                <td>Text on a brand-color fill</td>
+                <td>
+                  <div class="pickers">
+                    <label>Light <input type="color" data-token="--color-on-accent" data-scheme="light" aria-label="Light color for --color-on-accent" /></label>
+                    <label>Dark <input type="color" data-token="--color-on-accent" data-scheme="dark" aria-label="Dark color for --color-on-accent" /></label>
+                    <button type="button" data-token-reset="--color-on-accent" aria-label="Reset --color-on-accent">Reset</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row"><code>--color-text</code></th>
+                <td>Body text</td>
+                <td>
+                  <div class="pickers">
+                    <label>Light <input type="color" data-token="--color-text" data-scheme="light" aria-label="Light color for --color-text" /></label>
+                    <label>Dark <input type="color" data-token="--color-text" data-scheme="dark" aria-label="Dark color for --color-text" /></label>
+                    <button type="button" data-token-reset="--color-text" aria-label="Reset --color-text">Reset</button>
+                  </div>
+                </td>
+              </tr>
               <tr>
                 <th scope="row"><code>--color-text-muted</code></th>
                 <td>Secondary text</td>

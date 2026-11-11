@@ -1311,8 +1311,8 @@
         <a rel="home" href="../../../../">course-kit</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-hdIm6">
-            <span data-label="" id="norn-header-webc-hdIm6">Primary</span>
+          <nav aria-labelledby="norn-header-webc-1zObP">
+            <span data-label="" id="norn-header-webc-1zObP">Primary</span>
 
             <a href="../../../../#install">Install</a>
             <a href="../../../../#usage">Usage</a>
@@ -1337,8 +1337,8 @@
         <section aria-labelledby="nav-ui">
           <h2 id="nav-ui">Building blocks</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-CbCMD">
-              <span data-label="" id="norn-side-nav-webc-CbCMD"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-Wxx5-">
+              <span data-label="" id="norn-side-nav-webc-Wxx5-"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -1393,8 +1393,8 @@
         <section aria-labelledby="nav-site">
           <h2 id="nav-site">Site sections</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-xAODI">
-              <span data-label="" id="norn-side-nav-webc-xAODI"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-MRzta">
+              <span data-label="" id="norn-side-nav-webc-MRzta"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -1437,6 +1437,9 @@
                   <a href="/course-kit/preview/24/components/components/site/policies/"><span>policies</span></a>
                 </li>
                 <li>
+                  <a href="/course-kit/preview/24/components/components/site/practice-index/"><span>practice-index</span></a>
+                </li>
+                <li>
                   <a href="/course-kit/preview/24/components/components/site/schedule-overview/"><span>schedule-overview</span></a>
                 </li>
                 <li>
@@ -1458,8 +1461,8 @@
         <section aria-labelledby="nav-practice">
           <h2 id="nav-practice">Practice worksheets</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-XPgFW">
-              <span data-label="" id="norn-side-nav-webc-XPgFW"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-Fn4Qg">
+              <span data-label="" id="norn-side-nav-webc-Fn4Qg"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -1510,7 +1513,10 @@
       <main id="main" tabindex="-1">
         <div class="component">
           <h1><code>&lt;practice-worksheet&gt;</code></h1>
-          <p class="lead">The practice worksheet page: heading, sections of questions, and the check controls. Reads the <code>worksheet</code> data a worksheet's <code>.11tydata.js</code> supplies.</p>
+          <p class="lead">
+            The practice worksheet page: heading, results summary, question list, sections of questions and the check controls. Reads the <code>worksheet</code> data a worksheet's <code>.11tydata.js</code> supplies; <code>practice.js</code> grades, saves and restores the answers in this browser. With <code>checkMode: "question"</code> (front matter, or <code>worksheets.checkMode</code> in the course config) each gradable question also has a Check answer button; the default, <code>"end"</code>, checks only
+            from See results at the end.
+          </p>
           <p class="meta">Practice worksheets</p>
 
           <h2>Examples</h2>
@@ -1616,7 +1622,7 @@
               <norn-code-block>
                 <figure>
                   <norn-copy-button>
-                    <button type="button" hidden="" data-value="<practice-worksheet></practice-worksheet>" data-strings="norn-code-block-webc-HXSBc" data-compact="" data-surface="code">
+                    <button type="button" hidden="" data-value="<practice-worksheet></practice-worksheet>" data-strings="norn-code-block-webc-1QL_S" data-compact="" data-surface="code">
                       <span data-icons=""
                         ><norn-icon>
                           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1631,8 +1637,8 @@
                     <span role="status"></span>
                   </norn-copy-button>
                   <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;],[0,0,1,1,0,18,0,0,3,1,0,18,0,0,1]]">&lt;practice-worksheet&gt;&lt;/practice-worksheet&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-HXSBc">
-                    <span data-string="label" id="norn-code-block-webc-HXSBc-copy">Copy {name} to clipboard</span>
+                  <span hidden="" id="norn-code-block-webc-1QL_S">
+                    <span data-string="label" id="norn-code-block-webc-1QL_S-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -1701,6 +1707,17 @@
                 </td>
               </tr>
               <tr>
+                <th scope="row"><code>--color-border-strong</code></th>
+                <td>Edges of anything operable (at least 3:1)</td>
+                <td>
+                  <div class="pickers">
+                    <label>Light <input type="color" data-token="--color-border-strong" data-scheme="light" aria-label="Light color for --color-border-strong" /></label>
+                    <label>Dark <input type="color" data-token="--color-border-strong" data-scheme="dark" aria-label="Dark color for --color-border-strong" /></label>
+                    <button type="button" data-token-reset="--color-border-strong" aria-label="Reset --color-border-strong">Reset</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
                 <th scope="row"><code>--color-error</code></th>
                 <td>Error: wrong answers, failures</td>
                 <td>
@@ -1708,6 +1725,17 @@
                     <label>Light <input type="color" data-token="--color-error" data-scheme="light" aria-label="Light color for --color-error" /></label>
                     <label>Dark <input type="color" data-token="--color-error" data-scheme="dark" aria-label="Dark color for --color-error" /></label>
                     <button type="button" data-token-reset="--color-error" aria-label="Reset --color-error">Reset</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row"><code>--color-on-accent</code></th>
+                <td>Text on a brand-color fill</td>
+                <td>
+                  <div class="pickers">
+                    <label>Light <input type="color" data-token="--color-on-accent" data-scheme="light" aria-label="Light color for --color-on-accent" /></label>
+                    <label>Dark <input type="color" data-token="--color-on-accent" data-scheme="dark" aria-label="Dark color for --color-on-accent" /></label>
+                    <button type="button" data-token-reset="--color-on-accent" aria-label="Reset --color-on-accent">Reset</button>
                   </div>
                 </td>
               </tr>
@@ -1741,17 +1769,6 @@
                     <label>Light <input type="color" data-token="--color-surface" data-scheme="light" aria-label="Light color for --color-surface" /></label>
                     <label>Dark <input type="color" data-token="--color-surface" data-scheme="dark" aria-label="Dark color for --color-surface" /></label>
                     <button type="button" data-token-reset="--color-surface" aria-label="Reset --color-surface">Reset</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row"><code>--color-surface-accent</code></th>
-                <td>Accent-tinted wash</td>
-                <td>
-                  <div class="pickers">
-                    <label>Light <input type="color" data-token="--color-surface-accent" data-scheme="light" aria-label="Light color for --color-surface-accent" /></label>
-                    <label>Dark <input type="color" data-token="--color-surface-accent" data-scheme="dark" aria-label="Dark color for --color-surface-accent" /></label>
-                    <button type="button" data-token-reset="--color-surface-accent" aria-label="Reset --color-surface-accent">Reset</button>
                   </div>
                 </td>
               </tr>

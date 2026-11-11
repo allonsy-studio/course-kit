@@ -695,8 +695,8 @@
         <a rel="home" href="../">course-kit</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-BQ9AH">
-            <span data-label="" id="norn-header-webc-BQ9AH">Primary</span>
+          <nav aria-labelledby="norn-header-webc-P5Lri">
+            <span data-label="" id="norn-header-webc-P5Lri">Primary</span>
 
             <a href="../#install">Install</a>
             <a href="../#usage">Usage</a>
@@ -721,8 +721,8 @@
         <section aria-labelledby="nav-ui">
           <h2 id="nav-ui">Building blocks</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc--xR3u">
-              <span data-label="" id="norn-side-nav-webc--xR3u"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-bmOIT">
+              <span data-label="" id="norn-side-nav-webc-bmOIT"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -777,8 +777,8 @@
         <section aria-labelledby="nav-site">
           <h2 id="nav-site">Site sections</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-8wQeI">
-              <span data-label="" id="norn-side-nav-webc-8wQeI"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-wcMEB">
+              <span data-label="" id="norn-side-nav-webc-wcMEB"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -821,6 +821,9 @@
                   <a href="/course-kit/preview/24/components/components/site/policies/"><span>policies</span></a>
                 </li>
                 <li>
+                  <a href="/course-kit/preview/24/components/components/site/practice-index/"><span>practice-index</span></a>
+                </li>
+                <li>
                   <a href="/course-kit/preview/24/components/components/site/schedule-overview/"><span>schedule-overview</span></a>
                 </li>
                 <li>
@@ -842,8 +845,8 @@
         <section aria-labelledby="nav-practice">
           <h2 id="nav-practice">Practice worksheets</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-pfoCy">
-              <span data-label="" id="norn-side-nav-webc-pfoCy"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-FBesU">
+              <span data-label="" id="norn-side-nav-webc-FBesU"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -977,7 +980,7 @@
             </li>
             <li>
               <a href="/course-kit/preview/24/components/components/site/course-now/"><code>course-now</code></a>
-              <span>Where the course is now, for the home page: the current or next class, what is due soon, and a week-by-week track of the term. Built from the schedule, not from anything a student has done. The script fills it in by campus date; without it the section stays hidden.</span>
+              <span>The home page's opening band: the next class, what is due soon and the week-by-week progress. Hidden until its script has judged "today" in the campus zone. Wording comes from <code>copy.home</code> and <code>copy.schedule</code>.</span>
             </li>
             <li>
               <a href="/course-kit/preview/24/components/components/site/course-summary/"><code>course-summary</code></a>
@@ -1009,7 +1012,7 @@
             </li>
             <li>
               <a href="/course-kit/preview/24/components/components/site/masthead/"><code>masthead</code></a>
-              <span>The page header: institution, term, course title and the navigation. Reads <code>site</code>, <code>term</code> and <code>course</code>.</span>
+              <span>The page header: institution, term, course title and the navigation. Reads <code>site</code>, <code>term</code> and <code>course</code>. The menu is Home, Syllabus, then every page of the site menu that has not set <code>menu: false</code>.</span>
             </li>
             <li>
               <a href="/course-kit/preview/24/components/components/site/nav-links/"><code>nav-links</code></a>
@@ -1020,12 +1023,16 @@
               <span>The policies section: one disclosure per entry in <code>policies.json</code>, open by default, each with an optional link to the full policy. Renders nothing without <code>policies</code>.</span>
             </li>
             <li>
+              <a href="/course-kit/preview/24/components/components/site/practice-index/"><code>practice-index</code></a>
+              <span>The practice page's table: every practice sheet in <code>collections.practice</code>, by its worksheet <code>order</code> (then its URL), with what each is for. Says so when there are none. The page's own intro stays page content. Wording comes from <code>copy.practice</code>.</span>
+            </li>
+            <li>
               <a href="/course-kit/preview/24/components/components/site/schedule-overview/"><code>schedule-overview</code></a>
               <span>The schedule page's header: the meeting line, the key dates, and a row of jump links (Today, then one per month). Props are read in the template, since a setup script cannot see them.</span>
             </li>
             <li>
               <a href="/course-kit/preview/24/components/components/site/schedule-weeks/"><code>schedule-weeks</code></a>
-              <span>Every week of the term as a bordered block: its meetings (topics, readings, deadlines, deck and demos) beside the week's materials.</span>
+              <span>Every week of the term as a bordered block: one row per class meeting (when, topics, and what that class needs: reading, due items, materials) and a footer for the week's own resources. A "This week" card, the hide-past toggle and the Now and Done flags are added by the script. Deadlines carry a chip for their <code>kind</code>; the key above the weeks lists the kinds in use. Wording comes from <code>copy.schedule</code>.</span>
             </li>
             <li>
               <a href="/course-kit/preview/24/components/components/site/site-footer/"><code>site-footer</code></a>
@@ -1079,7 +1086,7 @@
             </li>
             <li>
               <a href="/course-kit/preview/24/components/components/practice/practice-question/"><code>practice-question</code></a>
-              <span>One worksheet question: its prompt, sources, snippet and figure, then the control its kind needs.</span>
+              <span>One worksheet question: its prompt, sources, snippet and figure, then the control its kind needs, then the feedback and the reasoning. <code>practice.js</code> grades it.</span>
             </li>
             <li>
               <a href="/course-kit/preview/24/components/components/practice/practice-selfcheck/"><code>practice-selfcheck</code></a>
@@ -1095,7 +1102,10 @@
             </li>
             <li>
               <a href="/course-kit/preview/24/components/components/practice/practice-worksheet/"><code>practice-worksheet</code></a>
-              <span>The practice worksheet page: heading, sections of questions, and the check controls. Reads the <code>worksheet</code> data a worksheet's <code>.11tydata.js</code> supplies.</span>
+              <span
+                >The practice worksheet page: heading, results summary, question list, sections of questions and the check controls. Reads the <code>worksheet</code> data a worksheet's <code>.11tydata.js</code> supplies; <code>practice.js</code> grades, saves and restores the answers in this browser. With <code>checkMode: "question"</code> (front matter, or <code>worksheets.checkMode</code> in the course config) each gradable question also has a Check answer button; the default, <code>"end"</code>, checks
+                only from See results at the end.</span
+              >
             </li>
           </ul>
         </section>

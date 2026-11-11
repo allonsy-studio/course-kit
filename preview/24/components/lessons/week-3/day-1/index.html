@@ -47,7 +47,7 @@
       .wfb8ab2x1 h3 {
         margin-block-start: calc(var(--content-space) * 1.75);
       }
-      .wagoe9qvi {
+      .waz1ptg-h {
         display: flex;
         gap: calc(var(--container-space) * 3.5);
         ul {
@@ -78,20 +78,21 @@
         a[href] {
           /* Inline padding is left alone; the block padding lifts each link to
            the 24px minimum target size without changing the row rhythm. */
-          display: inline-block;
+          display: inline-flex;
+          align-items: center;
+          min-block-size: var(--target-min);
+          min-inline-size: var(--target-min);
           padding-block: 0.2em;
           font-size: max(var(--base-font-size), 0.95em);
           color: inherit;
           text-decoration: none;
 
-          /* The current page is a filled pill, so it reads as "you are here"
-           without relying on an underline. */
+          /* The current page keeps an underline here; the hero menu fills it (below). */
           &[aria-current="page"] {
-            padding-inline: 0.85em;
-            border-radius: 9999px;
-            background-color: var(--color-text);
-            color: var(--color-page);
-            font-weight: var(--font-weight--semi-bold);
+            text-decoration: underline;
+            text-decoration-color: var(--color-accent-text);
+            text-decoration-thickness: var(--border-width);
+            text-underline-offset: 0.4ex;
           }
 
           &:not([aria-current="page"]):is(:hover, :focus-visible) {
@@ -106,7 +107,7 @@
           }
         }
       }
-      .wagoe9qvi[stacked] ul {
+      .waz1ptg-h[stacked] ul {
         display: flex;
         flex-wrap: wrap;
         justify-content: start;
@@ -114,11 +115,11 @@
         column-gap: calc(var(--content-space) * 2);
         row-gap: calc(var(--content-space) * 0.35);
       }
-      .wagoe9qvi[column] {
+      .waz1ptg-h[column] {
         padding: 0;
         line-height: inherit;
       }
-      .wagoe9qvi[column] ul {
+      .waz1ptg-h[column] ul {
         display: flex;
         flex-direction: column;
         align-items: start;
@@ -133,22 +134,45 @@
           row-gap: calc(var(--content-space) * 0.25);
         }
       }
-      .wagoe9qvi[column] li {
+      .waz1ptg-h[column] li {
         display: block;
       }
-      .wagoe9qvi[column] a,
-      .wagoe9qvi[column] a:visited {
+      .waz1ptg-h[column] a,
+      .waz1ptg-h[column] a:visited {
         margin: 0;
-        padding-inline: 0;
+        padding-inline: var(--link-pad, 0);
         border: none;
         border-radius: 0;
         line-height: inherit;
         font-size: max(var(--base-font-size), 1em);
         color: inherit;
-        .wagoe9qvi &[aria-current="page"] {
-          padding-inline: 0;
+        .waz1ptg-h &[aria-current="page"] {
+          padding-inline: var(--link-pad, 0);
           background: none;
           color: var(--color-accent-text);
+        }
+      }
+      .waz1ptg-h[data-context="hero"][column] {
+        --link-pad: 0.85em;
+      }
+      .waz1ptg-h[data-context="hero"][column] a[href] {
+        border-radius: var(--radius-pill);
+      }
+      .waz1ptg-h[data-context="hero"][column] a[href][aria-current="page"] {
+        background-color: var(--color-accent-secondary);
+        color: var(--color-on-accent-secondary);
+        text-decoration: none;
+        font-weight: var(--font-weight--semi-bold);
+        --color-focus-ring: var(--color-on-accent-secondary);
+      }
+      .waz1ptg-h[data-context="hero"][column] a[href]:not([aria-current="page"]):hover {
+        background-color: color-mix(in oklab, var(--color-accent-secondary) 10%, transparent);
+      }
+      @media (forced-colors: active) {
+        .waz1ptg-h[data-context="hero"][column] a[href][aria-current="page"] {
+          forced-color-adjust: none;
+          background: SelectedItem;
+          color: SelectedItemText;
         }
       }
       .woorkyj9o {
@@ -354,13 +378,10 @@
           </p>
         </div>
         <div class="links">
-          <nav column="" aria-label="Site" class="wagoe9qvi">
+          <nav data-context="hero" column="" aria-label="Site" class="waz1ptg-h">
             <ul role="list">
               <li>
                 <a href="/course-kit/preview/24/components/#syllabus">Syllabus</a>
-              </li>
-              <li>
-                <a href="/course-kit/preview/24/components/lessons/">Lesson Plans</a>
               </li>
             </ul>
           </nav>
@@ -502,7 +523,7 @@
         <div class="group">
           <p id="footer-pages" class="label">Pages</p>
 
-          <nav column="" aria-labelledby="footer-pages" class="wagoe9qvi">
+          <nav data-context="footer" column="" aria-labelledby="footer-pages" class="waz1ptg-h">
             <ul role="list">
               <li>
                 <a href="/course-kit/preview/24/components/lessons/">Lesson Plans</a>
@@ -538,6 +559,258 @@
         </nav>
       </div>
 
+      <script type="application/json" id="copy-data">
+        {
+          "common": { "sep": " · " },
+          "nav": { "site": "Site", "syllabus": "Syllabus", "contact": "Contact", "openSource": "Open source" },
+          "code": {
+            "copy": "Copy code",
+            "copied": "Copied",
+            "selected": "Code selected. Press your copy shortcut.",
+            "plain": "Code",
+            "languages": {
+              "bash": "Terminal",
+              "sh": "Terminal",
+              "shell": "Terminal",
+              "zsh": "Terminal",
+              "console": "Terminal",
+              "shellsession": "Terminal",
+              "css": "CSS",
+              "scss": "SCSS",
+              "html": "HTML",
+              "markup": "HTML",
+              "webc": "WebC",
+              "njk": "Nunjucks",
+              "xml": "XML",
+              "svg": "SVG",
+              "js": "JavaScript",
+              "javascript": "JavaScript",
+              "jsx": "JSX",
+              "ts": "TypeScript",
+              "typescript": "TypeScript",
+              "json": "JSON",
+              "md": "Markdown",
+              "markdown": "Markdown",
+              "php": "PHP",
+              "py": "Python",
+              "python": "Python",
+              "java": "Java",
+              "sql": "SQL",
+              "http": "HTTP",
+              "yaml": "YAML",
+              "yml": "YAML",
+              "text": "Text"
+            }
+          },
+          "home": {
+            "heading": "Where the course is",
+            "todayLabel": "Today's class",
+            "nextLabel": "Next class",
+            "firstLabel": "First class",
+            "when": "Week {week} · {weekday}, {date}",
+            "openSlides": "Open the slides",
+            "seeWeek": "See the week",
+            "comingUp": "Coming up",
+            "fullSchedule": "Full schedule",
+            "nothingDue": "Nothing else is due this term.",
+            "dueToday": "Today",
+            "dueTomorrow": "Tomorrow",
+            "dueInDays_one": "In {count} day",
+            "dueInDays_other": "In {count} days",
+            "progress": "Progress",
+            "weeksDone": "{done} of {total} weeks done",
+            "week": "Week {week}",
+            "stateDone": "Done",
+            "stateNow": "Now"
+          },
+          "schedule": {
+            "thisWeek": "This week",
+            "upNext": "Up next",
+            "read": "Read",
+            "dueThisWeek": "Due this week",
+            "today": "Today",
+            "next": "Next",
+            "stateDone": "Done",
+            "stateNow": "Now",
+            "hidePast": "Hide past weeks",
+            "weeksDone": "{done} of {total} weeks done.",
+            "pastHidden_one": "{count} finished week hidden.",
+            "pastHidden_other": "{count} finished weeks hidden.",
+            "weekHeading": "Week {week}",
+            "colClass": "Class",
+            "colTopics": "Topics",
+            "colFor": "For this class",
+            "readBefore": "Read before class",
+            "due": "Due",
+            "dueOn": "due {when}",
+            "materials": "Materials",
+            "slides": "Slides",
+            "addendum": "Addendum",
+            "weekResources": "This week’s resources",
+            "noClass": "No class — {reason}",
+            "substitution": "Runs a {weekday} schedule",
+            "dueKeyLabel": "Key to due items",
+            "graded": "graded",
+            "notGraded": "not graded",
+            "dueKindTest": "Test",
+            "dueKindGraded": "Graded",
+            "dueKindReading": "Reading check",
+            "dueKindPractice": "Practice",
+            "finalExam": "Final exam"
+          },
+          "glossary": {
+            "groupBy": "Group by",
+            "byAz": "A to Z",
+            "byTest": "Test",
+            "byMeeting": "Class meeting",
+            "mode": "Mode",
+            "review": "Review",
+            "flashcards": "Flashcards",
+            "search": "Search terms",
+            "clear": "Clear",
+            "clearSearch": "Clear search",
+            "filterSummary": "Filter by test or {reading}",
+            "filtersOn": "({count} on)",
+            "count": "{shown} of {total} terms",
+            "clearFilters": "Clear filters",
+            "removeFilter": "Remove {kind} filter: {label}",
+            "meetingChip": "Class meeting: {label}",
+            "taughtIn": "Taught in",
+            "slideRef": "Week {week} · {weekday}, slide {slide}",
+            "example": "Example",
+            "known": "✓ known",
+            "noMatch": "No terms match.",
+            "noMatchHint": "Clear the search or a filter to see more.",
+            "noMatchStudy": "Clear the search or a filter to study more.",
+            "terms_one": "{count} term",
+            "terms_other": "{count} terms",
+            "card": "Card {n} of {total}",
+            "toStudy": "{count} to study",
+            "knownOf": "{known} of {total} known",
+            "shuffle": "Shuffle",
+            "defFirst": "Definition first",
+            "resetKnown": "Reset known",
+            "knownMeter": "Known terms",
+            "allKnown": "You know every card in this set.",
+            "markedKnown": "{known} of {total} marked known.",
+            "startOver": "Start over with the ones I know",
+            "showDefinition": "Show definition",
+            "showTerm": "Show term",
+            "iKnow": "I know this",
+            "later": "Show me again later",
+            "prev": "← Previous",
+            "next": "Next →",
+            "hint": "Space reveals · arrows move",
+            "defShown": "Definition shown for {term}",
+            "symbols": "Symbols",
+            "glossary": "Glossary",
+            "courseGlossary": "Course glossary",
+            "termsFromClassEach": "terms from class. Each carries tags for its test, its {reading} and the meeting that taught it. Group by any of them, search, or narrow the list to what you are studying."
+          },
+          "practice": { "colSheet": "Practice sheet", "colFor": "For", "caption": "Every practice sheet, with what it is for", "empty": "No practice sheets posted yet." },
+          "syllabus": {
+            "due": "Due:",
+            "projectDue": "{date}, {time}",
+            "projectPage": "Full requirements, milestone dates, and the grading rubric are on {link}.",
+            "projectPageLink": "the project page",
+            "syllabus": "Syllabus",
+            "learningOutcomes": "Learning outcomes",
+            "uponCompletingThisCourse": "Upon completing this course students will be able to:",
+            "additionalOutcomesInThis": "Additional outcomes in this section",
+            "text": "Text",
+            "noTextIsRequired": "No text is required.",
+            "required": "Required:",
+            "technology": "Technology",
+            "bringALaptopMeeting": "Bring a laptop meeting the minimum specifications specified by {institution} to class every day.",
+            "theCollege": "the college",
+            "accessIsRequired": "{lms} access is required.",
+            "coursework": "Coursework",
+            "exam": "Exam:",
+            "points": "{display}, {points} points",
+            "atTheLastClassMeeting": "at the last class meeting, {lastMeeting}",
+            "grading": "Grading",
+            "keyDates": "Key dates",
+            "thisSectionsFinalExam": "This section's final exam",
+            "classStart": "{days} at {time}"
+          },
+          "courseSummary": {
+            "projectDue": "The final project is due {when}; its milestones and rubric are on {link}.",
+            "projectDueShort": "The final project is due {when}.",
+            "projectPageLink": "the project page",
+            "howThisSectionIs": "How this section is taught",
+            "scheduleClassResources": "Schedule &amp; class resources",
+            "prerequisites": "Prerequisites:",
+            "thisIsAProposed": "This is a proposed outline of topics and is subject to change. Any changes will be announced in class.",
+            "eachWeekListsWhatTo": "Each week lists what to read before its first meeting and the resources posted after class.",
+            "allAssignmentsWillBe": "All assignments will be posted in {lms}.",
+            "theFinalExamFalls": "The final exam falls in the exam period ({period}); the exact date and time will be announced in class.",
+            "thisSectionsFinalExamIs": "This section's final exam is {slot} — see the {link} section.",
+            "coursework": "Coursework",
+            "thisDocumentOmitsTheWeekbyweek": "This document omits the week-by-week schedule, which may be adjusted during the term{live}.",
+            "theLiveScheduleIsPublished": "; the live schedule is published at {url}"
+          },
+          "worksheet": {
+            "notice": "Nothing here is recorded or submitted.",
+            "noticeBody": "Your answers are saved in this browser only and go nowhere else. Checking an answer shows you the reasoning and the source it came from.",
+            "termsHeading": "Terms to know",
+            "termsHint": "Select a term for its definition, and a link to the source it comes from.",
+            "termSource": "",
+            "citeHeading": "Where this comes from",
+            "citeLabel": "Where this comes from, question",
+            "chooseOne": "Choose one answer",
+            "checkAll": "See results",
+            "resetAll": "Clear my answers",
+            "checkSection": "Check section",
+            "resetSection": "Clear section",
+            "section": "Section",
+            "wordBank": "Word bank",
+            "answer": "Answer:",
+            "showAnswer": "Show the answer",
+            "checkYourself": "Check yourself",
+            "verdict": "Verdict",
+            "judgeLine": "Select the line that causes the problem",
+            "judgeNoLine": "No line — it is fine as written",
+            "notGraded": "Not graded",
+            "navHeading": "Questions",
+            "resultsHeading": "Results",
+            "retryMissed": "Try missed questions",
+            "scoreOf": "of {total}",
+            "statusRight": "Correct",
+            "statusWrong": "Try again",
+            "statusPartial": "Unfinished",
+            "statusUnattempted": "Unattempted",
+            "statusAnswered": "Not checked",
+            "statusSelf": "Check yourself",
+            "tallyCorrect": "{right} of {total} correct",
+            "tallyWrong": "{count} to try again",
+            "tallyPartial": "{count} unfinished",
+            "tallyUnattempted": "{count} unattempted",
+            "tallySelf": "{count} to check yourself",
+            "feedbackRight": "Correct.",
+            "feedbackRightAll": "Correct: all {total} parts.",
+            "feedbackParts": "{right} of {total} parts correct",
+            "feedbackBlank": "{count} left blank",
+            "feedbackUnattempted": "Unattempted.",
+            "retryCount_one": "{count} question to try again",
+            "retryCount_other": "{count} questions to try again",
+            "confirmClearAll": "Clear every answer on this worksheet? This can't be undone.",
+            "confirmClearSection": "Clear every answer in this section? This can't be undone.",
+            "checkOne": "Check answer",
+            "restored": "Restored your answers from {when}."
+          },
+          "siteFooter": { "pages": "Pages", "policies": "Policies" },
+          "courseDocuments": { "additionalResources": "Additional resources" },
+          "policies": { "policies": "Policies", "readTheFullPolicy": "Read the full policy" },
+          "grading": { "gradeWeighting": "Grade weighting", "category": "Category", "weight": "Weight", "gradingScale": "Grading scale", "grade": "Grade", "weightedAverage": "Weighted average", "andAbove": "{min} and above", "below": "below {max}" },
+          "scheduleOverview": { "schedule": "Schedule", "keyDates": "Key dates", "jumpTo": "Jump to", "tests": "Tests", "finalProject": "Final project", "finalExam": "Final exam", "exam": "Exam", "noClass": "No class" },
+          "slideTimetable": { "everySlideDeckFor": "Every slide deck for this section, one row per week and one column per meeting day", "week": "Week", "noMeeting": "No meeting", "noClass": "No class: {reason}", "noDeck": "No deck", "draftNotInThe": "Draft, not in the student build", "speakerNotes": "Speaker notes", "addendumDraftNotIn": "Addendum draft, not in the student build", "addendumSpeakerNotes": "Addendum speaker notes" },
+          "tableRubric": { "criteria": "Criteria", "points": "Points", "pointsEach": "{points} points", "totalPointsPossible": "Total points possible", "milestone": "Milestone", "due": "Due", "whatIsGraded": "What is graded" },
+          "demoWeeks": { "lessonPlan": "Lesson plan", "shownAgainFirstUsed": "Shown again, first used {date}", "downloadTheHtmlFile": "Download the HTML file", "usedAgain": "Used again {dates}" },
+          "instructor": { "yourInstructor": "Your instructor", "name": "Name", "office": "Office", "officeHours": "Office hours", "email": "Email", "message": "Message", "sendMeAMessage": "Send me a message", "blog": "Blog", "instructor": "Instructor" },
+          "codepenEmbed": { "theCode": "The code", "html": "HTML", "css": "CSS", "javascript": "JavaScript", "htmlSource": "HTML source", "cssSource": "CSS source", "javascriptSource": "JavaScript source" },
+          "promptCopy": { "copyThisPrompt": "Copy this prompt", "promptCopied": "Prompt copied", "promptCopiedToThe": "Prompt copied to the clipboard.", "promptSelectedPressYour": "Prompt selected — press your copy shortcut." }
+        }
+      </script>
       <script type="module">
         // Print every disclosure expanded, then restore the reader's own
         // state (tracked per element — bundle scripts share one module
