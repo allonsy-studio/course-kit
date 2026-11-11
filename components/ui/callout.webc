@@ -1,9 +1,9 @@
 <script webc:setup>
 	/**
 	 * A highlighted aside. The content is the slot.
-	 * @prop {'success' | 'warn' | 'error'} [type] the color of the edge and wash; none is the brand color
+	 * @prop {'success' | 'warn' | 'error'} [type] the color of the edge and wash; none, or any other value, is the brand color. Write it `@type="warn"` or as the attribute `:type="'warn'"`: both color it.
 	 */
 </script>
-<div webc:root="override" class="callout">
+<div webc:root="override" :class="`callout${['success', 'warn', 'error'].includes(type) ? ` ${type}` : ''}`">
     <slot></slot>
 </div>

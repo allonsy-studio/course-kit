@@ -120,3 +120,31 @@ test("a component's scoped CSS never wraps :host in :is, :where, :not or :has, w
 	}
 	assert.deepEqual(wrapped, []);
 });
+
+test("every documented prop is read by its component's template or script", () => {
+	const unread = [];
+	for (const file of files) {
+		const text = fs.readFileSync(file, "utf8");
+		const setup = /^<script webc:setup>([\s\S]*?)<\/script>/.exec(text);
+		if (!setup) continue;
+		const names = [...setup[1].matchAll(/@prop \{(?:[^{}]|\{[^{}]*\})*\} \[?([A-Za-z]+)/g)].map((match) => match[1]);
+		const body = text.slice(setup[0].length).replace(/<style[\s\S]*?<\/style>/g, "") + setup[1].split("*/").slice(1).join("*/");
+		for (const name of names) if (!new RegExp(`(?<![\\w.-])${name}(?![\\w-])`).test(body)) unread.push(`${path.relative(root, file)}: ${name}`);
+	}
+	assert.deepEqual(unread, []);
+});
+
+test("callout colors itself from the type prop or the type attribute, and ignores any other value", async () => {
+	const { WebC } = await import("@11ty/webc");
+	const render = async (markup) => {
+		const page = new WebC();
+		page.defineComponents(path.join(packageRoot, "components", "ui", "callout.webc"));
+		page.setContent(markup);
+		return (await page.compile({ data: {} })).html;
+	};
+	assert.match(await render('<callout @type="warn">x</callout>'), /class="callout warn"/);
+	assert.match(await render("<callout :type=\"'error'\">x</callout>"), /class="callout error"/);
+	assert.match(await render("<callout :type=\"'success'\">x</callout>"), /type="success"/);
+	assert.match(await render('<callout @type="bogus">x</callout>'), /class="callout"/);
+	assert.match(await render("<callout>x</callout>"), /class="callout"/);
+});

@@ -37,7 +37,7 @@ A highlighted aside. The content is the slot.
 
 | Prop | Type | |
 |---|---|---|
-| `[type]` | `'success' \| 'warn' \| 'error'` | the color of the edge and wash; none is the brand color |
+| `[type]` | `'success' \| 'warn' \| 'error'` | the color of the edge and wash; none, or any other value, is the brand color. Write it `@type="warn"` or as the attribute `:type="'warn'"`: both color it. |
 
 ### `<card-list>`
 
