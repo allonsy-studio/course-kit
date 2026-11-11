@@ -39,7 +39,7 @@
 </head>
 
 <body>
-    <a href="#main-content" id="to-content" class="sr-only">Skip to content</a>
+    <a href="#main-content" id="to-content" class="sr-only" @text="$data.copy.base.skipToContent"></a>
 
     <masthead></masthead>
 

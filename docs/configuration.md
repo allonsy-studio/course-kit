@@ -35,6 +35,7 @@ Every option is optional.
 | `demos.runtime` | `none` | How runnable demos are served: `codepen` or `pyscript`. `pyscript` needs `@pyscript/core` and `pyodide` installed in your course. |
 | `slides.decks` | `content/slides` | Where your slide decks are, if not the default. |
 | `worksheets.checkMode` | `end` | How students check a practice worksheet: `end` shows only See results at the end; `question` also puts a Check answer button on every gradable question. A worksheet's own `checkMode` front matter wins. |
+| `copy` | none | A course's own copy namespaces, for components only it has. See [Course-only copy](#course-only-copy). |
 | `components` | none | Extra component file patterns, beyond your `_includes` folder. |
 | `theme` | `{}` | Color overrides, in the shape of `_data/theme.json`, which wins over them. See [color tokens](tokens.md). |
 | `inputDir`, `outputDir`, `dataDir` | `content`, `public`, `_data` | Where your pages, the built site and your data files live. |
@@ -98,7 +99,11 @@ The kit's English lives in `lib/copy.js` (`COPY_DEFAULTS`, one namespace per com
 { "schedule": { "dueKindReading": "Homework" } }
 ```
 
-A key that is not a copy key stops the build with `strings.json: "schedule.nope" is not a copy key`, and a value must be a string (`code.languages` is a map of language names to labels). A key with `_one` and `_other` variants is picked by a count. Scripts read the same table from the `#copy-data` block each page carries. A worksheet overrides only its own `worksheet` keys, with `copy:` in its front matter.
+A key that is not a copy key stops the build with `strings.json: "schedule.nope" is not a copy key`, and a value must be a string (`code.languages` is a map of language names to labels). A key with `_one` and `_other` variants is picked by a count. Scripts read the same table from the `#copy-data` block each page carries. A worksheet overrides only its own `worksheet` keys, with `copy:` in its front matter. [Copy keys](copy.md) lists every key and its default.
+
+#### Course-only copy
+
+A course with components the kit does not have gives their wording its own namespaces, passed as the `copy` option: `courseKit(config, { copy: { phpLab: { run: "Run", reset: "Reset" } } })`. They sit beside the shared ones (`$data.copy.phpLab.run`, and `COPY.phpLab` in scripts), and `_data/strings.json` can override them like any other. A name the kit already uses is refused, so a course can never change what a kit component reads.
 
 ## For developers
 

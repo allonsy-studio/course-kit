@@ -35,7 +35,7 @@
   "scripts": {
     "test": "node --test",
     "schema": "node scripts/theme-schema.js && node scripts/theme-docs.js",
-    "docs": "node scripts/component-docs.js",
+    "docs": "node scripts/component-docs.js && node scripts/copy-docs.js",
     "preview": "node scripts/site.js start",
     "preview:build": "node scripts/site.js build",
     "docs:build": "node scripts/site.js build",

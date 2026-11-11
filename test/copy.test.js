@@ -38,6 +38,19 @@ test("strings.json overrides a key, keeps the rest, and fails on a key that is n
 	resolveCopy({ dataDir: "_data" });
 });
 
+test("a course's own namespaces layer on the shared defaults, strings.json can override them, and a shared name is refused", () => {
+	try {
+		const copy = resolveCopy({ dataDir: dirWith({ phpLab: { run: "Go" } }), extra: { phpLab: { run: "Run", reset: "Reset" } } });
+		assert.equal(copy.phpLab.run, "Go");
+		assert.equal(copy.phpLab.reset, "Reset");
+		assert.equal(copy.nav.site, "Site");
+		assert.throws(() => resolveCopy({ dataDir: dirWith({ phpLab: { nope: "x" } }) }), /"phpLab\.nope" is not a copy key/);
+		assert.throws(() => resolveCopy({ extra: { nav: { site: "x" } } }), /"nav" is a shared namespace/);
+	} finally {
+		resolveCopy({ dataDir: "_data", extra: {} });
+	}
+});
+
 test("fill replaces placeholders and plural picks the variant for the count", () => {
 	assert.equal(fill("Week {week} · {weekday}", { week: 3, weekday: "Tuesday" }), "Week 3 · Tuesday");
 	assert.equal(fill("{missing}!", {}), "!");

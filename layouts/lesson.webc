@@ -1,33 +1,27 @@
 ---
 layout: "base"
 ---
+<script webc:setup>
+	const copy = $data.copy.lesson;
+	const link = (href, text) => `<a href="${href}">${text}</a>`;
+</script>
 
 <section class="lesson-list content-column wide">
 	<eyebrow class="separators">
 		<span @text="$data.term.label"></span>
 		<span @text="$data.code"></span>
 	</eyebrow>
-	<h1>Lesson plans</h1>
-	<p>
-		One plan per class meeting (<span @text="timeOfDay($data.schedule?.meetings?.time)"></span>), generated
-		from the course schedule and the academic calendar. Holidays are shown in
-		sequence so the term reads day by day.
-	</p>
-	<p webc:if="$data.collections.deck?.length">
-		<a href="/slides/">Slide index</a> — every deck in meeting order. Speaker
-		notes are on a separate printable sheet per deck, linked as "Notes" below.
-	</p>
+	<h1 @text="copy.lessonPlans"></h1>
+	<p @text="fill(copy.onePlanPerClass, { time: timeOfDay($data.schedule?.meetings?.time) })"></p>
+	<p webc:if="$data.collections.deck?.length" @raw="fill(copy.everyDeckInMeeting, { link: link('/slides/', copy.slideIndex) })"></p>
 
-	<p webc:if="$data.collections.assignment?.length">
-		<a href="/assignment/">Exercises</a> — the brief and starter for each.
-		Exercises due on a meeting are linked from its row below.
-	</p>
+	<p webc:if="$data.collections.assignment?.length" @raw="fill(copy.theBriefAndStarter, { link: link('/assignment/', copy.exercises) })"></p>
 
 	<table class="table-light" webc:if="$data.term.instructorDates?.length">
 		<thead>
 			<tr>
-				<th scope="col">Instructor deadlines</th>
-				<th scope="col">Due date</th>
+				<th scope="col" @text="copy.instructorDeadlines"></th>
+				<th scope="col" @text="copy.dueDate"></th>
 			</tr>
 		</thead>
 		<tr webc:for="item of $data.term.instructorDates">
@@ -37,30 +31,30 @@ layout: "base"
 	</table>
 
 	<table>
-		<caption class="sr-only">Every class meeting of the term, in order</caption>
+		<caption class="sr-only" @text="copy.everyClassMeetingOf"></caption>
 		<thead>
 			<tr>
-				<th scope="col">Date</th>
-				<th scope="col">Links</th>
-				<th scope="col">Topics</th>
+				<th scope="col" @text="copy.date"></th>
+				<th scope="col" @text="copy.links"></th>
+				<th scope="col" @text="copy.topics"></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr webc:for="lesson of $data.lessons" :data-date="lesson.date">
 				<td>
 					<span @text="lesson.display"></span>
-					<span class="muted" webc:if="lesson.substitution"><br/>(runs a <span @text="lesson.substitution"></span> schedule)</span>
+					<span class="muted" webc:if="lesson.substitution"><br/><span @text="fill(copy.runsASchedule, { weekday: lesson.substitution })"></span></span>
 				</td>
-				<td webc:if="lesson.noClass" colspan="2" class="muted no-class">No class — <span @text="lesson.noClass"></span></td>
+				<td webc:if="lesson.noClass" colspan="2" class="muted no-class" @text="fill(copy.noClass, { reason: lesson.noClass })"></td>
 				<template webc:else webc:nokeep>
 					<td>
-						<a :href="`/lessons/week-${lesson.week}/day-${lesson.day}/`">Lesson&nbsp;plan</a>
+						<a :href="`/lessons/week-${lesson.week}/day-${lesson.day}/`" @text="copy.lessonPlan"></a>
 						<span webc:nokeep webc:for="deck of ($data.collections.deck ?? []).filter((d) => d.data.week === lesson.week && d.data.day === lesson.day)">
-							<br/><a :href="deck.url" @text="deck.data.addendum ? 'Addendum' : 'Slides'"></a>
-							<br/><a :href="deckNotesUrl(deck.data.week, deck.data.day, deck.data.addendum === true)" @text="deck.data.addendum ? 'Addendum notes' : 'Notes'"></a>
+							<br/><a :href="deck.url" @text="deck.data.addendum ? copy.addendum : copy.slides"></a>
+							<br/><a :href="deckNotesUrl(deck.data.week, deck.data.day, deck.data.addendum === true)" @text="deck.data.addendum ? copy.addendumNotes : copy.notes"></a>
 						</span>
 						<span webc:nokeep webc:for="assignment of assignmentsDue($data.collections.assignment, lesson, $data.lessons)">
-							<br/>Due: <a :href="assignment.url" @text="assignment.title"></a> (<span @text="assignment.dueLabel"></span>)
+							<br/><span @text="copy.due"></span> <a :href="assignment.url" @text="assignment.title"></a> (<span @text="assignment.dueLabel"></span>)
 						</span>
 					</td>
 					<td>

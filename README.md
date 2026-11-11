@@ -49,6 +49,7 @@ You need [Node.js](https://nodejs.org) 22 or newer, and a terminal.
 | Know what goes in each data file | [Data files](docs/data-files.md) |
 | Write pages, slides and practice sheets | [Writing content](docs/writing-content.md) |
 | Change the name, time zone, or what the build does | [Configuration](docs/configuration.md) |
+| Change the wording students read | [Copy keys](docs/copy.md) |
 | Make the site look like my college | [Design](docs/design.md), [color tokens](docs/tokens.md) and the [theme panel](docs/theme-panel.md) |
 | Look up a component | [Component reference](docs/components-reference.md) |
 | See every component rendered | [Component preview](docs/preview.md) (`yarn preview`) |
