@@ -1,6 +1,6 @@
 <script webc:setup>
 	/**
-	 * The Check and Reset buttons and the score line for one worksheet scope. `practice.js` shows them and fills the tally.
+	 * The Check and Reset buttons and the score line for one worksheet scope. `practice.js` wires them and fills the tally.
 	 * @prop {string} scope ties the buttons and tally to a question or section
 	 * @prop {string} label the check button's text
 	 * @prop {string} reset the reset button's text
@@ -8,8 +8,8 @@
 	 */
 </script>
 <template webc:nokeep>
-	<button type="button" :data-check="scope" hidden @text="label"></button>
-	<button type="button" :data-reset="scope" :data-confirm="confirm" hidden @text="reset"></button>
+	<button type="button" :data-check="scope" @text="label"></button>
+	<button type="button" :data-reset="scope" :data-confirm="confirm" @text="reset"></button>
 	<p :data-tally="scope" role="status"></p>
 </template>
 

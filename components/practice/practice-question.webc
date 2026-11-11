@@ -24,7 +24,7 @@
 	<practice-judge webc:if="q.kind === 'judge'" :@q="q"></practice-judge>
 	<practice-selfcheck webc:if="q.kind === 'selfcheck'" :@q="q"></practice-selfcheck>
 
-	<button type="button" class="check-one" data-check-one hidden webc:if="$data.worksheet.checkMode === 'question' && q.kind !== 'selfcheck'" @text="$data.worksheet.copy.checkOne"></button>
+	<button type="button" class="check-one" data-check-one webc:if="$data.worksheet.checkMode === 'question' && q.kind !== 'selfcheck'" @text="$data.worksheet.copy.checkOne"></button>
 	<p class="feedback" role="status" hidden></p>
 	<div class="why" hidden>
 		<p @text="q.why"></p>

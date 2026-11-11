@@ -289,7 +289,7 @@ The widgets a practice worksheet is made of. `<practice-worksheet>` assembles th
 
 ### `<check-controls>`
 
-The Check and Reset buttons and the score line for one worksheet scope. `practice.js` shows them and fills the tally.
+The Check and Reset buttons and the score line for one worksheet scope. `practice.js` wires them and fills the tally.
 
 | Prop | Type | |
 |---|---|---|

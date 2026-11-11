@@ -615,10 +615,9 @@ for (const question of document.querySelectorAll(".question[data-kind='fill']"))
 	markUsedWords(question);
 }
 
-/* On load: show the buttons, restore saved answers, start the question list. */
+/* On load: restore saved answers and start the question list. */
 prune();
 for (const root of document.querySelectorAll("[data-worksheet]")) {
-	for (const button of root.querySelectorAll("[data-check], [data-reset], [data-check-one]")) button.hidden = false;
 	for (const question of questionsIn(root, "#worksheet")) {
 		if (!isGradable(question)) setState(question, "self");
 		else if (!question.dataset.state) setState(question, "unattempted");
