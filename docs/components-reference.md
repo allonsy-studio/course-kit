@@ -41,7 +41,7 @@ A highlighted aside. The content is the slot.
 
 ### `<card-list>`
 
-A list of cards, each linking to a page. A card shows the page's code, name and description unless the slot supplies its own content. Instead of `items` you can write the cards yourself as a `<ul>` of `<li>` cards in the `cards` slot (the default slot is taken: it is each card's own content); the array wins when it has items, and when it is missing or empty the `cards` slot is rendered instead.
+A list of cards, each linking to a page. A card shows the page's code, name and description unless the slot supplies its own content. Instead of `items` you can write the cards yourself as a `<ul>` of `<li>` cards in the `cards` slot (the default slot is taken: it is each card's own content); the array wins when it has items, and when it is missing or empty the `cards` slot is rendered instead. A card written in the slot must name its overlay link, as the items form does: `<li><a href="/x/" aria-labelledby="x-name"></a><h3 id="x-name">Name</h3></li>`.
 
 | Prop | Type | |
 |---|---|---|

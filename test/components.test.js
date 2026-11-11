@@ -4,6 +4,7 @@ import path from "node:path";
 import { test } from "node:test";
 
 import { walk } from "../lib/files.js";
+import { pathToFileURL } from "node:url";
 import { componentsDoc, readHeader } from "../scripts/component-docs.js";
 import { packageRoot } from "../lib/paths.js";
 
@@ -94,4 +95,19 @@ test("link-list, card-list and nav-links render their data, fall back to the slo
 		assert.match(emptied, /From slot/, `${tag}: an empty array falls back to the slot`);
 		assert.match(await render(file, `<${tag}>${slotted}</${tag}>`), /From slot/, `${tag}: a missing prop falls back to the slot`);
 	}
+});
+
+test("no story writes a link with no name in a slot", async () => {
+	const unnamed = [];
+	for (const file of walk(path.join(packageRoot, "preview", "stories"), (name) => name.endsWith(".stories.js"))) {
+		const stories = await import(pathToFileURL(file).href);
+		for (const [exportName, story] of Object.entries(stories)) {
+			if (exportName === "default") continue;
+			for (const value of Object.values(story.args ?? {})) {
+				if (typeof value !== "string") continue;
+				for (const [anchor] of value.matchAll(/<a\b[^>]*>\s*<\/a>/g)) if (!/aria-label(ledby)?=/.test(anchor)) unnamed.push(`${path.basename(file)} ${exportName}: ${anchor}`);
+			}
+		}
+	}
+	assert.deepEqual(unnamed, []);
 });
