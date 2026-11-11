@@ -8,4 +8,3 @@ layout: "base"
 	</div>
 	<article class="content-column" @raw="content"></article>
 </div>
-<script type="module" src="/js/prompt-copy.js" webc:keep></script>

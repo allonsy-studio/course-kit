@@ -21,5 +21,6 @@
 		<script type="application/json" id="copy-data" webc:keep @raw="copyJson($data)"></script>
 		<template webc:nokeep @raw="bundleFile('js', 'preview/content/scripts/practice.js', $data)"></template>
 		<script type="module" webc:keep @raw="getBundle('js')"></script>
+		<script type="module" src="/js/copy.js" webc:keep></script>
 	</body>
 </html>

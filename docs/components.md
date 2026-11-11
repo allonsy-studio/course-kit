@@ -10,6 +10,8 @@ WebC components in `components/`, in three folders. Component names are global, 
 
 Every component also needs an example in the [preview](preview.md): `preview/stories/<folder>/<name>.stories.js`.
 
+**Contributor rules.** A new or changed component meets WCAG 2.2 AAA and ships with what the [definition of done](accessibility.md#definition-of-done-for-a-component) lists: copy keys, roles and states, focus order, forced-colors and reduced-motion rules, 44px targets, a story for every variant, and a test. Two rules are easy to miss: **every variant is demoed** (each `options` value, each boolean on and off, a long title, a missing optional field), and **a prop that takes a list or an object also accepts semantic markup** in the default slot (`<dl>`, `<ul>`, `<table>`) that reads well with no styles or script. A boolean prop is set by a bare `@name`, which WebC passes as an empty string, so test it as "present and not `false`", never as truthy.
+
 `yarn test` holds the rules: every component opens with a JSDoc header in a `<script webc:setup>` (the props and slots it takes), `ui/` does not read `$data`, a component's CSS has no color literals, and nothing sits outside the three folders.
 
 ## Building blocks
@@ -36,6 +38,8 @@ A component that lists meetings renders `<today-marker>` once, puts `data-today-
 
 `ui/` components take their strings as props (`label`, `slidesLabel`, a `copy` table) and a `site/` component passes them from `$data.copy`. Every other string is a copy key: see [Changing the wording](configuration.md#changing-the-wording). Components and scripts hold no student-facing English.
 
+**Scripts.** `assets/scripts/` holds behavior that is not tied to one component, named for what it does (`copy.js`, `email.js`, `deck.js`). A script that serves one component lives in that component's `.webc`, in a `<script>` tag: WebC hoists it into the page's `js` bundle once however often the component appears, so it wraps its code in a function and keeps no top-level names (bundled scripts share one module scope).
+
 ### The home band and the schedule
 
 `<course-now>` is the home page's opening band: the next class (labelled "Today's class", "Next class" or, before the term, "First class"), what is due soon with a chip for each item's kind, and one bar per week. It builds its weeks from the page (`:@weeks` and `scheduleUrl` are optional), carries its data as JSON in the page, and stays hidden until its script has judged "today" in the campus zone. The deadlines come from the `courseDeadlines` filter: every dated item of a meeting, every dated reading, every `Test n` meeting and the final exam.
@@ -56,4 +60,4 @@ The top menu is Home, Syllabus, then every page with an `eleventyNavigation` tha
 
 ## The glossary
 
-`glossary` is the page. `glossary-panel` wraps the static list and carries the stylesheet, which also styles what the script builds. `glossary-entry` is one term. `scripts/glossary.js` defines `<glossary-app>`, which mounts on its own element. The tag hues are the `tag-test`, `tag-reading` and `tag-meeting` theme tokens; each kind's tints derive from its hue.
+`glossary` is the page. `glossary-panel` wraps the static list and carries the stylesheet, which also styles what the script builds. `glossary-entry` is one term. The script at the foot of `glossary-panel.webc` defines `<glossary-app>`, which mounts on its own element. The tag hues are the `tag-test`, `tag-reading` and `tag-meeting` theme tokens; each kind's tints derive from its hue.

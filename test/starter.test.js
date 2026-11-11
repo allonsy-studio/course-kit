@@ -151,7 +151,7 @@ test("the top menu starts with Home and Syllabus, and the footer lists the instr
 });
 
 test("a fence in a page is a code block with its edge, and the script finds its copy strings in the copy block", () => {
-	const source = fs.readFileSync(path.join(root, "assets", "scripts", "code-copy.js"), "utf8");
+	const source = fs.readFileSync(path.join(root, "assets", "scripts", "copy.js"), "utf8");
 	assert.ok(source.includes('t("code", "copy")'));
 	assert.ok(!/"Copy code"|"Copied"/.test(source));
 });
