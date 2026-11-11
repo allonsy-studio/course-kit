@@ -1,19 +1,25 @@
 <script webc:setup>
 	/**
-	 * The site navigation as a list of links, marking the current page.
+	 * The site navigation as a list of links, marking the current page. Give it the `navigation` array, or write the links in the default slot
+	 * as a `<ul>` of `<li><a>`; the array wins when it has items, and when it is missing or empty the slot is rendered instead.
 	 * @prop {{ url: string, title: string }[]} navigation pages from `eleventyNavigation`
 	 * @prop {'footer' | 'hero'} [context] adds the instructor's contact link in the footer and the hero
 	 */
 </script>
-<nav webc:root="override" :data-context="context" webc:if="navigation?.length">
-    <ul role="list">
+<nav webc:root="override" :data-context="context">
+    <ul role="list" webc:if="navigation?.length">
         <li webc:for="item of navigation">
             <a :href="item?.url" @attributes="({ 'aria-current': item?.url === $data?.page?.url ? 'page' : undefined })" @text="item?.title"></a>
         </li>
         <li webc:if="$data.instructor?.contact && (context === 'footer' || context === 'hero')"><a :href="$data.instructor.contact" @text="$data.copy.nav.contact"></a></li>
     </ul>
+    <slot webc:if="!navigation?.length"></slot>
 </nav>
 <style webc:scoped>
+:host:not(:has(li)) {
+    display: none;
+}
+
 :host {
     display: flex;
     gap: calc(var(--container-space) * 3.5);

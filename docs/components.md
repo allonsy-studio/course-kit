@@ -10,6 +10,8 @@ WebC components in `components/`, in three folders. Component names are global, 
 
 Every component also needs an example in the [preview](preview.md): `preview/stories/<folder>/<name>.stories.js`.
 
+**Two ways to give a list.** `assigned-list`, `link-list`, `card-list` (its `cards` slot) and `nav-links` take their data as a prop, or the same list as a `<ul>` or `<dl>` in a slot. The prop wins when it has items; when it is missing or empty the slot is rendered, so the list shows if the data does not load. See the [backlog](backlog.md) for the components that do not yet.
+
 **Contributor rules.** A new or changed component meets WCAG 2.2 AAA and ships with what the [definition of done](accessibility.md#definition-of-done-for-a-component) lists: copy keys, roles and states, focus order, forced-colors and reduced-motion rules, 44px targets, a story for every variant, and a test. Two rules are easy to miss: **every variant is demoed** (each `options` value, each boolean on and off, a long title, a missing optional field), and **a prop that takes a list or an object also accepts semantic markup** in the default slot (`<dl>`, `<ul>`, `<table>`) that reads well with no styles or script. A prop with a camelCase name is written kebab-case in an attribute (`dueOn` is `@due-on`), because HTML lowercases attribute names and `@dueOn` would arrive as `dueon`. A boolean prop is set by a bare `@name`, which WebC passes as an empty string, so test it as "present and not `false`", never as truthy.
 
 `yarn test` holds the rules: every component opens with a JSDoc header in a `<script webc:setup>` (the props and slots it takes), `ui/` does not read `$data`, a component's CSS has no color literals, and nothing sits outside the three folders.

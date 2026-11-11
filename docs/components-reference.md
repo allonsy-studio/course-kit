@@ -41,11 +41,16 @@ A highlighted aside. The content is the slot.
 
 ### `<card-list>`
 
-A list of cards, each linking to a page. A card shows the page's code, name and description unless the slot supplies its own content.
+A list of cards, each linking to a page. A card shows the page's code, name and description unless the slot supplies its own content. Instead of `items` you can write the cards yourself as a `<ul>` of `<li>` cards in the `cards` slot (the default slot is taken: it is each card's own content); the array wins when it has items, and when it is missing or empty the `cards` slot is rendered instead.
 
 | Prop | Type | |
 |---|---|---|
 | `items` | `object[]` | pages, each with `data` and `page.url` |
+
+Slots:
+
+- `cards`: the cards as a `<ul>`, used when `items` is missing or empty
+- `default`: each card's own content, in place of its code, name and description
 
 ### `<codepen-embed>`
 
@@ -79,7 +84,7 @@ A small line above a heading. The content is the slot.
 
 ### `<link-list>`
 
-A list of links, each with a name and an optional description.
+A list of links, each with a name and an optional description. Give it the `items` array, or write the list in the default slot as a `<ul>` of links, or as a `<dl>` (`<dt>` the link, `<dd>` the description). The array wins when it has items; when it is missing or empty the slot is rendered instead.
 
 | Prop | Type | |
 |---|---|---|
@@ -230,7 +235,7 @@ The page header: institution, term, course title and the navigation. Reads `site
 
 ### `<nav-links>`
 
-The site navigation as a list of links, marking the current page.
+The site navigation as a list of links, marking the current page. Give it the `navigation` array, or write the links in the default slot as a `<ul>` of `<li><a>`; the array wins when it has items, and when it is missing or empty the slot is rendered instead.
 
 | Prop | Type | |
 |---|---|---|

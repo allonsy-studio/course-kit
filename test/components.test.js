@@ -70,3 +70,28 @@ test("assigned-list renders the items array, falls back to its slot's <dl> when 
 	assert.doesNotMatch(empty, /<li/);
 	assert.match(await render(`<assigned-list @label="Due">${dl}</assigned-list>`), /From the slot/);
 });
+
+test("link-list, card-list and nav-links render their data, fall back to the slot when it is empty, and hide when both are empty", async () => {
+	const { WebC } = await import("@11ty/webc");
+	const render = async (file, markup) => {
+		const page = new WebC();
+		page.defineComponents([path.join(packageRoot, "components", file), path.join(packageRoot, "components", "ui", "eyebrow.webc")]);
+		page.setHelper("slugify", (text) => String(text).toLowerCase().replace(/\W+/g, "-"));
+		page.setContent(markup);
+		return (await page.compile({ data: { copy: {} } })).html;
+	};
+	const cases = [
+		["ui/link-list.webc", "link-list", ':@items="[{ url: \'/a\', name: \'From data\' }]"', "<ul><li><a href='/s'>From slot</a></li></ul>", "default"],
+		["ui/card-list.webc", "card-list", ':@items="[{ data: { name: \'From data\' }, page: { url: \'/a\' } }]"', "<ul><li>From slot</li></ul>", "cards"],
+		["site/nav-links.webc", "nav-links", ':@navigation="[{ url: \'/a\', title: \'From data\' }]"', "<ul><li><a href='/s'>From slot</a></li></ul>", "default"],
+	];
+	for (const [file, tag, data, slot, name] of cases) {
+		const slotted = name === "default" ? slot : `<template slot="${name}" webc:nokeep>${slot}</template>`;
+		const withData = await render(file, `<${tag} ${data}>${slotted}</${tag}>`);
+		assert.match(withData, /From data/, `${tag}: the data renders`);
+		assert.doesNotMatch(withData, /From slot/, `${tag}: the data wins when it has items`);
+		const emptied = await render(file, `<${tag} :@${tag === "nav-links" ? "navigation" : "items"}="[]">${slotted}</${tag}>`);
+		assert.match(emptied, /From slot/, `${tag}: an empty array falls back to the slot`);
+		assert.match(await render(file, `<${tag}>${slotted}</${tag}>`), /From slot/, `${tag}: a missing prop falls back to the slot`);
+	}
+});
