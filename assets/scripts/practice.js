@@ -625,8 +625,7 @@ for (const question of document.querySelectorAll(".question[data-kind='fill']"))
 	markUsedWords(question);
 }
 
-/* On load: unhide the buttons (they ship hidden so a no-JS reader is never
-   offered a dead control), restore saved answers, start the question list. */
+/* On load: show the buttons, restore saved answers, start the question list. */
 prune();
 for (const root of document.querySelectorAll("[data-worksheet]")) {
 	for (const button of root.querySelectorAll("[data-check], [data-reset], [data-check-one]")) button.hidden = false;

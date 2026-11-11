@@ -1,7 +1,7 @@
 <script webc:setup>
 	/**
 	 * The course glossary page: every `vocab` and `api` slide as one tagged
-	 * term, listed A to Z for readers without scripts and enhanced into
+	 * term, listed A to Z and enhanced into
 	 * Review and Flashcards by `<glossary-panel>`.
 	 * Reads the `glossary` global.
 	 */

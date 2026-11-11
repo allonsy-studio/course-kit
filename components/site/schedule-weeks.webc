@@ -119,8 +119,8 @@
      * <schedule-weeks>: mark finished weeks "Done" and the current one "Now",
      * fill the "This week" card from that week's meetings, and let readers
      * hide past weeks (every visit starts with all weeks shown). Dates compare
-     * in the campus zone, as <today-marker> does. Without the script every
-     * week shows and the tools stay hidden.
+     * in the campus zone, as <today-marker> does. The tools are
+     * screen only.
      */
     (() => {
         try {
