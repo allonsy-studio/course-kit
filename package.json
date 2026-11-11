@@ -30,7 +30,8 @@
     "components",
     "assets",
     "glue",
-    "schemas"
+    "schemas",
+    "examples/starter"
   ],
   "scripts": {
     "test": "node --test",
@@ -43,7 +44,10 @@
     "docs:test": "cypress run --project website",
     "pages:build": "node scripts/site.js build",
     "format": "opx lint --fix",
-    "lint": "opx lint"
+    "lint": "opx lint",
+    "changeset": "opx release add",
+    "version": "opx release version && yarn install --mode update-lockfile",
+    "release": "opx release publish"
   },
   "dependencies": {
     "@11ty/eleventy-navigation": "^1.0.5",
@@ -96,6 +100,7 @@
     "@allons-y/opx-lint-js": "^1.0.0",
     "@allons-y/opx-lint-json": "^0.1.0",
     "@allons-y/opx-lint-md": "^0.1.0",
+    "@allons-y/opx-release": "^0.1.1",
     "@allons-y/webc-code-sample": "0.1.0-beta.3",
     "@allons-y/webc-oss-site": "0.1.0-beta.3",
     "@allons-y/webc-patterns": "0.1.0-beta.3",
@@ -108,5 +113,9 @@
   "oss-docs": {
     "site": "website",
     "flavor": "landing"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

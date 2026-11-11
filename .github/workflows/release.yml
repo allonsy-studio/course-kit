@@ -1,0 +1,49 @@
+name: Release
+
+on:
+    push:
+        branches:
+            - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+    release:
+        name: Release
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write # version commits, tags and GitHub releases
+            pull-requests: write # the release pull request
+            id-token: write # npm trusted publishing and provenance
+
+        steps:
+            - name: Check out code
+              uses: actions/checkout@v7
+
+            - name: Enable Corepack
+              run: corepack enable
+
+            - name: Use Node
+              uses: actions/setup-node@v7
+              with:
+                  cache: yarn
+                  node-version-file: .nvmrc
+                  registry-url: https://registry.npmjs.org
+
+            - name: Use a current npm
+              run: npm install --global npm@latest # trusted publishing needs 11.5.1 or later
+
+            - name: Install dependencies
+              run: yarn install --immutable --mode=skip-build
+
+            - name: Open the release pull request, or publish
+              uses: changesets/action@v1
+              with:
+                  version: yarn run version
+                  publish: yarn release
+                  title: "chore(release): version packages"
+                  commit: "chore(release): version packages"
+                  commitMode: github-api
+                  createGithubReleases: false # opx release publish makes them
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
