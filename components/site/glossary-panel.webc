@@ -95,42 +95,101 @@
 			}
 		}
 
+		/* Group by and the Review / Flashcards tabs: the castastrophe segmented
+		   switch. One pill track; the checked radio or selected tab fills with
+		   the accent. Where anchor positioning exists, one pill slides to it
+		   and squishes toward its center on the way; it jumps under reduced
+		   motion. */
 		.seg {
 			display: inline-flex;
 			flex-wrap: wrap;
-			border-radius: var(--standard-border-radius);
+			gap: var(--gutter);
+			padding: var(--gutter);
+			border: var(--thin-border-width) solid var(--color-text-muted);
+			border-radius: 999px;
 
 			button {
-				padding-inline: 0.9em;
-				border-radius: 0;
-				margin-inline-start: calc(var(--thin-border-width) * -1);
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				min-block-size: 2.25rem;
+				padding: 0.3em 0.9em;
+				border: 0;
+				border-radius: 999px;
+				background: none;
+				color: var(--color-text);
+				font-size: max(var(--base-font-size), 0.875em);
+				font-weight: var(--font-weight);
 
-				&:first-child {
-					border-start-start-radius: var(--standard-border-radius);
-					border-end-start-radius: var(--standard-border-radius);
-					margin-inline-start: 0;
+				&:is([aria-checked="true"], [aria-selected="true"]) {
+					background-color: var(--color-accent);
+					color: var(--color-on-accent);
+					font-weight: var(--font-weight--semi-bold);
 				}
 
-				&:last-child {
-					border-start-end-radius: var(--standard-border-radius);
-					border-end-end-radius: var(--standard-border-radius);
+				&:focus-visible {
+					outline: var(--border-width) solid var(--color-text);
+					outline-offset: 2px;
 				}
+			}
+		}
 
-				&[aria-checked="true"] {
-					background-color: var(--color-surface-accent);
-					border-color: var(--color-accent-text);
-					box-shadow: inset 0 calc(var(--border-width) * -1) 0 var(--color-accent-text);
-					font-weight: var(--font-weight--bold);
+		@supports (anchor-name: --seg-on) {
+			.seg {
+				position: relative;
+				isolation: isolate;
+				anchor-scope: --seg-on;
+
+				button {
 					position: relative;
+					z-index: 1;
+
+					&:is([aria-checked="true"], [aria-selected="true"]) {
+						anchor-name: --seg-on;
+						background-color: transparent;
+					}
 				}
 
-				&[aria-selected="true"] {
-					background-color: var(--color-text);
-					border-color: var(--color-text);
-					color: var(--color-page);
-					min-inline-size: 6.5em;
-					position: relative;
+				&::before {
+					content: "";
+					position: absolute;
+					z-index: 0;
+					position-anchor: --seg-on;
+					inset-block-start: anchor(start);
+					inset-block-end: anchor(end);
+					inset-inline-start: anchor(start);
+					inline-size: anchor-size(inline);
+					border-radius: 999px;
+					background-color: var(--color-accent);
 				}
+			}
+
+			@media (prefers-reduced-motion: no-preference) {
+				.seg {
+					--squish: cubic-bezier(0.65, 0, 0.35, 1);
+
+					&::before {
+						transform-origin: center;
+						transition:
+							inset-inline-start 300ms var(--squish),
+							inline-size 340ms var(--squish) 90ms;
+					}
+
+					button {
+						transition: color 200ms ease-out;
+					}
+
+					/* A keyframes copy per option, so each change restarts the squish. */
+					&:has(button:nth-of-type(1):is([aria-checked="true"], [aria-selected="true"]))::before { animation: seg-squish-a 340ms var(--squish); }
+					&:has(button:nth-of-type(2):is([aria-checked="true"], [aria-selected="true"]))::before { animation: seg-squish-b 340ms var(--squish); }
+					&:has(button:nth-of-type(3):is([aria-checked="true"], [aria-selected="true"]))::before { animation: seg-squish-c 340ms var(--squish); }
+					&:has(button:nth-of-type(4):is([aria-checked="true"], [aria-selected="true"]))::before { animation: seg-squish-d 340ms var(--squish); }
+				}
+
+				@keyframes seg-squish-a { 45% { scale: 0.88 0.8; } }
+				@keyframes seg-squish-b { 45% { scale: 0.88 0.8; } }
+				@keyframes seg-squish-c { 45% { scale: 0.88 0.8; } }
+				@keyframes seg-squish-d { 45% { scale: 0.88 0.8; } }
 			}
 		}
 
