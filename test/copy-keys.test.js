@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { test } from "node:test";
 
-import { COPY_DEFAULTS } from "../lib/copy.js";
+import { CLIENT_COPY, COPY_DEFAULTS, copyJson } from "../lib/copy.js";
 import { copyDoc } from "../scripts/copy-docs.js";
 
 const root = path.resolve(import.meta.dirname, "..");
@@ -80,4 +80,31 @@ test("every default is a string, and each _one variant has an _other", () => {
 
 test("docs/copy.md lists every key and is current (run `yarn docs`)", () => {
 	assert.equal(fs.readFileSync(path.join(root, "docs", "copy.md"), "utf8"), copyDoc());
+});
+
+/** The namespaces the client scripts read: `t("ns", …)`, `ckCopy.t("ns", …)` and `COPY.ns`, in assets/scripts and in each component's `<script>` tags. */
+const clientNamespaces = () => {
+	const found = new Set();
+	for (const { file, text } of sources) {
+		const code = file.startsWith(path.join("assets", "scripts")) ? text : [...text.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((match) => match[1]).join("\n");
+		for (const match of code.matchAll(/\bt\(\s*"(\w+)"\s*,/g)) found.add(match[1]);
+		for (const match of code.matchAll(/ckCopy\.t\(\s*"(\w+)"/g)) found.add(match[1]);
+		for (const match of code.matchAll(/\bCOPY\.(\w+)/g)) found.add(match[1]);
+	}
+	return found;
+};
+
+test("CLIENT_COPY lists every namespace a client script reads, and no other", () => {
+	const read = clientNamespaces();
+	assert.deepEqual([...read].filter((ns) => !CLIENT_COPY.includes(ns) && ns in COPY_DEFAULTS), [], "read by a script but not in CLIENT_COPY");
+	assert.deepEqual(CLIENT_COPY.filter((ns) => !read.has(ns)), [], "in CLIENT_COPY but read by no script");
+	assert.deepEqual(CLIENT_COPY.filter((ns) => !(ns in COPY_DEFAULTS)), [], "not a namespace");
+});
+
+test("#copy-data carries the client namespaces, a course's own, and the page's worksheet copy", () => {
+	const data = { copy: { ...COPY_DEFAULTS, demo: { run: "Run" } } };
+	const carried = Object.keys(JSON.parse(copyJson(data)));
+	assert.ok(!carried.includes("syllabus") && !carried.includes("lessonDetail"), "build-only namespaces stay out");
+	assert.ok(carried.includes("home") && carried.includes("worksheet"));
+	assert.ok(Object.keys(JSON.parse(copyJson(data, ["demo"]))).includes("demo"));
 });

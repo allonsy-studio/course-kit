@@ -35,6 +35,7 @@
 	</div>
 
 	<script type="application/json" id="copy-data" webc:keep @raw="copyJson($data)"></script>
+	<script webc:keep @raw="copyReader()"></script>
 	<template webc:nokeep @raw="bundleFile('js', 'content/scripts/deck.js', $data)"></template>
 	<script type="module" webc:keep @raw="getBundle('js')"></script>
 

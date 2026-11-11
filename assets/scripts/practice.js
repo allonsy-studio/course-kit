@@ -10,17 +10,7 @@
  * template from the same object the questions come from.
  */
 
-/** Student-facing wording, rendered by the layout as one JSON block. */
-const COPY = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
-/** `t("home", "weeksDone", { done: 3, total: 16 })`; a key with `_one`/`_other` variants is picked by `count`. */
-const t = (ns, key, vars = {}) => {
-	const table = COPY[ns] ?? {};
-	let text = table[key];
-	if ("count" in vars && (`${key}_other` in table)) {
-		text = table[`${key}_${new Intl.PluralRules(document.documentElement.lang || "en-US").select(vars.count)}`] ?? table[`${key}_other`];
-	}
-	return String(text ?? "").replace(/\{(\w+)\}/g, (_, name) => String(vars[name] ?? ""));
-};
+const { t } = window.ckCopy;
 
 /** Strip the decoration students may or may not type: tags, punctuation, case. */
 const normalize = (value) =>

@@ -745,17 +745,7 @@
  * @property {Place[]} taught
  */
 
-/** The page's wording, from the `#copy-data` block the layout renders. */
-const COPY = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
-/** `t("glossary", "terms", { count: 3 })`; a key with `_one`/`_other` variants is picked by `count`. */
-const t = (ns, key, vars = {}) => {
-	const table = COPY[ns] ?? {};
-	let text = table[key];
-	if ("count" in vars && (`${key}_other` in table)) {
-		text = table[`${key}_${new Intl.PluralRules(document.documentElement.lang || "en-US").select(vars.count)}`] ?? table[`${key}_other`];
-	}
-	return String(text ?? "").replace(/\{(\w+)\}/g, (_, name) => String(vars[name] ?? ""));
-};
+const { t } = window.ckCopy;
 
 const KINDS = ["test", "chapter", "meeting", "topic"];
 /** The two kinds with a chip row. */

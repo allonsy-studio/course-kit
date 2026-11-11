@@ -3,9 +3,8 @@
 // and the strings it reads from the `#copy-data` block.
 const RESET_MS = 2000;
 
-/** The page's wording, from the `#copy-data` block the layout renders. */
-const COPY = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
-const t = (ns, key) => COPY[ns]?.[key] ?? "";
+/** The page's wording, read once by the script the layout renders after `#copy-data`. */
+const { t } = window.ckCopy;
 
 const ICON = {
 	code: {

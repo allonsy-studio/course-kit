@@ -5,10 +5,8 @@
 
 const ENDPOINT = "/.course-kit/theme";
 
-/** The panel's wording, from the `#copy-data` block the layout renders. */
-const COPY = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
 /** `t("color", { n: 2 })`: a `themePanel` string with its `{name}` placeholders filled. */
-const t = (key, vars = {}) => String(COPY.themePanel?.[key] ?? "").replace(/\{(\w+)\}/g, (_, name) => String(vars[name] ?? ""));
+const t = (key, vars = {}) => window.ckCopy.t("themePanel", key, vars);
 const STORE = "course-kit:theme-panel";
 
 /** Plain-language groups for the most used tokens; every token is also under "Every color". */

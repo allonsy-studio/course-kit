@@ -35,6 +35,7 @@ Every option is optional.
 | `demos.runtime` | `none` | How runnable demos are served: `codepen` or `pyscript`. `pyscript` needs `@pyscript/core` and `pyodide` installed in your course. |
 | `slides.decks` | `content/slides` | Where your slide decks are, if not the default. |
 | `worksheets.checkMode` | `end` | How students check a practice worksheet: `end` shows only See results at the end; `question` also puts a Check answer button on every gradable question. A worksheet's own `checkMode` front matter wins. |
+| `clientCopy` | none | More copy namespaces for the page's `#copy-data` block, for a course script that reads them. The kit carries only the namespaces its own scripts read. See [Copy keys](copy.md#what-a-page-carries). |
 | `copy` | none | A course's own copy namespaces, for components only it has. See [Course-only copy](#course-only-copy). |
 | `components` | none | Extra component file patterns, beyond your `_includes` folder. |
 | `theme` | `{}` | Color overrides, in the shape of `_data/theme.json`, which wins over them. See [color tokens](tokens.md). |

@@ -4,6 +4,10 @@ Generated from `lib/copy.js` by `yarn docs`. Do not edit by hand.
 
 Every student-facing and instructor-facing string, by namespace. Override any key in the course's `_data/strings.json`, which has this shape and is partial; see [Changing the wording](configuration.md#changing-the-wording). `{name}` marks a value filled at render time. A key with `_one` and `_other` variants is picked by a count.
 
+## What a page carries
+
+A page's `#copy-data` block carries only the namespaces its scripts read: `code`, `common`, `glossary`, `home`, `promptCopy`, `schedule`, `themePanel`, `worksheet` (`CLIENT_COPY` in `lib/copy.js`); a worksheet's own copy replaces `worksheet`. A course whose own script reads more adds them: `courseKit(config, { clientCopy: ["demo", "demoCheck"] })`. A script never parses the block itself: the layout renders a small reader after it, and the script uses `window.ckCopy.t("ns", "key", vars)`. A test scans the kit's scripts and fails if a namespace they read is missing from `CLIENT_COPY`, or one is listed that no script reads.
+
 ## Naming
 
 - The namespace is the component, layout, script or build module's file name in lowerCamelCase (`schedule-overview` is `scheduleOverview`).

@@ -126,15 +126,7 @@
         try {
             /** Today in the campus zone, as "YYYY-MM-DD". */
             const campusToday = () => new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone });
-            const COPY = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
-            const t = (ns, key, vars = {}) => {
-                const table = COPY[ns] ?? {};
-                let text = table[key];
-                if ("count" in vars && (`${key}_other` in table)) {
-                    text = table[`${key}_${new Intl.PluralRules(document.documentElement.lang || "en-US").select(vars.count)}`] ?? table[`${key}_other`];
-                }
-                return String(text ?? "").replace(/\{(\w+)\}/g, (_, name) => String(vars[name] ?? ""));
-            };
+                        const { t } = window.ckCopy;
             const root = document.querySelector(".schedule-weeks");
             const tools = root?.querySelector("[data-schedule-tools]");
             if (!root || !tools) return;
