@@ -392,7 +392,7 @@
     <main id="main-content" tabindex="-1">
       <div class="lesson-layout">
         <nav aria-labelledby="lesson-outline-heading" class="lesson-outline">
-          <p id="lesson-outline-heading" class="rail-label">Week <span>1</span></p>
+          <p id="lesson-outline-heading" class="rail-label">Week 1</p>
           <ol role="list">
             <li>
               <a href="/course-kit/preview/24/components/lessons/week-1/day-1/">
@@ -416,11 +416,11 @@
             <eyebrow class="eyebrow">
               <p class="eyebrow">Week 1, Day 2 — Lesson Plan</p>
             </eyebrow>
-            <h1 class="lesson-heading">Week <span>1</span>, Day <span>2</span></h1>
+            <h1 class="lesson-heading">Week 1, Day 2</h1>
             <p class="lesson-when separators">
               <span>Thursday, August 27, 2026</span>
               <span>10:00AM–11:15AM</span>
-              <span>Class meeting #<span>2</span> of the term</span>
+              <span>Class meeting #2 of the term</span>
             </p>
           </header>
 
@@ -441,12 +441,12 @@
               <li>Prepare/update slides and live-demo code</li>
 
               <li>Stage starter files or lab handout if needed</li>
-              <li>Check <span>Brightspace</span> for student questions or submissions</li>
+              <li>Check Brightspace for student questions or submissions</li>
             </ul>
           </section>
 
           <section aria-labelledby="outline-heading">
-            <h2 id="outline-heading">Lesson outline (<span>75</span> minutes)</h2>
+            <h2 id="outline-heading">Lesson outline (75 minutes)</h2>
             <table>
               <thead>
                 <tr>
@@ -484,7 +484,7 @@
             <ul role="list" class="checklist">
               <li>Post handouts to <code>content/resources/</code> and link them in <code>_data/schedule.json</code>'s <code>resources[]</code> for the week; the slide deck publishes itself from <code>content/slides/</code>, so it only needs a link there if students should see it from the schedule</li>
               <li>Note anything not covered and roll it into the next lesson</li>
-              <li>Post or grade lab/homework in <span>Brightspace</span> as needed</li>
+              <li>Post or grade lab/homework in Brightspace as needed</li>
             </ul>
           </section>
         </article>
@@ -716,6 +716,14 @@
             "symbols": "Symbols",
             "glossary": "Glossary",
             "courseGlossary": "Course glossary",
+            "slidesOnly": "Slides only",
+            "finalExam": "Final exam",
+            "reading": "Reading",
+            "chapter": "Chapter",
+            "section": "Section",
+            "unit": "Unit",
+            "module": "Module",
+            "lesson": "Lesson",
             "termsFromClassEach": "terms from class. Each carries tags for its test, its {reading} and the meeting that taught it. Group by any of them, search, or narrow the list to what you are studying."
           },
           "practice": { "colSheet": "Practice sheet", "colFor": "For", "caption": "Every practice sheet, with what it is for", "empty": "No practice sheets posted yet." },
@@ -819,6 +827,128 @@
           "demoWeeks": { "lessonPlan": "Lesson plan", "shownAgainFirstUsed": "Shown again, first used {date}", "downloadTheHtmlFile": "Download the HTML file", "usedAgain": "Used again {dates}" },
           "instructor": { "yourInstructor": "Your instructor", "name": "Name", "office": "Office", "officeHours": "Office hours", "email": "Email", "message": "Message", "sendMeAMessage": "Send me a message", "blog": "Blog", "instructor": "Instructor" },
           "codepenEmbed": { "theCode": "The code", "html": "HTML", "css": "CSS", "javascript": "JavaScript", "htmlSource": "HTML source", "cssSource": "CSS source", "javascriptSource": "JavaScript source" },
+          "base": { "skipToContent": "Skip to content" },
+          "deck": { "skipToFirstSlide": "Skip to first slide", "slides": "Slides", "previousSlide": "Previous slide", "nextSlide": "Next slide", "cycleColorTheme": "Cycle color theme", "toggleFullscreen": "Toggle fullscreen" },
+          "document": { "contents": "Contents" },
+          "lesson": {
+            "lessonPlans": "Lesson plans",
+            "onePlanPerClass": "One plan per class meeting ({time}), generated from the course schedule and the academic calendar. Holidays are shown in sequence so the term reads day by day.",
+            "slideIndex": "Slide index",
+            "everyDeckInMeeting": "{link} — every deck in meeting order. Speaker notes are on a separate printable sheet per deck, linked as \"Notes\" below.",
+            "exercises": "Exercises",
+            "theBriefAndStarter": "{link} — the brief and starter for each. Exercises due on a meeting are linked from its row below.",
+            "instructorDeadlines": "Instructor deadlines",
+            "dueDate": "Due date",
+            "everyClassMeetingOf": "Every class meeting of the term, in order",
+            "date": "Date",
+            "links": "Links",
+            "topics": "Topics",
+            "runsASchedule": "(runs a {weekday} schedule)",
+            "noClass": "No class — {reason}",
+            "lessonPlan": "Lesson&nbsp;plan",
+            "slides": "Slides",
+            "addendum": "Addendum",
+            "notes": "Notes",
+            "addendumNotes": "Addendum notes",
+            "due": "Due:"
+          },
+          "lessonDay": { "weekDayLesson": "Week {week}, Day {day} — Lesson Plan" },
+          "lessonDetail": {
+            "week": "Week {week}",
+            "weekDay": "Week {week}, Day {day}",
+            "noClass": "No class",
+            "lessonNavigation": "Lesson navigation",
+            "allLessons": "All lessons",
+            "previousDay": "Previous day",
+            "nextDay": "Next day",
+            "classMeetingOfThe": "Class meeting #{meeting} of the term",
+            "noClassOn": "No class on {reason}. Use this day to prep the next lesson or catch up on grading.",
+            "focus": "Focus:",
+            "thisMeetingRunsA": "This meeting runs a {weekday} schedule (college-wide) — plan the substituted day's session, not this weekday's usual rhythm.",
+            "aTestIsScheduledThis": "A test is scheduled this week — confirm day, reserve class time, and remind students at least one meeting ahead.",
+            "thisWeeksTopics": "This week's topics",
+            "beforeClass": "Before class",
+            "reviewTheReadingsSee": "Review the readings (see materials below)",
+            "prepareupdateSlidesAndLivedemo": "Prepare/update slides and live-demo code",
+            "printOrOpenThe": "Print or open the {link}",
+            "speakerNotesSheet": "speaker notes sheet",
+            "stageStarterFilesOr": "Stage starter files or lab handout if needed",
+            "checkForStudentQuestions": "Check {lms} for student questions or submissions",
+            "lessonOutline": "Lesson outline",
+            "lessonOutlineMinutes": "Lesson outline ({minutes} minutes)",
+            "time": "Time",
+            "segment": "Segment",
+            "min": "{minutes} min",
+            "afterClass": "After class",
+            "postHandoutsToAnd": "Post handouts to {resources} and link them in {schedule}'s {list} for the week; the slide deck publishes itself from {slides}, so it only needs a link there if students should see it from the schedule",
+            "noteAnythingNotCovered": "Note anything not covered and roll it into the next lesson",
+            "postOrGradeLabhomework": "Post or grade lab/homework in {lms} as needed",
+            "lessonTools": "Lesson tools",
+            "onThisPage": "On this page",
+            "materialsLinks": "Materials &amp; links"
+          },
+          "lessonMaterials": { "slidesForThisMeeting": "Slides for this meeting", "speakerNotes": "speaker notes", "printable": "(printable)", "demosFromThisMeeting": "Demos from this meeting", "exercisesDue": "Exercises due", "readingForThisMeeting": "Reading for this meeting", "due": "due {when}", "deadlinesToAnnounce": "Deadlines to announce", "assignedBeforeThisWeek": "Assigned before this week", "postedForTheClass": "Posted for the class", "nothingPostedForThis": "Nothing posted for this week yet." },
+          "lessons": {
+            "welcomeRecapThePrevious": "Welcome, recap the previous class, open questions",
+            "welcomeIntroductionsHowThe": "Welcome, introductions, how the course runs",
+            "instructionThisWeeksTopics": "Instruction: this week's topics (see above)",
+            "guidedPracticeLabWork": "Guided practice / lab work",
+            "wrapupRecapPreviewNext": "Wrap-up: recap, preview next class, assignment reminders",
+            "buffer": "Buffer",
+            "collegeHoliday": "College holiday",
+            "introduceThisWeeksMaterial": "Introduce this week's material",
+            "continuePracticeAndLab": "Continue, practice, and lab work",
+            "tbd": "TBD"
+          },
+          "term": { "classesBegin": "Classes begin", "collegeHoliday": "College holiday", "lastDayOfClasses": "Last day of classes", "readingDaysNoClasses": "Reading days (no classes or exams)", "finalExaminationPeriod": "Final examination period", "preregistrationForTheNext": "Pre-registration for the next term opens" },
+          "deckNotes": { "speakerNotes": "Speaker notes", "speakerNotesTitle": "Speaker notes: {title}", "weekDay": "Week {week}, Day {day}", "speakerNotesInstructorOnly": "Speaker notes · instructor only", "slideOpenInThe": "Slide {number}, open in the deck", "untitledSlide": "Untitled slide" },
+          "lessonPlans": { "lessonPlans": "Lesson plans", "navTitle": "Lesson Plans" },
+          "markdown": { "permalinkToThisHeading": "Permalink to this heading" },
+          "pdf": { "footer": "{course}: {name} — {term} syllabus · Generated {generated} ({version}) · Page {page} of {pages}" },
+          "themePanel": {
+            "brand": "Brand",
+            "brandColor": "Brand color",
+            "brandColorForText": "Brand color for text",
+            "textOnBrandColor": "Text on brand color",
+            "wayfindingColor": "Wayfinding color",
+            "textOnWayfindingColor": "Text on wayfinding color",
+            "page": "Page",
+            "pageBackground": "Page background",
+            "cardsAndPanels": "Cards and panels",
+            "linesAndBorders": "Lines and borders",
+            "text": "Text",
+            "bodyText": "Body text",
+            "secondaryText": "Secondary text",
+            "links": "Links",
+            "theme": "Theme",
+            "unsavedChanges": "Unsaved changes",
+            "preview": "Preview",
+            "light": "Light",
+            "dark": "Dark",
+            "everyColor": "Every color",
+            "allTokens": "All tokens",
+            "gradient": "Gradient",
+            "addAColor": "Add a color",
+            "undo": "Undo",
+            "reset": "Reset",
+            "save": "Save",
+            "download": "Download",
+            "hideTheThemePanel": "Hide the theme panel",
+            "notACssColor": "Not a CSS color",
+            "cssValue": "{name}, CSS value",
+            "backToTheSaved": "Back to the saved theme.",
+            "thePage": "the page",
+            "theBrandColor": "the brand color",
+            "passes": "passes",
+            "below": "below {minimum} : 1",
+            "contrast": "{ratio} : 1 on {ground}, {verdict}",
+            "color": "Color {n}",
+            "removeColor": "Remove color {n}",
+            "saving": "Saving…",
+            "savedToThe": "Saved to {file}. The site is rebuilding.",
+            "notSaved": "Not saved: {message}",
+            "downloadedPutItIn": "Downloaded. Put it in {folder} to keep it."
+          },
           "promptCopy": { "copyThisPrompt": "Copy this prompt", "promptCopied": "Prompt copied", "promptCopiedToThe": "Prompt copied to the clipboard.", "promptSelectedPressYour": "Prompt selected — press your copy shortcut." }
         }
       </script>
