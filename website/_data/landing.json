@@ -10,7 +10,7 @@
 	},
 	"quickStart": {
 		"title": "Quick start",
-		"intro": "Three steps from an empty folder to a built course site. Node 24 or later.",
+		"intro": "Three steps from an empty folder to a course site you can edit. Node 24 or later.",
 		"steps": [
 			{
 				"title": "Install the kit",
@@ -24,9 +24,9 @@
 				"code": "import courseKit from \"@allons-y/course-kit\";\n\nexport default function (config) {\n  courseKit(config, {\n    institution: { name: \"Example College\", timezone: \"America/New_York\" },\n  });\n}"
 			},
 			{
-				"title": "Describe the course",
+				"title": "Start from the starter course",
 				"language": "sh",
-				"code": "$ mkdir _data && cp node_modules/@allons-y/course-kit/examples/starter/_data/*.json _data/\n$ npx eleventy --serve"
+				"code": "$ cp -rn node_modules/@allons-y/course-kit/examples/starter/. .\n$ npx eleventy --serve"
 			}
 		]
 	},
