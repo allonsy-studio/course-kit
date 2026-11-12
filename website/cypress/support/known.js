@@ -5,8 +5,6 @@
  */
 export const KNOWN = [
 	// The preview's own chrome and the landing page come from the Norn design system, not the kit.
-	{ rule: "color-contrast-enhanced", match: /^((norn-simple-table|div\[role="region"\]) > .*)?th\[scope="col"\]/, reason: "Norn's table header text reads 6.51:1 on the preview shell; it is Norn's token." },
-	{ rule: "color-contrast-enhanced", match: /^a\[aria-current="page"\] > span$/, reason: "Norn's current-page link in the preview's dark menu reads 6.34:1." },
 	{ rule: "color-contrast-enhanced", match: /norn-card > article > p$/, reason: "Norn card text on the landing page reads 6.33:1 in dark." },
 	// The selected pill of the glossary and group switches: axe samples #1967d2 behind white text, which is not a kit color.
 	{ rule: "color-contrast-enhanced", match: /^(#glossary-tab-review|\.switch-track > label)/, reason: "Needs a look in a real browser: the computed fill is a system accent, not --color-accent." },
