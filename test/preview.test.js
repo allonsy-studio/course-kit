@@ -72,3 +72,12 @@ test("built under a path prefix, every link and asset stays under it", async () 
 		delete process.env.PATH_PREFIX;
 	}
 });
+
+test("a story's wrap and note frame it; the Today link story has a target, and its twin has none", () => {
+	const html = (url) => pages[url].replace(/<(script|style)[\s\S]*?<\/\1>/g, "");
+	const withTarget = catalog.frames.find((frame) => frame.title === "today-link: Default");
+	const without = catalog.frames.find((frame) => frame.title === "today-link: No target");
+	assert.match(html(withTarget.url), /id="today"/);
+	assert.doesNotMatch(html(without.url), /id="today"/);
+	for (const frame of [withTarget, without]) assert.match(html(frame.url), /class="story-note"/, `${frame.url} says what it shows`);
+});

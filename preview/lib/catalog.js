@@ -63,6 +63,21 @@ async function readStories(file) {
 }
 
 /**
+ * A story's frame: the component, inside the page context the story gives it.
+ * `wrap` is markup with `{story}` where the component goes (a `#today` target for the Today link, a list for a `<dt>`);
+ * `note` is a line of explanation shown above it, for a component whose real output depends on the page or the reader's clock.
+ * `empty` marks a story whose frame is meant to render nothing visible, and says why.
+ * @param {string} markup
+ * @param {{ wrap?: string, note?: string, empty?: string }} story
+ */
+function framed(markup, story) {
+	// A frame that renders nothing visible fails the audit, unless its story says why: `empty: "reason"`.
+	if (story.empty) return `${markup}\n<template data-story-empty>${story.empty}</template>`;
+	const wrapped = story.wrap ? story.wrap.replace("{story}", () => markup) : markup;
+	return story.note ? `<p class="story-note" style="margin: 0 0 1rem; padding: 0.5rem 0.75rem; border-inline-start: 3px solid var(--color-accent); font-size: 0.9em">${story.note}</p>\n${wrapped}` : wrapped;
+}
+
+/**
  * The argTypes the header derives: each prop and slot, with its type and description.
  * @param {ReturnType<typeof readHeader>} header
  */
@@ -104,7 +119,7 @@ export async function buildCatalog() {
 				const args = { ...baseline, ...story.args };
 				const frameUrl = `/frames/${group.id}/${tag}/${kebabCase(story.exportName)}/`;
 				const markup = renderStory(tag, args, argTypes);
-				frames.push({ groupId: group.id, url: frameUrl, title: `${tag}: ${story.name ?? startCase(story.exportName)}`, source: markup });
+				frames.push({ groupId: group.id, url: frameUrl, title: `${tag}: ${story.name ?? startCase(story.exportName)}`, source: framed(markup, story) });
 				return { name: story.name ?? startCase(story.exportName), frameUrl, source: markup, language: "html", height: story.height ?? csf.meta.height };
 			});
 
