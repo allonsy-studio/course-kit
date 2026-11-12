@@ -123,7 +123,8 @@ export async function buildCatalog() {
 				return { name: story.name ?? startCase(story.exportName), frameUrl, source: markup, language: "html", height: story.height ?? csf.meta.height };
 			});
 
-			const cells = csf ? matrixCells({ args: baseline, argTypes }, csf.stories.find((story) => story.exportName === "Default")) : [];
+			// `matrixCell(args, index)` in a story file's default export makes each cell's args its own (a heading or landmark name that must be unique on the page).
+			const cells = (csf ? matrixCells({ args: baseline, argTypes }, csf.stories.find((story) => story.exportName === "Default")) : []).map((cell, index) => (csf.meta.matrixCell ? { ...cell, args: csf.meta.matrixCell(cell.args, index) } : cell));
 			if (cells.length) {
 				const matrixUrl = `/frames/${group.id}/${tag}/matrix/`;
 				frames.push({ groupId: group.id, url: matrixUrl, title: `${tag}: matrix`, source: renderMatrix(tag, cells, argTypes) });

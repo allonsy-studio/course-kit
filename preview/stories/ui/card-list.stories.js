@@ -4,6 +4,7 @@ export default {
 };
 
 export const Default = {
+	wrap: "<h2>Page</h2>\n{story}",
 	args: {
 		items: [
 			{ data: { code: "CS101", name: "Introduction to Web Publishing", description: "HTML, CSS and a first look at JavaScript." }, page: { url: "/" } },
