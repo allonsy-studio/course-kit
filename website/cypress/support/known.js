@@ -5,7 +5,6 @@
  */
 export const KNOWN = [
 	// The preview's own chrome and the landing page come from the Norn design system, not the kit.
-	{ rule: "color-contrast-enhanced", match: /norn-card > article > p$/, reason: "Norn card text on the landing page reads 6.33:1 in dark." },
 	// The selected pill of the glossary and group switches: axe samples #1967d2 behind white text, which is not a kit color.
 	{ rule: "color-contrast-enhanced", match: /^(#glossary-tab-review|\.switch-track > label)/, reason: "Needs a look in a real browser: the computed fill is a system accent, not --color-accent." },
 	{ rule: "color-contrast-enhanced", match: /\.tag\.token/, reason: "Prism's highlighted-line ground (#eaeae8) in a worksheet snippet sits under the code tokens at 6.4:1; the kit's own highlight-line token is fixed, this is the Prism theme's." },
