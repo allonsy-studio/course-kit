@@ -80,6 +80,10 @@
 		}
 	}
 
+	:host > * {
+		min-inline-size: 0;
+	}
+
 	:host > .course-header {
 		grid-column: 1;
 		margin-block-end: 0;

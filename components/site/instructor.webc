@@ -220,6 +220,30 @@
         display: inline-flex;
         align-items: center;
         min-block-size: var(--target-min);
+        /* The address breaks at its <wbr>s; this is the last resort for one unbreakable token. */
+        overflow-wrap: anywhere;
+        min-inline-size: 0;
+    }
+
+    /* On a phone the card and the fact list stack, and their children may shrink below their content. */
+    :host .instructor-card > *,
+    :host .who > * {
+        min-inline-size: 0;
+    }
+
+    @media screen and (width < 30em) {
+        :host .instructor-card,
+        :host .who {
+            flex-direction: column;
+        }
+
+        :host .facts {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        :host .facts dt {
+            padding-block-start: 0.4em;
+        }
     }
 
     /* print.css collapses the facts to one inline run by id selector; match
@@ -235,6 +259,11 @@
 	for (const link of document.querySelectorAll("a[data-email]")) {
 		const email = atob(link.dataset.email);
 		link.href = `mailto:${email}`;
-		link.textContent = email;
+		// Break opportunities before "@" and after each ".": a narrow screen wraps the address there, not mid-word.
+		link.textContent = "";
+		email.split(/(?=@)|(?<=\.)/).forEach((part, index) => {
+			if (index) link.append(document.createElement("wbr"));
+			link.append(part);
+		});
 	}
 </script>
