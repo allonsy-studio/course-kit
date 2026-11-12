@@ -208,3 +208,26 @@ test("the link color follows the accent text, and the new tokens render", () => 
 	assert.ok(site.includes("--color-link: var(--color-accent-text);"));
 	for (const key of ["focus-ring", "border-strong", "on-highlight", "accent-fill-hover", "surface-accent-secondary", "code-surface", "code-edge-neutral", "highlight-line"]) assert.ok(site.includes(`--color-${key}:`), key);
 });
+
+/** `color-mix(in sRGB, a p%, b)`, as the callout wash is written. */
+const mixSrgb = (a, p, b) => a.map((v, i) => v * p + b[i] * (1 - p));
+
+test("every callout edge is 3:1 against the page and its own wash, in both modes, with the starter's overrides too", () => {
+	const starter = JSON.parse(fs.readFileSync(new URL("../examples/starter/_data/theme.json", import.meta.url), "utf8"));
+	const edge = (key, mode, overrides) => {
+		const own = overrides?.[key];
+		return own ? hex(typeof own === "string" ? own : own[mode]) : resolveColor(key, mode);
+	};
+	for (const mode of MODES) {
+		for (const [name, overrides] of [["defaults", undefined], ["the starter", starter]]) {
+			const page = overrides?.page ? hex(typeof overrides.page === "string" ? overrides.page : overrides.page[mode]) : resolveColor("page", mode);
+			for (const key of ["accent", "success", "warning-edge", "error"]) {
+				const color = edge(key, mode, overrides);
+				for (const [ground, rgb] of [["page", page], ["wash", mixSrgb(color, 0.1, page)]]) {
+					const got = ratio(color, rgb);
+					assert.ok(got >= 3, `${key} on ${ground} (${mode}, ${name}) is ${got.toFixed(2)}:1`);
+				}
+			}
+		}
+	}
+});

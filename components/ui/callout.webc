@@ -1,9 +1,11 @@
 <script webc:setup>
 	/**
-	 * A highlighted aside. The content is the slot.
-	 * @prop {'success' | 'warn' | 'error'} [type] the color of the edge and wash; none, or any other value, is the brand color. Write it `@type="warn"` or as the attribute `:type="'warn'"`: both color it.
+	 * A highlighted aside. The content is the slot. A typed callout opens with its type in words, so the type is never told by color alone.
+	 * @prop {'success' | 'warn' | 'error'} [type] the color of the edge and wash, and the opening word (`copy.callout`: Success, Warning, Error); none, or any other value, is the brand color with no word. Write it `@type="warn"` or as the attribute `:type="'warn'"`: both color it.
+	 * @prop {string} [label] the opening word in place of the default for the type; `label=""` (or a bare `@label`) shows none; a callout with no type shows none either way
 	 */
 </script>
 <div webc:root="override" :class="`callout${['success', 'warn', 'error'].includes(type) ? ` ${type}` : ''}`">
+    <p class="callout-label" webc:if="label ?? calloutLabel(type)" @text="label ?? calloutLabel(type)"></p>
     <slot></slot>
 </div>

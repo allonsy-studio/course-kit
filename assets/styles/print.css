@@ -20,6 +20,7 @@
 		--color-surface: #fff;
 		--color-highlight: transparent;
 		--color-warning: #000;
+		--color-warning-edge: #000;
 		--color-error: #000;
 		--color-success: #000;
 		color-scheme: light;

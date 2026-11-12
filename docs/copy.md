@@ -528,6 +528,14 @@ A page's `#copy-data` block carries only the namespaces its scripts read: `code`
 | `lessonPlans` | `Lesson plans` |
 | `navTitle` | `Lesson Plans` |
 
+## `callout`
+
+| Key | Default |
+|---|---|
+| `success` | `Success` |
+| `warning` | `Warning` |
+| `error` | `Error` |
+
 ## `markdown`
 
 | Key | Default |

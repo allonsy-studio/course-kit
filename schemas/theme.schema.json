@@ -129,6 +129,10 @@
 			"$ref": "#/$defs/color",
 			"description": "Warnings and cautions. CSS: --color-warning"
 		},
+		"warning-edge": {
+			"$ref": "#/$defs/color",
+			"description": "The edge and mark of a warning: dark enough to read as a line on the page and on a warning wash. CSS: --color-warning-edge"
+		},
 		"on-warning": {
 			"$ref": "#/$defs/color",
 			"description": "Text on a warning fill. CSS: --color-on-warning"
@@ -350,6 +354,10 @@
 					"$ref": "#/$defs/color",
 					"description": "Warnings and cautions. CSS: --color-warning"
 				},
+				"warning-edge": {
+					"$ref": "#/$defs/color",
+					"description": "The edge and mark of a warning: dark enough to read as a line on the page and on a warning wash. CSS: --color-warning-edge"
+				},
 				"on-warning": {
 					"$ref": "#/$defs/color",
 					"description": "Text on a warning fill. CSS: --color-on-warning"
@@ -564,6 +572,10 @@
 				"warning": {
 					"$ref": "#/$defs/color",
 					"description": "Warnings and cautions. CSS: --color-warning"
+				},
+				"warning-edge": {
+					"$ref": "#/$defs/color",
+					"description": "The edge and mark of a warning: dark enough to read as a line on the page and on a warning wash. CSS: --color-warning-edge"
 				},
 				"on-warning": {
 					"$ref": "#/$defs/color",

@@ -33,11 +33,12 @@ A labelled list of readings or deadlines. Renders nothing when empty. Give it th
 
 ### `<callout>`
 
-A highlighted aside. The content is the slot.
+A highlighted aside. The content is the slot. A typed callout opens with its type in words, so the type is never told by color alone.
 
 | Prop | Type | |
 |---|---|---|
-| `[type]` | `'success' \| 'warn' \| 'error'` | the color of the edge and wash; none, or any other value, is the brand color. Write it `@type="warn"` or as the attribute `:type="'warn'"`: both color it. |
+| `[type]` | `'success' \| 'warn' \| 'error'` | the color of the edge and wash, and the opening word (`copy.callout`: Success, Warning, Error); none, or any other value, is the brand color with no word. Write it `@type="warn"` or as the attribute `:type="'warn'"`: both color it. |
+| `[label]` | `string` | the opening word in place of the default for the type; `label=""` (or a bare `@label`) shows none; a callout with no type shows none either way |
 
 ### `<card-list>`
 

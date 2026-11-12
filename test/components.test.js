@@ -134,11 +134,13 @@ test("every documented prop is read by its component's template or script", () =
 	assert.deepEqual(unread, []);
 });
 
-test("callout colors itself from the type prop or the type attribute, and ignores any other value", async () => {
+test("callout colors itself from the type prop or the type attribute, opens a typed one with its word, and ignores any other type", async () => {
 	const { WebC } = await import("@11ty/webc");
+	const { resolveCopy } = await import("../lib/copy.js");
 	const render = async (markup) => {
 		const page = new WebC();
 		page.defineComponents(path.join(packageRoot, "components", "ui", "callout.webc"));
+		page.setHelper("calloutLabel", (type) => resolveCopy().callout[{ success: "success", warn: "warning", error: "error" }[type]] ?? "");
 		page.setContent(markup);
 		return (await page.compile({ data: {} })).html;
 	};
@@ -147,4 +149,10 @@ test("callout colors itself from the type prop or the type attribute, and ignore
 	assert.match(await render("<callout :type=\"'success'\">x</callout>"), /type="success"/);
 	assert.match(await render('<callout @type="bogus">x</callout>'), /class="callout"/);
 	assert.match(await render("<callout>x</callout>"), /class="callout"/);
+	// Every type has a word by default, as real text inside the callout.
+	for (const [type, word] of [["success", "Success"], ["warn", "Warning"], ["error", "Error"]]) assert.match(await render(`<callout @type="${type}">x</callout>`), new RegExp(`<p class="callout-label">${word}</p>`));
+	assert.match(await render('<callout @type="warn" @label="Heads up">x</callout>'), /<p class="callout-label">Heads up<\/p>/);
+	assert.doesNotMatch(await render('<callout @type="warn" @label="">x</callout>'), /callout-label/);
+	assert.doesNotMatch(await render("<callout>x</callout>"), /callout-label/);
+	assert.doesNotMatch(await render('<callout @type="bogus">x</callout>'), /callout-label/);
 });

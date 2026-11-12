@@ -36,6 +36,7 @@ Every color in the site and the slide decks comes from one of these. Override an
 | `error` | `--color-error` | Error: wrong answers, failures | `#A90916` / `#FF8D88` | `#A02317` / `#ff9d8f` |
 | `on-error` | `--color-on-error` | Text on an error fill | `#FBF9F3` / `#1C1613` |  |
 | `warning` | `--color-warning` | Warnings and cautions | `#FFC143` / `#D59719` | `#8a3500` / `#ffb37a` |
+| `warning-edge` | `--color-warning-edge` | The edge and mark of a warning: dark enough to read as a line on the page and on a warning wash | `#8A5A00` / `#D59719` |  |
 | `on-warning` | `--color-on-warning` | Text on a warning fill | `#33394E` / `#1C1613` |  |
 | `highlight` | `--color-highlight` | Highlighted (marked) text | `#FFD36C` / `#FFC233` |  |
 | `on-highlight` | `--color-on-highlight` | Text on a highlight fill | `#33394E` |  |
