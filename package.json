@@ -92,10 +92,10 @@
   "packageManager": "yarn@4.18.1",
   "devDependencies": {
     "@11ty/eleventy": "^3.1.8",
-    "@allons-y/opx-cli": "^0.1.0-beta.2",
-    "@allons-y/opx-lint-js": "^0.1.0-beta.0",
-    "@allons-y/opx-lint-json": "^0.1.0-beta.2",
-    "@allons-y/opx-lint-md": "^0.1.0-beta.2",
+    "@allons-y/opx-cli": "^0.2.0",
+    "@allons-y/opx-lint-js": "^1.0.0",
+    "@allons-y/opx-lint-json": "^0.1.0",
+    "@allons-y/opx-lint-md": "^0.1.0",
     "@allons-y/webc-code-sample": "0.1.0-beta.3",
     "@allons-y/webc-oss-site": "0.1.0-beta.3",
     "@allons-y/webc-patterns": "0.1.0-beta.3",
@@ -103,8 +103,7 @@
     "ajv-formats": "^3.0.1",
     "axe-core": "^4.14.0",
     "cypress": "^15.21.1",
-    "cypress-axe": "^1.7.0",
-    "typescript": "^6.0.3"
+    "cypress-axe": "^1.7.0"
   },
   "oss-docs": {
     "site": "website",
