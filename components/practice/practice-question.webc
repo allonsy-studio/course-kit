@@ -88,6 +88,7 @@
 		}
 
 		.snippet {
+			background: var(--color-code-surface);
 			font-size: 0.9em;
 
 			.token:is(.comment, .prolog, .doctype, .cdata) {

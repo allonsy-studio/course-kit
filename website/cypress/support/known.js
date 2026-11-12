@@ -7,7 +7,6 @@ export const KNOWN = [
 	// The preview's own chrome and the landing page come from the Norn design system, not the kit.
 	// The selected pill of the glossary and group switches.
 	{ rule: "color-contrast-enhanced", match: /^(#glossary-tab-review|\.switch-track > label)/, reason: "The selected option is transparent over a sliding ::before pill (anchor positioning), which axe cannot read, so it samples the page behind the white text. The pill is --color-accent under --color-on-accent (10.91:1 light, 7.82:1 dark); without anchor positioning the option itself carries that fill. Filling the option too would show the destination filled before the pill arrives." },
-	{ rule: "color-contrast-enhanced", match: /\.tag\.token/, reason: "Prism's highlighted-line ground (#eaeae8) in a worksheet snippet sits under the code tokens at 6.4:1; the kit's own highlight-line token is fixed, this is the Prism theme's." },
 	// A story renders one component alone, without the page around it.
 	{ rule: "dlitem", match: /^(dt|dd)$/, reason: "glossary-entry and demo-weeks are parts of a <dl> on their pages; their stories show them alone." },
 	{ rule: "heading-order", match: /^(#(week-\d+-heading|introduction-to-web-publishing)|h3|h4|li > h4)$/, reason: "A story has no h2 above the component's own heading." },
