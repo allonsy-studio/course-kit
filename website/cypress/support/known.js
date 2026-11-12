@@ -12,14 +12,12 @@ export const KNOWN = [
 export const isKnown = (rule, target) => KNOWN.some((entry) => entry.rule === rule && entry.match.test(target.replace(/:nth-child\(\d+\)/g, "")));
 
 /**
- * Targets under 44px that the audit knows about. Each is a standalone link or disclosure in a list (a footer, a link list, a policy
- * summary) that needs a design decision: padding every row to 44px changes the density of the page. Inline links in running text are
- * exempt in the check itself.
+ * Targets under 44px that the audit knows about, each with the reason it stays. Inline links in running text are exempt in the check itself.
  */
 export const KNOWN_TARGETS = [
-	{ match: /^a(\.\w+)? \d+x\d+: /, reason: "Standalone links in lists (assigned items, link lists, footer, readings, glossary slide links, instructor email) are text-height." },
-	{ match: /^summary \d+x\d+: /, reason: "Disclosure summaries (policies, Show the answer) are text-height." },
-	{ match: /^button\.term \d+x\d+: /, reason: "Worksheet term buttons are inline in a sentence of terms." },
+	{ match: /^button\.term \d+x\d+: /, reason: "Worksheet term buttons sit inside a sentence of terms: the inline-in-text exception of WCAG 2.5.5 applies." },
+	{ match: /^a \d+x\d+: Week \d+ · /, reason: "Glossary slide links share a wrapping row with a gap between them (several per line), so they keep the 24px bar of WCAG 2.5.8 rather than 44px." },
+	{ match: /^a \d+x\d+: Open in CodePen/, reason: "CodePen's own embed script writes this link; it is not the kit's markup." },
 ];
 
 /** Whether a measured target (`tag.class WxH: text`) is a known small one. */

@@ -87,14 +87,14 @@
         display: flex;
         flex-direction: column;
         align-items: start;
-        gap: calc(var(--content-space) * 0.35);
+        gap: 0;
 
         @media screen and (width <= 768px) {
             flex-direction: row;
             flex-wrap: wrap;
-            align-items: baseline;
+            align-items: center;
             column-gap: calc(var(--content-space) * 1.25);
-            row-gap: calc(var(--content-space) * 0.25);
+            row-gap: 0;
         }
     }
 
@@ -102,9 +102,11 @@
         font-size: 1em;
     }
 
-    nav.group a {
-        display: inline-block;
-        padding-block: 0.2em;
+    nav.group a,
+    .course a {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: var(--target-min);
         font-size: max(var(--base-font-size), 1em);
         color: inherit;
         text-decoration: none;

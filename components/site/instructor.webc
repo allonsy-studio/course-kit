@@ -215,6 +215,13 @@
         color: var(--color-link);
     }
 
+    /* The address is an operable target: 44px tall (WCAG 2.5.5). */
+    :host a[data-email] {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: var(--target-min);
+    }
+
     /* print.css collapses the facts to one inline run by id selector; match
        its specificity to drop a screen-only row. */
     @media print {
