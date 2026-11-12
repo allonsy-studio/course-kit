@@ -91,7 +91,7 @@
   },
   "packageManager": "yarn@4.18.1",
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.7",
+    "@11ty/eleventy": "^3.1.8",
     "@allons-y/opx-cli": "^0.1.0-beta.2",
     "@allons-y/opx-lint-js": "^0.1.0-beta.0",
     "@allons-y/opx-lint-json": "^0.1.0-beta.2",
