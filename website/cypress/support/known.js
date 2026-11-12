@@ -23,10 +23,5 @@ export const KNOWN_TARGETS = [
 /** Whether a measured target (`tag.class WxH: text`) is a known small one. */
 export const isKnownTarget = (url, entry) => KNOWN_TARGETS.some((known) => known.match.test(entry));
 
-/** Pages that scroll sideways at 320px; each needs a layout decision (a table that clips, a menu row that does not wrap). */
-export const KNOWN_REFLOW = [
-	{ url: "/components/frames/site/course-summary/default/", reason: "The instructor card and summary grid overflow 320px." },
-	{ url: "/components/frames/site/instructor/default/", reason: "The instructor card (photo, facts and links) is wider than 320px." },
-	{ url: "/components/frames/ui/table-rubric/milestones/", reason: "The milestone table is wider than 320px; it clips rather than scrolls." },
-	{ url: "/components/frames/ui/table-rubric/levels/", reason: "The levels matrix is wider than 320px; it clips rather than scrolls." },
-];
+/** Pages that scroll sideways at 320px, each with the layout decision it needs. None now. */
+export const KNOWN_REFLOW = [];
