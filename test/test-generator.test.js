@@ -24,8 +24,8 @@ const repo = () => {
 };
 
 test("a multiple-choice item shows its answer only in the key", () => {
-	const student = mc(1, "Pick " + code("<b>"), ["a", "b"], 1, false);
-	const key = mc(1, "Pick " + code("<b>"), ["a", "b"], 1, true);
+	const student = mc(1, `Pick ${code("<b>")}`, ["a", "b"], 1, false);
+	const key = mc(1, `Pick ${code("<b>")}`, ["a", "b"], 1, true);
 	assert.doesNotMatch(student, /class="ans"|class="hit"/);
 	assert.match(key, /class="ans">b</);
 	assert.match(key, /class="hit"/);

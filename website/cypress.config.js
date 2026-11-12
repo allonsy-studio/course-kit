@@ -9,7 +9,7 @@ import { defineConfig } from "cypress";
 const PORT = 8080;
 const BUILD_DIR = join(import.meta.dirname, "_a11y");
 
-const toUrl = (file) => "/" + file.split(sep).join("/").replace(/(^|\/)index\.html$/, "$1");
+const toUrl = (file) => `/${file.split(sep).join("/").replace(/(^|\/)index\.html$/, "$1")}`;
 
 export default defineConfig({
 	defaultBrowser: "chrome",
