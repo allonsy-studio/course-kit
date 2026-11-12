@@ -10,7 +10,7 @@
     <meta name="description" content="Course content for Example College." />
     <meta name="keywords" content="Example College, CS101, Introduction to Web Publishing, syllabus, course schedule, class resources" />
     <meta name="author" content="Cassondra Roberts" />
-    <meta name="generator" content="Eleventy v3.1.7" />
+    <meta name="generator" content="Eleventy v3.1.8" />
 
     <meta name="robots" content="noindex, nofollow" />
 
@@ -41,11 +41,16 @@
         color: var(--color-text-muted);
         margin-block: 0;
       }
-      .wfb8ab2x1:not(:last-child) {
+      .wkdefel0y:not(:last-child) {
         margin-block-end: calc(var(--content-space) * 1.5);
       }
-      .wfb8ab2x1 h3 {
+      .wkdefel0y h3 {
         margin-block-start: calc(var(--content-space) * 1.75);
+      }
+      .wkdefel0y li > a:only-child {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: var(--target-min);
       }
       .wyz4foyhb:not(:has(li)) {
         display: none;
@@ -276,7 +281,7 @@
         font-size: max(var(--base-font-size), 0.85em);
         color: var(--color-text-muted);
       }
-      .wqox_maih {
+      .wp7xogbrw {
         --context: footer;
         text-align: start;
         display: grid;
@@ -330,14 +335,14 @@
           display: flex;
           flex-direction: column;
           align-items: start;
-          gap: calc(var(--content-space) * 0.35);
+          gap: 0;
 
           @media screen and (width <= 768px) {
             flex-direction: row;
             flex-wrap: wrap;
-            align-items: baseline;
+            align-items: center;
             column-gap: calc(var(--content-space) * 1.25);
-            row-gap: calc(var(--content-space) * 0.25);
+            row-gap: 0;
           }
         }
 
@@ -345,9 +350,11 @@
           font-size: 1em;
         }
 
-        nav.group a {
-          display: inline-block;
-          padding-block: 0.2em;
+        nav.group a,
+        .course a {
+          display: inline-flex;
+          align-items: center;
+          min-block-size: var(--target-min);
           font-size: max(var(--base-font-size), 1em);
           color: inherit;
           text-decoration: none;
@@ -502,7 +509,7 @@
           <section aria-labelledby="materials-heading">
             <h2 id="materials-heading" class="rail-label">Materials &amp; links</h2>
 
-            <div class="link-section wfb8ab2x1">
+            <div class="link-section wkdefel0y">
               <p class="muted">Nothing posted for this week yet.</p>
             </div>
           </section>
@@ -511,7 +518,7 @@
     </main>
 
     <footer>
-      <div class="wqox_maih">
+      <div class="wp7xogbrw">
         <div class="brand">
           <p class="course">
             <a href="/course-kit/preview/24/components/"><span>CS101</span>: <span>Introduction to Web Publishing</span></a>

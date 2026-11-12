@@ -647,17 +647,24 @@
           }
         }
       }
-      .wsom_l55h {
+      .wqdsu6hdd {
         .check-title {
           font-weight: var(--font-weight--semi-bold);
           margin-block-end: 0.2em;
+        }
+
+        /* The disclosure is an operable target: 44px tall (WCAG 2.5.5). */
+        summary {
+          display: flex;
+          align-items: center;
+          min-block-size: var(--target-min);
         }
 
         .reveal {
           font-family: var(--mono-font);
         }
       }
-      .wnxj-xsx9 {
+      .wcumc5k3_ {
         .question {
           background: var(--color-surface-subtle);
           border-inline-start: var(--thick-border-width) solid var(--color-border);
@@ -713,6 +720,7 @@
         }
 
         .snippet {
+          background: var(--color-code-surface);
           font-size: 0.9em;
 
           .token:is(.comment, .prolog, .doctype, .cdata) {
@@ -1161,7 +1169,7 @@
               <p class="blurb"></p>
             </header>
 
-            <practice-question class="wnxj-xsx9">
+            <practice-question class="wcumc5k3_">
               <div id="q-1.1" data-question="1.1" data-kind="choice" data-answers='{"answer":1}' class="question">
                 <div class="question-head">
                   <p class="question-prompt"><span class="q-number">1.1</span> <span>Which element holds the page's main content?</span></p>
@@ -1210,7 +1218,7 @@
                 </div>
               </div>
             </practice-question>
-            <practice-question class="wnxj-xsx9">
+            <practice-question class="wcumc5k3_">
               <div id="q-1.2" data-question="1.2" data-kind="match" data-answers='{"items":["A","B"]}' class="question">
                 <div class="question-head">
                   <p class="question-prompt"><span class="q-number">1.2</span> <span>Match each element to what it is.</span></p>
@@ -1289,7 +1297,7 @@
               <p class="blurb"></p>
             </header>
 
-            <practice-question class="wnxj-xsx9">
+            <practice-question class="wcumc5k3_">
               <div id="q-2.1" data-question="2.1" data-kind="fill" data-answers='{"blanks":[["ul"],["li"]]}' class="question">
                 <div class="question-head">
                   <p class="question-prompt"><span class="q-number">2.1</span> <span>Complete the markup.</span></p>
@@ -1342,7 +1350,7 @@
                 </div>
               </div>
             </practice-question>
-            <practice-question class="wnxj-xsx9">
+            <practice-question class="wcumc5k3_">
               <div id="q-2.2" data-question="2.2" data-kind="grid" data-answers='{"rows":[0,1]}' class="question">
                 <div class="question-head">
                   <p class="question-prompt"><span class="q-number">2.2</span> <span>Which column does each element belong in?</span></p>
@@ -1415,7 +1423,7 @@
                 </div>
               </div>
             </practice-question>
-            <practice-question class="wnxj-xsx9">
+            <practice-question class="wcumc5k3_">
               <div id="q-2.3" data-question="2.3" data-kind="tree" data-answers='{"blanks":[["li"]]}' class="question">
                 <div class="question-head">
                   <p class="question-prompt"><span class="q-number">2.3</span> <span>Fill in the tree for this markup.</span></p>
@@ -1473,7 +1481,7 @@
               </ul>
             </header>
 
-            <practice-question class="wnxj-xsx9">
+            <practice-question class="wcumc5k3_">
               <div id="q-3.1" data-question="3.1" data-kind="judge" data-answers='{"answer":1,"lines":[1]}' class="question">
                 <div class="question-head">
                   <p class="question-prompt"><span class="q-number">3.1</span> <span>Is this markup valid and correct?</span></p>
@@ -1528,7 +1536,7 @@
                 </div>
               </div>
             </practice-question>
-            <practice-question class="wnxj-xsx9">
+            <practice-question class="wcumc5k3_">
               <div id="q-3.2" data-question="3.2" data-kind="selfcheck" data-answers="{}" class="question">
                 <div class="question-head">
                   <p class="question-prompt"><span class="q-number">3.2</span> <span>Explain why a heading level should not be chosen for its size.</span></p>
@@ -1545,7 +1553,7 @@
                   </cite-panel>
                 </div>
 
-                <practice-selfcheck class="wsom_l55h">
+                <practice-selfcheck class="wqdsu6hdd">
                   <div class="selfcheck">
                     <div class="disclosures">
                       <details data-reveal="">

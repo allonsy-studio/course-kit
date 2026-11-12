@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/course-kit/preview/24/components/styles/prism-dark.css" media="(prefers-color-scheme: dark)" data-prism-theme="dark" />
     <link rel="stylesheet" href="/course-kit/preview/24/components/styles/base.css" />
     <style>
-      .wfkxn9ffd .who {
+      .wcgdwpi5v .who {
         display: flex;
         align-items: flex-start;
         gap: calc(var(--content-space) * 1.1);
@@ -19,11 +19,11 @@
           display: block;
         }
       }
-      .wfkxn9ffd .facts-column {
+      .wcgdwpi5v .facts-column {
         min-inline-size: 0;
         flex: 1 1 auto;
       }
-      .wfkxn9ffd .facts-column h2 {
+      .wcgdwpi5v .facts-column h2 {
         margin-block: 0 0.35em;
         font-size: var(--font-size-6);
         font-weight: var(--font-weight--semi-bold);
@@ -31,7 +31,7 @@
         text-transform: uppercase;
         color: var(--color-text-muted);
       }
-      .wfkxn9ffd .facts {
+      .wcgdwpi5v .facts {
         display: grid;
         grid-template-columns: max-content minmax(0, 1fr);
         column-gap: var(--content-space);
@@ -77,11 +77,11 @@
           display: inline;
         }
       }
-      .wfkxn9ffd .note {
+      .wcgdwpi5v .note {
         margin-block: 0.75em 0;
         font-size: max(var(--base-font-size), 0.9em);
       }
-      .wfkxn9ffd .photo {
+      .wcgdwpi5v .photo {
         flex: none;
         inline-size: 5.5em;
         block-size: 5.5em;
@@ -89,10 +89,10 @@
         object-fit: cover;
         border: var(--thin-border-width) solid var(--color-border);
       }
-      .wfkxn9ffd .instructor-contact {
+      .wcgdwpi5v .instructor-contact {
         margin-block: 0;
       }
-      .wfkxn9ffd .instructor-card {
+      .wcgdwpi5v .instructor-card {
         display: flex;
         align-items: flex-start;
         gap: var(--content-space);
@@ -103,11 +103,11 @@
         border: var(--thin-border-width) solid var(--color-border);
         border-radius: var(--standard-border-radius);
       }
-      .wfkxn9ffd .instructor-card .photo {
+      .wcgdwpi5v .instructor-card .photo {
         inline-size: 4em;
         block-size: 4em;
       }
-      .wfkxn9ffd .monogram {
+      .wcgdwpi5v .monogram {
         flex: none;
         display: grid;
         place-items: center;
@@ -119,20 +119,43 @@
         color: var(--color-accent-text);
         font-weight: var(--font-weight--semi-bold);
       }
-      .wfkxn9ffd .instructor-name {
+      .wcgdwpi5v .instructor-name {
         margin-block: 0 0.15em;
         font-size: max(var(--base-font-size), 1.15em);
       }
-      .wfkxn9ffd .instructor-meta {
+      .wcgdwpi5v .instructor-meta {
         margin-block: 0 0.75em;
         color: var(--color-text-muted);
         font-size: max(var(--base-font-size), 0.92em);
       }
-      .wfkxn9ffd .cta {
+      .wcgdwpi5v .cta {
         color: var(--color-link);
       }
+      .wcgdwpi5v a[data-email] {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: var(--target-min);
+        overflow-wrap: anywhere;
+        min-inline-size: 0;
+      }
+      .wcgdwpi5v .instructor-card > *,
+      .wcgdwpi5v .who > * {
+        min-inline-size: 0;
+      }
+      @media screen and (width < 30em) {
+        .wcgdwpi5v .instructor-card,
+        .wcgdwpi5v .who {
+          flex-direction: column;
+        }
+        .wcgdwpi5v .facts {
+          grid-template-columns: minmax(0, 1fr);
+        }
+        .wcgdwpi5v .facts dt {
+          padding-block-start: 0.4em;
+        }
+      }
       @media print {
-        .wfkxn9ffd#instructor .facts > div.screen-only {
+        .wcgdwpi5v#instructor .facts > div.screen-only {
           display: none;
         }
       }
@@ -143,7 +166,7 @@
     <main id="main-content" tabindex="-1" style="margin: 0; padding: 1rem; min-block-size: 0">
       <h1 class="sr-only">instructor: Card</h1>
 
-      <section id="instructor" aria-labelledby="instructor-heading" class="wfkxn9ffd">
+      <section id="instructor" aria-labelledby="instructor-heading" class="wcgdwpi5v">
         <div class="instructor-card">
           <p aria-hidden="true" class="monogram">DSE</p>
           <div>
@@ -432,7 +455,12 @@
       for (const link of document.querySelectorAll("a[data-email]")) {
         const email = atob(link.dataset.email);
         link.href = `mailto:${email}`;
-        link.textContent = email;
+        // Break opportunities before "@" and after each ".": a narrow screen wraps the address there, not mid-word.
+        link.textContent = "";
+        email.split(/(?=@)|(?<=\.)/).forEach((part, index) => {
+          if (index) link.append(document.createElement("wbr"));
+          link.append(part);
+        });
       }
       // assets/scripts/practice.js
       var { t } = window.ckCopy;

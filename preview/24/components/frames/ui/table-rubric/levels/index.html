@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/course-kit/preview/24/components/styles/prism-dark.css" media="(prefers-color-scheme: dark)" data-prism-theme="dark" />
     <link rel="stylesheet" href="/course-kit/preview/24/components/styles/base.css" />
     <style>
-      .w8qa1f9dg {
+      .wld7whjfn {
         width: 100%;
         border-block-end: var(--thin-border-width) solid var(--color-border);
         :is(td, th) {
@@ -76,6 +76,94 @@
           }
         }
       }
+      .wld7whjfn .cell-label {
+        display: none;
+      }
+      @media (width < 40em) {
+        .wld7whjfn,
+        .wld7whjfn :is(thead, tbody, tfoot, tr, th, td) {
+          display: block;
+        }
+        .wld7whjfn {
+          inline-size: 100%;
+          max-inline-size: 100%;
+        }
+        .wld7whjfn thead {
+          position: absolute;
+          inline-size: 1px;
+          block-size: 1px;
+          overflow: hidden;
+          clip-path: inset(50%);
+          white-space: nowrap;
+        }
+        .wld7whjfn tr {
+          background: none;
+        }
+        .wld7whjfn tbody tr {
+          padding-block: 0.4em;
+          border-block-start: var(--thin-border-width) solid var(--color-border);
+        }
+        .wld7whjfn :is(td, th) {
+          border: none;
+          padding: 0.25em 0.6em;
+        }
+        .wld7whjfn td.num {
+          text-align: start;
+        }
+        .wld7whjfn tbody th {
+          padding-block-end: 0.25em;
+        }
+        .wld7whjfn td:empty,
+        .wld7whjfn td.blank {
+          display: none;
+        }
+        .wld7whjfn td {
+          display: grid;
+          grid-template-columns: minmax(6rem, 30%) minmax(0, 1fr);
+          gap: 0 0.75em;
+          text-align: start;
+        }
+        .wld7whjfn .cell-label {
+          display: block;
+          color: var(--color-text-muted);
+          font-size: max(var(--base-font-size), 0.85em);
+          font-weight: var(--font-weight--medium);
+          overflow-wrap: anywhere;
+        }
+        .wld7whjfn .points {
+          padding-block-start: 0;
+          border-block-start: none;
+        }
+        .wld7whjfn tbody tr:has(+ .points) {
+          padding-block-end: 0;
+        }
+        .wld7whjfn .points > td {
+          padding-block: 0;
+        }
+        .wld7whjfn tfoot tr {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: baseline;
+          justify-content: space-between;
+          gap: 0 1em;
+          border-block-start: var(--border-width) solid var(--color-border);
+          padding-block: 0.4em;
+        }
+        .wld7whjfn tfoot :is(th, td) {
+          border: none;
+          padding-inline: 0.6em;
+        }
+        .wld7whjfn tfoot th {
+          text-align: start;
+        }
+        .wld7whjfn tfoot td {
+          display: block;
+          text-align: end;
+        }
+        .wld7whjfn tfoot .cell-label {
+          display: none;
+        }
+      }
     </style>
     <script src="/course-kit/preview/24/components/preview-assets/tokens.js"></script>
   </head>
@@ -83,48 +171,48 @@
     <main id="main-content" tabindex="-1" style="margin: 0; padding: 1rem; min-block-size: 0">
       <h1 class="sr-only">table-rubric: Performance levels</h1>
 
-      <table class="w8qa1f9dg">
+      <table role="table" class="wld7whjfn">
         <caption class="sr-only">
           Project rubric
         </caption>
 
-        <thead>
-          <tr>
-            <th scope="col" class="criteria">Criteria</th>
-            <th scope="col">Exceeds</th>
-            <th scope="col">Meets</th>
-            <th scope="col">Not yet</th>
+        <thead role="rowgroup">
+          <tr role="row">
+            <th scope="col" role="columnheader" class="criteria">Criteria</th>
+            <th scope="col" role="columnheader">Exceeds</th>
+            <th scope="col" role="columnheader">Meets</th>
+            <th scope="col" role="columnheader">Not yet</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <th scope="row" rowspan="2">Structure</th>
-            <td>Every page uses landmarks and headings correctly.</td>
-            <td>Most pages are structured.</td>
-            <td>Structure is missing.</td>
+        <tbody role="rowgroup">
+          <tr role="row">
+            <th scope="row" role="rowheader" rowspan="2">Structure</th>
+            <td role="cell"><span aria-hidden="true" class="cell-label">Exceeds</span><span>Every page uses landmarks and headings correctly.</span></td>
+            <td role="cell"><span aria-hidden="true" class="cell-label">Meets</span><span>Most pages are structured.</span></td>
+            <td role="cell"><span aria-hidden="true" class="cell-label">Not yet</span><span>Structure is missing.</span></td>
           </tr>
-          <tr class="points">
-            <td>10 points</td>
-            <td>7 points</td>
-            <td>3 points</td>
+          <tr role="row" class="points">
+            <td role="cell"><span aria-hidden="true" class="cell-label">Exceeds</span><span>10 points</span></td>
+            <td role="cell"><span aria-hidden="true" class="cell-label">Meets</span><span>7 points</span></td>
+            <td role="cell"><span aria-hidden="true" class="cell-label">Not yet</span><span>3 points</span></td>
           </tr>
 
-          <tr>
-            <th scope="row" rowspan="2">Style</th>
-            <td>Consistent and responsive.</td>
-            <td>Mostly consistent.</td>
-            <td>Inconsistent.</td>
+          <tr role="row">
+            <th scope="row" role="rowheader" rowspan="2">Style</th>
+            <td role="cell"><span aria-hidden="true" class="cell-label">Exceeds</span><span>Consistent and responsive.</span></td>
+            <td role="cell"><span aria-hidden="true" class="cell-label">Meets</span><span>Mostly consistent.</span></td>
+            <td role="cell"><span aria-hidden="true" class="cell-label">Not yet</span><span>Inconsistent.</span></td>
           </tr>
-          <tr class="points">
-            <td>10 points</td>
-            <td>7 points</td>
-            <td>3 points</td>
+          <tr role="row" class="points">
+            <td role="cell"><span aria-hidden="true" class="cell-label">Exceeds</span><span>10 points</span></td>
+            <td role="cell"><span aria-hidden="true" class="cell-label">Meets</span><span>7 points</span></td>
+            <td role="cell"><span aria-hidden="true" class="cell-label">Not yet</span><span>3 points</span></td>
           </tr>
         </tbody>
-        <tfoot>
-          <tr>
-            <th scope="row" colspan="3">Total points possible</th>
-            <td class="num">20</td>
+        <tfoot role="rowgroup">
+          <tr role="row">
+            <th scope="row" role="rowheader" colspan="3">Total points possible</th>
+            <td role="cell" class="num">20</td>
           </tr>
         </tfoot>
       </table>

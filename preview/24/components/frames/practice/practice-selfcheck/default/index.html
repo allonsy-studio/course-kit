@@ -11,10 +11,17 @@
     <link rel="stylesheet" href="/course-kit/preview/24/components/styles/prism-dark.css" media="(prefers-color-scheme: dark)" data-prism-theme="dark" />
     <link rel="stylesheet" href="/course-kit/preview/24/components/styles/base.css" />
     <style>
-      .wsom_l55h {
+      .wqdsu6hdd {
         .check-title {
           font-weight: var(--font-weight--semi-bold);
           margin-block-end: 0.2em;
+        }
+
+        /* The disclosure is an operable target: 44px tall (WCAG 2.5.5). */
+        summary {
+          display: flex;
+          align-items: center;
+          min-block-size: var(--target-min);
         }
 
         .reveal {
@@ -27,7 +34,7 @@
   <body>
     <main id="main-content" tabindex="-1" style="margin: 0; padding: 1rem; min-block-size: 0">
       <h1 class="sr-only">practice-selfcheck: Selfcheck question</h1>
-      <practice-selfcheck class="wsom_l55h">
+      <practice-selfcheck class="wqdsu6hdd">
         <div class="selfcheck">
           <div class="disclosures">
             <details data-reveal="">

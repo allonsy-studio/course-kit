@@ -10,6 +10,9 @@ body.preview {
 	--p-line: light-dark(#c9ced6, #3a4350);
 	--p-link: light-dark(#7a1f34, #f0bfcc);
 	--p-hover: light-dark(#f3f4f6, #1a212b);
+	/* Norn's table headers and its dark current-page link set their own color: 7:1 or better on the shell's grounds. */
+	--p-th: light-dark(#3d4860, #b9c0d0);
+	--p-current-dark: #a9c1e6;
 
 	/* The kit's base styles read these. */
 	--color-page: var(--p-bg);
@@ -119,6 +122,18 @@ details.nav {
 		color: var(--p-muted);
 	}
 
+}
+
+/* Norn's table header text reads 6.5:1 on the shell's grounds; the shell's own token reads 7.9:1 or better. */
+norn-simple-table th {
+	color: var(--p-th);
+}
+
+/* Norn's current-page link in the dark menu reads 6.3:1; the kit's blue reads 8.6:1. Light is Norn's own. */
+@media (prefers-color-scheme: dark) {
+	body.preview a[aria-current="page"] > span {
+		color: var(--p-current-dark);
+	}
 }
 
 /* The one leak left: the kit's base styles dot-underline a span inside any nav link, and Norn's list has no such mark. */

@@ -11,14 +11,15 @@
     <link rel="stylesheet" href="/course-kit/preview/24/components/styles/prism-dark.css" media="(prefers-color-scheme: dark)" data-prism-theme="dark" />
     <link rel="stylesheet" href="/course-kit/preview/24/components/styles/base.css" />
     <style>
-      .wc0pp-n63 {
-        .wc0pp-n63 &:not(:has(li, dt)) {
+      .wfwhm0lnx {
+        .wfwhm0lnx &:not(:has(li, dt)) {
           display: none;
         }
         ul,
         dl {
           display: grid;
-          gap: calc(var(--content-space) * 0.75);
+          /* The links are 44px tall, so the rows already carry most of the space between items. */
+          gap: calc(var(--content-space) * 0.25);
           list-style: none;
           margin: 0;
           padding: 0;
@@ -29,8 +30,17 @@
         dt {
           display: flex;
           flex-wrap: wrap;
-          align-items: baseline;
-          gap: 0.25em 0.5em;
+          align-items: center;
+          gap: 0 0.5em;
+        }
+
+        /* A link is an operable target: 44px tall (WCAG 2.5.5). */
+        li a,
+        dt a {
+          display: inline-flex;
+          align-items: center;
+          min-block-size: var(--target-min);
+          min-inline-size: var(--target-min);
         }
 
         /* The slot form: a title and its detail stay a pair, and the pairs are spaced like the list's items. */
@@ -40,7 +50,7 @@
         }
 
         dt:not(:first-child) {
-          margin-block-start: calc(var(--content-space) * 0.75);
+          margin-block-start: calc(var(--content-space) * 0.25);
         }
 
         dd {
@@ -50,14 +60,14 @@
           line-height: var(--font-height);
         }
       }
-      .wc0pp-n63 .label {
+      .wfwhm0lnx .label {
         margin: 0 0 calc(var(--content-space) * 0.5);
         color: var(--color-text-muted);
         text-transform: uppercase;
         letter-spacing: 0.05em;
         font-size: var(--font-size-6);
       }
-      .wc0pp-n63 .check {
+      .wfwhm0lnx .check {
         flex-basis: 100%;
         line-height: var(--font-height);
         color: var(--color-text-muted);
@@ -70,7 +80,7 @@
     <main id="main-content" tabindex="-1" style="margin: 0; padding: 1rem; min-block-size: 0">
       <h1 class="sr-only">assigned-list: Empty items falls back to the slot</h1>
 
-      <div class="assigned wc0pp-n63">
+      <div class="assigned wfwhm0lnx">
         <p class="label">Due</p>
 
         <dl>

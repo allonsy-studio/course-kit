@@ -11,11 +11,11 @@
     <link rel="stylesheet" href="/course-kit/preview/24/components/styles/prism-dark.css" media="(prefers-color-scheme: dark)" data-prism-theme="dark" />
     <link rel="stylesheet" href="/course-kit/preview/24/components/styles/base.css" />
     <style>
-      .wnl1nbpkt[hidden],
-      .wnl1nbpkt .course-now[hidden] {
+      .w0_mavhoo[hidden],
+      .w0_mavhoo .course-now[hidden] {
         display: none;
       }
-      .wnl1nbpkt {
+      .w0_mavhoo {
         display: grid;
         grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
         gap: var(--content-space);
@@ -28,7 +28,7 @@
           font-size: var(--font-size-4);
         }
       }
-      .wnl1nbpkt .now-card {
+      .w0_mavhoo .now-card {
         display: flex;
         flex-direction: column;
         gap: calc(var(--gutter) * 2);
@@ -36,7 +36,7 @@
         border-radius: calc(var(--standard-border-radius) * 4);
         background-color: var(--color-accent);
         color: var(--color-on-accent);
-        .wnl1nbpkt &[hidden] {
+        .w0_mavhoo &[hidden] {
           display: none;
         }
         p {
@@ -92,7 +92,12 @@
           }
         }
       }
-      .wnl1nbpkt .coming-up {
+      .w0_mavhoo .coming-up p > a {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: var(--target-min);
+      }
+      .w0_mavhoo .coming-up {
         display: grid;
         gap: calc(var(--gutter) * 3);
         align-content: start;
@@ -100,7 +105,7 @@
         border: var(--thin-border-width) solid var(--color-border);
         border-radius: calc(var(--standard-border-radius) * 4);
         background-color: var(--color-surface);
-        .wnl1nbpkt &[hidden] {
+        .w0_mavhoo &[hidden] {
           display: none;
         }
         ul {
@@ -143,7 +148,7 @@
           font-weight: var(--font-weight);
         }
       }
-      .wnl1nbpkt .progress {
+      .w0_mavhoo .progress {
         display: grid;
         grid-column: 1/-1;
         grid-template-columns: 1fr auto;
@@ -207,16 +212,16 @@
         }
       }
       @media (forced-colors: active) {
-        .wnl1nbpkt .progress [data-state="now"] .bar {
+        .w0_mavhoo .progress [data-state="now"] .bar {
           background: Highlight;
         }
-        .wnl1nbpkt .progress [data-state="done"] .bar {
+        .w0_mavhoo .progress [data-state="done"] .bar {
           background: CanvasText;
         }
       }
       @media print {
-        .wnl1nbpkt,
-        .wnl1nbpkt .course-now {
+        .w0_mavhoo,
+        .w0_mavhoo .course-now {
           display: none;
         }
       }
@@ -226,8 +231,9 @@
   <body>
     <main id="main-content" tabindex="-1" style="margin: 0; padding: 1rem; min-block-size: 0">
       <h1 class="sr-only">course-now: Default</h1>
+      <p style="margin: 0 0 1rem; padding: 0.5rem 0.75rem; border-inline-start: 3px solid var(--color-accent); font-size: 0.9em" class="story-note">Built from the starter course and today's date: once the starter's three weeks are over, every week reads Done.</p>
 
-      <section aria-labelledby="course-now-heading" data-course-now="" hidden="" class="course-now screen-only wnl1nbpkt">
+      <section aria-labelledby="course-now-heading" data-course-now="" hidden="" class="course-now screen-only w0_mavhoo">
         <h2 id="course-now-heading" class="sr-only">Where the course is</h2>
         <div data-now-card="" hidden="" class="now-card on-accent">
           <p data-now-label="" class="label"></p>
