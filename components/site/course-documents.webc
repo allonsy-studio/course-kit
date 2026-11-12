@@ -16,3 +16,12 @@
 		</template>
 	</dl>
 </section>
+
+<style webc:scoped>
+	/* Each link is an operable target: 44px tall (WCAG 2.5.5). */
+	dt a {
+		display: inline-flex;
+		align-items: center;
+		min-block-size: var(--target-min);
+	}
+</style>

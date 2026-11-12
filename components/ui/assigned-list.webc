@@ -41,7 +41,8 @@
 		ul,
 		dl {
 			display: grid;
-			gap: calc(var(--content-space) * 0.75);
+			/* The links are 44px tall, so the rows already carry most of the space between items. */
+			gap: calc(var(--content-space) * 0.25);
 			list-style: none;
 			margin: 0;
 			padding: 0;
@@ -52,8 +53,17 @@
 		dt {
 			display: flex;
 			flex-wrap: wrap;
-			align-items: baseline;
-			gap: 0.25em 0.5em;
+			align-items: center;
+			gap: 0 0.5em;
+		}
+
+		/* A link is an operable target: 44px tall (WCAG 2.5.5). */
+		li a,
+		dt a {
+			display: inline-flex;
+			align-items: center;
+			min-block-size: var(--target-min);
+			min-inline-size: var(--target-min);
 		}
 
 		/* The slot form: a title and its detail stay a pair, and the pairs are spaced like the list's items. */
@@ -63,7 +73,7 @@
 		}
 
 		dt:not(:first-child) {
-			margin-block-start: calc(var(--content-space) * 0.75);
+			margin-block-start: calc(var(--content-space) * 0.25);
 		}
 
 		dd {

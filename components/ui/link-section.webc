@@ -30,4 +30,11 @@
 	h3 {
 		margin-block-start: calc(var(--content-space) * 1.75);
 	}
+
+	/* A link that is the whole item is an operable target: 44px tall (WCAG 2.5.5). A link inside a sentence keeps the line. */
+	li > a:only-child {
+		display: inline-flex;
+		align-items: center;
+		min-block-size: var(--target-min);
+	}
 </style>

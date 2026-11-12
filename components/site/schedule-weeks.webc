@@ -381,8 +381,11 @@
             border-inline-start: var(--thin-border-width) solid var(--color-border);
         }
 
-        li + li {
-            margin-block-start: 0.3em;
+        /* Each link is an operable target: 44px tall (WCAG 2.5.5), so the rows carry the spacing. */
+        li a {
+            display: inline-flex;
+            align-items: center;
+            min-block-size: var(--target-min);
         }
     }
 
@@ -410,7 +413,14 @@
         ul {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.4em 2em;
+            gap: 0 2em;
+        }
+
+        /* A link is an operable target: 44px tall (WCAG 2.5.5). */
+        a {
+            display: inline-flex;
+            align-items: center;
+            min-block-size: var(--target-min);
         }
     }
 

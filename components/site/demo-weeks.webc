@@ -55,12 +55,17 @@
         font-size: max(var(--base-font-size), 0.9em);
     }
 
-    .lesson {
-        margin-block-start: 0.35em;
+    /* Each link is an operable target: 44px tall (WCAG 2.5.5), so the rows carry the spacing. */
+    .lesson,
+    .demo-title a,
+    .meta a {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: var(--target-min);
     }
 
     .demo + .demo {
-        margin-block-start: 0.8em;
+        margin-block-start: 0.25em;
     }
 
     .demo p {

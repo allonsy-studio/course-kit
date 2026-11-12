@@ -50,6 +50,19 @@
         }
     }
 
+    /* A link is an operable target: 44px tall (WCAG 2.5.5), and the rows carry the spacing. The cards variant stretches its own link. */
+    :host:not([cards]) a {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: var(--target-min);
+    }
+
+    :host:not([cards]),
+    :host:not([cards]) > ul,
+    :host:not([cards]) > dl {
+        gap: 0;
+    }
+
     :host([cards]),
     :host([cards]) > ul {
         grid-template-columns: repeat(auto-fill, minmax(min(100%, 15em), 1fr));

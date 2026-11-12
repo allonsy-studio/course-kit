@@ -249,6 +249,12 @@
         }
     }
 
+    .coming-up p > a {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: var(--target-min);
+    }
+
     .coming-up {
         display: grid;
         gap: calc(var(--gutter) * 3);
