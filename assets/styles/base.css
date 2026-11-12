@@ -1458,7 +1458,8 @@ blockquote {
 	details {
 		margin-block: 0;
 		padding: 0;
-		padding-block: 1.05em;
+		/* The summary is 44px tall (WCAG 2.5.5), so the rows need little more space. */
+		padding-block: 0.25em;
 
 		background: none;
 		border: none;
@@ -1478,7 +1479,8 @@ blockquote {
 
 	summary {
 		display: flex;
-		align-items: baseline;
+		align-items: center;
+		min-block-size: var(--target-min);
 		margin: 0;
 		padding: 0;
 

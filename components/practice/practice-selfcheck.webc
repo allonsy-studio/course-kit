@@ -26,6 +26,13 @@
 			margin-block-end: 0.2em;
 		}
 
+		/* The disclosure is an operable target: 44px tall (WCAG 2.5.5). */
+		summary {
+			display: flex;
+			align-items: center;
+			min-block-size: var(--target-min);
+		}
+
 		.reveal {
 			font-family: var(--mono-font);
 		}
