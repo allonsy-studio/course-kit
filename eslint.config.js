@@ -11,7 +11,7 @@ export default [
 	// Written by `yarn docs` and `yarn schema`.
 	{ ignores: ["docs/components-reference.md", "docs/tokens.md"] },
 	// Placeholders and task lists in templates and the sample worksheet that the Markdown rules misread.
-	{ ignores: ["skills/test-generator/templates/**", "preview/stories/practice/sample.worksheet.md"] },
+	{ ignores: ["skills/test-generator/templates/**", "preview/stories/practice/sample.worksheet.md", "preview/_slides/**"] },
 	{
 		// Scripts the kit publishes, and the preview's own, run in the browser.
 		files: ["assets/scripts/**/*.js", "preview/content/assets/**/*.js"],

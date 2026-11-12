@@ -58,6 +58,8 @@ export default async function (config) {
 		components: ["preview/_includes/*.webc", patterns(), codeBlock, ossComponents],
 		institution: { name: "Example College", timezone: "America/New_York" },
 		pdf: false,
+		// Sample decks for the glossary, kept out of the input folder so they are not built as slide pages.
+		slides: { decks: "preview/_slides" },
 	});
 
 	// The helpers the Norn components call. The English strings are their defaults.

@@ -23,6 +23,8 @@ This release aligns the kit with the two course sites that use it: the same mark
 
 ### Added
 
+- Component preview: a story can set `wrap` (page context around the component, `{story}` marking its place), `note` (a line saying what the frame shows) and `empty` (the frame is meant to show nothing). The Today link now has a Default story with a `#today` target and a "No target" story for the hidden state; `course-documents`, `demo-weeks` and `glossary` demos show content (sample decks in `preview/_slides`). The audit fails a frame with no visible text or control unless its story is marked `empty`.
+- `<course-documents>` takes an optional `documents` prop, defaulting to `course.documents`.
 - `docs/accessibility.md`: the WCAG 2.2 AAA goal, the bar per area, what is automated and what is manual, and the definition of done for a component. `docs/components.md` carries the contributor rule.
 - The Cypress audit (`yarn docs:test`) now runs axe at the AAA tag set plus best practices on every page of the website and the component preview, in light, dark and forced colors at the desktop and mobile widths, and adds a 320px reflow check, state scans (worksheet after See results and a restored answer, glossary filters, each Group by option and Flashcards, Hide past weeks, the code copy button, the preview canvas), a keyboard check, a reduced-motion check and a 44px target-size check. No new dependency.
 - `minifyInline()`: an opt-in Eleventy transform that minifies inline scripts and styles with esbuild (`config.addTransform("minify-inline", minifyInline())`). The kit does not minify by default; see "Minifying inline code" in `docs/configuration.md`. `yarn docs:test` builds the preview minified (`MINIFY=0` turns it off).
