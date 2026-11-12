@@ -20,9 +20,10 @@ export const Milestones = {
 	args: {
 		copy: COPY_DEFAULTS.tableRubric,
 		caption: "Project milestones",
+		total: 30,
 		criteria: [
-			{ id: "M1", title: "Proposal", due: "Sep 15", points: 10, graded: "A one-page plan." },
-			{ id: "M2", title: "Prototype", due: "Oct 6", points: 20, graded: "Working pages with real content." },
+			{ id: "M1", title: "Proposal", due: "Sep 15", points: 10, description: "A one-page plan." },
+			{ id: "M2", title: "Prototype", due: "Oct 6", points: 20, description: "Working pages with real content." },
 		],
 	},
 };

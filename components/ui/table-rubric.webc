@@ -8,55 +8,55 @@
 	 * @prop {Record<string, string>} copy the table's wording: `copy.tableRubric` (`criteria`, `points`, `pointsEach`, `totalPointsPossible`, `milestone`, `due`, `whatIsGraded`)
 	 */
 </script>
-<table webc:root="override" webc:if="criteria?.length">
+<table webc:root="override" webc:if="criteria?.length" role="table">
     <caption webc:if="caption" @text="caption" class="sr-only"></caption>
 
-    <thead webc:if="criteria[0]?.levels?.length">
-        <tr>
-            <th scope="col" class="criteria" @text="copy.criteria"></th>
-            <th scope="col" webc:for="level of levels" @text="level"></th>
+    <thead webc:if="criteria[0]?.levels?.length" role="rowgroup">
+        <tr role="row">
+            <th scope="col" role="columnheader" class="criteria" @text="copy.criteria"></th>
+            <th scope="col" role="columnheader" webc:for="level of levels" @text="level"></th>
         </tr>
     </thead>
-    <tbody webc:if="criteria[0]?.levels?.length">
+    <tbody webc:if="criteria[0]?.levels?.length" role="rowgroup">
         <template webc:for="criterion of criteria" webc:nokeep>
-            <tr>
-                <th scope="row" @text="criterion.title" rowspan="2"></th>
-                <td webc:for="level of criterion.levels" @text="level.description"></td>
+            <tr role="row">
+                <th scope="row" role="rowheader" @text="criterion.title" rowspan="2"></th>
+                <td role="cell" webc:for="(index, level) in criterion.levels"><span class="cell-label" aria-hidden="true" @text="levels[index]"></span><span @text="level.description"></span></td>
             </tr>
-            <tr class="points"><td webc:for="level of criterion.levels" @text="copy.pointsEach.replace('{points}', level.points)"></td></tr>
+            <tr role="row" class="points"><td role="cell" webc:for="(index, level) in criterion.levels"><span class="cell-label" aria-hidden="true" @text="levels[index]"></span><span @text="copy.pointsEach.replace('{points}', level.points)"></span></td></tr>
         </template>
     </tbody>
-    <tfoot webc:if="criteria[0]?.levels?.length">
-        <tr>
-            <th scope="row" :colspan="levels?.length ?? 1" @text="copy.totalPointsPossible"></th>
-            <td class="num" @text="total"></td>
+    <tfoot webc:if="criteria[0]?.levels?.length" role="rowgroup">
+        <tr role="row">
+            <th scope="row" role="rowheader" :colspan="levels?.length ?? 1" @text="copy.totalPointsPossible"></th>
+            <td role="cell" class="num" @text="total"></td>
         </tr>
     </tfoot>
 
-    <thead webc:if="!criteria[0]?.levels?.length">
-        <tr>
-            <th scope="col" @text="copy.milestone"></th>
-            <th scope="col" @text="copy.due"></th>
-            <th scope="col" class="num" @text="copy.points"></th>
-            <th scope="col" @text="copy.whatIsGraded"></th>
+    <thead webc:if="!criteria[0]?.levels?.length" role="rowgroup">
+        <tr role="row">
+            <th scope="col" role="columnheader" @text="copy.milestone"></th>
+            <th scope="col" role="columnheader" @text="copy.due"></th>
+            <th scope="col" role="columnheader" class="num" @text="copy.points"></th>
+            <th scope="col" role="columnheader" @text="copy.whatIsGraded"></th>
         </tr>
     </thead>
-    <tbody webc:if="!criteria[0]?.levels?.length">
-        <tr webc:for="criterion of criteria">
-            <th scope="row">
+    <tbody webc:if="!criteria[0]?.levels?.length" role="rowgroup">
+        <tr role="row" webc:for="criterion of criteria">
+            <th scope="row" role="rowheader">
                 <span class="id" webc:if="criterion.id" @text="criterion.id"></span>
                 <span @text="criterion.title"></span>
             </th>
-            <td class="due" @text="criterion.due ? fullDate(criterion.due) + (criterion.dueTime ? `, ${criterion.dueTime}` : '') : ''"></td>
-            <td class="num" @text="criterion.points"></td>
-            <td @text="criterion.description"></td>
+            <td role="cell" class="due"><span class="cell-label" aria-hidden="true" @text="copy.due"></span><span @text="criterion.due ? fullDate(criterion.due) + (criterion.dueTime ? `, ${criterion.dueTime}` : '') : ''"></span></td>
+            <td role="cell" class="num"><span class="cell-label" aria-hidden="true" @text="copy.points"></span><span @text="criterion.points"></span></td>
+            <td role="cell"><span class="cell-label" aria-hidden="true" @text="copy.whatIsGraded"></span><span @text="criterion.description"></span></td>
         </tr>
     </tbody>
-    <tfoot webc:if="!criteria[0]?.levels?.length">
-        <tr>
-            <th scope="row" colspan="2" @text="copy.totalPointsPossible"></th>
-            <td class="num" @text="total"></td>
-            <td></td>
+    <tfoot webc:if="!criteria[0]?.levels?.length" role="rowgroup">
+        <tr role="row">
+            <th scope="row" role="rowheader" colspan="2" @text="copy.totalPointsPossible"></th>
+            <td role="cell" class="num"><span class="cell-label" aria-hidden="true" @text="copy.points"></span><span @text="total"></span></td>
+            <td role="cell" class="blank"></td>
         </tr>
     </tfoot>
 </table>
@@ -131,6 +131,121 @@
             :is(th, td) {
                 border-block-start: var(--border-width) solid var(--color-border);
             }
+        }
+    }
+
+    /* Below 40em neither table fits, so each row stacks: its cells one under another, each with its column's name beside it as
+       text. The elements keep their roles (set in the markup, since `display: block` can drop them) and the header row stays
+       in the accessibility tree, so a screen reader still reads the table; the visible label is aria-hidden to avoid saying it twice. */
+    .cell-label {
+        display: none;
+    }
+
+    @media (width < 40em) {
+        :host,
+        :host :is(thead, tbody, tfoot, tr, th, td) {
+            display: block;
+        }
+
+        :host {
+            inline-size: 100%;
+            max-inline-size: 100%;
+        }
+
+        /* The header row is for assistive technology only: the labels sit in the cells. */
+        :host thead {
+            position: absolute;
+            inline-size: 1px;
+            block-size: 1px;
+            overflow: hidden;
+            clip-path: inset(50%);
+            white-space: nowrap;
+        }
+
+        :host tr {
+            background: none;
+        }
+
+        :host tbody tr {
+            padding-block: 0.4em;
+            border-block-start: var(--thin-border-width) solid var(--color-border);
+        }
+
+        :host :is(td, th) {
+            border: none;
+            padding: 0.25em 0.6em;
+        }
+
+        :host td.num {
+            text-align: start;
+        }
+
+        :host tbody th {
+            padding-block-end: 0.25em;
+        }
+
+        :host td:empty,
+        :host td.blank {
+            display: none;
+        }
+
+        /* A cell: its column's name, then its value, side by side, the value wrapping under itself. */
+        :host td {
+            display: grid;
+            grid-template-columns: minmax(6rem, 30%) minmax(0, 1fr);
+            gap: 0 0.75em;
+            text-align: start;
+        }
+
+        :host .cell-label {
+            display: block;
+            color: var(--color-text-muted);
+            font-size: max(var(--base-font-size), 0.85em);
+            font-weight: var(--font-weight--medium);
+            overflow-wrap: anywhere;
+        }
+
+        /* The levels matrix: a level's points sit with the level's name on the line below its description, not in a block of their own. */
+        :host .points {
+            padding-block-start: 0;
+            border-block-start: none;
+        }
+
+        :host tbody tr:has(+ .points) {
+            padding-block-end: 0;
+        }
+
+        :host .points > td {
+            padding-block: 0;
+        }
+
+        /* The footer: the total beside its name, one row. */
+        :host tfoot tr {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 0 1em;
+            border-block-start: var(--border-width) solid var(--color-border);
+            padding-block: 0.4em;
+        }
+
+        :host tfoot :is(th, td) {
+            border: none;
+            padding-inline: 0.6em;
+        }
+
+        :host tfoot th {
+            text-align: start;
+        }
+
+        :host tfoot td {
+            display: block;
+            text-align: end;
+        }
+
+        :host tfoot .cell-label {
+            display: none;
         }
     }
 </style>
