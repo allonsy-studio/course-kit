@@ -46,8 +46,8 @@
 	   look per host. */
 
       [data-today] {
-        background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
-        box-shadow: inset var(--border-width) 0 0 var(--color-accent);
+        background-color: var(--color-surface-accent-secondary);
+        box-shadow: inset var(--border-width) 0 0 var(--color-accent-secondary);
       }
 
       /* A table row can't carry a shadow of its own: wash its cells, edge the first. */
@@ -56,17 +56,17 @@
         box-shadow: none;
 
         > :is(th, td) {
-          background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
+          background-color: var(--color-surface-accent-secondary);
         }
 
         > :first-child {
-          box-shadow: inset var(--border-width) 0 0 var(--color-accent);
+          box-shadow: inset var(--border-width) 0 0 var(--color-accent-secondary);
         }
       }
 
       .today-flag {
         display: block;
-        color: var(--color-accent-text);
+        color: var(--color-accent-secondary);
       }
 
       /* host: a list of meetings (schedule-weeks, demo-weeks). The meeting holds
@@ -78,8 +78,8 @@
         }
 
         [data-today-scope]:has([data-today]) {
-          background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
-          box-shadow: inset var(--border-width) 0 0 var(--color-accent);
+          background-color: var(--color-surface-accent-secondary);
+          box-shadow: inset var(--border-width) 0 0 var(--color-accent-secondary);
         }
 
         .today-flag {
@@ -90,7 +90,7 @@
       /* host: a grid of day cells (slide-timetable). The edge runs along the top. */
       [data-today-host="timetable"] {
         [data-today] {
-          box-shadow: inset 0 var(--border-width) 0 var(--color-accent);
+          box-shadow: inset 0 var(--border-width) 0 var(--color-accent-secondary);
         }
 
         .today-flag {
@@ -106,7 +106,10 @@
           outline-offset: calc(var(--border-width) * -1);
         }
       }
-      .w4i8m2o1y {
+      .wyz4foyhb:not(:has(li)) {
+        display: none;
+      }
+      .wyz4foyhb {
         display: flex;
         gap: calc(var(--container-space) * 3.5);
         ul {
@@ -137,21 +140,24 @@
         a[href] {
           /* Inline padding is left alone; the block padding lifts each link to
            the 24px minimum target size without changing the row rhythm. */
-          display: inline-block;
+          display: inline-flex;
+          align-items: center;
+          min-block-size: var(--target-min);
+          min-inline-size: var(--target-min);
           padding-block: 0.2em;
           font-size: max(var(--base-font-size), 0.95em);
           color: inherit;
           text-decoration: none;
 
+          /* The current page keeps an underline here; the hero menu fills it (below). */
           &[aria-current="page"] {
-            font-weight: var(--font-weight--semi-bold);
             text-decoration: underline;
+            text-decoration-color: var(--color-accent-text);
             text-decoration-thickness: var(--border-width);
             text-underline-offset: 0.4ex;
-            text-decoration-color: var(--color-accent);
           }
 
-          &:is(:hover, :focus-visible) {
+          &:not([aria-current="page"]):is(:hover, :focus-visible) {
             color: var(--color-link-hover);
             text-decoration: underline;
             text-decoration-thickness: var(--thin-border-width);
@@ -163,7 +169,7 @@
           }
         }
       }
-      .w4i8m2o1y[stacked] ul {
+      .wyz4foyhb[stacked] ul {
         display: flex;
         flex-wrap: wrap;
         justify-content: start;
@@ -171,11 +177,11 @@
         column-gap: calc(var(--content-space) * 2);
         row-gap: calc(var(--content-space) * 0.35);
       }
-      .w4i8m2o1y[column] {
+      .wyz4foyhb[column] {
         padding: 0;
         line-height: inherit;
       }
-      .w4i8m2o1y[column] ul {
+      .wyz4foyhb[column] ul {
         display: flex;
         flex-direction: column;
         align-items: start;
@@ -190,20 +196,45 @@
           row-gap: calc(var(--content-space) * 0.25);
         }
       }
-      .w4i8m2o1y[column] li {
+      .wyz4foyhb[column] li {
         display: block;
       }
-      .w4i8m2o1y[column] a,
-      .w4i8m2o1y[column] a:visited {
+      .wyz4foyhb[column] a,
+      .wyz4foyhb[column] a:visited {
         margin: 0;
-        padding-inline: 0;
+        padding-inline: var(--link-pad, 0);
         border: none;
         border-radius: 0;
         line-height: inherit;
         font-size: max(var(--base-font-size), 1em);
         color: inherit;
-        .w4i8m2o1y &[aria-current="page"] {
+        .wyz4foyhb &[aria-current="page"] {
+          padding-inline: var(--link-pad, 0);
+          background: none;
           color: var(--color-accent-text);
+        }
+      }
+      .wyz4foyhb[data-context="hero"][column] {
+        --link-pad: 0.85em;
+      }
+      .wyz4foyhb[data-context="hero"][column] a[href] {
+        border-radius: var(--radius-pill);
+      }
+      .wyz4foyhb[data-context="hero"][column] a[href][aria-current="page"] {
+        background-color: var(--color-accent-secondary);
+        color: var(--color-on-accent-secondary);
+        text-decoration: none;
+        font-weight: var(--font-weight--semi-bold);
+        --color-focus-ring: var(--color-on-accent-secondary);
+      }
+      .wyz4foyhb[data-context="hero"][column] a[href]:not([aria-current="page"]):hover {
+        background-color: color-mix(in oklab, var(--color-accent-secondary) 10%, transparent);
+      }
+      @media (forced-colors: active) {
+        .wyz4foyhb[data-context="hero"][column] a[href][aria-current="page"] {
+          forced-color-adjust: none;
+          background: SelectedItem;
+          color: SelectedItemText;
         }
       }
       .woorkyj9o {
@@ -304,7 +335,7 @@
         font-size: max(var(--base-font-size), 0.85em);
         color: var(--color-text-muted);
       }
-      .wqox_maih {
+      .wp7xogbrw {
         --context: footer;
         text-align: start;
         display: grid;
@@ -358,14 +389,14 @@
           display: flex;
           flex-direction: column;
           align-items: start;
-          gap: calc(var(--content-space) * 0.35);
+          gap: 0;
 
           @media screen and (width <= 768px) {
             flex-direction: row;
             flex-wrap: wrap;
-            align-items: baseline;
+            align-items: center;
             column-gap: calc(var(--content-space) * 1.25);
-            row-gap: calc(var(--content-space) * 0.25);
+            row-gap: 0;
           }
         }
 
@@ -373,9 +404,11 @@
           font-size: 1em;
         }
 
-        nav.group a {
-          display: inline-block;
-          padding-block: 0.2em;
+        nav.group a,
+        .course a {
+          display: inline-flex;
+          align-items: center;
+          min-block-size: var(--target-min);
           font-size: max(var(--base-font-size), 1em);
           color: inherit;
           text-decoration: none;
@@ -409,13 +442,10 @@
           </p>
         </div>
         <div class="links">
-          <nav column="" aria-label="Site" class="w4i8m2o1y">
+          <nav data-context="hero" column="" aria-label="Site" class="wyz4foyhb">
             <ul role="list">
               <li>
                 <a href="/course-kit/components/#syllabus">Syllabus</a>
-              </li>
-              <li>
-                <a href="/course-kit/components/lessons/" aria-current="page">Lesson Plans</a>
               </li>
             </ul>
           </nav>
@@ -431,7 +461,7 @@
         </p>
 
         <h1>Lesson plans</h1>
-        <p>One plan per class meeting (<span>10:00AM–11:15AM</span>), generated from the course schedule and the academic calendar. Holidays are shown in sequence so the term reads day by day.</p>
+        <p>One plan per class meeting (10:00AM–11:15AM), generated from the course schedule and the academic calendar. Holidays are shown in sequence so the term reads day by day.</p>
 
         <table>
           <caption class="sr-only">
@@ -527,7 +557,7 @@
     </main>
 
     <footer>
-      <div class="wqox_maih">
+      <div class="wp7xogbrw">
         <div class="brand">
           <p class="course">
             <a href="/course-kit/components/"><span>CS101</span>: <span>Introduction to Web Publishing</span></a>
@@ -542,7 +572,7 @@
         <div class="group">
           <p id="footer-pages" class="label">Pages</p>
 
-          <nav column="" aria-labelledby="footer-pages" class="w4i8m2o1y">
+          <nav data-context="footer" column="" aria-labelledby="footer-pages" class="wyz4foyhb">
             <ul role="list">
               <li>
                 <a href="/course-kit/components/lessons/" aria-current="page">Lesson Plans</a>
@@ -553,9 +583,6 @@
         <nav aria-labelledby="footer-policies" class="group">
           <p id="footer-policies" class="label">Policies</p>
           <ul role="list">
-            <li>
-              <a href="/course-kit/components/#policy-$schema"></a>
-            </li>
             <li>
               <a href="/course-kit/components/#policy-attendance">Attendance</a>
             </li>
@@ -578,6 +605,273 @@
         </nav>
       </div>
 
+      <script type="application/json" id="copy-data">
+        {
+          "code": {
+            "copy": "Copy code",
+            "copied": "Copied",
+            "selected": "Code selected. Press your copy shortcut.",
+            "plain": "Code",
+            "languages": {
+              "bash": "Terminal",
+              "sh": "Terminal",
+              "shell": "Terminal",
+              "zsh": "Terminal",
+              "console": "Terminal",
+              "shellsession": "Terminal",
+              "css": "CSS",
+              "scss": "SCSS",
+              "html": "HTML",
+              "markup": "HTML",
+              "webc": "WebC",
+              "njk": "Nunjucks",
+              "xml": "XML",
+              "svg": "SVG",
+              "js": "JavaScript",
+              "javascript": "JavaScript",
+              "jsx": "JSX",
+              "ts": "TypeScript",
+              "typescript": "TypeScript",
+              "json": "JSON",
+              "md": "Markdown",
+              "markdown": "Markdown",
+              "php": "PHP",
+              "py": "Python",
+              "python": "Python",
+              "java": "Java",
+              "sql": "SQL",
+              "http": "HTTP",
+              "yaml": "YAML",
+              "yml": "YAML",
+              "text": "Text"
+            }
+          },
+          "common": { "sep": " · " },
+          "glossary": {
+            "groupBy": "Group by",
+            "byAz": "A to Z",
+            "byTest": "Test",
+            "byMeeting": "Class meeting",
+            "mode": "Mode",
+            "review": "Review",
+            "flashcards": "Flashcards",
+            "search": "Search terms",
+            "clear": "Clear",
+            "clearSearch": "Clear search",
+            "filterSummary": "Filter by test or {reading}",
+            "filtersOn": "({count} on)",
+            "count": "{shown} of {total} terms",
+            "clearFilters": "Clear filters",
+            "removeFilter": "Remove {kind} filter: {label}",
+            "meetingChip": "Class meeting: {label}",
+            "taughtIn": "Taught in",
+            "slideRef": "Week {week} · {weekday}, slide {slide}",
+            "example": "Example",
+            "known": "✓ known",
+            "noMatch": "No terms match.",
+            "noMatchHint": "Clear the search or a filter to see more.",
+            "noMatchStudy": "Clear the search or a filter to study more.",
+            "terms_one": "{count} term",
+            "terms_other": "{count} terms",
+            "card": "Card {n} of {total}",
+            "toStudy": "{count} to study",
+            "knownOf": "{known} of {total} known",
+            "shuffle": "Shuffle",
+            "defFirst": "Definition first",
+            "resetKnown": "Reset known",
+            "knownMeter": "Known terms",
+            "allKnown": "You know every card in this set.",
+            "markedKnown": "{known} of {total} marked known.",
+            "startOver": "Start over with the ones I know",
+            "showDefinition": "Show definition",
+            "showTerm": "Show term",
+            "iKnow": "I know this",
+            "later": "Show me again later",
+            "prev": "← Previous",
+            "next": "Next →",
+            "hint": "Space reveals · arrows move",
+            "defShown": "Definition shown for {term}",
+            "symbols": "Symbols",
+            "glossary": "Glossary",
+            "courseGlossary": "Course glossary",
+            "slidesOnly": "Slides only",
+            "finalExam": "Final exam",
+            "reading": "Reading",
+            "chapter": "Chapter",
+            "section": "Section",
+            "unit": "Unit",
+            "module": "Module",
+            "lesson": "Lesson",
+            "termsFromClassEach": "terms from class. Each carries tags for its test, its {reading} and the meeting that taught it. Group by any of them, search, or narrow the list to what you are studying."
+          },
+          "home": {
+            "heading": "Where the course is",
+            "todayLabel": "Today's class",
+            "nextLabel": "Next class",
+            "firstLabel": "First class",
+            "when": "Week {week} · {weekday}, {date}",
+            "openSlides": "Open the slides",
+            "seeWeek": "See the week",
+            "comingUp": "Coming up",
+            "fullSchedule": "Full schedule",
+            "nothingDue": "Nothing else is due this term.",
+            "dueToday": "Today",
+            "dueTomorrow": "Tomorrow",
+            "dueInDays_one": "In {count} day",
+            "dueInDays_other": "In {count} days",
+            "progress": "Progress",
+            "weeksDone": "{done} of {total} weeks done",
+            "week": "Week {week}",
+            "stateDone": "Done",
+            "stateNow": "Now"
+          },
+          "promptCopy": { "copyThisPrompt": "Copy this prompt", "promptCopied": "Prompt copied", "promptCopiedToThe": "Prompt copied to the clipboard.", "promptSelectedPressYour": "Prompt selected — press your copy shortcut." },
+          "schedule": {
+            "thisWeek": "This week",
+            "upNext": "Up next",
+            "read": "Read",
+            "dueThisWeek": "Due this week",
+            "today": "Today",
+            "next": "Next",
+            "stateDone": "Done",
+            "stateNow": "Now",
+            "hidePast": "Hide past weeks",
+            "weeksDone": "{done} of {total} weeks done.",
+            "pastHidden_one": "{count} finished week hidden.",
+            "pastHidden_other": "{count} finished weeks hidden.",
+            "weekHeading": "Week {week}",
+            "colClass": "Class",
+            "colTopics": "Topics",
+            "colFor": "For this class",
+            "readBefore": "Read before class",
+            "due": "Due",
+            "dueOn": "due {when}",
+            "materials": "Materials",
+            "slides": "Slides",
+            "addendum": "Addendum",
+            "weekResources": "This week’s resources",
+            "noClass": "No class — {reason}",
+            "substitution": "Runs a {weekday} schedule",
+            "dueKeyLabel": "Key to due items",
+            "graded": "graded",
+            "notGraded": "not graded",
+            "dueKindTest": "Test",
+            "dueKindGraded": "Graded",
+            "dueKindReading": "Reading check",
+            "dueKindPractice": "Practice",
+            "finalExam": "Final exam"
+          },
+          "themePanel": {
+            "brand": "Brand",
+            "brandColor": "Brand color",
+            "brandColorForText": "Brand color for text",
+            "textOnBrandColor": "Text on brand color",
+            "wayfindingColor": "Wayfinding color",
+            "textOnWayfindingColor": "Text on wayfinding color",
+            "page": "Page",
+            "pageBackground": "Page background",
+            "cardsAndPanels": "Cards and panels",
+            "linesAndBorders": "Lines and borders",
+            "text": "Text",
+            "bodyText": "Body text",
+            "secondaryText": "Secondary text",
+            "links": "Links",
+            "theme": "Theme",
+            "unsavedChanges": "Unsaved changes",
+            "preview": "Preview",
+            "light": "Light",
+            "dark": "Dark",
+            "everyColor": "Every color",
+            "allTokens": "All tokens",
+            "gradient": "Gradient",
+            "addAColor": "Add a color",
+            "undo": "Undo",
+            "reset": "Reset",
+            "save": "Save",
+            "download": "Download",
+            "hideTheThemePanel": "Hide the theme panel",
+            "notACssColor": "Not a CSS color",
+            "cssValue": "{name}, CSS value",
+            "backToTheSaved": "Back to the saved theme.",
+            "thePage": "the page",
+            "theBrandColor": "the brand color",
+            "passes": "passes",
+            "below": "below {minimum} : 1",
+            "contrast": "{ratio} : 1 on {ground}, {verdict}",
+            "color": "Color {n}",
+            "removeColor": "Remove color {n}",
+            "saving": "Saving…",
+            "savedToThe": "Saved to {file}. The site is rebuilding.",
+            "notSaved": "Not saved: {message}",
+            "downloadedPutItIn": "Downloaded. Put it in {folder} to keep it."
+          },
+          "worksheet": {
+            "notice": "Nothing here is recorded or submitted.",
+            "noticeBody": "Your answers are saved in this browser only and go nowhere else. Checking an answer shows you the reasoning and the source it came from.",
+            "termsHeading": "Terms to know",
+            "termsHint": "Select a term for its definition, and a link to the source it comes from.",
+            "termSource": "",
+            "citeHeading": "Where this comes from",
+            "citeLabel": "Where this comes from, question",
+            "chooseOne": "Choose one answer",
+            "checkAll": "See results",
+            "resetAll": "Clear my answers",
+            "checkSection": "Check section",
+            "resetSection": "Clear section",
+            "section": "Section",
+            "wordBank": "Word bank",
+            "answer": "Answer:",
+            "showAnswer": "Show the answer",
+            "checkYourself": "Check yourself",
+            "verdict": "Verdict",
+            "judgeLine": "Select the line that causes the problem",
+            "judgeNoLine": "No line — it is fine as written",
+            "notGraded": "Not graded",
+            "navHeading": "Questions",
+            "resultsHeading": "Results",
+            "retryMissed": "Try missed questions",
+            "scoreOf": "of {total}",
+            "statusRight": "Correct",
+            "statusWrong": "Try again",
+            "statusPartial": "Unfinished",
+            "statusUnattempted": "Unattempted",
+            "statusAnswered": "Not checked",
+            "statusSelf": "Check yourself",
+            "tallyCorrect": "{right} of {total} correct",
+            "tallyWrong": "{count} to try again",
+            "tallyPartial": "{count} unfinished",
+            "tallyUnattempted": "{count} unattempted",
+            "tallySelf": "{count} to check yourself",
+            "feedbackRight": "Correct.",
+            "feedbackRightAll": "Correct: all {total} parts.",
+            "feedbackParts": "{right} of {total} parts correct",
+            "feedbackBlank": "{count} left blank",
+            "feedbackUnattempted": "Unattempted.",
+            "retryCount_one": "{count} question to try again",
+            "retryCount_other": "{count} questions to try again",
+            "confirmClearAll": "Clear every answer on this worksheet? This can't be undone.",
+            "confirmClearSection": "Clear every answer in this section? This can't be undone.",
+            "checkOne": "Check answer",
+            "restored": "Restored your answers from {when}."
+          }
+        }
+      </script>
+      <script>
+        window.ckCopy ??= (function () {
+          var data = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
+          var rules = new Intl.PluralRules(document.documentElement.lang || "en-US");
+          function t(ns, key, vars) {
+            vars = vars || {};
+            var table = data[ns] || {};
+            var text = table[key];
+            if ("count" in vars) if (key + "_other" in table) text = table[key + "_" + rules.select(vars.count)] ?? table[key + "_other"];
+            return String(text ?? "").replace(/\{(\w+)\}/g, function (match, name) {
+              return String(vars[name] ?? "");
+            });
+          }
+          return { data: data, t: t };
+        })();
+      </script>
       <script type="module">
         /**
          * <today-marker>: flag today's [data-date] elements and give one of them
@@ -585,8 +879,10 @@
          */
         (() => {
           try {
-            /** @type {string} today on campus (not the reader's zone), as YYYY-MM-DD; <html data-timezone> comes from `site.timezone` */
-            const today = new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone || undefined });
+            /** Today in the campus zone, as "YYYY-MM-DD". */
+            const campusToday = () => new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone });
+            const { t } = window.ckCopy;
+            const today = campusToday();
 
             /** The node that can hold a flag or an anchor: a table row can't, its first cell can. */
             const holder = (el) => (el instanceof HTMLTableRowElement ? el.cells[0] : el);
@@ -602,7 +898,7 @@
               el.setAttribute("aria-current", "date");
               const flag = document.createElement("strong");
               flag.className = "today-flag";
-              flag.textContent = el.dataset.todayLabel ?? "Today";
+              flag.textContent = el.dataset.todayLabel ?? t("schedule", "today");
               holder(el)?.prepend(flag);
             }
 
@@ -629,7 +925,7 @@
             }
 
             // Opened as /page/#today before the target existed: the browser has already missed it.
-            if (location.hash === "#today") document.getElementById("today")?.scrollIntoView();
+            if (location.hash === "#today") document.getElementById("today")?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
           } catch {
             // Never let the marker break the scripts bundled after it.
           }
@@ -652,6 +948,7 @@
       </script>
     </footer>
     <script type="module" src="/course-kit/components/js/email.js"></script>
+    <script type="module" src="/course-kit/components/js/copy.js"></script>
     <theme-panel context="site"></theme-panel>
     <script type="module" src="/course-kit/components/js/theme-panel.js"></script>
   </body>

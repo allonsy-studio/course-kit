@@ -695,8 +695,8 @@
         <a rel="home" href="../../">course-kit</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc--RY9O">
-            <span data-label="" id="norn-header-webc--RY9O">Primary</span>
+          <nav aria-labelledby="norn-header-webc-ZOVck">
+            <span data-label="" id="norn-header-webc-ZOVck">Primary</span>
 
             <a href="../../#install">Install</a>
             <a href="../../#usage">Usage</a>
@@ -721,8 +721,8 @@
         <section aria-labelledby="nav-ui">
           <h2 id="nav-ui">Building blocks</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-EJMve">
-              <span data-label="" id="norn-side-nav-webc-EJMve"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-ZRrTI">
+              <span data-label="" id="norn-side-nav-webc-ZRrTI"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -777,8 +777,8 @@
         <section aria-labelledby="nav-site">
           <h2 id="nav-site">Site sections</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-eI8SN">
-              <span data-label="" id="norn-side-nav-webc-eI8SN"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-BRxoD">
+              <span data-label="" id="norn-side-nav-webc-BRxoD"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -786,6 +786,9 @@
                 </li>
                 <li>
                   <a href="/course-kit/components/components/site/course-documents/"><span>course-documents</span></a>
+                </li>
+                <li>
+                  <a href="/course-kit/components/components/site/course-now/"><span>course-now</span></a>
                 </li>
                 <li>
                   <a href="/course-kit/components/components/site/course-summary/"><span>course-summary</span></a>
@@ -818,6 +821,9 @@
                   <a href="/course-kit/components/components/site/policies/"><span>policies</span></a>
                 </li>
                 <li>
+                  <a href="/course-kit/components/components/site/practice-index/"><span>practice-index</span></a>
+                </li>
+                <li>
                   <a href="/course-kit/components/components/site/schedule-overview/"><span>schedule-overview</span></a>
                 </li>
                 <li>
@@ -839,8 +845,8 @@
         <section aria-labelledby="nav-practice">
           <h2 id="nav-practice">Practice worksheets</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-YES7i">
-              <span data-label="" id="norn-side-nav-webc-YES7i"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-lN17y">
+              <span data-label="" id="norn-side-nav-webc-lN17y"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -947,12 +953,23 @@
             </tr>
             <tr>
               <th scope="row"><code>--color-surface-accent</code></th>
-              <td>Accent-tinted wash</td>
+              <td>Accent-tinted wash, light enough for muted and accent text to stay at 7:1</td>
               <td>
                 <div class="pickers">
                   <label>Light <input type="color" data-token="--color-surface-accent" data-scheme="light" aria-label="Light color for --color-surface-accent" /></label>
                   <label>Dark <input type="color" data-token="--color-surface-accent" data-scheme="dark" aria-label="Dark color for --color-surface-accent" /></label>
                   <button type="button" data-token-reset="--color-surface-accent" aria-label="Reset --color-surface-accent">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>--color-surface-accent-secondary</code></th>
+              <td>Wayfinding wash: today, the current week</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-surface-accent-secondary" data-scheme="light" aria-label="Light color for --color-surface-accent-secondary" /></label>
+                  <label>Dark <input type="color" data-token="--color-surface-accent-secondary" data-scheme="dark" aria-label="Dark color for --color-surface-accent-secondary" /></label>
+                  <button type="button" data-token-reset="--color-surface-accent-secondary" aria-label="Reset --color-surface-accent-secondary">Reset</button>
                 </div>
               </td>
             </tr>
@@ -1055,6 +1072,17 @@
               </td>
             </tr>
             <tr>
+              <th scope="row"><code>--color-accent-fill-hover</code></th>
+              <td>Solid brand fill, hovered, under on-accent text</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-accent-fill-hover" data-scheme="light" aria-label="Light color for --color-accent-fill-hover" /></label>
+                  <label>Dark <input type="color" data-token="--color-accent-fill-hover" data-scheme="dark" aria-label="Dark color for --color-accent-fill-hover" /></label>
+                  <button type="button" data-token-reset="--color-accent-fill-hover" aria-label="Reset --color-accent-fill-hover">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
               <th scope="row"><code>--color-accent-hover</code></th>
               <td>Brand fill, hovered</td>
               <td>
@@ -1073,6 +1101,28 @@
                   <label>Light <input type="color" data-token="--color-accent-active" data-scheme="light" aria-label="Light color for --color-accent-active" /></label>
                   <label>Dark <input type="color" data-token="--color-accent-active" data-scheme="dark" aria-label="Dark color for --color-accent-active" /></label>
                   <button type="button" data-token-reset="--color-accent-active" aria-label="Reset --color-accent-active">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>--color-accent-secondary</code></th>
+              <td>Wayfinding color: progress, section bars, the current location, highlighted code</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-accent-secondary" data-scheme="light" aria-label="Light color for --color-accent-secondary" /></label>
+                  <label>Dark <input type="color" data-token="--color-accent-secondary" data-scheme="dark" aria-label="Dark color for --color-accent-secondary" /></label>
+                  <button type="button" data-token-reset="--color-accent-secondary" aria-label="Reset --color-accent-secondary">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>--color-on-accent-secondary</code></th>
+              <td>Text on a wayfinding-color fill</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-on-accent-secondary" data-scheme="light" aria-label="Light color for --color-on-accent-secondary" /></label>
+                  <label>Dark <input type="color" data-token="--color-on-accent-secondary" data-scheme="dark" aria-label="Dark color for --color-on-accent-secondary" /></label>
+                  <button type="button" data-token-reset="--color-on-accent-secondary" aria-label="Reset --color-on-accent-secondary">Reset</button>
                 </div>
               </td>
             </tr>
@@ -1176,6 +1226,17 @@
               </td>
             </tr>
             <tr>
+              <th scope="row"><code>--color-warning-edge</code></th>
+              <td>The edge and mark of a warning: dark enough to read as a line on the page and on a warning wash</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-warning-edge" data-scheme="light" aria-label="Light color for --color-warning-edge" /></label>
+                  <label>Dark <input type="color" data-token="--color-warning-edge" data-scheme="dark" aria-label="Dark color for --color-warning-edge" /></label>
+                  <button type="button" data-token-reset="--color-warning-edge" aria-label="Reset --color-warning-edge">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
               <th scope="row"><code>--color-on-warning</code></th>
               <td>Text on a warning fill</td>
               <td>
@@ -1194,6 +1255,39 @@
                   <label>Light <input type="color" data-token="--color-highlight" data-scheme="light" aria-label="Light color for --color-highlight" /></label>
                   <label>Dark <input type="color" data-token="--color-highlight" data-scheme="dark" aria-label="Dark color for --color-highlight" /></label>
                   <button type="button" data-token-reset="--color-highlight" aria-label="Reset --color-highlight">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>--color-on-highlight</code></th>
+              <td>Text on a highlight fill</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-on-highlight" data-scheme="light" aria-label="Light color for --color-on-highlight" /></label>
+                  <label>Dark <input type="color" data-token="--color-on-highlight" data-scheme="dark" aria-label="Dark color for --color-on-highlight" /></label>
+                  <button type="button" data-token-reset="--color-on-highlight" aria-label="Reset --color-on-highlight">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>--color-focus-ring</code></th>
+              <td>Focus outline (solid, 2.4.13)</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-focus-ring" data-scheme="light" aria-label="Light color for --color-focus-ring" /></label>
+                  <label>Dark <input type="color" data-token="--color-focus-ring" data-scheme="dark" aria-label="Dark color for --color-focus-ring" /></label>
+                  <button type="button" data-token-reset="--color-focus-ring" aria-label="Reset --color-focus-ring">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>--color-border-strong</code></th>
+              <td>Edges of anything operable (at least 3:1)</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-border-strong" data-scheme="light" aria-label="Light color for --color-border-strong" /></label>
+                  <label>Dark <input type="color" data-token="--color-border-strong" data-scheme="dark" aria-label="Dark color for --color-border-strong" /></label>
+                  <button type="button" data-token-reset="--color-border-strong" aria-label="Reset --color-border-strong">Reset</button>
                 </div>
               </td>
             </tr>
@@ -1238,6 +1332,149 @@
                   <label>Light <input type="color" data-token="--color-code" data-scheme="light" aria-label="Light color for --color-code" /></label>
                   <label>Dark <input type="color" data-token="--color-code" data-scheme="dark" aria-label="Dark color for --color-code" /></label>
                   <button type="button" data-token-reset="--color-code" aria-label="Reset --color-code">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>--color-code-surface</code></th>
+              <td>Code block ground</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-code-surface" data-scheme="light" aria-label="Light color for --color-code-surface" /></label>
+                  <label>Dark <input type="color" data-token="--color-code-surface" data-scheme="dark" aria-label="Dark color for --color-code-surface" /></label>
+                  <button type="button" data-token-reset="--color-code-surface" aria-label="Reset --color-code-surface">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>--color-code-text</code></th>
+              <td>Code text</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-code-text" data-scheme="light" aria-label="Light color for --color-code-text" /></label>
+                  <label>Dark <input type="color" data-token="--color-code-text" data-scheme="dark" aria-label="Dark color for --color-code-text" /></label>
+                  <button type="button" data-token-reset="--color-code-text" aria-label="Reset --color-code-text">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>--color-code-keyword</code></th>
+              <td>Code keywords, and the copy button</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-code-keyword" data-scheme="light" aria-label="Light color for --color-code-keyword" /></label>
+                  <label>Dark <input type="color" data-token="--color-code-keyword" data-scheme="dark" aria-label="Dark color for --color-code-keyword" /></label>
+                  <button type="button" data-token-reset="--color-code-keyword" aria-label="Reset --color-code-keyword">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>--color-code-string</code></th>
+              <td>Code strings</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-code-string" data-scheme="light" aria-label="Light color for --color-code-string" /></label>
+                  <label>Dark <input type="color" data-token="--color-code-string" data-scheme="dark" aria-label="Dark color for --color-code-string" /></label>
+                  <button type="button" data-token-reset="--color-code-string" aria-label="Reset --color-code-string">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>--color-code-function</code></th>
+              <td>Code functions</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-code-function" data-scheme="light" aria-label="Light color for --color-code-function" /></label>
+                  <label>Dark <input type="color" data-token="--color-code-function" data-scheme="dark" aria-label="Dark color for --color-code-function" /></label>
+                  <button type="button" data-token-reset="--color-code-function" aria-label="Reset --color-code-function">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>--color-code-number</code></th>
+              <td>Code numbers</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-code-number" data-scheme="light" aria-label="Light color for --color-code-number" /></label>
+                  <label>Dark <input type="color" data-token="--color-code-number" data-scheme="dark" aria-label="Dark color for --color-code-number" /></label>
+                  <button type="button" data-token-reset="--color-code-number" aria-label="Reset --color-code-number">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>--color-code-comment</code></th>
+              <td>Code comments</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-code-comment" data-scheme="light" aria-label="Light color for --color-code-comment" /></label>
+                  <label>Dark <input type="color" data-token="--color-code-comment" data-scheme="dark" aria-label="Dark color for --color-code-comment" /></label>
+                  <button type="button" data-token-reset="--color-code-comment" aria-label="Reset --color-code-comment">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>--color-code-edge-css</code></th>
+              <td>Decorative language bar: CSS</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-code-edge-css" data-scheme="light" aria-label="Light color for --color-code-edge-css" /></label>
+                  <label>Dark <input type="color" data-token="--color-code-edge-css" data-scheme="dark" aria-label="Dark color for --color-code-edge-css" /></label>
+                  <button type="button" data-token-reset="--color-code-edge-css" aria-label="Reset --color-code-edge-css">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>--color-code-edge-js</code></th>
+              <td>Decorative language bar: JavaScript</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-code-edge-js" data-scheme="light" aria-label="Light color for --color-code-edge-js" /></label>
+                  <label>Dark <input type="color" data-token="--color-code-edge-js" data-scheme="dark" aria-label="Dark color for --color-code-edge-js" /></label>
+                  <button type="button" data-token-reset="--color-code-edge-js" aria-label="Reset --color-code-edge-js">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>--color-code-edge-html</code></th>
+              <td>Decorative language bar: HTML</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-code-edge-html" data-scheme="light" aria-label="Light color for --color-code-edge-html" /></label>
+                  <label>Dark <input type="color" data-token="--color-code-edge-html" data-scheme="dark" aria-label="Dark color for --color-code-edge-html" /></label>
+                  <button type="button" data-token-reset="--color-code-edge-html" aria-label="Reset --color-code-edge-html">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>--color-code-edge-shell</code></th>
+              <td>Decorative language bar: terminal</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-code-edge-shell" data-scheme="light" aria-label="Light color for --color-code-edge-shell" /></label>
+                  <label>Dark <input type="color" data-token="--color-code-edge-shell" data-scheme="dark" aria-label="Dark color for --color-code-edge-shell" /></label>
+                  <button type="button" data-token-reset="--color-code-edge-shell" aria-label="Reset --color-code-edge-shell">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>--color-code-edge-neutral</code></th>
+              <td>Decorative language bar: anything else</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-code-edge-neutral" data-scheme="light" aria-label="Light color for --color-code-edge-neutral" /></label>
+                  <label>Dark <input type="color" data-token="--color-code-edge-neutral" data-scheme="dark" aria-label="Dark color for --color-code-edge-neutral" /></label>
+                  <button type="button" data-token-reset="--color-code-edge-neutral" aria-label="Reset --color-code-edge-neutral">Reset</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>--color-highlight-line</code></th>
+              <td>Highlighted code line wash</td>
+              <td>
+                <div class="pickers">
+                  <label>Light <input type="color" data-token="--color-highlight-line" data-scheme="light" aria-label="Light color for --color-highlight-line" /></label>
+                  <label>Dark <input type="color" data-token="--color-highlight-line" data-scheme="dark" aria-label="Dark color for --color-highlight-line" /></label>
+                  <button type="button" data-token-reset="--color-highlight-line" aria-label="Reset --color-highlight-line">Reset</button>
                 </div>
               </td>
             </tr>

@@ -41,13 +41,21 @@
         color: var(--color-text-muted);
         margin-block: 0;
       }
-      .wfb8ab2x1:not(:last-child) {
+      .wkdefel0y:not(:last-child) {
         margin-block-end: calc(var(--content-space) * 1.5);
       }
-      .wfb8ab2x1 h3 {
+      .wkdefel0y h3 {
         margin-block-start: calc(var(--content-space) * 1.75);
       }
-      .w4i8m2o1y {
+      .wkdefel0y li > a:only-child {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: var(--target-min);
+      }
+      .wyz4foyhb:not(:has(li)) {
+        display: none;
+      }
+      .wyz4foyhb {
         display: flex;
         gap: calc(var(--container-space) * 3.5);
         ul {
@@ -78,21 +86,24 @@
         a[href] {
           /* Inline padding is left alone; the block padding lifts each link to
            the 24px minimum target size without changing the row rhythm. */
-          display: inline-block;
+          display: inline-flex;
+          align-items: center;
+          min-block-size: var(--target-min);
+          min-inline-size: var(--target-min);
           padding-block: 0.2em;
           font-size: max(var(--base-font-size), 0.95em);
           color: inherit;
           text-decoration: none;
 
+          /* The current page keeps an underline here; the hero menu fills it (below). */
           &[aria-current="page"] {
-            font-weight: var(--font-weight--semi-bold);
             text-decoration: underline;
+            text-decoration-color: var(--color-accent-text);
             text-decoration-thickness: var(--border-width);
             text-underline-offset: 0.4ex;
-            text-decoration-color: var(--color-accent);
           }
 
-          &:is(:hover, :focus-visible) {
+          &:not([aria-current="page"]):is(:hover, :focus-visible) {
             color: var(--color-link-hover);
             text-decoration: underline;
             text-decoration-thickness: var(--thin-border-width);
@@ -104,7 +115,7 @@
           }
         }
       }
-      .w4i8m2o1y[stacked] ul {
+      .wyz4foyhb[stacked] ul {
         display: flex;
         flex-wrap: wrap;
         justify-content: start;
@@ -112,11 +123,11 @@
         column-gap: calc(var(--content-space) * 2);
         row-gap: calc(var(--content-space) * 0.35);
       }
-      .w4i8m2o1y[column] {
+      .wyz4foyhb[column] {
         padding: 0;
         line-height: inherit;
       }
-      .w4i8m2o1y[column] ul {
+      .wyz4foyhb[column] ul {
         display: flex;
         flex-direction: column;
         align-items: start;
@@ -131,20 +142,45 @@
           row-gap: calc(var(--content-space) * 0.25);
         }
       }
-      .w4i8m2o1y[column] li {
+      .wyz4foyhb[column] li {
         display: block;
       }
-      .w4i8m2o1y[column] a,
-      .w4i8m2o1y[column] a:visited {
+      .wyz4foyhb[column] a,
+      .wyz4foyhb[column] a:visited {
         margin: 0;
-        padding-inline: 0;
+        padding-inline: var(--link-pad, 0);
         border: none;
         border-radius: 0;
         line-height: inherit;
         font-size: max(var(--base-font-size), 1em);
         color: inherit;
-        .w4i8m2o1y &[aria-current="page"] {
+        .wyz4foyhb &[aria-current="page"] {
+          padding-inline: var(--link-pad, 0);
+          background: none;
           color: var(--color-accent-text);
+        }
+      }
+      .wyz4foyhb[data-context="hero"][column] {
+        --link-pad: 0.85em;
+      }
+      .wyz4foyhb[data-context="hero"][column] a[href] {
+        border-radius: var(--radius-pill);
+      }
+      .wyz4foyhb[data-context="hero"][column] a[href][aria-current="page"] {
+        background-color: var(--color-accent-secondary);
+        color: var(--color-on-accent-secondary);
+        text-decoration: none;
+        font-weight: var(--font-weight--semi-bold);
+        --color-focus-ring: var(--color-on-accent-secondary);
+      }
+      .wyz4foyhb[data-context="hero"][column] a[href]:not([aria-current="page"]):hover {
+        background-color: color-mix(in oklab, var(--color-accent-secondary) 10%, transparent);
+      }
+      @media (forced-colors: active) {
+        .wyz4foyhb[data-context="hero"][column] a[href][aria-current="page"] {
+          forced-color-adjust: none;
+          background: SelectedItem;
+          color: SelectedItemText;
         }
       }
       .woorkyj9o {
@@ -245,7 +281,7 @@
         font-size: max(var(--base-font-size), 0.85em);
         color: var(--color-text-muted);
       }
-      .wqox_maih {
+      .wp7xogbrw {
         --context: footer;
         text-align: start;
         display: grid;
@@ -299,14 +335,14 @@
           display: flex;
           flex-direction: column;
           align-items: start;
-          gap: calc(var(--content-space) * 0.35);
+          gap: 0;
 
           @media screen and (width <= 768px) {
             flex-direction: row;
             flex-wrap: wrap;
-            align-items: baseline;
+            align-items: center;
             column-gap: calc(var(--content-space) * 1.25);
-            row-gap: calc(var(--content-space) * 0.25);
+            row-gap: 0;
           }
         }
 
@@ -314,9 +350,11 @@
           font-size: 1em;
         }
 
-        nav.group a {
-          display: inline-block;
-          padding-block: 0.2em;
+        nav.group a,
+        .course a {
+          display: inline-flex;
+          align-items: center;
+          min-block-size: var(--target-min);
           font-size: max(var(--base-font-size), 1em);
           color: inherit;
           text-decoration: none;
@@ -350,13 +388,10 @@
           </p>
         </div>
         <div class="links">
-          <nav column="" aria-label="Site" class="w4i8m2o1y">
+          <nav data-context="hero" column="" aria-label="Site" class="wyz4foyhb">
             <ul role="list">
               <li>
                 <a href="/course-kit/components/#syllabus">Syllabus</a>
-              </li>
-              <li>
-                <a href="/course-kit/components/lessons/">Lesson Plans</a>
               </li>
             </ul>
           </nav>
@@ -365,109 +400,136 @@
     </header>
 
     <main id="main-content" tabindex="-1">
-      <article class="lesson-plan content-column">
-        <header class="stacked">
-          <nav aria-label="Lesson navigation" class="lesson-nav">
-            <a href="/course-kit/components/lessons/">All lessons</a>
-            <a href="/course-kit/components/lessons/week-1/day-2/">Previous day</a>
-            <a href="/course-kit/components/lessons/week-2/day-2/">Next day</a>
-          </nav>
-          <eyebrow class="eyebrow">
-            <p class="eyebrow">Week 2, Day 1 — Lesson Plan</p>
-          </eyebrow>
-          <h1 class="lesson-heading">Week <span>2</span>, Day <span>1</span></h1>
-          <p class="lesson-when separators">
-            <span>Tuesday, September 1, 2026</span>
-            <span>10:00AM–11:15AM</span>
-            <span>Class meeting #<span>3</span> of the term</span>
-          </p>
-        </header>
+      <div class="lesson-layout">
+        <nav aria-labelledby="lesson-outline-heading" class="lesson-outline">
+          <p id="lesson-outline-heading" class="rail-label">Week 2</p>
+          <ol role="list">
+            <li>
+              <a href="/course-kit/components/lessons/week-2/day-1/" aria-current="page">
+                <span>Tuesday, September 1, 2026</span>
+              </a>
+            </li>
+            <li>
+              <a href="/course-kit/components/lessons/week-2/day-2/">
+                <span>Thursday, September 3, 2026</span>
+              </a>
+            </li>
+          </ol>
+        </nav>
+        <article class="lesson-plan content-column">
+          <header class="stacked">
+            <nav aria-label="Lesson navigation" class="lesson-nav">
+              <a href="/course-kit/components/lessons/">All lessons</a>
+              <a href="/course-kit/components/lessons/week-1/day-2/">Previous day</a>
+              <a href="/course-kit/components/lessons/week-2/day-2/">Next day</a>
+            </nav>
+            <eyebrow class="eyebrow">
+              <p class="eyebrow">Week 2, Day 1 — Lesson Plan</p>
+            </eyebrow>
+            <h1 class="lesson-heading">Week 2, Day 1</h1>
+            <p class="lesson-when separators">
+              <span>Tuesday, September 1, 2026</span>
+              <span>10:00AM–11:15AM</span>
+              <span>Class meeting #3 of the term</span>
+            </p>
+          </header>
 
-        <p class="focus"><strong>Focus:</strong> <span>Introduce this week's material</span></p>
+          <p class="focus"><strong>Focus:</strong> <span>Introduce this week's material</span></p>
 
-        <section aria-labelledby="topics-heading">
-          <h2 id="topics-heading">This week's topics</h2>
-          <ul>
-            <li>Writing HTML</li>
-            <li>Headings, lists and links</li>
-          </ul>
-        </section>
-
-        <section aria-labelledby="before-heading">
-          <h2 id="before-heading">Before class</h2>
-          <ul role="list" class="checklist">
-            <li>Review the readings (see materials below)</li>
-            <li>Prepare/update slides and live-demo code</li>
-
-            <li>Stage starter files or lab handout if needed</li>
-            <li>Check <span>Brightspace</span> for student questions or submissions</li>
-          </ul>
-        </section>
-
-        <section aria-labelledby="outline-heading">
-          <h2 id="outline-heading">Lesson outline (<span>75</span> minutes)</h2>
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Time</th>
-                <th scope="col">Segment</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>5 min</td>
-                <td>Welcome, recap the previous class, open questions</td>
-              </tr>
-              <tr>
-                <td>25 min</td>
-                <td>Instruction: this week's topics (see above)</td>
-              </tr>
-              <tr>
-                <td>30 min</td>
-                <td>Guided practice / lab work</td>
-              </tr>
-              <tr>
-                <td>10 min</td>
-                <td>Wrap-up: recap, preview next class, assignment reminders</td>
-              </tr>
-              <tr>
-                <td>5 min</td>
-                <td>Buffer</td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-
-        <section aria-labelledby="materials-heading">
-          <h2 id="materials-heading">Materials &amp; links</h2>
-
-          <div class="link-section wfb8ab2x1">
-            <h3>Assigned before this week</h3>
+          <section aria-labelledby="topics-heading">
+            <h2 id="topics-heading">This week's topics</h2>
             <ul>
-              <li>
-                <a href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics">MDN: HTML basics</a>
-              </li>
+              <li>Writing HTML</li>
+              <li>Headings, lists and links</li>
             </ul>
-          </div>
+          </section>
 
-          <div class="link-section wfb8ab2x1">
-            <p class="muted">Nothing posted for this week yet.</p>
-          </div>
-        </section>
+          <section aria-labelledby="before-heading">
+            <h2 id="before-heading">Before class</h2>
+            <ul role="list" class="checklist">
+              <li>Review the readings (see materials below)</li>
+              <li>Prepare/update slides and live-demo code</li>
 
-        <section aria-labelledby="after-heading">
-          <h2 id="after-heading">After class</h2>
-          <ul role="list" class="checklist">
-            <li>Post handouts to <code>content/resources/</code> and link them in <code>_data/schedule.json</code>'s <code>resources[]</code> for the week; the slide deck publishes itself from <code>content/slides/</code>, so it only needs a link there if students should see it from the schedule</li>
-            <li>Note anything not covered and roll it into the next lesson</li>
-            <li>Post or grade lab/homework in <span>Brightspace</span> as needed</li>
-          </ul>
-        </section>
-      </article>
+              <li>Stage starter files or lab handout if needed</li>
+              <li>Check Brightspace for student questions or submissions</li>
+            </ul>
+          </section>
+
+          <section aria-labelledby="outline-heading">
+            <h2 id="outline-heading">Lesson outline (75 minutes)</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Time</th>
+                  <th scope="col">Segment</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>5 min</td>
+                  <td>Welcome, recap the previous class, open questions</td>
+                </tr>
+                <tr>
+                  <td>25 min</td>
+                  <td>Instruction: this week's topics (see above)</td>
+                </tr>
+                <tr>
+                  <td>30 min</td>
+                  <td>Guided practice / lab work</td>
+                </tr>
+                <tr>
+                  <td>10 min</td>
+                  <td>Wrap-up: recap, preview next class, assignment reminders</td>
+                </tr>
+                <tr>
+                  <td>5 min</td>
+                  <td>Buffer</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section aria-labelledby="after-heading">
+            <h2 id="after-heading">After class</h2>
+            <ul role="list" class="checklist">
+              <li>Post handouts to <code>content/resources/</code> and link them in <code>_data/schedule.json</code>'s <code>resources[]</code> for the week; the slide deck publishes itself from <code>content/slides/</code>, so it only needs a link there if students should see it from the schedule</li>
+              <li>Note anything not covered and roll it into the next lesson</li>
+              <li>Post or grade lab/homework in Brightspace as needed</li>
+            </ul>
+          </section>
+        </article>
+        <aside aria-label="Lesson tools" class="lesson-rail">
+          <nav aria-labelledby="on-this-page-heading">
+            <p id="on-this-page-heading" class="rail-label">On this page</p>
+            <ul role="list">
+              <li><a href="#topics-heading">This week's topics</a></li>
+              <li><a href="#before-heading">Before class</a></li>
+              <li><a href="#outline-heading">Lesson outline</a></li>
+              <li><a href="#after-heading">After class</a></li>
+            </ul>
+          </nav>
+          <section aria-labelledby="materials-heading">
+            <h2 id="materials-heading" class="rail-label">Materials &amp; links</h2>
+
+            <div class="link-section wkdefel0y">
+              <h3>Assigned before this week</h3>
+              <ul>
+                <li>
+                  <a href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics">MDN: HTML basics</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="link-section wkdefel0y">
+              <p class="muted">Nothing posted for this week yet.</p>
+            </div>
+          </section>
+        </aside>
+      </div>
     </main>
 
     <footer>
-      <div class="wqox_maih">
+      <div class="wp7xogbrw">
         <div class="brand">
           <p class="course">
             <a href="/course-kit/components/"><span>CS101</span>: <span>Introduction to Web Publishing</span></a>
@@ -482,7 +544,7 @@
         <div class="group">
           <p id="footer-pages" class="label">Pages</p>
 
-          <nav column="" aria-labelledby="footer-pages" class="w4i8m2o1y">
+          <nav data-context="footer" column="" aria-labelledby="footer-pages" class="wyz4foyhb">
             <ul role="list">
               <li>
                 <a href="/course-kit/components/lessons/">Lesson Plans</a>
@@ -493,9 +555,6 @@
         <nav aria-labelledby="footer-policies" class="group">
           <p id="footer-policies" class="label">Policies</p>
           <ul role="list">
-            <li>
-              <a href="/course-kit/components/#policy-$schema"></a>
-            </li>
             <li>
               <a href="/course-kit/components/#policy-attendance">Attendance</a>
             </li>
@@ -518,6 +577,273 @@
         </nav>
       </div>
 
+      <script type="application/json" id="copy-data">
+        {
+          "code": {
+            "copy": "Copy code",
+            "copied": "Copied",
+            "selected": "Code selected. Press your copy shortcut.",
+            "plain": "Code",
+            "languages": {
+              "bash": "Terminal",
+              "sh": "Terminal",
+              "shell": "Terminal",
+              "zsh": "Terminal",
+              "console": "Terminal",
+              "shellsession": "Terminal",
+              "css": "CSS",
+              "scss": "SCSS",
+              "html": "HTML",
+              "markup": "HTML",
+              "webc": "WebC",
+              "njk": "Nunjucks",
+              "xml": "XML",
+              "svg": "SVG",
+              "js": "JavaScript",
+              "javascript": "JavaScript",
+              "jsx": "JSX",
+              "ts": "TypeScript",
+              "typescript": "TypeScript",
+              "json": "JSON",
+              "md": "Markdown",
+              "markdown": "Markdown",
+              "php": "PHP",
+              "py": "Python",
+              "python": "Python",
+              "java": "Java",
+              "sql": "SQL",
+              "http": "HTTP",
+              "yaml": "YAML",
+              "yml": "YAML",
+              "text": "Text"
+            }
+          },
+          "common": { "sep": " · " },
+          "glossary": {
+            "groupBy": "Group by",
+            "byAz": "A to Z",
+            "byTest": "Test",
+            "byMeeting": "Class meeting",
+            "mode": "Mode",
+            "review": "Review",
+            "flashcards": "Flashcards",
+            "search": "Search terms",
+            "clear": "Clear",
+            "clearSearch": "Clear search",
+            "filterSummary": "Filter by test or {reading}",
+            "filtersOn": "({count} on)",
+            "count": "{shown} of {total} terms",
+            "clearFilters": "Clear filters",
+            "removeFilter": "Remove {kind} filter: {label}",
+            "meetingChip": "Class meeting: {label}",
+            "taughtIn": "Taught in",
+            "slideRef": "Week {week} · {weekday}, slide {slide}",
+            "example": "Example",
+            "known": "✓ known",
+            "noMatch": "No terms match.",
+            "noMatchHint": "Clear the search or a filter to see more.",
+            "noMatchStudy": "Clear the search or a filter to study more.",
+            "terms_one": "{count} term",
+            "terms_other": "{count} terms",
+            "card": "Card {n} of {total}",
+            "toStudy": "{count} to study",
+            "knownOf": "{known} of {total} known",
+            "shuffle": "Shuffle",
+            "defFirst": "Definition first",
+            "resetKnown": "Reset known",
+            "knownMeter": "Known terms",
+            "allKnown": "You know every card in this set.",
+            "markedKnown": "{known} of {total} marked known.",
+            "startOver": "Start over with the ones I know",
+            "showDefinition": "Show definition",
+            "showTerm": "Show term",
+            "iKnow": "I know this",
+            "later": "Show me again later",
+            "prev": "← Previous",
+            "next": "Next →",
+            "hint": "Space reveals · arrows move",
+            "defShown": "Definition shown for {term}",
+            "symbols": "Symbols",
+            "glossary": "Glossary",
+            "courseGlossary": "Course glossary",
+            "slidesOnly": "Slides only",
+            "finalExam": "Final exam",
+            "reading": "Reading",
+            "chapter": "Chapter",
+            "section": "Section",
+            "unit": "Unit",
+            "module": "Module",
+            "lesson": "Lesson",
+            "termsFromClassEach": "terms from class. Each carries tags for its test, its {reading} and the meeting that taught it. Group by any of them, search, or narrow the list to what you are studying."
+          },
+          "home": {
+            "heading": "Where the course is",
+            "todayLabel": "Today's class",
+            "nextLabel": "Next class",
+            "firstLabel": "First class",
+            "when": "Week {week} · {weekday}, {date}",
+            "openSlides": "Open the slides",
+            "seeWeek": "See the week",
+            "comingUp": "Coming up",
+            "fullSchedule": "Full schedule",
+            "nothingDue": "Nothing else is due this term.",
+            "dueToday": "Today",
+            "dueTomorrow": "Tomorrow",
+            "dueInDays_one": "In {count} day",
+            "dueInDays_other": "In {count} days",
+            "progress": "Progress",
+            "weeksDone": "{done} of {total} weeks done",
+            "week": "Week {week}",
+            "stateDone": "Done",
+            "stateNow": "Now"
+          },
+          "promptCopy": { "copyThisPrompt": "Copy this prompt", "promptCopied": "Prompt copied", "promptCopiedToThe": "Prompt copied to the clipboard.", "promptSelectedPressYour": "Prompt selected — press your copy shortcut." },
+          "schedule": {
+            "thisWeek": "This week",
+            "upNext": "Up next",
+            "read": "Read",
+            "dueThisWeek": "Due this week",
+            "today": "Today",
+            "next": "Next",
+            "stateDone": "Done",
+            "stateNow": "Now",
+            "hidePast": "Hide past weeks",
+            "weeksDone": "{done} of {total} weeks done.",
+            "pastHidden_one": "{count} finished week hidden.",
+            "pastHidden_other": "{count} finished weeks hidden.",
+            "weekHeading": "Week {week}",
+            "colClass": "Class",
+            "colTopics": "Topics",
+            "colFor": "For this class",
+            "readBefore": "Read before class",
+            "due": "Due",
+            "dueOn": "due {when}",
+            "materials": "Materials",
+            "slides": "Slides",
+            "addendum": "Addendum",
+            "weekResources": "This week’s resources",
+            "noClass": "No class — {reason}",
+            "substitution": "Runs a {weekday} schedule",
+            "dueKeyLabel": "Key to due items",
+            "graded": "graded",
+            "notGraded": "not graded",
+            "dueKindTest": "Test",
+            "dueKindGraded": "Graded",
+            "dueKindReading": "Reading check",
+            "dueKindPractice": "Practice",
+            "finalExam": "Final exam"
+          },
+          "themePanel": {
+            "brand": "Brand",
+            "brandColor": "Brand color",
+            "brandColorForText": "Brand color for text",
+            "textOnBrandColor": "Text on brand color",
+            "wayfindingColor": "Wayfinding color",
+            "textOnWayfindingColor": "Text on wayfinding color",
+            "page": "Page",
+            "pageBackground": "Page background",
+            "cardsAndPanels": "Cards and panels",
+            "linesAndBorders": "Lines and borders",
+            "text": "Text",
+            "bodyText": "Body text",
+            "secondaryText": "Secondary text",
+            "links": "Links",
+            "theme": "Theme",
+            "unsavedChanges": "Unsaved changes",
+            "preview": "Preview",
+            "light": "Light",
+            "dark": "Dark",
+            "everyColor": "Every color",
+            "allTokens": "All tokens",
+            "gradient": "Gradient",
+            "addAColor": "Add a color",
+            "undo": "Undo",
+            "reset": "Reset",
+            "save": "Save",
+            "download": "Download",
+            "hideTheThemePanel": "Hide the theme panel",
+            "notACssColor": "Not a CSS color",
+            "cssValue": "{name}, CSS value",
+            "backToTheSaved": "Back to the saved theme.",
+            "thePage": "the page",
+            "theBrandColor": "the brand color",
+            "passes": "passes",
+            "below": "below {minimum} : 1",
+            "contrast": "{ratio} : 1 on {ground}, {verdict}",
+            "color": "Color {n}",
+            "removeColor": "Remove color {n}",
+            "saving": "Saving…",
+            "savedToThe": "Saved to {file}. The site is rebuilding.",
+            "notSaved": "Not saved: {message}",
+            "downloadedPutItIn": "Downloaded. Put it in {folder} to keep it."
+          },
+          "worksheet": {
+            "notice": "Nothing here is recorded or submitted.",
+            "noticeBody": "Your answers are saved in this browser only and go nowhere else. Checking an answer shows you the reasoning and the source it came from.",
+            "termsHeading": "Terms to know",
+            "termsHint": "Select a term for its definition, and a link to the source it comes from.",
+            "termSource": "",
+            "citeHeading": "Where this comes from",
+            "citeLabel": "Where this comes from, question",
+            "chooseOne": "Choose one answer",
+            "checkAll": "See results",
+            "resetAll": "Clear my answers",
+            "checkSection": "Check section",
+            "resetSection": "Clear section",
+            "section": "Section",
+            "wordBank": "Word bank",
+            "answer": "Answer:",
+            "showAnswer": "Show the answer",
+            "checkYourself": "Check yourself",
+            "verdict": "Verdict",
+            "judgeLine": "Select the line that causes the problem",
+            "judgeNoLine": "No line — it is fine as written",
+            "notGraded": "Not graded",
+            "navHeading": "Questions",
+            "resultsHeading": "Results",
+            "retryMissed": "Try missed questions",
+            "scoreOf": "of {total}",
+            "statusRight": "Correct",
+            "statusWrong": "Try again",
+            "statusPartial": "Unfinished",
+            "statusUnattempted": "Unattempted",
+            "statusAnswered": "Not checked",
+            "statusSelf": "Check yourself",
+            "tallyCorrect": "{right} of {total} correct",
+            "tallyWrong": "{count} to try again",
+            "tallyPartial": "{count} unfinished",
+            "tallyUnattempted": "{count} unattempted",
+            "tallySelf": "{count} to check yourself",
+            "feedbackRight": "Correct.",
+            "feedbackRightAll": "Correct: all {total} parts.",
+            "feedbackParts": "{right} of {total} parts correct",
+            "feedbackBlank": "{count} left blank",
+            "feedbackUnattempted": "Unattempted.",
+            "retryCount_one": "{count} question to try again",
+            "retryCount_other": "{count} questions to try again",
+            "confirmClearAll": "Clear every answer on this worksheet? This can't be undone.",
+            "confirmClearSection": "Clear every answer in this section? This can't be undone.",
+            "checkOne": "Check answer",
+            "restored": "Restored your answers from {when}."
+          }
+        }
+      </script>
+      <script>
+        window.ckCopy ??= (function () {
+          var data = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
+          var rules = new Intl.PluralRules(document.documentElement.lang || "en-US");
+          function t(ns, key, vars) {
+            vars = vars || {};
+            var table = data[ns] || {};
+            var text = table[key];
+            if ("count" in vars) if (key + "_other" in table) text = table[key + "_" + rules.select(vars.count)] ?? table[key + "_other"];
+            return String(text ?? "").replace(/\{(\w+)\}/g, function (match, name) {
+              return String(vars[name] ?? "");
+            });
+          }
+          return { data: data, t: t };
+        })();
+      </script>
       <script type="module">
         // Print every disclosure expanded, then restore the reader's own
         // state (tracked per element — bundle scripts share one module
@@ -537,6 +863,7 @@
       </script>
     </footer>
     <script type="module" src="/course-kit/components/js/email.js"></script>
+    <script type="module" src="/course-kit/components/js/copy.js"></script>
     <theme-panel context="site"></theme-panel>
     <script type="module" src="/course-kit/components/js/theme-panel.js"></script>
   </body>

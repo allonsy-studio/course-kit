@@ -408,6 +408,66 @@
       			}
       		}
       	}
+      @layer norn.components {
+      		norn-simple-table {
+      			display: block;
+      			min-inline-size: 0;
+
+      			/* Shadows at the edges that have more to scroll to: the first two are the page's color and scroll with the content, so they cover the shadows underneath until the content has moved. */
+      			& > div {
+      				--_bg: var(--norn-surface-base, light-dark(#ffffff, #101216));
+      				--_shadow: color-mix(in oklab, var(--norn-text-base, light-dark(#16181d, #eceef3)) 18%, transparent);
+      				overflow-x: auto;
+      				background:
+      					linear-gradient(to right, var(--_bg) 30%, transparent) local 0 0 / 2rem 100% no-repeat,
+      					linear-gradient(to left, var(--_bg) 30%, transparent) local 100% 0 / 2rem 100% no-repeat,
+      					radial-gradient(farthest-side at 0 50%, var(--_shadow), transparent) scroll 0 0 / 0.75rem 100% no-repeat,
+      					radial-gradient(farthest-side at 100% 50%, var(--_shadow), transparent) scroll 100% 0 / 0.75rem 100% no-repeat;
+      			}
+
+      			& > div > table {
+      				min-inline-size: 100%;
+      				border-collapse: collapse;
+      				border-block-end: 1px solid var(--norn-ui-border-color, light-dark(#d3d8e2, #2d323e));
+      			}
+
+      			& > div > table > caption {
+      				padding-block-end: var(--norn-space-xs, 0.5rem);
+      				color: var(--norn-text-muted, light-dark(#4b5160, #a4abba));
+      				text-align: start;
+      			}
+
+      			& > div > table :is(th, td) {
+      				min-inline-size: 7rem;
+      				padding: var(--norn-space-xs, 0.5rem) var(--norn-space-s, 0.75rem);
+      				border-block-end: 1px solid var(--norn-ui-border-color, light-dark(#d3d8e2, #2d323e));
+      				text-align: start;
+      				vertical-align: top;
+      			}
+
+      			/* The last column is usually the one with sentences, so it keeps room to wrap into rather than a column of words. */
+      			& > div > table :is(th, td):last-child {
+      				min-inline-size: 10rem;
+      			}
+
+      			/* Wrap between words only: a token split across lines reads as two. */
+      			& > div > table :is(th, td, code) {
+      				overflow-wrap: normal;
+      				word-break: normal;
+      			}
+
+      			& > div > table code {
+      				white-space: nowrap;
+      			}
+
+      			@media print {
+      				& > div {
+      					overflow: visible;
+      					background: none;
+      				}
+      			}
+      		}
+      	}
       /* The fonts sit at assets/fonts: from the bundle, one level up. Each fallback matches its font's metrics. */
       	@font-face {
       		font-family: "PT Mono";
@@ -1265,6 +1325,52 @@
 
         if (!customElements.get("norn-code-block")) customElements.define("norn-code-block", CodeBlock);
       }
+      {
+        /** A table box that is a named tab stop only while it scrolls. */
+        class SimpleTable extends HTMLElement {
+          #observer;
+
+          connectedCallback() {
+            const box = this.querySelector(":scope > div");
+            if (!box || typeof ResizeObserver === "undefined") return;
+            const label = this.querySelector(":scope > span[hidden][id]");
+            const caption = box.querySelector("caption");
+            if (caption && label) caption.id ||= `${label.id}-caption`;
+            const named = label?.textContent.trim() ? label : caption?.textContent.trim() ? caption : undefined;
+            const headings = [...this.querySelectorAll("thead th")].map((cell) => cell.textContent.trim()).filter(Boolean);
+            const fit = () => {
+              if (box.scrollWidth > box.clientWidth) {
+                box.setAttribute("tabindex", "0");
+                if (named) {
+                  box.setAttribute("role", "region");
+                  box.setAttribute("aria-labelledby", named.id);
+                } else if (headings.length) {
+                  box.setAttribute("role", "region");
+                  box.setAttribute("aria-label", headings.join(", "));
+                }
+              } else {
+                box.removeAttribute("tabindex");
+                box.removeAttribute("role");
+                box.removeAttribute("aria-labelledby");
+                box.removeAttribute("aria-label");
+              }
+            };
+            this.#observer?.disconnect();
+            // The box keeps its width when the table grows, so watch both.
+            this.#observer = new ResizeObserver(fit);
+            this.#observer.observe(box);
+            const table = box.querySelector("table");
+            if (table) this.#observer.observe(table);
+          }
+
+          disconnectedCallback() {
+            this.#observer?.disconnect();
+            this.#observer = undefined;
+          }
+        }
+
+        if (!customElements.get("norn-simple-table")) customElements.define("norn-simple-table", SimpleTable);
+      }
     </script>
     <script src="/course-kit/components/preview-assets/tokens.js"></script>
     <script type="module" src="/course-kit/components/preview-assets/canvas.js"></script>
@@ -1311,8 +1417,8 @@
         <a rel="home" href="../../../../">course-kit</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-dM2K_">
-            <span data-label="" id="norn-header-webc-dM2K_">Primary</span>
+          <nav aria-labelledby="norn-header-webc-6zcLB">
+            <span data-label="" id="norn-header-webc-6zcLB">Primary</span>
 
             <a href="../../../../#install">Install</a>
             <a href="../../../../#usage">Usage</a>
@@ -1337,8 +1443,8 @@
         <section aria-labelledby="nav-ui">
           <h2 id="nav-ui">Building blocks</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-N73Eu">
-              <span data-label="" id="norn-side-nav-webc-N73Eu"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-zx9MV">
+              <span data-label="" id="norn-side-nav-webc-zx9MV"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -1393,8 +1499,8 @@
         <section aria-labelledby="nav-site">
           <h2 id="nav-site">Site sections</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-myDv9">
-              <span data-label="" id="norn-side-nav-webc-myDv9"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-umsoN">
+              <span data-label="" id="norn-side-nav-webc-umsoN"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -1402,6 +1508,9 @@
                 </li>
                 <li>
                   <a href="/course-kit/components/components/site/course-documents/"><span>course-documents</span></a>
+                </li>
+                <li>
+                  <a href="/course-kit/components/components/site/course-now/"><span>course-now</span></a>
                 </li>
                 <li>
                   <a href="/course-kit/components/components/site/course-summary/"><span>course-summary</span></a>
@@ -1434,6 +1543,9 @@
                   <a href="/course-kit/components/components/site/policies/"><span>policies</span></a>
                 </li>
                 <li>
+                  <a href="/course-kit/components/components/site/practice-index/"><span>practice-index</span></a>
+                </li>
+                <li>
                   <a href="/course-kit/components/components/site/schedule-overview/"><span>schedule-overview</span></a>
                 </li>
                 <li>
@@ -1455,8 +1567,8 @@
         <section aria-labelledby="nav-practice">
           <h2 id="nav-practice">Practice worksheets</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-k4Skc">
-              <span data-label="" id="norn-side-nav-webc-k4Skc"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-MoJdB">
+              <span data-label="" id="norn-side-nav-webc-MoJdB"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -1613,7 +1725,7 @@
               <norn-code-block>
                 <figure>
                   <norn-copy-button>
-                    <button type="button" hidden="" data-value="<today-link></today-link>" data-strings="norn-code-block-webc-JNgSr" data-compact="" data-surface="code">
+                    <button type="button" hidden="" data-value='<today-link @label="Today"></today-link>' data-strings="norn-code-block-webc-QaJL4" data-compact="" data-surface="code">
                       <span data-icons=""
                         ><norn-icon>
                           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1627,9 +1739,9 @@
                     </button>
                     <span role="status"></span>
                   </norn-copy-button>
-                  <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;],[0,0,1,1,0,10,0,0,3,1,0,10,0,0,1]]">&lt;today-link&gt;&lt;/today-link&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-JNgSr">
-                    <span data-string="label" id="norn-code-block-webc-JNgSr-copy">Copy {name} to clipboard</span>
+                  <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,10,2,1,6,0,0,1,3,0,7,0,0,3,1,0,10,0,0,1]]">&lt;today-link @label="Today"&gt;&lt;/today-link&gt;</code></pre>
+                  <span hidden="" id="norn-code-block-webc-QaJL4">
+                    <span data-string="label" id="norn-code-block-webc-QaJL4-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -1639,6 +1751,158 @@
               </norn-code-block>
             </details>
           </div>
+          <div class="story">
+            <h3>No target</h3>
+
+            <figure data-canvas="" class="canvas">
+              <!-- A form of its own makes the radio names local to this canvas. -->
+              <form onsubmit="return false;" class="canvas-bar">
+                <norn-segmented-control>
+                  <fieldset data-icon-only="">
+                    <legend><span>Color scheme</span></legend>
+
+                    <label title="Light"
+                      ><input type="radio" name="scheme" value="light" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M16 12a4 4 0 1 1-8 0a4 4 0 1 1 8 0M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"></path>
+                        </svg> </norn-icon
+                      ><span>Light</span></label
+                    >
+                    <label title="System"
+                      ><input type="radio" name="scheme" value="system" checked="" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0"></path>
+                          <path d="M12 3a9 9 0 0 1 0 18z" data-fill=""></path>
+                        </svg> </norn-icon
+                      ><span>System</span></label
+                    >
+                    <label title="Dark"
+                      ><input type="radio" name="scheme" value="dark" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+                        </svg> </norn-icon
+                      ><span>Dark</span></label
+                    >
+                  </fieldset>
+                </norn-segmented-control>
+                <norn-segmented-control class="widths">
+                  <fieldset data-icon-only="">
+                    <legend><span>Width</span></legend>
+
+                    <label title="Fill"
+                      ><input type="radio" name="width" value="" checked="" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M3 12h18M7 8l-4 4l4 4M17 8l4 4l-4 4"></path>
+                        </svg> </norn-icon
+                      ><span>Fill</span></label
+                    >
+                    <label title="Phone, 320px"
+                      ><input type="radio" name="width" value="320" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M7 2h10v20H7zM11 18h2"></path>
+                        </svg> </norn-icon
+                      ><span>Phone, 320px</span></label
+                    >
+                    <label title="Tablet, 768px"
+                      ><input type="radio" name="width" value="768" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M4 3h16v18H4zM11 18h2"></path>
+                        </svg> </norn-icon
+                      ><span>Tablet, 768px</span></label
+                    >
+                    <label title="Desktop, 1024px"
+                      ><input type="radio" name="width" value="1024" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M3 4h18v12H3zM8 20h8M12 16v4"></path>
+                        </svg> </norn-icon
+                      ><span>Desktop, 1024px</span></label
+                    >
+                  </fieldset>
+                </norn-segmented-control>
+                <button type="button" data-axe="" data-state="idle">
+                  <norn-icon data-for="idle">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M12 7v.5M7.5 10l4.5 1l4.5-1M12 11v3M9.5 18l2.5-4l2.5 4"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="running">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M21 12a9 9 0 1 1-9-9"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="pass">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M8 12l3 3l5-6"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="fail">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M15 9l-6 6M9 9l6 6"></path>
+                    </svg>
+                  </norn-icon>
+                  Check accessibility
+                </button>
+              </form>
+              <div class="stage"><iframe src="/course-kit/components/frames/ui/today-link/no-target/" title="No target" loading="lazy"></iframe></div>
+              <p class="open"><a href="/course-kit/components/frames/ui/today-link/no-target/">Open on its own</a></p>
+              <output aria-live="polite" class="axe-result"></output>
+            </figure>
+
+            <details>
+              <summary>Source</summary>
+              <norn-code-block>
+                <figure>
+                  <norn-copy-button>
+                    <button type="button" hidden="" data-value='<today-link @label="Today"></today-link>' data-strings="norn-code-block-webc-8Lii3" data-compact="" data-surface="code">
+                      <span data-icons=""
+                        ><norn-icon>
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M9 9h11v11H9zM15 9V4H4v11h5"></path>
+                          </svg> </norn-icon
+                        ><norn-icon>
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M5 12l5 5L20 7"></path>
+                          </svg> </norn-icon></span
+                      ><span data-label=""></span>
+                    </button>
+                    <span role="status"></span>
+                  </norn-copy-button>
+                  <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,10,2,1,6,0,0,1,3,0,7,0,0,3,1,0,10,0,0,1]]">&lt;today-link @label="Today"&gt;&lt;/today-link&gt;</code></pre>
+                  <span hidden="" id="norn-code-block-webc-8Lii3">
+                    <span data-string="label" id="norn-code-block-webc-8Lii3-copy">Copy {name} to clipboard</span>
+                    <span data-string="copy">Copy</span>
+                    <span data-string="copied">Copied</span>
+                    <span data-string="failed">Copy failed</span>
+                  </span>
+                  <span data-name="" hidden=""><span data-default="">html code</span></span>
+                </figure>
+              </norn-code-block>
+            </details>
+          </div>
+
+          <h2>Props</h2>
+          <p>Write them with the <code>@</code> prefix, and <code>:@</code> for an expression. A prop in square brackets is optional.</p>
+          <norn-simple-table class="spec"
+            ><span hidden="" id="norn-simple-table-webc-exAg6"></span>
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><code>label</code></th>
+                    <td data-label="Type"><code>string</code></td>
+                    <td>the link's text, <code>copy.schedule.today</code></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </norn-simple-table>
 
           <h2>Color tokens</h2>
           <p>The tokens this component's styles read. Set one in <code>_data/theme.json</code> to change it everywhere.</p>

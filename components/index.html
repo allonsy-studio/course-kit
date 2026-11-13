@@ -695,8 +695,8 @@
         <a rel="home" href="../">course-kit</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-Dayxq">
-            <span data-label="" id="norn-header-webc-Dayxq">Primary</span>
+          <nav aria-labelledby="norn-header-webc-6S26y">
+            <span data-label="" id="norn-header-webc-6S26y">Primary</span>
 
             <a href="../#install">Install</a>
             <a href="../#usage">Usage</a>
@@ -721,8 +721,8 @@
         <section aria-labelledby="nav-ui">
           <h2 id="nav-ui">Building blocks</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-AwJKu">
-              <span data-label="" id="norn-side-nav-webc-AwJKu"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-W3MEv">
+              <span data-label="" id="norn-side-nav-webc-W3MEv"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -777,8 +777,8 @@
         <section aria-labelledby="nav-site">
           <h2 id="nav-site">Site sections</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-dx5Ln">
-              <span data-label="" id="norn-side-nav-webc-dx5Ln"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-Qj3Rf">
+              <span data-label="" id="norn-side-nav-webc-Qj3Rf"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -786,6 +786,9 @@
                 </li>
                 <li>
                   <a href="/course-kit/components/components/site/course-documents/"><span>course-documents</span></a>
+                </li>
+                <li>
+                  <a href="/course-kit/components/components/site/course-now/"><span>course-now</span></a>
                 </li>
                 <li>
                   <a href="/course-kit/components/components/site/course-summary/"><span>course-summary</span></a>
@@ -818,6 +821,9 @@
                   <a href="/course-kit/components/components/site/policies/"><span>policies</span></a>
                 </li>
                 <li>
+                  <a href="/course-kit/components/components/site/practice-index/"><span>practice-index</span></a>
+                </li>
+                <li>
                   <a href="/course-kit/components/components/site/schedule-overview/"><span>schedule-overview</span></a>
                 </li>
                 <li>
@@ -839,8 +845,8 @@
         <section aria-labelledby="nav-practice">
           <h2 id="nav-practice">Practice worksheets</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-kmZMF">
-              <span data-label="" id="norn-side-nav-webc-kmZMF"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-X5uIW">
+              <span data-label="" id="norn-side-nav-webc-X5uIW"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -901,15 +907,21 @@
             </li>
             <li>
               <a href="/course-kit/components/components/ui/assigned-list/"><code>assigned-list</code></a>
-              <span>A labelled list of readings or deadlines. Renders nothing when empty.</span>
+              <span
+                >A labelled list of readings or deadlines. Renders nothing when empty. Give it the <code>items</code> array, or write the list as a <code>&lt;dl&gt;</code> in the default slot: each <code>&lt;dt&gt;</code> holds the title or its link (give it <code>data-kind</code> and, before the title, <code>&lt;span class="due-chip" data-kind="test"&gt;Test&lt;/span&gt;</code> for a chip), each <code>&lt;dd&gt;</code> only the check or due detail. The array wins when it has items; when it is missing or
+                empty the slot is rendered instead, so the list still shows if the data does not load.</span
+              >
             </li>
             <li>
               <a href="/course-kit/components/components/ui/callout/"><code>callout</code></a>
-              <span>A highlighted aside. The content is the slot.</span>
+              <span>A highlighted aside. The content is the slot. A typed callout opens with its type in words, so the type is never told by color alone.</span>
             </li>
             <li>
               <a href="/course-kit/components/components/ui/card-list/"><code>card-list</code></a>
-              <span>A list of cards, each linking to a page. A card shows the page's code, name and description unless the slot supplies its own content.</span>
+              <span
+                >A list of cards, each linking to a page. A card shows the page's code, name and description unless the slot supplies its own content. Instead of <code>items</code> you can write the cards yourself as a <code>&lt;ul&gt;</code> of <code>&lt;li&gt;</code> cards in the <code>cards</code> slot (the default slot is taken: it is each card's own content); the array wins when it has items, and when it is missing or empty the <code>cards</code> slot is rendered instead. A card written in the slot
+                must name its overlay link, as the items form does: <code>&lt;li&gt;&lt;a href="/x/" aria-labelledby="x-name"&gt;&lt;/a&gt;&lt;h3 id="x-name"&gt;Name&lt;/h3&gt;&lt;/li&gt;</code>.</span
+              >
             </li>
             <li>
               <a href="/course-kit/components/components/ui/codepen-embed/"><code>codepen-embed</code></a>
@@ -925,7 +937,7 @@
             </li>
             <li>
               <a href="/course-kit/components/components/ui/link-list/"><code>link-list</code></a>
-              <span>A list of links, each with a name and an optional description.</span>
+              <span>A list of links, each with a name and an optional description. Give it the <code>items</code> array, or write the list in the default slot as a <code>&lt;ul&gt;</code> of links, or as a <code>&lt;dl&gt;</code> (<code>&lt;dt&gt;</code> the link, <code>&lt;dd&gt;</code> the description). The array wins when it has items; when it is missing or empty the slot is rendered instead.</span>
             </li>
             <li>
               <a href="/course-kit/components/components/ui/link-section/"><code>link-section</code></a>
@@ -973,6 +985,10 @@
               <span>The "Additional resources" list: the entries of <code>course.documents</code>, each a link with an optional description. A PDF is listed only when the build produced PDFs. Renders nothing when there are none.</span>
             </li>
             <li>
+              <a href="/course-kit/components/components/site/course-now/"><code>course-now</code></a>
+              <span>The home page's opening band: the next class, what is due soon and the week-by-week progress. Hidden until its script has judged "today" in the campus zone. Wording comes from <code>copy.home</code> and <code>copy.schedule</code>.</span>
+            </li>
+            <li>
               <a href="/course-kit/components/components/site/course-summary/"><code>course-summary</code></a>
               <span>The course home page's body: the description, the instructor, the syllabus and the schedule. Reads the <code>course</code>, <code>grading</code>, <code>schedule</code>, <code>instructor</code> and <code>term</code> data; it takes no props.</span>
             </li>
@@ -986,11 +1002,11 @@
             </li>
             <li>
               <a href="/course-kit/components/components/site/glossary-panel/"><code>glossary-panel</code></a>
-              <span>The glossary's element: the plain list it wraps (the slot) stays when scripts do not run, and <code>scripts/glossary.js</code> replaces it with Review and Flashcards. One stylesheet covers both, since the script renders the same markup the server does.</span>
+              <span>The glossary's element: the grouped list it wraps (the slot), which the script at the foot of this file replaces with Review and Flashcards. One stylesheet covers both, since the script renders the same markup the server does.</span>
             </li>
             <li>
               <a href="/course-kit/components/components/site/glossary/"><code>glossary</code></a>
-              <span>The course glossary page: every <code>vocab</code> and <code>api</code> slide as one tagged term, listed A to Z for readers without scripts and enhanced into Review and Flashcards by <code>&lt;glossary-panel&gt;</code>. Reads the <code>glossary</code> global.</span>
+              <span>The course glossary page: every <code>vocab</code> and <code>api</code> slide as one tagged term, listed A to Z and enhanced into Review and Flashcards by <code>&lt;glossary-panel&gt;</code>. Reads the <code>glossary</code> global.</span>
             </li>
             <li>
               <a href="/course-kit/components/components/site/grading/"><code>grading</code></a>
@@ -1002,15 +1018,19 @@
             </li>
             <li>
               <a href="/course-kit/components/components/site/masthead/"><code>masthead</code></a>
-              <span>The page header: institution, term, course title and the navigation. Reads <code>site</code>, <code>term</code> and <code>course</code>.</span>
+              <span>The page header: institution, term, course title and the navigation. Reads <code>site</code>, <code>term</code> and <code>course</code>. The menu is Home, Syllabus, then every page of the site menu that has not set <code>menu: false</code>.</span>
             </li>
             <li>
               <a href="/course-kit/components/components/site/nav-links/"><code>nav-links</code></a>
-              <span>The site navigation as a list of links, marking the current page.</span>
+              <span>The site navigation as a list of links, marking the current page. Give it the <code>navigation</code> array, or write the links in the default slot as a <code>&lt;ul&gt;</code> of <code>&lt;li&gt;&lt;a&gt;</code>; the array wins when it has items, and when it is missing or empty the slot is rendered instead.</span>
             </li>
             <li>
               <a href="/course-kit/components/components/site/policies/"><code>policies</code></a>
               <span>The policies section: one disclosure per entry in <code>policies.json</code>, open by default, each with an optional link to the full policy. Renders nothing without <code>policies</code>.</span>
+            </li>
+            <li>
+              <a href="/course-kit/components/components/site/practice-index/"><code>practice-index</code></a>
+              <span>The practice page's table: every practice sheet in <code>collections.practice</code>, by its worksheet <code>order</code> (then its URL), with what each is for. Says so when there are none. The page's own intro stays page content. Wording comes from <code>copy.practice</code>.</span>
             </li>
             <li>
               <a href="/course-kit/components/components/site/schedule-overview/"><code>schedule-overview</code></a>
@@ -1018,7 +1038,7 @@
             </li>
             <li>
               <a href="/course-kit/components/components/site/schedule-weeks/"><code>schedule-weeks</code></a>
-              <span>Every week of the term as a bordered block: its meetings (topics, readings, deadlines, deck and demos) beside the week's materials.</span>
+              <span>Every week of the term as a bordered block: one row per class meeting (when, topics, and what that class needs: reading, due items, materials) and a footer for the week's own resources. A "This week" card, the hide-past toggle and the Now and Done flags are added by the script. Deadlines carry a chip for their <code>kind</code>; the key above the weeks lists the kinds in use. Wording comes from <code>copy.schedule</code>.</span>
             </li>
             <li>
               <a href="/course-kit/components/components/site/site-footer/"><code>site-footer</code></a>
@@ -1040,7 +1060,7 @@
           <ul role="list" class="index">
             <li>
               <a href="/course-kit/components/components/practice/check-controls/"><code>check-controls</code></a>
-              <span>The Check and Reset buttons and the score line for one worksheet scope. <code>practice.js</code> shows them and fills the tally.</span>
+              <span>The Check and Reset buttons and the score line for one worksheet scope. <code>practice.js</code> wires them and fills the tally.</span>
             </li>
             <li>
               <a href="/course-kit/components/components/practice/choice-list/"><code>choice-list</code></a>
@@ -1072,7 +1092,7 @@
             </li>
             <li>
               <a href="/course-kit/components/components/practice/practice-question/"><code>practice-question</code></a>
-              <span>One worksheet question: its prompt, sources, snippet and figure, then the control its kind needs.</span>
+              <span>One worksheet question: its prompt, sources, snippet and figure, then the control its kind needs, then the feedback and the reasoning. <code>practice.js</code> grades it.</span>
             </li>
             <li>
               <a href="/course-kit/components/components/practice/practice-selfcheck/"><code>practice-selfcheck</code></a>
@@ -1088,7 +1108,10 @@
             </li>
             <li>
               <a href="/course-kit/components/components/practice/practice-worksheet/"><code>practice-worksheet</code></a>
-              <span>The practice worksheet page: heading, sections of questions, and the check controls. Reads the <code>worksheet</code> data a worksheet's <code>.11tydata.js</code> supplies.</span>
+              <span
+                >The practice worksheet page: heading, results summary, question list, sections of questions and the check controls. Reads the <code>worksheet</code> data a worksheet's <code>.11tydata.js</code> supplies; <code>practice.js</code> grades, saves and restores the answers in this browser. With <code>checkMode: "question"</code> (front matter, or <code>worksheets.checkMode</code> in the course config) each gradable question also has a Check answer button; the default, <code>"end"</code>, checks
+                only from See results at the end.</span
+              >
             </li>
           </ul>
         </section>

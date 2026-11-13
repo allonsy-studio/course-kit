@@ -408,6 +408,66 @@
       			}
       		}
       	}
+      @layer norn.components {
+      		norn-simple-table {
+      			display: block;
+      			min-inline-size: 0;
+
+      			/* Shadows at the edges that have more to scroll to: the first two are the page's color and scroll with the content, so they cover the shadows underneath until the content has moved. */
+      			& > div {
+      				--_bg: var(--norn-surface-base, light-dark(#ffffff, #101216));
+      				--_shadow: color-mix(in oklab, var(--norn-text-base, light-dark(#16181d, #eceef3)) 18%, transparent);
+      				overflow-x: auto;
+      				background:
+      					linear-gradient(to right, var(--_bg) 30%, transparent) local 0 0 / 2rem 100% no-repeat,
+      					linear-gradient(to left, var(--_bg) 30%, transparent) local 100% 0 / 2rem 100% no-repeat,
+      					radial-gradient(farthest-side at 0 50%, var(--_shadow), transparent) scroll 0 0 / 0.75rem 100% no-repeat,
+      					radial-gradient(farthest-side at 100% 50%, var(--_shadow), transparent) scroll 100% 0 / 0.75rem 100% no-repeat;
+      			}
+
+      			& > div > table {
+      				min-inline-size: 100%;
+      				border-collapse: collapse;
+      				border-block-end: 1px solid var(--norn-ui-border-color, light-dark(#d3d8e2, #2d323e));
+      			}
+
+      			& > div > table > caption {
+      				padding-block-end: var(--norn-space-xs, 0.5rem);
+      				color: var(--norn-text-muted, light-dark(#4b5160, #a4abba));
+      				text-align: start;
+      			}
+
+      			& > div > table :is(th, td) {
+      				min-inline-size: 7rem;
+      				padding: var(--norn-space-xs, 0.5rem) var(--norn-space-s, 0.75rem);
+      				border-block-end: 1px solid var(--norn-ui-border-color, light-dark(#d3d8e2, #2d323e));
+      				text-align: start;
+      				vertical-align: top;
+      			}
+
+      			/* The last column is usually the one with sentences, so it keeps room to wrap into rather than a column of words. */
+      			& > div > table :is(th, td):last-child {
+      				min-inline-size: 10rem;
+      			}
+
+      			/* Wrap between words only: a token split across lines reads as two. */
+      			& > div > table :is(th, td, code) {
+      				overflow-wrap: normal;
+      				word-break: normal;
+      			}
+
+      			& > div > table code {
+      				white-space: nowrap;
+      			}
+
+      			@media print {
+      				& > div {
+      					overflow: visible;
+      					background: none;
+      				}
+      			}
+      		}
+      	}
       /* The fonts sit at assets/fonts: from the bundle, one level up. Each fallback matches its font's metrics. */
       	@font-face {
       		font-family: "PT Mono";
@@ -1265,6 +1325,52 @@
 
         if (!customElements.get("norn-code-block")) customElements.define("norn-code-block", CodeBlock);
       }
+      {
+        /** A table box that is a named tab stop only while it scrolls. */
+        class SimpleTable extends HTMLElement {
+          #observer;
+
+          connectedCallback() {
+            const box = this.querySelector(":scope > div");
+            if (!box || typeof ResizeObserver === "undefined") return;
+            const label = this.querySelector(":scope > span[hidden][id]");
+            const caption = box.querySelector("caption");
+            if (caption && label) caption.id ||= `${label.id}-caption`;
+            const named = label?.textContent.trim() ? label : caption?.textContent.trim() ? caption : undefined;
+            const headings = [...this.querySelectorAll("thead th")].map((cell) => cell.textContent.trim()).filter(Boolean);
+            const fit = () => {
+              if (box.scrollWidth > box.clientWidth) {
+                box.setAttribute("tabindex", "0");
+                if (named) {
+                  box.setAttribute("role", "region");
+                  box.setAttribute("aria-labelledby", named.id);
+                } else if (headings.length) {
+                  box.setAttribute("role", "region");
+                  box.setAttribute("aria-label", headings.join(", "));
+                }
+              } else {
+                box.removeAttribute("tabindex");
+                box.removeAttribute("role");
+                box.removeAttribute("aria-labelledby");
+                box.removeAttribute("aria-label");
+              }
+            };
+            this.#observer?.disconnect();
+            // The box keeps its width when the table grows, so watch both.
+            this.#observer = new ResizeObserver(fit);
+            this.#observer.observe(box);
+            const table = box.querySelector("table");
+            if (table) this.#observer.observe(table);
+          }
+
+          disconnectedCallback() {
+            this.#observer?.disconnect();
+            this.#observer = undefined;
+          }
+        }
+
+        if (!customElements.get("norn-simple-table")) customElements.define("norn-simple-table", SimpleTable);
+      }
     </script>
     <script src="/course-kit/components/preview-assets/tokens.js"></script>
     <script type="module" src="/course-kit/components/preview-assets/canvas.js"></script>
@@ -1311,8 +1417,8 @@
         <a rel="home" href="../../../../">course-kit</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-3dWeI">
-            <span data-label="" id="norn-header-webc-3dWeI">Primary</span>
+          <nav aria-labelledby="norn-header-webc-Tt7Af">
+            <span data-label="" id="norn-header-webc-Tt7Af">Primary</span>
 
             <a href="../../../../#install">Install</a>
             <a href="../../../../#usage">Usage</a>
@@ -1337,8 +1443,8 @@
         <section aria-labelledby="nav-ui">
           <h2 id="nav-ui">Building blocks</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-UieZg">
-              <span data-label="" id="norn-side-nav-webc-UieZg"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-emIr-">
+              <span data-label="" id="norn-side-nav-webc-emIr-"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -1393,8 +1499,8 @@
         <section aria-labelledby="nav-site">
           <h2 id="nav-site">Site sections</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-EQEqL">
-              <span data-label="" id="norn-side-nav-webc-EQEqL"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-e6A0v">
+              <span data-label="" id="norn-side-nav-webc-e6A0v"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -1402,6 +1508,9 @@
                 </li>
                 <li>
                   <a href="/course-kit/components/components/site/course-documents/" aria-current="page"><span>course-documents</span></a>
+                </li>
+                <li>
+                  <a href="/course-kit/components/components/site/course-now/"><span>course-now</span></a>
                 </li>
                 <li>
                   <a href="/course-kit/components/components/site/course-summary/"><span>course-summary</span></a>
@@ -1434,6 +1543,9 @@
                   <a href="/course-kit/components/components/site/policies/"><span>policies</span></a>
                 </li>
                 <li>
+                  <a href="/course-kit/components/components/site/practice-index/"><span>practice-index</span></a>
+                </li>
+                <li>
                   <a href="/course-kit/components/components/site/schedule-overview/"><span>schedule-overview</span></a>
                 </li>
                 <li>
@@ -1455,8 +1567,8 @@
         <section aria-labelledby="nav-practice">
           <h2 id="nav-practice">Practice worksheets</h2>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-UEQL8">
-              <span data-label="" id="norn-side-nav-webc-UEQL8"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-Qm3X4">
+              <span data-label="" id="norn-side-nav-webc-Qm3X4"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -1613,7 +1725,13 @@
               <norn-code-block>
                 <figure>
                   <norn-copy-button>
-                    <button type="button" hidden="" data-value="<course-documents></course-documents>" data-strings="norn-code-block-webc-6v_rX" data-compact="" data-surface="code">
+                    <button
+                      type="button"
+                      hidden=""
+                      data-value='<course-documents :@documents="([{&amp;quot;title&amp;quot;:&amp;quot;Style guide&amp;quot;,&amp;quot;description&amp;quot;:&amp;quot;How to format the code you hand in.&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;https://example.edu/style-guide&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;Accessibility checklist&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;https://example.edu/a11y&amp;quot;}])"></course-documents>'
+                      data-strings="norn-code-block-webc-WbfsI"
+                      data-compact=""
+                      data-surface="code">
                       <span data-icons=""
                         ><norn-icon>
                           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1627,9 +1745,11 @@
                     </button>
                     <span role="status"></span>
                   </norn-copy-button>
-                  <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;],[0,0,1,1,0,16,0,0,3,1,0,16,0,0,1]]">&lt;course-documents&gt;&lt;/course-documents&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-6v_rX">
-                    <span data-string="label" id="norn-code-block-webc-6v_rX-copy">Copy {name} to clipboard</span>
+                  <pre
+                    dir="ltr"
+                    data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,16,2,1,11,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,11,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,11,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,35,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,31,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,23,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,24,0,0,1,3,0,4,0,0,1,3,0,4,0,0,3,1,0,16,0,0,1]]">&lt;course-documents :@documents="([{&amp;quot;title&amp;quot;:&amp;quot;Style guide&amp;quot;,&amp;quot;description&amp;quot;:&amp;quot;How to format the code you hand in.&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;https://example.edu/style-guide&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;Accessibility checklist&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;https://example.edu/a11y&amp;quot;}])"&gt;&lt;/course-documents&gt;</code></pre>
+                  <span hidden="" id="norn-code-block-webc-WbfsI">
+                    <span data-string="label" id="norn-code-block-webc-WbfsI-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -1639,6 +1759,30 @@
               </norn-code-block>
             </details>
           </div>
+
+          <h2>Props</h2>
+          <p>Write them with the <code>@</code> prefix, and <code>:@</code> for an expression. A prop in square brackets is optional.</p>
+          <norn-simple-table class="spec"
+            ><span hidden="" id="norn-simple-table-webc-tALfs"></span>
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><code>[documents]</code></th>
+                    <td data-label="Type"><code>{ title: string, description?: string, href: string }[]</code></td>
+                    <td>defaults to <code>course.documents</code></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </norn-simple-table>
         </div>
       </main>
     </div>
