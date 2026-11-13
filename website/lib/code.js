@@ -28,7 +28,7 @@ export function codeCss() {
 	return `:root {\n\t${tokens}\n\t--thin-border-width: 1px;\n\t--target-min: 44px;\n\t--sans-font: var(--norn-font-body, system-ui, sans-serif);\n\t--mono-font: var(--norn-font-mono, ui-monospace, monospace);\n\t--font-weight--semi-bold: 600;\n}\n${css.slice(start, end)}`;
 }
 
-/** The `#copy-data` block `code-copy.js` reads its wording from. */
+/** The `#copy-data` block `copy.js` reads its wording from. */
 export const copyData = () => JSON.stringify({ code: resolveCopy().code }).replaceAll("<", "\\u003c");
 
 /**
