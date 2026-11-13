@@ -23,7 +23,7 @@
 
 <meta name="twitter:card" content="summary">
 
-<link rel="stylesheet" href="/course-kit/preview/25/bundle/GT1SsuhqOi.css">
+<link rel="stylesheet" href="/course-kit/preview/25/bundle/fFh3XS7qcU.css">
 
 		<meta property="og:site_name" content="course-kit">
 		<meta property="og:locale" content="en_US">
@@ -34,7 +34,19 @@
 
 <link rel="stylesheet" href="/course-kit/preview/25/assets/styles/project.css">
 <script type="application/json" id="copy-data">{"code":{"copy":"Copy code","copied":"Copied","selected":"Code selected. Press your copy shortcut.","plain":"Code","languages":{"bash":"Terminal","sh":"Terminal","shell":"Terminal","zsh":"Terminal","console":"Terminal","shellsession":"Terminal","css":"CSS","scss":"SCSS","html":"HTML","markup":"HTML","webc":"WebC","njk":"Nunjucks","xml":"XML","svg":"SVG","js":"JavaScript","javascript":"JavaScript","jsx":"JSX","ts":"TypeScript","typescript":"TypeScript","json":"JSON","md":"Markdown","markdown":"Markdown","php":"PHP","py":"Python","python":"Python","java":"Java","sql":"SQL","http":"HTTP","yaml":"YAML","yml":"YAML","text":"Text"}}}</script>
-<script src="/course-kit/preview/25/assets/scripts/code-copy.js" defer=""></script>
+<script>window.ckCopy ??= (function () {
+	var data = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
+	var rules = new Intl.PluralRules(document.documentElement.lang || "en-US");
+	function t(ns, key, vars) {
+		vars = vars || {};
+		var table = data[ns] || {};
+		var text = table[key];
+		if ("count" in vars) if (key + "_other" in table) text = table[key + "_" + rules.select(vars.count)] ?? table[key + "_other"];
+		return String(text ?? "").replace(/\{(\w+)\}/g, function (match, name) { return String(vars[name] ?? ""); });
+	}
+	return { data: data, t: t };
+})();</script>
+<script type="module" src="/course-kit/preview/25/assets/scripts/copy.js"></script>
 <link rel="preload" href="/course-kit/preview/25/assets/fonts/pt-mono.woff2" as="font" type="font/woff2" crossorigin="">
 
 
@@ -57,7 +69,7 @@
 			</a>
 	<details>
 		<summary>Menu</summary>
-		<nav aria-labelledby="norn-header-webc-rh_y4"><span data-label="" id="norn-header-webc-rh_y4">Primary</span>
+		<nav aria-labelledby="norn-header-webc-8AYSJ"><span data-label="" id="norn-header-webc-8AYSJ">Primary</span>
 			
 			<a href="#quick-start">Quick start</a>
 <a href="#features">Features</a>

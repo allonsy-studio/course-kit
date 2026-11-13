@@ -1053,7 +1053,7 @@
 /* ---- Code blocks ----
    A fenced sample (lib/markdown.js): a bar in the language's color inside the
    top border, a title bar (language, then file name, then the copy button
-   added by /js/code-copy.js), and the lines. Line numbers are CSS counters, so
+   added by /js/copy.js), and the lines. Line numbers are CSS counters, so
    selecting or copying never takes them. */
 .code-block {
 	--code-edge: var(--color-code-edge-neutral);

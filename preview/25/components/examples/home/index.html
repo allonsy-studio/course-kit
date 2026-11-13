@@ -10,7 +10,7 @@
     <meta name="description" content="Course content for Example College." />
     <meta name="keywords" content="Example College, CS101, Introduction to Web Publishing, syllabus, course schedule, class resources" />
     <meta name="author" content="Cassondra Roberts" />
-    <meta name="generator" content="Eleventy v3.1.7" />
+    <meta name="generator" content="Eleventy v3.1.8" />
 
     <meta name="robots" content="noindex, nofollow" />
 
@@ -32,11 +32,11 @@
     <link rel="stylesheet" href="/course-kit/preview/25/components/styles/base.css" />
 
     <style>
-      .wxkk88cxd[hidden],
-      .wxkk88cxd .course-now[hidden] {
+      .w0_mavhoo[hidden],
+      .w0_mavhoo .course-now[hidden] {
         display: none;
       }
-      .wxkk88cxd {
+      .w0_mavhoo {
         display: grid;
         grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
         gap: var(--content-space);
@@ -49,7 +49,7 @@
           font-size: var(--font-size-4);
         }
       }
-      .wxkk88cxd .now-card {
+      .w0_mavhoo .now-card {
         display: flex;
         flex-direction: column;
         gap: calc(var(--gutter) * 2);
@@ -57,7 +57,7 @@
         border-radius: calc(var(--standard-border-radius) * 4);
         background-color: var(--color-accent);
         color: var(--color-on-accent);
-        .wxkk88cxd &[hidden] {
+        .w0_mavhoo &[hidden] {
           display: none;
         }
         p {
@@ -113,7 +113,12 @@
           }
         }
       }
-      .wxkk88cxd .coming-up {
+      .w0_mavhoo .coming-up p > a {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: var(--target-min);
+      }
+      .w0_mavhoo .coming-up {
         display: grid;
         gap: calc(var(--gutter) * 3);
         align-content: start;
@@ -121,7 +126,7 @@
         border: var(--thin-border-width) solid var(--color-border);
         border-radius: calc(var(--standard-border-radius) * 4);
         background-color: var(--color-surface);
-        .wxkk88cxd &[hidden] {
+        .w0_mavhoo &[hidden] {
           display: none;
         }
         ul {
@@ -164,7 +169,7 @@
           font-weight: var(--font-weight);
         }
       }
-      .wxkk88cxd .progress {
+      .w0_mavhoo .progress {
         display: grid;
         grid-column: 1/-1;
         grid-template-columns: 1fr auto;
@@ -228,11 +233,17 @@
         }
       }
       @media (forced-colors: active) {
-        .wxkk88cxd .progress [data-state="now"] .bar {
+        .w0_mavhoo .progress [data-state="now"] .bar {
           background: Highlight;
         }
-        .wxkk88cxd .progress [data-state="done"] .bar {
+        .w0_mavhoo .progress [data-state="done"] .bar {
           background: CanvasText;
+        }
+      }
+      @media print {
+        .w0_mavhoo,
+        .w0_mavhoo .course-now {
+          display: none;
         }
       }
       .eyebrow {
@@ -244,7 +255,7 @@
         color: var(--color-text-muted);
         margin-block: 0;
       }
-      .wvs7ubxo3 .who {
+      .wcgdwpi5v .who {
         display: flex;
         align-items: flex-start;
         gap: calc(var(--content-space) * 1.1);
@@ -252,11 +263,11 @@
           display: block;
         }
       }
-      .wvs7ubxo3 .facts-column {
+      .wcgdwpi5v .facts-column {
         min-inline-size: 0;
         flex: 1 1 auto;
       }
-      .wvs7ubxo3 .facts-column h2 {
+      .wcgdwpi5v .facts-column h2 {
         margin-block: 0 0.35em;
         font-size: var(--font-size-6);
         font-weight: var(--font-weight--semi-bold);
@@ -264,7 +275,7 @@
         text-transform: uppercase;
         color: var(--color-text-muted);
       }
-      .wvs7ubxo3 .facts {
+      .wcgdwpi5v .facts {
         display: grid;
         grid-template-columns: max-content minmax(0, 1fr);
         column-gap: var(--content-space);
@@ -310,11 +321,11 @@
           display: inline;
         }
       }
-      .wvs7ubxo3 .note {
+      .wcgdwpi5v .note {
         margin-block: 0.75em 0;
         font-size: max(var(--base-font-size), 0.9em);
       }
-      .wvs7ubxo3 .photo {
+      .wcgdwpi5v .photo {
         flex: none;
         inline-size: 5.5em;
         block-size: 5.5em;
@@ -322,10 +333,10 @@
         object-fit: cover;
         border: var(--thin-border-width) solid var(--color-border);
       }
-      .wvs7ubxo3 .instructor-contact {
+      .wcgdwpi5v .instructor-contact {
         margin-block: 0;
       }
-      .wvs7ubxo3 .instructor-card {
+      .wcgdwpi5v .instructor-card {
         display: flex;
         align-items: flex-start;
         gap: var(--content-space);
@@ -336,36 +347,59 @@
         border: var(--thin-border-width) solid var(--color-border);
         border-radius: var(--standard-border-radius);
       }
-      .wvs7ubxo3 .instructor-card .photo {
+      .wcgdwpi5v .instructor-card .photo {
         inline-size: 4em;
         block-size: 4em;
       }
-      .wvs7ubxo3 .monogram {
+      .wcgdwpi5v .monogram {
         flex: none;
         display: grid;
         place-items: center;
         inline-size: 2.75em;
         block-size: 2.75em;
         margin: 0;
-        background-color: color-mix(in sRGB, var(--color-accent) 14%, transparent);
+        background-color: var(--color-surface-accent);
         border-radius: 50%;
         color: var(--color-accent-text);
         font-weight: var(--font-weight--semi-bold);
       }
-      .wvs7ubxo3 .instructor-name {
+      .wcgdwpi5v .instructor-name {
         margin-block: 0 0.15em;
         font-size: max(var(--base-font-size), 1.15em);
       }
-      .wvs7ubxo3 .instructor-meta {
+      .wcgdwpi5v .instructor-meta {
         margin-block: 0 0.75em;
         color: var(--color-text-muted);
         font-size: max(var(--base-font-size), 0.92em);
       }
-      .wvs7ubxo3 .cta {
+      .wcgdwpi5v .cta {
         color: var(--color-link);
       }
+      .wcgdwpi5v a[data-email] {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: var(--target-min);
+        overflow-wrap: anywhere;
+        min-inline-size: 0;
+      }
+      .wcgdwpi5v .instructor-card > *,
+      .wcgdwpi5v .who > * {
+        min-inline-size: 0;
+      }
+      @media screen and (width < 30em) {
+        .wcgdwpi5v .instructor-card,
+        .wcgdwpi5v .who {
+          flex-direction: column;
+        }
+        .wcgdwpi5v .facts {
+          grid-template-columns: minmax(0, 1fr);
+        }
+        .wcgdwpi5v .facts dt {
+          padding-block-start: 0.4em;
+        }
+      }
       @media print {
-        .wvs7ubxo3#instructor .facts > div.screen-only {
+        .wcgdwpi5v#instructor .facts > div.screen-only {
           display: none;
         }
       }
@@ -480,7 +514,7 @@
           flex: none;
           padding: 0.1em 0.6em;
           border-radius: var(--pill-border-radius);
-          background-color: color-mix(in oklab, var(--color-accent) 24%, transparent);
+          background-color: var(--color-surface-accent);
           color: var(--color-accent-text);
           font-size: var(--font-size-6);
           font-weight: var(--font-weight--semi-bold);
@@ -574,18 +608,18 @@
           outline-offset: calc(var(--border-width) * -1);
         }
       }
-      .wuaoycijn {
+      .wjizog40i {
         --week-grid: 8.5em minmax(0, 7fr) minmax(0, 5fr);
         display: grid;
         gap: var(--content-space);
       }
-      .wuaoycijn ul,
-      .wuaoycijn ol {
+      .wjizog40i ul,
+      .wjizog40i ol {
         list-style: none;
         margin: 0;
         padding: 0;
       }
-      .wuaoycijn .label {
+      .wjizog40i .label {
         margin: 0 0 0.3em;
         color: var(--color-text-muted);
         font-size: var(--font-size-6);
@@ -593,14 +627,14 @@
         letter-spacing: 0.08em;
         text-transform: uppercase;
       }
-      .wuaoycijn .week {
+      .wjizog40i .week {
         margin: 0;
         padding: 0;
         border: var(--thin-border-width) solid var(--color-border);
         border-radius: var(--standard-border-radius);
         overflow: hidden;
       }
-      .wuaoycijn .week-head {
+      .wjizog40i .week-head {
         display: flex;
         flex-wrap: wrap;
         align-items: baseline;
@@ -614,12 +648,12 @@
           font-weight: var(--font-weight--medium);
         }
       }
-      .wuaoycijn .week-of {
+      .wjizog40i .week-of {
         margin: 0;
         color: var(--color-text-muted);
         font-size: max(var(--base-font-size), 0.9em);
       }
-      .wuaoycijn .week-cols {
+      .wjizog40i .week-cols {
         display: grid;
         grid-template-columns: var(--week-grid);
         gap: 0 1.5em;
@@ -634,13 +668,13 @@
           display: none;
         }
       }
-      .wuaoycijn .meeting {
+      .wjizog40i .meeting {
         display: grid;
         grid-template-columns: var(--week-grid);
         gap: 0.6em 1.5em;
         align-items: start;
         padding: 0.9em 1em;
-        .wuaoycijn & + .meeting {
+        .wjizog40i & + .meeting {
           border-block-start: var(--thin-border-width) solid var(--color-border);
         }
         @media (width <= 860px) {
@@ -656,7 +690,7 @@
           }
         }
       }
-      .wuaoycijn .when {
+      .wjizog40i .when {
         display: flex;
         flex-direction: column;
         margin: 0;
@@ -667,26 +701,26 @@
           align-items: baseline;
         }
       }
-      .wuaoycijn .weekday {
+      .wjizog40i .weekday {
         font-weight: var(--font-weight--semi-bold);
       }
-      .wuaoycijn .date,
-      .wuaoycijn .note,
-      .wuaoycijn .no-class,
-      .wuaoycijn .check {
+      .wjizog40i .date,
+      .wjizog40i .note,
+      .wjizog40i .no-class,
+      .wjizog40i .check {
         color: var(--color-text-muted);
         font-size: max(var(--base-font-size), 0.9em);
       }
-      .wuaoycijn .note {
+      .wjizog40i .note {
         font-style: italic;
       }
-      .wuaoycijn .no-class {
+      .wjizog40i .no-class {
         margin: 0;
       }
-      .wuaoycijn .topics li + li {
+      .wjizog40i .topics li + li {
         margin-block-start: 0.3em;
       }
-      .wuaoycijn .for-class {
+      .wjizog40i .for-class {
         display: grid;
         gap: 0.8em;
         font-size: max(var(--base-font-size), 0.94em);
@@ -694,22 +728,24 @@
           padding-inline-start: 1.5em;
           border-inline-start: var(--thin-border-width) solid var(--color-border);
         }
-        li + li {
-          margin-block-start: 0.3em;
+        li a {
+          display: inline-flex;
+          align-items: center;
+          min-block-size: var(--target-min);
         }
       }
-      .wuaoycijn .check {
+      .wjizog40i .check {
         display: block;
       }
-      .wuaoycijn .arrow {
+      .wjizog40i .arrow {
         color: var(--color-accent-text);
         text-decoration: none;
         font-weight: var(--font-weight--medium);
-        .wuaoycijn &:is(:hover, :focus-visible) {
+        .wjizog40i &:is(:hover, :focus-visible) {
           text-decoration: underline;
         }
       }
-      .wuaoycijn .week-resources {
+      .wjizog40i .week-resources {
         padding: 0.8em 1em;
         border-block-start: var(--thin-border-width) solid var(--color-border);
         background-color: var(--color-surface);
@@ -717,24 +753,31 @@
         ul {
           display: flex;
           flex-wrap: wrap;
-          gap: 0.4em 2em;
+          gap: 0 2em;
+        }
+
+        /* A link is an operable target: 44px tall (WCAG 2.5.5). */
+        a {
+          display: inline-flex;
+          align-items: center;
+          min-block-size: var(--target-min);
         }
       }
-      .wuaoycijn .schedule-tools {
+      .wjizog40i .schedule-tools {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
         gap: calc(var(--gutter) * 2) var(--content-space);
-        .wuaoycijn &[hidden] {
+        .wjizog40i &[hidden] {
           display: none;
         }
       }
-      .wuaoycijn .schedule-status {
+      .wjizog40i .schedule-status {
         margin: 0;
         color: var(--color-text-muted);
       }
-      .wuaoycijn .hide-past {
+      .wjizog40i .hide-past {
         min-block-size: var(--target-min);
         min-inline-size: var(--target-min);
         padding-inline: 1.1em;
@@ -745,21 +788,21 @@
         font: inherit;
         font-weight: var(--font-weight--semi-bold);
         cursor: pointer;
-        .wuaoycijn &[aria-pressed="true"] {
+        .wjizog40i &[aria-pressed="true"] {
           border-color: var(--color-accent-secondary);
           background-color: var(--color-accent-secondary);
           color: var(--color-on-accent-secondary);
           --color-focus-ring: var(--color-on-accent-secondary);
         }
       }
-      .wuaoycijn .this-week {
+      .wjizog40i .this-week {
         display: grid;
         gap: var(--content-space);
         padding: calc(var(--content-space) * 1.4);
         border: var(--border-width) solid var(--color-accent-secondary);
         border-radius: calc(var(--standard-border-radius) * 4);
         background-color: var(--color-surface-accent-secondary);
-        .wuaoycijn &[hidden] {
+        .wjizog40i &[hidden] {
           display: none;
         }
         h3 {
@@ -775,12 +818,12 @@
           font-weight: var(--font-weight);
         }
       }
-      .wuaoycijn .this-days {
+      .wjizog40i .this-days {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(min(100%, 16em), 1fr));
         gap: var(--content-space);
       }
-      .wuaoycijn .this-day {
+      .wjizog40i .this-day {
         display: flex;
         flex-direction: column;
         gap: 0.5em;
@@ -809,7 +852,7 @@
           font-weight: var(--font-weight--semi-bold);
         }
       }
-      .wuaoycijn .day-flag {
+      .wjizog40i .day-flag {
         padding: 0.05em 0.65em;
         border-radius: var(--radius-pill);
         background-color: var(--color-accent-secondary);
@@ -817,48 +860,48 @@
         font-size: max(var(--base-font-size), 0.85em);
         font-weight: var(--font-weight--semi-bold);
       }
-      .wuaoycijn .this-groups {
+      .wjizog40i .this-groups {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(min(100%, 16em), 1fr));
         gap: var(--content-space);
         padding-block-start: var(--content-space);
         border-block-start: var(--thin-border-width) solid var(--color-border-strong);
-        .wuaoycijn &[hidden],
-        .wuaoycijn [hidden] {
+        .wjizog40i &[hidden],
+        .wjizog40i [hidden] {
           display: none;
         }
         li + li {
           margin-block-start: 0.4em;
         }
       }
-      .wuaoycijn .week[data-current] {
+      .wjizog40i .week[data-current] {
         border-color: var(--color-accent-secondary);
         box-shadow: inset var(--border-width) 0 0 var(--color-accent-secondary);
       }
-      .wuaoycijn .week-flag {
+      .wjizog40i .week-flag {
         padding: 0.1em 0.65em;
         border-radius: var(--radius-pill);
         font-size: max(var(--base-font-size), 0.85em);
         font-weight: var(--font-weight--semi-bold);
-        .wuaoycijn &.now {
+        .wjizog40i &.now {
           background-color: var(--color-accent-secondary);
           color: var(--color-on-accent-secondary);
         }
-        .wuaoycijn &.done {
+        .wjizog40i &.done {
           color: var(--color-text-muted);
         }
-        .wuaoycijn &.done::before {
+        .wjizog40i &.done::before {
           content: "✓ "/"";
         }
       }
       @media print {
-        .wuaoycijn .this-week,
-        .wuaoycijn .schedule-tools,
-        .wuaoycijn .week-cols {
+        .wjizog40i .this-week,
+        .wjizog40i .schedule-tools,
+        .wjizog40i .week-cols {
           display: none;
         }
       }
-      .wq1ulaw1z {
+      .wd6vheaxf {
         display: grid;
         grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
         column-gap: calc(var(--section-space) * 1.5);
@@ -871,14 +914,17 @@
           display: block;
         }
       }
-      .wq1ulaw1z > .course-header {
+      .wd6vheaxf > * {
+        min-inline-size: 0;
+      }
+      .wd6vheaxf > .course-header {
         grid-column: 1;
         margin-block-end: 0;
       }
-      .wq1ulaw1z > #approach {
+      .wd6vheaxf > #approach {
         grid-column: 1;
       }
-      .wq1ulaw1z > #instructor {
+      .wd6vheaxf > #instructor {
         grid-column: 2;
         grid-row: 1 / span 2;
         box-sizing: border-box;
@@ -896,23 +942,31 @@
           border: none;
         }
       }
-      .wq1ulaw1z > #syllabus,
-      .wq1ulaw1z > #schedule {
+      .wd6vheaxf > #syllabus,
+      .wd6vheaxf > #schedule {
         grid-column: 1/-1;
       }
-      .wq1ulaw1z > #schedule {
+      .wd6vheaxf > #schedule {
         margin-block-start: var(--section-space);
       }
       @media screen {
-        .wq1ulaw1z > .course-header .lede,
-        .wq1ulaw1z > #approach p {
+        .wd6vheaxf > .course-header .lede,
+        .wd6vheaxf > #approach p {
           max-inline-size: 70ch;
         }
-        .wq1ulaw1z > #schedule > p {
+        .wd6vheaxf > #schedule > p {
           max-inline-size: 90ch;
         }
       }
-      .waz1ptg-h {
+      .wdquqpfix dt a {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: var(--target-min);
+      }
+      .wyz4foyhb:not(:has(li)) {
+        display: none;
+      }
+      .wyz4foyhb {
         display: flex;
         gap: calc(var(--container-space) * 3.5);
         ul {
@@ -972,7 +1026,7 @@
           }
         }
       }
-      .waz1ptg-h[stacked] ul {
+      .wyz4foyhb[stacked] ul {
         display: flex;
         flex-wrap: wrap;
         justify-content: start;
@@ -980,11 +1034,11 @@
         column-gap: calc(var(--content-space) * 2);
         row-gap: calc(var(--content-space) * 0.35);
       }
-      .waz1ptg-h[column] {
+      .wyz4foyhb[column] {
         padding: 0;
         line-height: inherit;
       }
-      .waz1ptg-h[column] ul {
+      .wyz4foyhb[column] ul {
         display: flex;
         flex-direction: column;
         align-items: start;
@@ -999,11 +1053,11 @@
           row-gap: calc(var(--content-space) * 0.25);
         }
       }
-      .waz1ptg-h[column] li {
+      .wyz4foyhb[column] li {
         display: block;
       }
-      .waz1ptg-h[column] a,
-      .waz1ptg-h[column] a:visited {
+      .wyz4foyhb[column] a,
+      .wyz4foyhb[column] a:visited {
         margin: 0;
         padding-inline: var(--link-pad, 0);
         border: none;
@@ -1011,30 +1065,30 @@
         line-height: inherit;
         font-size: max(var(--base-font-size), 1em);
         color: inherit;
-        .waz1ptg-h &[aria-current="page"] {
+        .wyz4foyhb &[aria-current="page"] {
           padding-inline: var(--link-pad, 0);
           background: none;
           color: var(--color-accent-text);
         }
       }
-      .waz1ptg-h[data-context="hero"][column] {
+      .wyz4foyhb[data-context="hero"][column] {
         --link-pad: 0.85em;
       }
-      .waz1ptg-h[data-context="hero"][column] a[href] {
+      .wyz4foyhb[data-context="hero"][column] a[href] {
         border-radius: var(--radius-pill);
       }
-      .waz1ptg-h[data-context="hero"][column] a[href][aria-current="page"] {
+      .wyz4foyhb[data-context="hero"][column] a[href][aria-current="page"] {
         background-color: var(--color-accent-secondary);
         color: var(--color-on-accent-secondary);
         text-decoration: none;
         font-weight: var(--font-weight--semi-bold);
         --color-focus-ring: var(--color-on-accent-secondary);
       }
-      .waz1ptg-h[data-context="hero"][column] a[href]:not([aria-current="page"]):hover {
+      .wyz4foyhb[data-context="hero"][column] a[href]:not([aria-current="page"]):hover {
         background-color: color-mix(in oklab, var(--color-accent-secondary) 10%, transparent);
       }
       @media (forced-colors: active) {
-        .waz1ptg-h[data-context="hero"][column] a[href][aria-current="page"] {
+        .wyz4foyhb[data-context="hero"][column] a[href][aria-current="page"] {
           forced-color-adjust: none;
           background: SelectedItem;
           color: SelectedItemText;
@@ -1138,7 +1192,7 @@
         font-size: max(var(--base-font-size), 0.85em);
         color: var(--color-text-muted);
       }
-      .wqox_maih {
+      .wp7xogbrw {
         --context: footer;
         text-align: start;
         display: grid;
@@ -1192,14 +1246,14 @@
           display: flex;
           flex-direction: column;
           align-items: start;
-          gap: calc(var(--content-space) * 0.35);
+          gap: 0;
 
           @media screen and (width <= 768px) {
             flex-direction: row;
             flex-wrap: wrap;
-            align-items: baseline;
+            align-items: center;
             column-gap: calc(var(--content-space) * 1.25);
-            row-gap: calc(var(--content-space) * 0.25);
+            row-gap: 0;
           }
         }
 
@@ -1207,9 +1261,11 @@
           font-size: 1em;
         }
 
-        nav.group a {
-          display: inline-block;
-          padding-block: 0.2em;
+        nav.group a,
+        .course a {
+          display: inline-flex;
+          align-items: center;
+          min-block-size: var(--target-min);
           font-size: max(var(--base-font-size), 1em);
           color: inherit;
           text-decoration: none;
@@ -1243,7 +1299,7 @@
           </p>
         </div>
         <div class="links">
-          <nav data-context="hero" column="" aria-label="Site" class="waz1ptg-h">
+          <nav data-context="hero" column="" aria-label="Site" class="wyz4foyhb">
             <ul role="list">
               <li>
                 <a href="/course-kit/preview/25/components/#syllabus">Syllabus</a>
@@ -1255,7 +1311,9 @@
     </header>
 
     <main id="main-content" tabindex="-1">
-      <section aria-labelledby="course-now-heading" data-course-now="" hidden="" class="course-now screen-only wxkk88cxd">
+      <h1 class="sr-only">CS101: Introduction to Web Publishing</h1>
+
+      <section aria-labelledby="course-now-heading" data-course-now="" hidden="" class="course-now screen-only w0_mavhoo">
         <h2 id="course-now-heading" class="sr-only">Where the course is</h2>
         <div data-now-card="" hidden="" class="now-card on-accent">
           <p data-now-label="" class="label"></p>
@@ -1316,7 +1374,7 @@
         </script>
       </section>
 
-      <article class="content-column wide wq1ulaw1z">
+      <article class="content-column wide wd6vheaxf">
         <header class="course-header">
           <eyebrow class="print-only eyebrow">
             <p class="eyebrow print-only">Fall 2026</p>
@@ -1334,7 +1392,7 @@
           <p>Every class mixes a short talk with time to build. You learn by making a small site that grows all term.</p>
         </section>
 
-        <section id="instructor" aria-labelledby="instructor-heading" class="wvs7ubxo3">
+        <section id="instructor" aria-labelledby="instructor-heading" class="wcgdwpi5v">
           <div class="who">
             <div class="facts-column">
               <h2 id="instructor-heading">Your instructor</h2>
@@ -1512,7 +1570,7 @@
             </p>
           </div>
 
-          <div data-today-host="meetings" class="schedule-weeks wuaoycijn">
+          <div data-today-host="meetings" class="schedule-weeks wjizog40i">
             <div data-schedule-tools="" hidden="" class="schedule-tools screen-only">
               <p data-schedule-status="" role="status" class="schedule-status"></p>
               <button type="button" data-hide-past="" aria-pressed="false" class="hide-past">Hide past weeks</button>
@@ -1712,7 +1770,7 @@
     </main>
 
     <footer>
-      <div class="wqox_maih">
+      <div class="wp7xogbrw">
         <div class="brand">
           <p class="course">
             <a href="/course-kit/preview/25/components/"><span>CS101</span>: <span>Introduction to Web Publishing</span></a>
@@ -1727,7 +1785,7 @@
         <div class="group">
           <p id="footer-pages" class="label">Pages</p>
 
-          <nav data-context="footer" column="" aria-labelledby="footer-pages" class="waz1ptg-h">
+          <nav data-context="footer" column="" aria-labelledby="footer-pages" class="wyz4foyhb">
             <ul role="list">
               <li>
                 <a href="/course-kit/preview/25/components/lessons/">Lesson Plans</a>
@@ -1738,9 +1796,6 @@
         <nav aria-labelledby="footer-policies" class="group">
           <p id="footer-policies" class="label">Policies</p>
           <ul role="list">
-            <li>
-              <a href="/course-kit/preview/25/components/#policy-$schema"></a>
-            </li>
             <li>
               <a href="/course-kit/preview/25/components/#policy-attendance">Attendance</a>
             </li>
@@ -1765,8 +1820,6 @@
 
       <script type="application/json" id="copy-data">
         {
-          "common": { "sep": " · " },
-          "nav": { "site": "Site", "syllabus": "Syllabus", "contact": "Contact", "openSource": "Open source" },
           "code": {
             "copy": "Copy code",
             "copied": "Copied",
@@ -1806,62 +1859,7 @@
               "text": "Text"
             }
           },
-          "home": {
-            "heading": "Where the course is",
-            "todayLabel": "Today's class",
-            "nextLabel": "Next class",
-            "firstLabel": "First class",
-            "when": "Week {week} · {weekday}, {date}",
-            "openSlides": "Open the slides",
-            "seeWeek": "See the week",
-            "comingUp": "Coming up",
-            "fullSchedule": "Full schedule",
-            "nothingDue": "Nothing else is due this term.",
-            "dueToday": "Today",
-            "dueTomorrow": "Tomorrow",
-            "dueInDays_one": "In {count} day",
-            "dueInDays_other": "In {count} days",
-            "progress": "Progress",
-            "weeksDone": "{done} of {total} weeks done",
-            "week": "Week {week}",
-            "stateDone": "Done",
-            "stateNow": "Now"
-          },
-          "schedule": {
-            "thisWeek": "This week",
-            "upNext": "Up next",
-            "read": "Read",
-            "dueThisWeek": "Due this week",
-            "today": "Today",
-            "next": "Next",
-            "stateDone": "Done",
-            "stateNow": "Now",
-            "hidePast": "Hide past weeks",
-            "weeksDone": "{done} of {total} weeks done.",
-            "pastHidden_one": "{count} finished week hidden.",
-            "pastHidden_other": "{count} finished weeks hidden.",
-            "weekHeading": "Week {week}",
-            "colClass": "Class",
-            "colTopics": "Topics",
-            "colFor": "For this class",
-            "readBefore": "Read before class",
-            "due": "Due",
-            "dueOn": "due {when}",
-            "materials": "Materials",
-            "slides": "Slides",
-            "addendum": "Addendum",
-            "weekResources": "This week’s resources",
-            "noClass": "No class — {reason}",
-            "substitution": "Runs a {weekday} schedule",
-            "dueKeyLabel": "Key to due items",
-            "graded": "graded",
-            "notGraded": "not graded",
-            "dueKindTest": "Test",
-            "dueKindGraded": "Graded",
-            "dueKindReading": "Reading check",
-            "dueKindPractice": "Practice",
-            "finalExam": "Final exam"
-          },
+          "common": { "sep": " · " },
           "glossary": {
             "groupBy": "Group by",
             "byAz": "A to Z",
@@ -1919,47 +1917,106 @@
             "lesson": "Lesson",
             "termsFromClassEach": "terms from class. Each carries tags for its test, its {reading} and the meeting that taught it. Group by any of them, search, or narrow the list to what you are studying."
           },
-          "practice": { "colSheet": "Practice sheet", "colFor": "For", "caption": "Every practice sheet, with what it is for", "empty": "No practice sheets posted yet." },
-          "syllabus": {
-            "due": "Due:",
-            "projectDue": "{date}, {time}",
-            "projectPage": "Full requirements, milestone dates, and the grading rubric are on {link}.",
-            "projectPageLink": "the project page",
-            "syllabus": "Syllabus",
-            "learningOutcomes": "Learning outcomes",
-            "uponCompletingThisCourse": "Upon completing this course students will be able to:",
-            "additionalOutcomesInThis": "Additional outcomes in this section",
-            "text": "Text",
-            "noTextIsRequired": "No text is required.",
-            "required": "Required:",
-            "technology": "Technology",
-            "bringALaptopMeeting": "Bring a laptop meeting the minimum specifications specified by {institution} to class every day.",
-            "theCollege": "the college",
-            "accessIsRequired": "{lms} access is required.",
-            "coursework": "Coursework",
-            "exam": "Exam:",
-            "points": "{display}, {points} points",
-            "atTheLastClassMeeting": "at the last class meeting, {lastMeeting}",
-            "grading": "Grading",
-            "keyDates": "Key dates",
-            "thisSectionsFinalExam": "This section's final exam",
-            "classStart": "{days} at {time}"
+          "home": {
+            "heading": "Where the course is",
+            "todayLabel": "Today's class",
+            "nextLabel": "Next class",
+            "firstLabel": "First class",
+            "when": "Week {week} · {weekday}, {date}",
+            "openSlides": "Open the slides",
+            "seeWeek": "See the week",
+            "comingUp": "Coming up",
+            "fullSchedule": "Full schedule",
+            "nothingDue": "Nothing else is due this term.",
+            "dueToday": "Today",
+            "dueTomorrow": "Tomorrow",
+            "dueInDays_one": "In {count} day",
+            "dueInDays_other": "In {count} days",
+            "progress": "Progress",
+            "weeksDone": "{done} of {total} weeks done",
+            "week": "Week {week}",
+            "stateDone": "Done",
+            "stateNow": "Now"
           },
-          "courseSummary": {
-            "projectDue": "The final project is due {when}; its milestones and rubric are on {link}.",
-            "projectDueShort": "The final project is due {when}.",
-            "projectPageLink": "the project page",
-            "howThisSectionIs": "How this section is taught",
-            "scheduleClassResources": "Schedule &amp; class resources",
-            "prerequisites": "Prerequisites:",
-            "thisIsAProposed": "This is a proposed outline of topics and is subject to change. Any changes will be announced in class.",
-            "eachWeekListsWhatTo": "Each week lists what to read before its first meeting and the resources posted after class.",
-            "allAssignmentsWillBe": "All assignments will be posted in {lms}.",
-            "theFinalExamFalls": "The final exam falls in the exam period ({period}); the exact date and time will be announced in class.",
-            "thisSectionsFinalExamIs": "This section's final exam is {slot} — see the {link} section.",
-            "coursework": "Coursework",
-            "thisDocumentOmitsTheWeekbyweek": "This document omits the week-by-week schedule, which may be adjusted during the term{live}.",
-            "theLiveScheduleIsPublished": "; the live schedule is published at {url}"
+          "promptCopy": { "copyThisPrompt": "Copy this prompt", "promptCopied": "Prompt copied", "promptCopiedToThe": "Prompt copied to the clipboard.", "promptSelectedPressYour": "Prompt selected — press your copy shortcut." },
+          "schedule": {
+            "thisWeek": "This week",
+            "upNext": "Up next",
+            "read": "Read",
+            "dueThisWeek": "Due this week",
+            "today": "Today",
+            "next": "Next",
+            "stateDone": "Done",
+            "stateNow": "Now",
+            "hidePast": "Hide past weeks",
+            "weeksDone": "{done} of {total} weeks done.",
+            "pastHidden_one": "{count} finished week hidden.",
+            "pastHidden_other": "{count} finished weeks hidden.",
+            "weekHeading": "Week {week}",
+            "colClass": "Class",
+            "colTopics": "Topics",
+            "colFor": "For this class",
+            "readBefore": "Read before class",
+            "due": "Due",
+            "dueOn": "due {when}",
+            "materials": "Materials",
+            "slides": "Slides",
+            "addendum": "Addendum",
+            "weekResources": "This week’s resources",
+            "noClass": "No class — {reason}",
+            "substitution": "Runs a {weekday} schedule",
+            "dueKeyLabel": "Key to due items",
+            "graded": "graded",
+            "notGraded": "not graded",
+            "dueKindTest": "Test",
+            "dueKindGraded": "Graded",
+            "dueKindReading": "Reading check",
+            "dueKindPractice": "Practice",
+            "finalExam": "Final exam"
+          },
+          "themePanel": {
+            "brand": "Brand",
+            "brandColor": "Brand color",
+            "brandColorForText": "Brand color for text",
+            "textOnBrandColor": "Text on brand color",
+            "wayfindingColor": "Wayfinding color",
+            "textOnWayfindingColor": "Text on wayfinding color",
+            "page": "Page",
+            "pageBackground": "Page background",
+            "cardsAndPanels": "Cards and panels",
+            "linesAndBorders": "Lines and borders",
+            "text": "Text",
+            "bodyText": "Body text",
+            "secondaryText": "Secondary text",
+            "links": "Links",
+            "theme": "Theme",
+            "unsavedChanges": "Unsaved changes",
+            "preview": "Preview",
+            "light": "Light",
+            "dark": "Dark",
+            "everyColor": "Every color",
+            "allTokens": "All tokens",
+            "gradient": "Gradient",
+            "addAColor": "Add a color",
+            "undo": "Undo",
+            "reset": "Reset",
+            "save": "Save",
+            "download": "Download",
+            "hideTheThemePanel": "Hide the theme panel",
+            "notACssColor": "Not a CSS color",
+            "cssValue": "{name}, CSS value",
+            "backToTheSaved": "Back to the saved theme.",
+            "thePage": "the page",
+            "theBrandColor": "the brand color",
+            "passes": "passes",
+            "below": "below {minimum} : 1",
+            "contrast": "{ratio} : 1 on {ground}, {verdict}",
+            "color": "Color {n}",
+            "removeColor": "Remove color {n}",
+            "saving": "Saving…",
+            "savedToThe": "Saved to {file}. The site is rebuilding.",
+            "notSaved": "Not saved: {message}",
+            "downloadedPutItIn": "Downloaded. Put it in {folder} to keep it."
           },
           "worksheet": {
             "notice": "Nothing here is recorded or submitted.",
@@ -2009,148 +2066,31 @@
             "confirmClearSection": "Clear every answer in this section? This can't be undone.",
             "checkOne": "Check answer",
             "restored": "Restored your answers from {when}."
-          },
-          "siteFooter": { "pages": "Pages", "policies": "Policies" },
-          "courseDocuments": { "additionalResources": "Additional resources" },
-          "policies": { "policies": "Policies", "readTheFullPolicy": "Read the full policy" },
-          "grading": { "gradeWeighting": "Grade weighting", "category": "Category", "weight": "Weight", "gradingScale": "Grading scale", "grade": "Grade", "weightedAverage": "Weighted average", "andAbove": "{min} and above", "below": "below {max}" },
-          "scheduleOverview": { "schedule": "Schedule", "keyDates": "Key dates", "jumpTo": "Jump to", "tests": "Tests", "finalProject": "Final project", "finalExam": "Final exam", "exam": "Exam", "noClass": "No class" },
-          "slideTimetable": { "everySlideDeckFor": "Every slide deck for this section, one row per week and one column per meeting day", "week": "Week", "noMeeting": "No meeting", "noClass": "No class: {reason}", "noDeck": "No deck", "draftNotInThe": "Draft, not in the student build", "speakerNotes": "Speaker notes", "addendumDraftNotIn": "Addendum draft, not in the student build", "addendumSpeakerNotes": "Addendum speaker notes" },
-          "tableRubric": { "criteria": "Criteria", "points": "Points", "pointsEach": "{points} points", "totalPointsPossible": "Total points possible", "milestone": "Milestone", "due": "Due", "whatIsGraded": "What is graded" },
-          "demoWeeks": { "lessonPlan": "Lesson plan", "shownAgainFirstUsed": "Shown again, first used {date}", "downloadTheHtmlFile": "Download the HTML file", "usedAgain": "Used again {dates}" },
-          "instructor": { "yourInstructor": "Your instructor", "name": "Name", "office": "Office", "officeHours": "Office hours", "email": "Email", "message": "Message", "sendMeAMessage": "Send me a message", "blog": "Blog", "instructor": "Instructor" },
-          "codepenEmbed": { "theCode": "The code", "html": "HTML", "css": "CSS", "javascript": "JavaScript", "htmlSource": "HTML source", "cssSource": "CSS source", "javascriptSource": "JavaScript source" },
-          "base": { "skipToContent": "Skip to content" },
-          "deck": { "skipToFirstSlide": "Skip to first slide", "slides": "Slides", "previousSlide": "Previous slide", "nextSlide": "Next slide", "cycleColorTheme": "Cycle color theme", "toggleFullscreen": "Toggle fullscreen" },
-          "document": { "contents": "Contents" },
-          "lesson": {
-            "lessonPlans": "Lesson plans",
-            "onePlanPerClass": "One plan per class meeting ({time}), generated from the course schedule and the academic calendar. Holidays are shown in sequence so the term reads day by day.",
-            "slideIndex": "Slide index",
-            "everyDeckInMeeting": "{link} — every deck in meeting order. Speaker notes are on a separate printable sheet per deck, linked as \"Notes\" below.",
-            "exercises": "Exercises",
-            "theBriefAndStarter": "{link} — the brief and starter for each. Exercises due on a meeting are linked from its row below.",
-            "instructorDeadlines": "Instructor deadlines",
-            "dueDate": "Due date",
-            "everyClassMeetingOf": "Every class meeting of the term, in order",
-            "date": "Date",
-            "links": "Links",
-            "topics": "Topics",
-            "runsASchedule": "(runs a {weekday} schedule)",
-            "noClass": "No class — {reason}",
-            "lessonPlan": "Lesson&nbsp;plan",
-            "slides": "Slides",
-            "addendum": "Addendum",
-            "notes": "Notes",
-            "addendumNotes": "Addendum notes",
-            "due": "Due:"
-          },
-          "lessonDay": { "weekDayLesson": "Week {week}, Day {day} — Lesson Plan" },
-          "lessonDetail": {
-            "week": "Week {week}",
-            "weekDay": "Week {week}, Day {day}",
-            "noClass": "No class",
-            "lessonNavigation": "Lesson navigation",
-            "allLessons": "All lessons",
-            "previousDay": "Previous day",
-            "nextDay": "Next day",
-            "classMeetingOfThe": "Class meeting #{meeting} of the term",
-            "noClassOn": "No class on {reason}. Use this day to prep the next lesson or catch up on grading.",
-            "focus": "Focus:",
-            "thisMeetingRunsA": "This meeting runs a {weekday} schedule (college-wide) — plan the substituted day's session, not this weekday's usual rhythm.",
-            "aTestIsScheduledThis": "A test is scheduled this week — confirm day, reserve class time, and remind students at least one meeting ahead.",
-            "thisWeeksTopics": "This week's topics",
-            "beforeClass": "Before class",
-            "reviewTheReadingsSee": "Review the readings (see materials below)",
-            "prepareupdateSlidesAndLivedemo": "Prepare/update slides and live-demo code",
-            "printOrOpenThe": "Print or open the {link}",
-            "speakerNotesSheet": "speaker notes sheet",
-            "stageStarterFilesOr": "Stage starter files or lab handout if needed",
-            "checkForStudentQuestions": "Check {lms} for student questions or submissions",
-            "lessonOutline": "Lesson outline",
-            "lessonOutlineMinutes": "Lesson outline ({minutes} minutes)",
-            "time": "Time",
-            "segment": "Segment",
-            "min": "{minutes} min",
-            "afterClass": "After class",
-            "postHandoutsToAnd": "Post handouts to {resources} and link them in {schedule}'s {list} for the week; the slide deck publishes itself from {slides}, so it only needs a link there if students should see it from the schedule",
-            "noteAnythingNotCovered": "Note anything not covered and roll it into the next lesson",
-            "postOrGradeLabhomework": "Post or grade lab/homework in {lms} as needed",
-            "lessonTools": "Lesson tools",
-            "onThisPage": "On this page",
-            "materialsLinks": "Materials &amp; links"
-          },
-          "lessonMaterials": { "slidesForThisMeeting": "Slides for this meeting", "speakerNotes": "speaker notes", "printable": "(printable)", "demosFromThisMeeting": "Demos from this meeting", "exercisesDue": "Exercises due", "readingForThisMeeting": "Reading for this meeting", "due": "due {when}", "deadlinesToAnnounce": "Deadlines to announce", "assignedBeforeThisWeek": "Assigned before this week", "postedForTheClass": "Posted for the class", "nothingPostedForThis": "Nothing posted for this week yet." },
-          "lessons": {
-            "welcomeRecapThePrevious": "Welcome, recap the previous class, open questions",
-            "welcomeIntroductionsHowThe": "Welcome, introductions, how the course runs",
-            "instructionThisWeeksTopics": "Instruction: this week's topics (see above)",
-            "guidedPracticeLabWork": "Guided practice / lab work",
-            "wrapupRecapPreviewNext": "Wrap-up: recap, preview next class, assignment reminders",
-            "buffer": "Buffer",
-            "collegeHoliday": "College holiday",
-            "introduceThisWeeksMaterial": "Introduce this week's material",
-            "continuePracticeAndLab": "Continue, practice, and lab work",
-            "tbd": "TBD"
-          },
-          "term": { "classesBegin": "Classes begin", "collegeHoliday": "College holiday", "lastDayOfClasses": "Last day of classes", "readingDaysNoClasses": "Reading days (no classes or exams)", "finalExaminationPeriod": "Final examination period", "preregistrationForTheNext": "Pre-registration for the next term opens" },
-          "deckNotes": { "speakerNotes": "Speaker notes", "speakerNotesTitle": "Speaker notes: {title}", "weekDay": "Week {week}, Day {day}", "speakerNotesInstructorOnly": "Speaker notes · instructor only", "slideOpenInThe": "Slide {number}, open in the deck", "untitledSlide": "Untitled slide" },
-          "lessonPlans": { "lessonPlans": "Lesson plans", "navTitle": "Lesson Plans" },
-          "markdown": { "permalinkToThisHeading": "Permalink to this heading" },
-          "pdf": { "footer": "{course}: {name} — {term} syllabus · Generated {generated} ({version}) · Page {page} of {pages}" },
-          "themePanel": {
-            "brand": "Brand",
-            "brandColor": "Brand color",
-            "brandColorForText": "Brand color for text",
-            "textOnBrandColor": "Text on brand color",
-            "wayfindingColor": "Wayfinding color",
-            "textOnWayfindingColor": "Text on wayfinding color",
-            "page": "Page",
-            "pageBackground": "Page background",
-            "cardsAndPanels": "Cards and panels",
-            "linesAndBorders": "Lines and borders",
-            "text": "Text",
-            "bodyText": "Body text",
-            "secondaryText": "Secondary text",
-            "links": "Links",
-            "theme": "Theme",
-            "unsavedChanges": "Unsaved changes",
-            "preview": "Preview",
-            "light": "Light",
-            "dark": "Dark",
-            "everyColor": "Every color",
-            "allTokens": "All tokens",
-            "gradient": "Gradient",
-            "addAColor": "Add a color",
-            "undo": "Undo",
-            "reset": "Reset",
-            "save": "Save",
-            "download": "Download",
-            "hideTheThemePanel": "Hide the theme panel",
-            "notACssColor": "Not a CSS color",
-            "cssValue": "{name}, CSS value",
-            "backToTheSaved": "Back to the saved theme.",
-            "thePage": "the page",
-            "theBrandColor": "the brand color",
-            "passes": "passes",
-            "below": "below {minimum} : 1",
-            "contrast": "{ratio} : 1 on {ground}, {verdict}",
-            "color": "Color {n}",
-            "removeColor": "Remove color {n}",
-            "saving": "Saving…",
-            "savedToThe": "Saved to {file}. The site is rebuilding.",
-            "notSaved": "Not saved: {message}",
-            "downloadedPutItIn": "Downloaded. Put it in {folder} to keep it."
-          },
-          "promptCopy": { "copyThisPrompt": "Copy this prompt", "promptCopied": "Prompt copied", "promptCopiedToThe": "Prompt copied to the clipboard.", "promptSelectedPressYour": "Prompt selected — press your copy shortcut." }
+          }
         }
+      </script>
+      <script>
+        window.ckCopy ??= (function () {
+          var data = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
+          var rules = new Intl.PluralRules(document.documentElement.lang || "en-US");
+          function t(ns, key, vars) {
+            vars = vars || {};
+            var table = data[ns] || {};
+            var text = table[key];
+            if ("count" in vars) if (key + "_other" in table) text = table[key + "_" + rules.select(vars.count)] ?? table[key + "_other"];
+            return String(text ?? "").replace(/\{(\w+)\}/g, function (match, name) {
+              return String(vars[name] ?? "");
+            });
+          }
+          return { data: data, t: t };
+        })();
       </script>
       <script type="module">
         /**
          * <course-now>: the home page's class card, the next due items and the
          * week-by-week progress track. Everything comes from the schedule data
          * already on the page; dates compare in the campus zone, as
-         * <today-marker> does. Hidden without the script.
+         * <today-marker> does. Screen only.
          */
         (() => {
           try {
@@ -2158,16 +2098,7 @@
             if (!root) return;
             /** Today in the campus zone, as "YYYY-MM-DD". */
             const campusToday = () => new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone });
-            const COPY = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
-            /** `t("home", "weeksDone", { done: 3, total: 16 })`; a key with `_one`/`_other` variants is picked by `count`. */
-            const t = (ns, key, vars = {}) => {
-              const table = COPY[ns] ?? {};
-              let text = table[key];
-              if ("count" in vars && `${key}_other` in table) {
-                text = table[`${key}_${new Intl.PluralRules(document.documentElement.lang || "en-US").select(vars.count)}`] ?? table[`${key}_other`];
-              }
-              return String(text ?? "").replace(/\{(\w+)\}/g, (_, name) => String(vars[name] ?? ""));
-            };
+            const { t } = window.ckCopy;
             const today = campusToday();
             const { meetings, deadlines } = JSON.parse(root.querySelector("[data-course-now-data]").textContent);
             const DAY_MS = 86_400_000;
@@ -2249,7 +2180,12 @@
         for (const link of document.querySelectorAll("a[data-email]")) {
           const email = atob(link.dataset.email);
           link.href = `mailto:${email}`;
-          link.textContent = email;
+          // Break opportunities before "@" and after each ".": a narrow screen wraps the address there, not mid-word.
+          link.textContent = "";
+          email.split(/(?=@)|(?<=\.)/).forEach((part, index) => {
+            if (index) link.append(document.createElement("wbr"));
+            link.append(part);
+          });
         }
         /**
          * <today-marker>: flag today's [data-date] elements and give one of them
@@ -2259,15 +2195,7 @@
           try {
             /** Today in the campus zone, as "YYYY-MM-DD". */
             const campusToday = () => new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone });
-            const COPY = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
-            const t = (ns, key, vars = {}) => {
-              const table = COPY[ns] ?? {};
-              let text = table[key];
-              if ("count" in vars && `${key}_other` in table) {
-                text = table[`${key}_${new Intl.PluralRules(document.documentElement.lang || "en-US").select(vars.count)}`] ?? table[`${key}_other`];
-              }
-              return String(text ?? "").replace(/\{(\w+)\}/g, (_, name) => String(vars[name] ?? ""));
-            };
+            const { t } = window.ckCopy;
             const today = campusToday();
 
             /** The node that can hold a flag or an anchor: a table row can't, its first cell can. */
@@ -2320,22 +2248,14 @@
          * <schedule-weeks>: mark finished weeks "Done" and the current one "Now",
          * fill the "This week" card from that week's meetings, and let readers
          * hide past weeks (every visit starts with all weeks shown). Dates compare
-         * in the campus zone, as <today-marker> does. Without the script every
-         * week shows and the tools stay hidden.
+         * in the campus zone, as <today-marker> does. The tools are
+         * screen only.
          */
         (() => {
           try {
             /** Today in the campus zone, as "YYYY-MM-DD". */
             const campusToday = () => new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone });
-            const COPY = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
-            const t = (ns, key, vars = {}) => {
-              const table = COPY[ns] ?? {};
-              let text = table[key];
-              if ("count" in vars && `${key}_other` in table) {
-                text = table[`${key}_${new Intl.PluralRules(document.documentElement.lang || "en-US").select(vars.count)}`] ?? table[`${key}_other`];
-              }
-              return String(text ?? "").replace(/\{(\w+)\}/g, (_, name) => String(vars[name] ?? ""));
-            };
+            const { t } = window.ckCopy;
             const root = document.querySelector(".schedule-weeks");
             const tools = root?.querySelector("[data-schedule-tools]");
             if (!root || !tools) return;
@@ -2450,7 +2370,7 @@
       </script>
     </footer>
     <script type="module" src="/course-kit/preview/25/components/js/email.js"></script>
-    <script type="module" src="/course-kit/preview/25/components/js/code-copy.js"></script>
+    <script type="module" src="/course-kit/preview/25/components/js/copy.js"></script>
     <theme-panel context="site"></theme-panel>
     <script type="module" src="/course-kit/preview/25/components/js/theme-panel.js"></script>
   </body>

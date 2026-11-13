@@ -2,10 +2,13 @@
 :root {
 	/* The kit's default accent, the Course Reader magenta. */
 	--norn-ui-accent: #8b1e5e;
-	/* Secondary text: the default dark value is 6.3:1 on a card; AAA needs 7:1. */
-	--norn-text-muted: light-dark(#4b5160, #c0c6d2);
 	/* Fonts: Instrument Sans is bundled; uncomment it, or load your own (@font-face or @import) & put the family first.
 	--norn-font-body: "Instrument Sans", "Instrument Sans Fallback", ui-sans-serif, system-ui, sans-serif; */
+}
+
+/* Norn's card text reads 6.3:1 in dark. Light keeps Norn's own value; dark is lighter (7.7:1). */
+norn-card > article > p {
+	color: light-dark(#4b5160, #b6bccb);
 }
 
 /* Quick start: numbered steps, each a heading over a code block. */

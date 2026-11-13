@@ -1417,8 +1417,8 @@
         <a rel="home" href="../../../../">course-kit</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-CUaoY">
-            <span data-label="" id="norn-header-webc-CUaoY">Primary</span>
+          <nav aria-labelledby="norn-header-webc-fYcIG">
+            <span data-label="" id="norn-header-webc-fYcIG">Primary</span>
 
             <a href="../../../../#quick-start">Quick start</a>
             <a href="../../../../#features">Features</a>
@@ -1440,8 +1440,8 @@
         <details open="true" data-current="">
           <summary>Building blocks</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-4MK15">
-              <span data-label="" id="norn-side-nav-webc-4MK15"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-3yJrK">
+              <span data-label="" id="norn-side-nav-webc-3yJrK"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -1496,8 +1496,8 @@
         <details>
           <summary>Site sections</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-uCRHP">
-              <span data-label="" id="norn-side-nav-webc-uCRHP"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-4mepB">
+              <span data-label="" id="norn-side-nav-webc-4mepB"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -1564,8 +1564,8 @@
         <details>
           <summary>Practice worksheets</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-2JmtW">
-              <span data-label="" id="norn-side-nav-webc-2JmtW"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-N5v2Q">
+              <span data-label="" id="norn-side-nav-webc-N5v2Q"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -1616,7 +1616,10 @@
       <main id="main" tabindex="-1">
         <div class="component">
           <h1><code>&lt;assigned-list&gt;</code></h1>
-          <p class="lead">A labelled list of readings or deadlines. Renders nothing when empty.</p>
+          <p class="lead">
+            A labelled list of readings or deadlines. Renders nothing when empty. Give it the <code>items</code> array, or write the list as a <code>&lt;dl&gt;</code> in the default slot: each <code>&lt;dt&gt;</code> holds the title or its link (give it <code>data-kind</code> and, before the title, <code>&lt;span class="due-chip" data-kind="test"&gt;Test&lt;/span&gt;</code> for a chip), each <code>&lt;dd&gt;</code> only the check or due detail. The array wins when it has items; when it is missing or empty
+            the slot is rendered instead, so the list still shows if the data does not load.
+          </p>
           <p class="meta">Building blocks</p>
 
           <h2>Examples</h2>
@@ -1725,8 +1728,8 @@
                     <button
                       type="button"
                       hidden=""
-                      data-value='<assigned-list @label="Read before class" @dueOn="due {when}" :@items="([{&amp;quot;title&amp;quot;:&amp;quot;Chapter 1&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;#&amp;quot;,&amp;quot;check&amp;quot;:&amp;quot;Answer the review questions&amp;quot;,&amp;quot;dueLabel&amp;quot;:&amp;quot;Tue, Sep 1&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;MDN: HTML basics&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;#&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;Course syllabus&amp;quot;}])"></assigned-list>'
-                      data-strings="norn-code-block-webc-AdzJ6"
+                      data-value='<assigned-list @label="Read before class" @due-on="due {when}" :@kinds="({&amp;quot;test&amp;quot;:&amp;quot;Test&amp;quot;,&amp;quot;graded&amp;quot;:&amp;quot;Graded&amp;quot;,&amp;quot;reading&amp;quot;:&amp;quot;Reading check&amp;quot;,&amp;quot;practice&amp;quot;:&amp;quot;Practice&amp;quot;})" :@items="([{&amp;quot;title&amp;quot;:&amp;quot;Chapter 1&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;#&amp;quot;,&amp;quot;kind&amp;quot;:&amp;quot;reading&amp;quot;,&amp;quot;check&amp;quot;:&amp;quot;Answer the review questions&amp;quot;,&amp;quot;dueLabel&amp;quot;:&amp;quot;Tue, Sep 1&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;MDN: HTML basics&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;#&amp;quot;,&amp;quot;kind&amp;quot;:&amp;quot;practice&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;Course syllabus&amp;quot;,&amp;quot;kind&amp;quot;:&amp;quot;graded&amp;quot;}])"></assigned-list>'
+                      data-strings="norn-code-block-webc-TJQzk"
                       data-compact=""
                       data-surface="code">
                       <span data-icons=""
@@ -1744,9 +1747,9 @@
                   </norn-copy-button>
                   <pre
                     dir="ltr"
-                    data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,13,2,1,6,0,0,1,3,0,19,2,1,6,0,0,1,3,0,12,2,1,7,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,27,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,16,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,4,0,0,3,1,0,13,0,0,1]]">&lt;assigned-list @label="Read before class" @dueOn="due {when}" :@items="([{&amp;quot;title&amp;quot;:&amp;quot;Chapter 1&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;#&amp;quot;,&amp;quot;check&amp;quot;:&amp;quot;Answer the review questions&amp;quot;,&amp;quot;dueLabel&amp;quot;:&amp;quot;Tue, Sep 1&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;MDN: HTML basics&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;#&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;Course syllabus&amp;quot;}])"&gt;&lt;/assigned-list&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-AdzJ6">
-                    <span data-string="label" id="norn-code-block-webc-AdzJ6-copy">Copy {name} to clipboard</span>
+                    data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,13,2,1,6,0,0,1,3,0,19,2,1,7,0,0,1,3,0,12,2,1,7,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,13,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,3,2,1,7,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,27,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,16,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,4,0,0,3,1,0,13,0,0,1]]">&lt;assigned-list @label="Read before class" @due-on="due {when}" :@kinds="({&amp;quot;test&amp;quot;:&amp;quot;Test&amp;quot;,&amp;quot;graded&amp;quot;:&amp;quot;Graded&amp;quot;,&amp;quot;reading&amp;quot;:&amp;quot;Reading check&amp;quot;,&amp;quot;practice&amp;quot;:&amp;quot;Practice&amp;quot;})" :@items="([{&amp;quot;title&amp;quot;:&amp;quot;Chapter 1&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;#&amp;quot;,&amp;quot;kind&amp;quot;:&amp;quot;reading&amp;quot;,&amp;quot;check&amp;quot;:&amp;quot;Answer the review questions&amp;quot;,&amp;quot;dueLabel&amp;quot;:&amp;quot;Tue, Sep 1&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;MDN: HTML basics&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;#&amp;quot;,&amp;quot;kind&amp;quot;:&amp;quot;practice&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;Course syllabus&amp;quot;,&amp;quot;kind&amp;quot;:&amp;quot;graded&amp;quot;}])"&gt;&lt;/assigned-list&gt;</code></pre>
+                  <span hidden="" id="norn-code-block-webc-TJQzk">
+                    <span data-string="label" id="norn-code-block-webc-TJQzk-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -1862,7 +1865,7 @@
                       type="button"
                       hidden=""
                       data-value='<assigned-list @label="Due" @chips :@kinds="({&amp;quot;test&amp;quot;:&amp;quot;Test&amp;quot;,&amp;quot;graded&amp;quot;:&amp;quot;Graded&amp;quot;,&amp;quot;reading&amp;quot;:&amp;quot;Reading check&amp;quot;,&amp;quot;practice&amp;quot;:&amp;quot;Practice&amp;quot;})" :@items="([{&amp;quot;title&amp;quot;:&amp;quot;Test 1&amp;quot;,&amp;quot;kind&amp;quot;:&amp;quot;test&amp;quot;,&amp;quot;dueLabel&amp;quot;:&amp;quot;Tue, Sep 29, 10:00AM&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;Lab 2&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;#&amp;quot;,&amp;quot;kind&amp;quot;:&amp;quot;graded&amp;quot;,&amp;quot;dueLabel&amp;quot;:&amp;quot;Thu, Oct 1, 11:59PM&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;Chapter 3 reading&amp;quot;,&amp;quot;kind&amp;quot;:&amp;quot;reading&amp;quot;,&amp;quot;dueLabel&amp;quot;:&amp;quot;Thu, Oct 1, 11:59PM&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;Worksheet&amp;quot;,&amp;quot;kind&amp;quot;:&amp;quot;practice&amp;quot;}])"></assigned-list>'
-                      data-strings="norn-code-block-webc-8g7Po"
+                      data-strings="norn-code-block-webc-itmVk"
                       data-compact=""
                       data-surface="code">
                       <span data-icons=""
@@ -1881,8 +1884,440 @@
                   <pre
                     dir="ltr"
                     data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,13,2,1,6,0,0,1,3,0,5,2,1,6,2,1,7,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,13,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,3,2,1,7,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,20,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,19,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,17,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,19,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,3,1,0,13,0,0,1]]">&lt;assigned-list @label="Due" @chips :@kinds="({&amp;quot;test&amp;quot;:&amp;quot;Test&amp;quot;,&amp;quot;graded&amp;quot;:&amp;quot;Graded&amp;quot;,&amp;quot;reading&amp;quot;:&amp;quot;Reading check&amp;quot;,&amp;quot;practice&amp;quot;:&amp;quot;Practice&amp;quot;})" :@items="([{&amp;quot;title&amp;quot;:&amp;quot;Test 1&amp;quot;,&amp;quot;kind&amp;quot;:&amp;quot;test&amp;quot;,&amp;quot;dueLabel&amp;quot;:&amp;quot;Tue, Sep 29, 10:00AM&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;Lab 2&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;#&amp;quot;,&amp;quot;kind&amp;quot;:&amp;quot;graded&amp;quot;,&amp;quot;dueLabel&amp;quot;:&amp;quot;Thu, Oct 1, 11:59PM&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;Chapter 3 reading&amp;quot;,&amp;quot;kind&amp;quot;:&amp;quot;reading&amp;quot;,&amp;quot;dueLabel&amp;quot;:&amp;quot;Thu, Oct 1, 11:59PM&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;Worksheet&amp;quot;,&amp;quot;kind&amp;quot;:&amp;quot;practice&amp;quot;}])"&gt;&lt;/assigned-list&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-8g7Po">
-                    <span data-string="label" id="norn-code-block-webc-8g7Po-copy">Copy {name} to clipboard</span>
+                  <span hidden="" id="norn-code-block-webc-itmVk">
+                    <span data-string="label" id="norn-code-block-webc-itmVk-copy">Copy {name} to clipboard</span>
+                    <span data-string="copy">Copy</span>
+                    <span data-string="copied">Copied</span>
+                    <span data-string="failed">Copy failed</span>
+                  </span>
+                  <span data-name="" hidden=""><span data-default="">html code</span></span>
+                </figure>
+              </norn-code-block>
+            </details>
+          </div>
+          <div class="story">
+            <h3>Definition list</h3>
+
+            <figure data-canvas="" class="canvas">
+              <!-- A form of its own makes the radio names local to this canvas. -->
+              <form onsubmit="return false;" class="canvas-bar">
+                <norn-segmented-control>
+                  <fieldset data-icon-only="">
+                    <legend><span>Color scheme</span></legend>
+
+                    <label title="Light"
+                      ><input type="radio" name="scheme" value="light" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M16 12a4 4 0 1 1-8 0a4 4 0 1 1 8 0M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"></path>
+                        </svg> </norn-icon
+                      ><span>Light</span></label
+                    >
+                    <label title="System"
+                      ><input type="radio" name="scheme" value="system" checked="" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0"></path>
+                          <path d="M12 3a9 9 0 0 1 0 18z" data-fill=""></path>
+                        </svg> </norn-icon
+                      ><span>System</span></label
+                    >
+                    <label title="Dark"
+                      ><input type="radio" name="scheme" value="dark" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+                        </svg> </norn-icon
+                      ><span>Dark</span></label
+                    >
+                  </fieldset>
+                </norn-segmented-control>
+                <norn-segmented-control class="widths">
+                  <fieldset data-icon-only="">
+                    <legend><span>Width</span></legend>
+
+                    <label title="Fill"
+                      ><input type="radio" name="width" value="" checked="" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M3 12h18M7 8l-4 4l4 4M17 8l4 4l-4 4"></path>
+                        </svg> </norn-icon
+                      ><span>Fill</span></label
+                    >
+                    <label title="Phone, 320px"
+                      ><input type="radio" name="width" value="320" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M7 2h10v20H7zM11 18h2"></path>
+                        </svg> </norn-icon
+                      ><span>Phone, 320px</span></label
+                    >
+                    <label title="Tablet, 768px"
+                      ><input type="radio" name="width" value="768" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M4 3h16v18H4zM11 18h2"></path>
+                        </svg> </norn-icon
+                      ><span>Tablet, 768px</span></label
+                    >
+                    <label title="Desktop, 1024px"
+                      ><input type="radio" name="width" value="1024" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M3 4h18v12H3zM8 20h8M12 16v4"></path>
+                        </svg> </norn-icon
+                      ><span>Desktop, 1024px</span></label
+                    >
+                  </fieldset>
+                </norn-segmented-control>
+                <button type="button" data-axe="" data-state="idle" title="Check accessibility">
+                  <norn-icon data-for="idle">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M12 7v.5M7.5 10l4.5 1l4.5-1M12 11v3M9.5 18l2.5-4l2.5 4"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="running">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                      <path d="M21 12a9 9 0 1 1-9-9"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="pass">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M8 12l3 3l5-6"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="fail">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M15 9l-6 6M9 9l6 6"></path>
+                    </svg>
+                  </norn-icon>
+                  <span class="sr-only">Check accessibility</span>
+                </button>
+              </form>
+              <div class="stage"><iframe src="/course-kit/preview/25/components/frames/ui/assigned-list/definition-list/" title="Definition list" loading="lazy"></iframe></div>
+              <p class="open"><a href="/course-kit/preview/25/components/frames/ui/assigned-list/definition-list/">Open on its own</a></p>
+              <output aria-live="polite" class="axe-result"></output>
+            </figure>
+
+            <details>
+              <summary>Source</summary>
+              <norn-code-block>
+                <figure>
+                  <norn-copy-button>
+                    <button
+                      type="button"
+                      hidden=""
+                      data-value='<assigned-list @label="Due">
+	<dl>
+		<dt data-kind="test"><span class="due-chip" data-kind="test">Test</span> Test 1</dt>
+		<dd>Tue, Sep 29, 10:00AM</dd>
+		<dt data-kind="graded"><span class="due-chip" data-kind="graded">Graded</span> <a href="#">Lab 2</a></dt>
+		<dd>Thu, Oct 1, 11:59PM</dd>
+		<dt>Worksheet</dt>
+	</dl>
+</assigned-list>'
+                      data-strings="norn-code-block-webc-vFWPv"
+                      data-compact=""
+                      data-surface="code">
+                      <span data-icons=""
+                        ><norn-icon>
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M9 9h11v11H9zM15 9V4H4v11h5"></path>
+                          </svg> </norn-icon
+                        ><norn-icon>
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M5 12l5 5L20 7"></path>
+                          </svg> </norn-icon></span
+                      ><span data-label=""></span>
+                    </button>
+                    <span role="status"></span>
+                  </norn-copy-button>
+                  <pre
+                    dir="ltr"
+                    data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,13,2,1,6,0,0,1,3,0,5,0,0,1,0,2,1,1,0,2,0,0,1,0,3,1,1,0,2,2,1,9,0,0,1,3,0,6,0,0,2,1,0,4,2,1,5,0,0,1,3,0,10,2,1,9,0,0,1,3,0,6,0,0,1,0,4,2,1,0,4,0,0,1,0,7,2,1,0,2,0,0,1,0,3,1,1,0,2,0,0,1,0,20,2,1,0,2,0,0,1,0,3,1,1,0,2,2,1,9,0,0,1,3,0,8,0,0,2,1,0,4,2,1,5,0,0,1,3,0,10,2,1,9,0,0,1,3,0,8,0,0,1,0,6,2,1,0,4,0,0,1,0,1,1,1,0,1,2,1,4,0,0,1,3,0,3,0,0,1,0,5,2,1,0,1,0,0,3,1,0,2,0,0,1,0,3,1,1,0,2,0,0,1,0,19,2,1,0,2,0,0,1,0,3,1,1,0,2,0,0,1,0,9,2,1,0,2,0,0,1,0,2,2,1,0,2,0,0,1,0,1,2,1,0,13,0,0,1]]">&lt;assigned-list @label="Due"&gt;
+	&lt;dl&gt;
+		&lt;dt data-kind="test"&gt;&lt;span class="due-chip" data-kind="test"&gt;Test&lt;/span&gt; Test 1&lt;/dt&gt;
+		&lt;dd&gt;Tue, Sep 29, 10:00AM&lt;/dd&gt;
+		&lt;dt data-kind="graded"&gt;&lt;span class="due-chip" data-kind="graded"&gt;Graded&lt;/span&gt; &lt;a href="#"&gt;Lab 2&lt;/a&gt;&lt;/dt&gt;
+		&lt;dd&gt;Thu, Oct 1, 11:59PM&lt;/dd&gt;
+		&lt;dt&gt;Worksheet&lt;/dt&gt;
+	&lt;/dl&gt;
+&lt;/assigned-list&gt;</code></pre>
+                  <span hidden="" id="norn-code-block-webc-vFWPv">
+                    <span data-string="label" id="norn-code-block-webc-vFWPv-copy">Copy {name} to clipboard</span>
+                    <span data-string="copy">Copy</span>
+                    <span data-string="copied">Copied</span>
+                    <span data-string="failed">Copy failed</span>
+                  </span>
+                  <span data-name="" hidden=""><span data-default="">html code</span></span>
+                </figure>
+              </norn-code-block>
+            </details>
+          </div>
+          <div class="story">
+            <h3>Long title</h3>
+
+            <figure data-canvas="" class="canvas">
+              <!-- A form of its own makes the radio names local to this canvas. -->
+              <form onsubmit="return false;" class="canvas-bar">
+                <norn-segmented-control>
+                  <fieldset data-icon-only="">
+                    <legend><span>Color scheme</span></legend>
+
+                    <label title="Light"
+                      ><input type="radio" name="scheme" value="light" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M16 12a4 4 0 1 1-8 0a4 4 0 1 1 8 0M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"></path>
+                        </svg> </norn-icon
+                      ><span>Light</span></label
+                    >
+                    <label title="System"
+                      ><input type="radio" name="scheme" value="system" checked="" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0"></path>
+                          <path d="M12 3a9 9 0 0 1 0 18z" data-fill=""></path>
+                        </svg> </norn-icon
+                      ><span>System</span></label
+                    >
+                    <label title="Dark"
+                      ><input type="radio" name="scheme" value="dark" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+                        </svg> </norn-icon
+                      ><span>Dark</span></label
+                    >
+                  </fieldset>
+                </norn-segmented-control>
+                <norn-segmented-control class="widths">
+                  <fieldset data-icon-only="">
+                    <legend><span>Width</span></legend>
+
+                    <label title="Fill"
+                      ><input type="radio" name="width" value="" checked="" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M3 12h18M7 8l-4 4l4 4M17 8l4 4l-4 4"></path>
+                        </svg> </norn-icon
+                      ><span>Fill</span></label
+                    >
+                    <label title="Phone, 320px"
+                      ><input type="radio" name="width" value="320" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M7 2h10v20H7zM11 18h2"></path>
+                        </svg> </norn-icon
+                      ><span>Phone, 320px</span></label
+                    >
+                    <label title="Tablet, 768px"
+                      ><input type="radio" name="width" value="768" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M4 3h16v18H4zM11 18h2"></path>
+                        </svg> </norn-icon
+                      ><span>Tablet, 768px</span></label
+                    >
+                    <label title="Desktop, 1024px"
+                      ><input type="radio" name="width" value="1024" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M3 4h18v12H3zM8 20h8M12 16v4"></path>
+                        </svg> </norn-icon
+                      ><span>Desktop, 1024px</span></label
+                    >
+                  </fieldset>
+                </norn-segmented-control>
+                <button type="button" data-axe="" data-state="idle" title="Check accessibility">
+                  <norn-icon data-for="idle">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M12 7v.5M7.5 10l4.5 1l4.5-1M12 11v3M9.5 18l2.5-4l2.5 4"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="running">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                      <path d="M21 12a9 9 0 1 1-9-9"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="pass">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M8 12l3 3l5-6"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="fail">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M15 9l-6 6M9 9l6 6"></path>
+                    </svg>
+                  </norn-icon>
+                  <span class="sr-only">Check accessibility</span>
+                </button>
+              </form>
+              <div class="stage"><iframe src="/course-kit/preview/25/components/frames/ui/assigned-list/long-title/" title="Long title" loading="lazy"></iframe></div>
+              <p class="open"><a href="/course-kit/preview/25/components/frames/ui/assigned-list/long-title/">Open on its own</a></p>
+              <output aria-live="polite" class="axe-result"></output>
+            </figure>
+
+            <details>
+              <summary>Source</summary>
+              <norn-code-block>
+                <figure>
+                  <norn-copy-button>
+                    <button
+                      type="button"
+                      hidden=""
+                      data-value='<assigned-list @label="Due" @chips :@kinds="({&amp;quot;test&amp;quot;:&amp;quot;Test&amp;quot;,&amp;quot;graded&amp;quot;:&amp;quot;Graded&amp;quot;,&amp;quot;reading&amp;quot;:&amp;quot;Reading check&amp;quot;,&amp;quot;practice&amp;quot;:&amp;quot;Practice&amp;quot;})" :@items="([{&amp;quot;title&amp;quot;:&amp;quot;Chapter 12: Putting everything together, a very long reading title that has to wrap onto a second and a third line on a phone&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;#&amp;quot;,&amp;quot;kind&amp;quot;:&amp;quot;reading&amp;quot;,&amp;quot;check&amp;quot;:&amp;quot;Answer the review questions at the end of the chapter before class&amp;quot;,&amp;quot;dueLabel&amp;quot;:&amp;quot;Thu, Oct 1, 11:59PM&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;Plain item with no kind&amp;quot;,&amp;quot;dueLabel&amp;quot;:&amp;quot;Fri, Oct 2&amp;quot;}])"></assigned-list>'
+                      data-strings="norn-code-block-webc-tPk9u"
+                      data-compact=""
+                      data-surface="code">
+                      <span data-icons=""
+                        ><norn-icon>
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M9 9h11v11H9zM15 9V4H4v11h5"></path>
+                          </svg> </norn-icon
+                        ><norn-icon>
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M5 12l5 5L20 7"></path>
+                          </svg> </norn-icon></span
+                      ><span data-label=""></span>
+                    </button>
+                    <span role="status"></span>
+                  </norn-copy-button>
+                  <pre
+                    dir="ltr"
+                    data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,13,2,1,6,0,0,1,3,0,5,2,1,6,2,1,7,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,13,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,3,2,1,7,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,125,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,66,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,19,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,23,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,4,0,0,3,1,0,13,0,0,1]]">&lt;assigned-list @label="Due" @chips :@kinds="({&amp;quot;test&amp;quot;:&amp;quot;Test&amp;quot;,&amp;quot;graded&amp;quot;:&amp;quot;Graded&amp;quot;,&amp;quot;reading&amp;quot;:&amp;quot;Reading check&amp;quot;,&amp;quot;practice&amp;quot;:&amp;quot;Practice&amp;quot;})" :@items="([{&amp;quot;title&amp;quot;:&amp;quot;Chapter 12: Putting everything together, a very long reading title that has to wrap onto a second and a third line on a phone&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;#&amp;quot;,&amp;quot;kind&amp;quot;:&amp;quot;reading&amp;quot;,&amp;quot;check&amp;quot;:&amp;quot;Answer the review questions at the end of the chapter before class&amp;quot;,&amp;quot;dueLabel&amp;quot;:&amp;quot;Thu, Oct 1, 11:59PM&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;Plain item with no kind&amp;quot;,&amp;quot;dueLabel&amp;quot;:&amp;quot;Fri, Oct 2&amp;quot;}])"&gt;&lt;/assigned-list&gt;</code></pre>
+                  <span hidden="" id="norn-code-block-webc-tPk9u">
+                    <span data-string="label" id="norn-code-block-webc-tPk9u-copy">Copy {name} to clipboard</span>
+                    <span data-string="copy">Copy</span>
+                    <span data-string="copied">Copied</span>
+                    <span data-string="failed">Copy failed</span>
+                  </span>
+                  <span data-name="" hidden=""><span data-default="">html code</span></span>
+                </figure>
+              </norn-code-block>
+            </details>
+          </div>
+          <div class="story">
+            <h3>Empty items falls back to the slot</h3>
+
+            <figure data-canvas="" class="canvas">
+              <!-- A form of its own makes the radio names local to this canvas. -->
+              <form onsubmit="return false;" class="canvas-bar">
+                <norn-segmented-control>
+                  <fieldset data-icon-only="">
+                    <legend><span>Color scheme</span></legend>
+
+                    <label title="Light"
+                      ><input type="radio" name="scheme" value="light" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M16 12a4 4 0 1 1-8 0a4 4 0 1 1 8 0M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"></path>
+                        </svg> </norn-icon
+                      ><span>Light</span></label
+                    >
+                    <label title="System"
+                      ><input type="radio" name="scheme" value="system" checked="" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0"></path>
+                          <path d="M12 3a9 9 0 0 1 0 18z" data-fill=""></path>
+                        </svg> </norn-icon
+                      ><span>System</span></label
+                    >
+                    <label title="Dark"
+                      ><input type="radio" name="scheme" value="dark" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+                        </svg> </norn-icon
+                      ><span>Dark</span></label
+                    >
+                  </fieldset>
+                </norn-segmented-control>
+                <norn-segmented-control class="widths">
+                  <fieldset data-icon-only="">
+                    <legend><span>Width</span></legend>
+
+                    <label title="Fill"
+                      ><input type="radio" name="width" value="" checked="" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M3 12h18M7 8l-4 4l4 4M17 8l4 4l-4 4"></path>
+                        </svg> </norn-icon
+                      ><span>Fill</span></label
+                    >
+                    <label title="Phone, 320px"
+                      ><input type="radio" name="width" value="320" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M7 2h10v20H7zM11 18h2"></path>
+                        </svg> </norn-icon
+                      ><span>Phone, 320px</span></label
+                    >
+                    <label title="Tablet, 768px"
+                      ><input type="radio" name="width" value="768" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M4 3h16v18H4zM11 18h2"></path>
+                        </svg> </norn-icon
+                      ><span>Tablet, 768px</span></label
+                    >
+                    <label title="Desktop, 1024px"
+                      ><input type="radio" name="width" value="1024" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M3 4h18v12H3zM8 20h8M12 16v4"></path>
+                        </svg> </norn-icon
+                      ><span>Desktop, 1024px</span></label
+                    >
+                  </fieldset>
+                </norn-segmented-control>
+                <button type="button" data-axe="" data-state="idle" title="Check accessibility">
+                  <norn-icon data-for="idle">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M12 7v.5M7.5 10l4.5 1l4.5-1M12 11v3M9.5 18l2.5-4l2.5 4"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="running">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                      <path d="M21 12a9 9 0 1 1-9-9"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="pass">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M8 12l3 3l5-6"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="fail">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M15 9l-6 6M9 9l6 6"></path>
+                    </svg>
+                  </norn-icon>
+                  <span class="sr-only">Check accessibility</span>
+                </button>
+              </form>
+              <div class="stage"><iframe src="/course-kit/preview/25/components/frames/ui/assigned-list/empty-items-fallback/" title="Empty items falls back to the slot" loading="lazy"></iframe></div>
+              <p class="open"><a href="/course-kit/preview/25/components/frames/ui/assigned-list/empty-items-fallback/">Open on its own</a></p>
+              <output aria-live="polite" class="axe-result"></output>
+            </figure>
+
+            <details>
+              <summary>Source</summary>
+              <norn-code-block>
+                <figure>
+                  <norn-copy-button>
+                    <button
+                      type="button"
+                      hidden=""
+                      data-value='<assigned-list @label="Due" :@items="([])">
+	<dl>
+		<dt>Chapter 1</dt>
+		<dd>Tue, Sep 1</dd>
+	</dl>
+</assigned-list>'
+                      data-strings="norn-code-block-webc-hajzJ"
+                      data-compact=""
+                      data-surface="code">
+                      <span data-icons=""
+                        ><norn-icon>
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M9 9h11v11H9zM15 9V4H4v11h5"></path>
+                          </svg> </norn-icon
+                        ><norn-icon>
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M5 12l5 5L20 7"></path>
+                          </svg> </norn-icon></span
+                      ><span data-label=""></span>
+                    </button>
+                    <span role="status"></span>
+                  </norn-copy-button>
+                  <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,13,2,1,6,0,0,1,3,0,5,2,1,7,0,0,1,3,0,6,0,0,1,0,2,1,1,0,2,0,0,1,0,3,1,1,0,2,0,0,1,0,9,2,1,0,2,0,0,1,0,3,1,1,0,2,0,0,1,0,10,2,1,0,2,0,0,1,0,2,2,1,0,2,0,0,1,0,1,2,1,0,13,0,0,1]]">&lt;assigned-list @label="Due" :@items="([])"&gt;
+	&lt;dl&gt;
+		&lt;dt&gt;Chapter 1&lt;/dt&gt;
+		&lt;dd&gt;Tue, Sep 1&lt;/dd&gt;
+	&lt;/dl&gt;
+&lt;/assigned-list&gt;</code></pre>
+                  <span hidden="" id="norn-code-block-webc-hajzJ">
+                    <span data-string="label" id="norn-code-block-webc-hajzJ-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -1993,7 +2428,7 @@
           <h2>Props</h2>
           <p>Write them with the <code>@</code> prefix, and <code>:@</code> for an expression. A prop in square brackets is optional.</p>
           <norn-simple-table class="spec"
-            ><span hidden="" id="norn-simple-table-webc-hdeoL"></span>
+            ><span hidden="" id="norn-simple-table-webc-FsDAy"></span>
             <div>
               <table>
                 <thead>
@@ -2022,7 +2457,7 @@
                   <tr>
                     <th scope="row"><code>[chips]</code></th>
                     <td data-label="Type"><code>boolean</code></td>
-                    <td>put a <code>.due-chip</code> for the item's <code>kind</code> before its title</td>
+                    <td>put a <code>.due-chip</code> for the item's <code>kind</code> before its title; a bare <code>@chips</code> turns them on</td>
                   </tr>
                   <tr>
                     <th scope="row"><code>[kinds]</code></th>

@@ -10,7 +10,7 @@
     <meta name="description" content="Course content for Example College." />
     <meta name="keywords" content="Example College, CS101, Introduction to Web Publishing, syllabus, course schedule, class resources" />
     <meta name="author" content="Cassondra Roberts" />
-    <meta name="generator" content="Eleventy v3.1.7" />
+    <meta name="generator" content="Eleventy v3.1.8" />
 
     <meta name="robots" content="noindex, nofollow" />
 
@@ -668,17 +668,24 @@
           }
         }
       }
-      .wsom_l55h {
+      .wqdsu6hdd {
         .check-title {
           font-weight: var(--font-weight--semi-bold);
           margin-block-end: 0.2em;
+        }
+
+        /* The disclosure is an operable target: 44px tall (WCAG 2.5.5). */
+        summary {
+          display: flex;
+          align-items: center;
+          min-block-size: var(--target-min);
         }
 
         .reveal {
           font-family: var(--mono-font);
         }
       }
-      .wnxj-xsx9 {
+      .wcumc5k3_ {
         .question {
           background: var(--color-surface-subtle);
           border-inline-start: var(--thick-border-width) solid var(--color-border);
@@ -734,6 +741,7 @@
         }
 
         .snippet {
+          background: var(--color-code-surface);
           font-size: 0.9em;
 
           .token:is(.comment, .prolog, .doctype, .cdata) {
@@ -1072,7 +1080,10 @@
           }
         }
       }
-      .waz1ptg-h {
+      .wyz4foyhb:not(:has(li)) {
+        display: none;
+      }
+      .wyz4foyhb {
         display: flex;
         gap: calc(var(--container-space) * 3.5);
         ul {
@@ -1132,7 +1143,7 @@
           }
         }
       }
-      .waz1ptg-h[stacked] ul {
+      .wyz4foyhb[stacked] ul {
         display: flex;
         flex-wrap: wrap;
         justify-content: start;
@@ -1140,11 +1151,11 @@
         column-gap: calc(var(--content-space) * 2);
         row-gap: calc(var(--content-space) * 0.35);
       }
-      .waz1ptg-h[column] {
+      .wyz4foyhb[column] {
         padding: 0;
         line-height: inherit;
       }
-      .waz1ptg-h[column] ul {
+      .wyz4foyhb[column] ul {
         display: flex;
         flex-direction: column;
         align-items: start;
@@ -1159,11 +1170,11 @@
           row-gap: calc(var(--content-space) * 0.25);
         }
       }
-      .waz1ptg-h[column] li {
+      .wyz4foyhb[column] li {
         display: block;
       }
-      .waz1ptg-h[column] a,
-      .waz1ptg-h[column] a:visited {
+      .wyz4foyhb[column] a,
+      .wyz4foyhb[column] a:visited {
         margin: 0;
         padding-inline: var(--link-pad, 0);
         border: none;
@@ -1171,30 +1182,30 @@
         line-height: inherit;
         font-size: max(var(--base-font-size), 1em);
         color: inherit;
-        .waz1ptg-h &[aria-current="page"] {
+        .wyz4foyhb &[aria-current="page"] {
           padding-inline: var(--link-pad, 0);
           background: none;
           color: var(--color-accent-text);
         }
       }
-      .waz1ptg-h[data-context="hero"][column] {
+      .wyz4foyhb[data-context="hero"][column] {
         --link-pad: 0.85em;
       }
-      .waz1ptg-h[data-context="hero"][column] a[href] {
+      .wyz4foyhb[data-context="hero"][column] a[href] {
         border-radius: var(--radius-pill);
       }
-      .waz1ptg-h[data-context="hero"][column] a[href][aria-current="page"] {
+      .wyz4foyhb[data-context="hero"][column] a[href][aria-current="page"] {
         background-color: var(--color-accent-secondary);
         color: var(--color-on-accent-secondary);
         text-decoration: none;
         font-weight: var(--font-weight--semi-bold);
         --color-focus-ring: var(--color-on-accent-secondary);
       }
-      .waz1ptg-h[data-context="hero"][column] a[href]:not([aria-current="page"]):hover {
+      .wyz4foyhb[data-context="hero"][column] a[href]:not([aria-current="page"]):hover {
         background-color: color-mix(in oklab, var(--color-accent-secondary) 10%, transparent);
       }
       @media (forced-colors: active) {
-        .waz1ptg-h[data-context="hero"][column] a[href][aria-current="page"] {
+        .wyz4foyhb[data-context="hero"][column] a[href][aria-current="page"] {
           forced-color-adjust: none;
           background: SelectedItem;
           color: SelectedItemText;
@@ -1298,7 +1309,7 @@
         font-size: max(var(--base-font-size), 0.85em);
         color: var(--color-text-muted);
       }
-      .wqox_maih {
+      .wp7xogbrw {
         --context: footer;
         text-align: start;
         display: grid;
@@ -1352,14 +1363,14 @@
           display: flex;
           flex-direction: column;
           align-items: start;
-          gap: calc(var(--content-space) * 0.35);
+          gap: 0;
 
           @media screen and (width <= 768px) {
             flex-direction: row;
             flex-wrap: wrap;
-            align-items: baseline;
+            align-items: center;
             column-gap: calc(var(--content-space) * 1.25);
-            row-gap: calc(var(--content-space) * 0.25);
+            row-gap: 0;
           }
         }
 
@@ -1367,9 +1378,11 @@
           font-size: 1em;
         }
 
-        nav.group a {
-          display: inline-block;
-          padding-block: 0.2em;
+        nav.group a,
+        .course a {
+          display: inline-flex;
+          align-items: center;
+          min-block-size: var(--target-min);
           font-size: max(var(--base-font-size), 1em);
           color: inherit;
           text-decoration: none;
@@ -1403,7 +1416,7 @@
           </p>
         </div>
         <div class="links">
-          <nav data-context="hero" column="" aria-label="Site" class="waz1ptg-h">
+          <nav data-context="hero" column="" aria-label="Site" class="wyz4foyhb">
             <ul role="list">
               <li>
                 <a href="/course-kit/preview/25/components/#syllabus">Syllabus</a>
@@ -1450,8 +1463,8 @@
               </practice-terms>
 
               <check-controls class="wpbhrol4s">
-                <button type="button" data-check="#worksheet" hidden="">See results</button>
-                <button type="button" data-reset="#worksheet" data-confirm="Clear every answer on this worksheet? This can't be undone." hidden="">Clear my answers</button>
+                <button type="button" data-check="#worksheet">See results</button>
+                <button type="button" data-reset="#worksheet" data-confirm="Clear every answer on this worksheet? This can't be undone.">Clear my answers</button>
                 <p data-tally="#worksheet" role="status"></p>
               </check-controls>
               <p data-restore-note="" role="status" hidden="" class="restore-note"></p>
@@ -1520,7 +1533,7 @@
                 <p class="blurb"></p>
               </header>
 
-              <practice-question class="wnxj-xsx9">
+              <practice-question class="wcumc5k3_">
                 <div id="q-1.1" data-question="1.1" data-kind="choice" data-answers='{"answer":1}' class="question">
                   <div class="question-head">
                     <p class="question-prompt"><span class="q-number">1.1</span> <span>Which element holds the page's main content?</span></p>
@@ -1569,7 +1582,7 @@
                   </div>
                 </div>
               </practice-question>
-              <practice-question class="wnxj-xsx9">
+              <practice-question class="wcumc5k3_">
                 <div id="q-1.2" data-question="1.2" data-kind="match" data-answers='{"items":["A","B"]}' class="question">
                   <div class="question-head">
                     <p class="question-prompt"><span class="q-number">1.2</span> <span>Match each element to what it is.</span></p>
@@ -1589,17 +1602,17 @@
                   <practice-match class="w7lezdw8n">
                     <div class="matching">
                       <ol class="bank">
-                        <li data-letter="A">
+                        <li draggable="true" data-letter="A">
                           <span class="letter">A</span>
                           <span>A list of links</span>
                         </li>
-                        <li data-letter="B">
+                        <li draggable="true" data-letter="B">
                           <span class="letter">B</span>
                           <span>The page's footer</span>
                         </li>
                       </ol>
                       <ol class="match-items">
-                        <li>
+                        <li data-drop="true">
                           <label>
                             <span class="match-text">`nav`</span>
                             <select name="1.2-match-0" data-blank="0">
@@ -1612,7 +1625,7 @@
                             <span>Answer: A</span>
                           </span>
                         </li>
-                        <li>
+                        <li data-drop="true">
                           <label>
                             <span class="match-text">`footer`</span>
                             <select name="1.2-match-1" data-blank="1">
@@ -1637,8 +1650,8 @@
               </practice-question>
 
               <check-controls class="wpbhrol4s">
-                <button type="button" data-check="#section-1" hidden="">Check section 1</button>
-                <button type="button" data-reset="#section-1" data-confirm="Clear every answer in this section? This can't be undone." hidden="">Clear section</button>
+                <button type="button" data-check="#section-1">Check section 1</button>
+                <button type="button" data-reset="#section-1" data-confirm="Clear every answer in this section? This can't be undone.">Clear section</button>
                 <p data-tally="#section-1" role="status"></p>
               </check-controls>
             </section>
@@ -1648,7 +1661,7 @@
                 <p class="blurb"></p>
               </header>
 
-              <practice-question class="wnxj-xsx9">
+              <practice-question class="wcumc5k3_">
                 <div id="q-2.1" data-question="2.1" data-kind="fill" data-answers='{"blanks":[["ul"],["li"]]}' class="question">
                   <div class="question-head">
                     <p class="question-prompt"><span class="q-number">2.1</span> <span>Complete the markup.</span></p>
@@ -1671,15 +1684,20 @@
 
                   <practice-fill class="w4i9fw-bp">
                     <div class="filling">
+                      <p class="word-bank">
+                        <span class="word-bank-label">Word bank</span>
+                        <span draggable="true" data-word="ul" class="word">ul</span>
+                        <span draggable="true" data-word="li" class="word">li</span>
+                      </p>
                       <ol class="blanks">
-                        <li>
+                        <li data-drop="true">
                           <label>
                             <span class="blank-label">The list's tag</span>
                             <input type="text" autocomplete="off" spellcheck="false" name="2.1-blank-0" data-blank="0" placeholder="" />
                           </label>
                           <span hidden="" data-answer="ul" class="answer-key">Answer: ul</span>
                         </li>
-                        <li>
+                        <li data-drop="true">
                           <label>
                             <span class="blank-label">The child's tag</span>
                             <input type="text" autocomplete="off" spellcheck="false" name="2.1-blank-1" data-blank="1" placeholder="" />
@@ -1696,7 +1714,7 @@
                   </div>
                 </div>
               </practice-question>
-              <practice-question class="wnxj-xsx9">
+              <practice-question class="wcumc5k3_">
                 <div id="q-2.2" data-question="2.2" data-kind="grid" data-answers='{"rows":[0,1]}' class="question">
                   <div class="question-head">
                     <p class="question-prompt"><span class="q-number">2.2</span> <span>Which column does each element belong in?</span></p>
@@ -1769,7 +1787,7 @@
                   </div>
                 </div>
               </practice-question>
-              <practice-question class="wnxj-xsx9">
+              <practice-question class="wcumc5k3_">
                 <div id="q-2.3" data-question="2.3" data-kind="tree" data-answers='{"blanks":[["li"]]}' class="question">
                   <div class="question-head">
                     <p class="question-prompt"><span class="q-number">2.3</span> <span>Fill in the tree for this markup.</span></p>
@@ -1812,8 +1830,8 @@
               </practice-question>
 
               <check-controls class="wpbhrol4s">
-                <button type="button" data-check="#section-2" hidden="">Check section 2</button>
-                <button type="button" data-reset="#section-2" data-confirm="Clear every answer in this section? This can't be undone." hidden="">Clear section</button>
+                <button type="button" data-check="#section-2">Check section 2</button>
+                <button type="button" data-reset="#section-2" data-confirm="Clear every answer in this section? This can't be undone.">Clear section</button>
                 <p data-tally="#section-2" role="status"></p>
               </check-controls>
             </section>
@@ -1827,7 +1845,7 @@
                 </ul>
               </header>
 
-              <practice-question class="wnxj-xsx9">
+              <practice-question class="wcumc5k3_">
                 <div id="q-3.1" data-question="3.1" data-kind="judge" data-answers='{"answer":1,"lines":[1]}' class="question">
                   <div class="question-head">
                     <p class="question-prompt"><span class="q-number">3.1</span> <span>Is this markup valid and correct?</span></p>
@@ -1882,7 +1900,7 @@
                   </div>
                 </div>
               </practice-question>
-              <practice-question class="wnxj-xsx9">
+              <practice-question class="wcumc5k3_">
                 <div id="q-3.2" data-question="3.2" data-kind="selfcheck" data-answers="{}" class="question">
                   <div class="question-head">
                     <p class="question-prompt"><span class="q-number">3.2</span> <span>Explain why a heading level should not be chosen for its size.</span></p>
@@ -1899,7 +1917,7 @@
                     </cite-panel>
                   </div>
 
-                  <practice-selfcheck class="wsom_l55h">
+                  <practice-selfcheck class="wqdsu6hdd">
                     <div class="selfcheck">
                       <div class="disclosures">
                         <details data-reveal="">
@@ -1924,8 +1942,8 @@
               </practice-question>
 
               <check-controls class="wpbhrol4s">
-                <button type="button" data-check="#section-3" hidden="">Check section 3</button>
-                <button type="button" data-reset="#section-3" data-confirm="Clear every answer in this section? This can't be undone." hidden="">Clear section</button>
+                <button type="button" data-check="#section-3">Check section 3</button>
+                <button type="button" data-reset="#section-3" data-confirm="Clear every answer in this section? This can't be undone.">Clear section</button>
                 <p data-tally="#section-3" role="status"></p>
               </check-controls>
             </section>
@@ -1935,7 +1953,7 @@
     </main>
 
     <footer>
-      <div class="wqox_maih">
+      <div class="wp7xogbrw">
         <div class="brand">
           <p class="course">
             <a href="/course-kit/preview/25/components/"><span>CS101</span>: <span>Introduction to Web Publishing</span></a>
@@ -1950,7 +1968,7 @@
         <div class="group">
           <p id="footer-pages" class="label">Pages</p>
 
-          <nav data-context="footer" column="" aria-labelledby="footer-pages" class="waz1ptg-h">
+          <nav data-context="footer" column="" aria-labelledby="footer-pages" class="wyz4foyhb">
             <ul role="list">
               <li>
                 <a href="/course-kit/preview/25/components/lessons/">Lesson Plans</a>
@@ -1961,9 +1979,6 @@
         <nav aria-labelledby="footer-policies" class="group">
           <p id="footer-policies" class="label">Policies</p>
           <ul role="list">
-            <li>
-              <a href="/course-kit/preview/25/components/#policy-$schema"></a>
-            </li>
             <li>
               <a href="/course-kit/preview/25/components/#policy-attendance">Attendance</a>
             </li>
@@ -1988,8 +2003,6 @@
 
       <script type="application/json" id="copy-data">
         {
-          "common": { "sep": " · " },
-          "nav": { "site": "Site", "syllabus": "Syllabus", "contact": "Contact", "openSource": "Open source" },
           "code": {
             "copy": "Copy code",
             "copied": "Copied",
@@ -2029,62 +2042,7 @@
               "text": "Text"
             }
           },
-          "home": {
-            "heading": "Where the course is",
-            "todayLabel": "Today's class",
-            "nextLabel": "Next class",
-            "firstLabel": "First class",
-            "when": "Week {week} · {weekday}, {date}",
-            "openSlides": "Open the slides",
-            "seeWeek": "See the week",
-            "comingUp": "Coming up",
-            "fullSchedule": "Full schedule",
-            "nothingDue": "Nothing else is due this term.",
-            "dueToday": "Today",
-            "dueTomorrow": "Tomorrow",
-            "dueInDays_one": "In {count} day",
-            "dueInDays_other": "In {count} days",
-            "progress": "Progress",
-            "weeksDone": "{done} of {total} weeks done",
-            "week": "Week {week}",
-            "stateDone": "Done",
-            "stateNow": "Now"
-          },
-          "schedule": {
-            "thisWeek": "This week",
-            "upNext": "Up next",
-            "read": "Read",
-            "dueThisWeek": "Due this week",
-            "today": "Today",
-            "next": "Next",
-            "stateDone": "Done",
-            "stateNow": "Now",
-            "hidePast": "Hide past weeks",
-            "weeksDone": "{done} of {total} weeks done.",
-            "pastHidden_one": "{count} finished week hidden.",
-            "pastHidden_other": "{count} finished weeks hidden.",
-            "weekHeading": "Week {week}",
-            "colClass": "Class",
-            "colTopics": "Topics",
-            "colFor": "For this class",
-            "readBefore": "Read before class",
-            "due": "Due",
-            "dueOn": "due {when}",
-            "materials": "Materials",
-            "slides": "Slides",
-            "addendum": "Addendum",
-            "weekResources": "This week’s resources",
-            "noClass": "No class — {reason}",
-            "substitution": "Runs a {weekday} schedule",
-            "dueKeyLabel": "Key to due items",
-            "graded": "graded",
-            "notGraded": "not graded",
-            "dueKindTest": "Test",
-            "dueKindGraded": "Graded",
-            "dueKindReading": "Reading check",
-            "dueKindPractice": "Practice",
-            "finalExam": "Final exam"
-          },
+          "common": { "sep": " · " },
           "glossary": {
             "groupBy": "Group by",
             "byAz": "A to Z",
@@ -2142,47 +2100,106 @@
             "lesson": "Lesson",
             "termsFromClassEach": "terms from class. Each carries tags for its test, its {reading} and the meeting that taught it. Group by any of them, search, or narrow the list to what you are studying."
           },
-          "practice": { "colSheet": "Practice sheet", "colFor": "For", "caption": "Every practice sheet, with what it is for", "empty": "No practice sheets posted yet." },
-          "syllabus": {
-            "due": "Due:",
-            "projectDue": "{date}, {time}",
-            "projectPage": "Full requirements, milestone dates, and the grading rubric are on {link}.",
-            "projectPageLink": "the project page",
-            "syllabus": "Syllabus",
-            "learningOutcomes": "Learning outcomes",
-            "uponCompletingThisCourse": "Upon completing this course students will be able to:",
-            "additionalOutcomesInThis": "Additional outcomes in this section",
-            "text": "Text",
-            "noTextIsRequired": "No text is required.",
-            "required": "Required:",
-            "technology": "Technology",
-            "bringALaptopMeeting": "Bring a laptop meeting the minimum specifications specified by {institution} to class every day.",
-            "theCollege": "the college",
-            "accessIsRequired": "{lms} access is required.",
-            "coursework": "Coursework",
-            "exam": "Exam:",
-            "points": "{display}, {points} points",
-            "atTheLastClassMeeting": "at the last class meeting, {lastMeeting}",
-            "grading": "Grading",
-            "keyDates": "Key dates",
-            "thisSectionsFinalExam": "This section's final exam",
-            "classStart": "{days} at {time}"
+          "home": {
+            "heading": "Where the course is",
+            "todayLabel": "Today's class",
+            "nextLabel": "Next class",
+            "firstLabel": "First class",
+            "when": "Week {week} · {weekday}, {date}",
+            "openSlides": "Open the slides",
+            "seeWeek": "See the week",
+            "comingUp": "Coming up",
+            "fullSchedule": "Full schedule",
+            "nothingDue": "Nothing else is due this term.",
+            "dueToday": "Today",
+            "dueTomorrow": "Tomorrow",
+            "dueInDays_one": "In {count} day",
+            "dueInDays_other": "In {count} days",
+            "progress": "Progress",
+            "weeksDone": "{done} of {total} weeks done",
+            "week": "Week {week}",
+            "stateDone": "Done",
+            "stateNow": "Now"
           },
-          "courseSummary": {
-            "projectDue": "The final project is due {when}; its milestones and rubric are on {link}.",
-            "projectDueShort": "The final project is due {when}.",
-            "projectPageLink": "the project page",
-            "howThisSectionIs": "How this section is taught",
-            "scheduleClassResources": "Schedule &amp; class resources",
-            "prerequisites": "Prerequisites:",
-            "thisIsAProposed": "This is a proposed outline of topics and is subject to change. Any changes will be announced in class.",
-            "eachWeekListsWhatTo": "Each week lists what to read before its first meeting and the resources posted after class.",
-            "allAssignmentsWillBe": "All assignments will be posted in {lms}.",
-            "theFinalExamFalls": "The final exam falls in the exam period ({period}); the exact date and time will be announced in class.",
-            "thisSectionsFinalExamIs": "This section's final exam is {slot} — see the {link} section.",
-            "coursework": "Coursework",
-            "thisDocumentOmitsTheWeekbyweek": "This document omits the week-by-week schedule, which may be adjusted during the term{live}.",
-            "theLiveScheduleIsPublished": "; the live schedule is published at {url}"
+          "promptCopy": { "copyThisPrompt": "Copy this prompt", "promptCopied": "Prompt copied", "promptCopiedToThe": "Prompt copied to the clipboard.", "promptSelectedPressYour": "Prompt selected — press your copy shortcut." },
+          "schedule": {
+            "thisWeek": "This week",
+            "upNext": "Up next",
+            "read": "Read",
+            "dueThisWeek": "Due this week",
+            "today": "Today",
+            "next": "Next",
+            "stateDone": "Done",
+            "stateNow": "Now",
+            "hidePast": "Hide past weeks",
+            "weeksDone": "{done} of {total} weeks done.",
+            "pastHidden_one": "{count} finished week hidden.",
+            "pastHidden_other": "{count} finished weeks hidden.",
+            "weekHeading": "Week {week}",
+            "colClass": "Class",
+            "colTopics": "Topics",
+            "colFor": "For this class",
+            "readBefore": "Read before class",
+            "due": "Due",
+            "dueOn": "due {when}",
+            "materials": "Materials",
+            "slides": "Slides",
+            "addendum": "Addendum",
+            "weekResources": "This week’s resources",
+            "noClass": "No class — {reason}",
+            "substitution": "Runs a {weekday} schedule",
+            "dueKeyLabel": "Key to due items",
+            "graded": "graded",
+            "notGraded": "not graded",
+            "dueKindTest": "Test",
+            "dueKindGraded": "Graded",
+            "dueKindReading": "Reading check",
+            "dueKindPractice": "Practice",
+            "finalExam": "Final exam"
+          },
+          "themePanel": {
+            "brand": "Brand",
+            "brandColor": "Brand color",
+            "brandColorForText": "Brand color for text",
+            "textOnBrandColor": "Text on brand color",
+            "wayfindingColor": "Wayfinding color",
+            "textOnWayfindingColor": "Text on wayfinding color",
+            "page": "Page",
+            "pageBackground": "Page background",
+            "cardsAndPanels": "Cards and panels",
+            "linesAndBorders": "Lines and borders",
+            "text": "Text",
+            "bodyText": "Body text",
+            "secondaryText": "Secondary text",
+            "links": "Links",
+            "theme": "Theme",
+            "unsavedChanges": "Unsaved changes",
+            "preview": "Preview",
+            "light": "Light",
+            "dark": "Dark",
+            "everyColor": "Every color",
+            "allTokens": "All tokens",
+            "gradient": "Gradient",
+            "addAColor": "Add a color",
+            "undo": "Undo",
+            "reset": "Reset",
+            "save": "Save",
+            "download": "Download",
+            "hideTheThemePanel": "Hide the theme panel",
+            "notACssColor": "Not a CSS color",
+            "cssValue": "{name}, CSS value",
+            "backToTheSaved": "Back to the saved theme.",
+            "thePage": "the page",
+            "theBrandColor": "the brand color",
+            "passes": "passes",
+            "below": "below {minimum} : 1",
+            "contrast": "{ratio} : 1 on {ground}, {verdict}",
+            "color": "Color {n}",
+            "removeColor": "Remove color {n}",
+            "saving": "Saving…",
+            "savedToThe": "Saved to {file}. The site is rebuilding.",
+            "notSaved": "Not saved: {message}",
+            "downloadedPutItIn": "Downloaded. Put it in {folder} to keep it."
           },
           "worksheet": {
             "notice": "Nothing here is recorded or submitted.",
@@ -2232,143 +2249,160 @@
             "confirmClearSection": "Clear every answer in this section? This can't be undone.",
             "checkOne": "Check answer",
             "restored": "Restored your answers from {when}."
-          },
-          "siteFooter": { "pages": "Pages", "policies": "Policies" },
-          "courseDocuments": { "additionalResources": "Additional resources" },
-          "policies": { "policies": "Policies", "readTheFullPolicy": "Read the full policy" },
-          "grading": { "gradeWeighting": "Grade weighting", "category": "Category", "weight": "Weight", "gradingScale": "Grading scale", "grade": "Grade", "weightedAverage": "Weighted average", "andAbove": "{min} and above", "below": "below {max}" },
-          "scheduleOverview": { "schedule": "Schedule", "keyDates": "Key dates", "jumpTo": "Jump to", "tests": "Tests", "finalProject": "Final project", "finalExam": "Final exam", "exam": "Exam", "noClass": "No class" },
-          "slideTimetable": { "everySlideDeckFor": "Every slide deck for this section, one row per week and one column per meeting day", "week": "Week", "noMeeting": "No meeting", "noClass": "No class: {reason}", "noDeck": "No deck", "draftNotInThe": "Draft, not in the student build", "speakerNotes": "Speaker notes", "addendumDraftNotIn": "Addendum draft, not in the student build", "addendumSpeakerNotes": "Addendum speaker notes" },
-          "tableRubric": { "criteria": "Criteria", "points": "Points", "pointsEach": "{points} points", "totalPointsPossible": "Total points possible", "milestone": "Milestone", "due": "Due", "whatIsGraded": "What is graded" },
-          "demoWeeks": { "lessonPlan": "Lesson plan", "shownAgainFirstUsed": "Shown again, first used {date}", "downloadTheHtmlFile": "Download the HTML file", "usedAgain": "Used again {dates}" },
-          "instructor": { "yourInstructor": "Your instructor", "name": "Name", "office": "Office", "officeHours": "Office hours", "email": "Email", "message": "Message", "sendMeAMessage": "Send me a message", "blog": "Blog", "instructor": "Instructor" },
-          "codepenEmbed": { "theCode": "The code", "html": "HTML", "css": "CSS", "javascript": "JavaScript", "htmlSource": "HTML source", "cssSource": "CSS source", "javascriptSource": "JavaScript source" },
-          "base": { "skipToContent": "Skip to content" },
-          "deck": { "skipToFirstSlide": "Skip to first slide", "slides": "Slides", "previousSlide": "Previous slide", "nextSlide": "Next slide", "cycleColorTheme": "Cycle color theme", "toggleFullscreen": "Toggle fullscreen" },
-          "document": { "contents": "Contents" },
-          "lesson": {
-            "lessonPlans": "Lesson plans",
-            "onePlanPerClass": "One plan per class meeting ({time}), generated from the course schedule and the academic calendar. Holidays are shown in sequence so the term reads day by day.",
-            "slideIndex": "Slide index",
-            "everyDeckInMeeting": "{link} — every deck in meeting order. Speaker notes are on a separate printable sheet per deck, linked as \"Notes\" below.",
-            "exercises": "Exercises",
-            "theBriefAndStarter": "{link} — the brief and starter for each. Exercises due on a meeting are linked from its row below.",
-            "instructorDeadlines": "Instructor deadlines",
-            "dueDate": "Due date",
-            "everyClassMeetingOf": "Every class meeting of the term, in order",
-            "date": "Date",
-            "links": "Links",
-            "topics": "Topics",
-            "runsASchedule": "(runs a {weekday} schedule)",
-            "noClass": "No class — {reason}",
-            "lessonPlan": "Lesson&nbsp;plan",
-            "slides": "Slides",
-            "addendum": "Addendum",
-            "notes": "Notes",
-            "addendumNotes": "Addendum notes",
-            "due": "Due:"
-          },
-          "lessonDay": { "weekDayLesson": "Week {week}, Day {day} — Lesson Plan" },
-          "lessonDetail": {
-            "week": "Week {week}",
-            "weekDay": "Week {week}, Day {day}",
-            "noClass": "No class",
-            "lessonNavigation": "Lesson navigation",
-            "allLessons": "All lessons",
-            "previousDay": "Previous day",
-            "nextDay": "Next day",
-            "classMeetingOfThe": "Class meeting #{meeting} of the term",
-            "noClassOn": "No class on {reason}. Use this day to prep the next lesson or catch up on grading.",
-            "focus": "Focus:",
-            "thisMeetingRunsA": "This meeting runs a {weekday} schedule (college-wide) — plan the substituted day's session, not this weekday's usual rhythm.",
-            "aTestIsScheduledThis": "A test is scheduled this week — confirm day, reserve class time, and remind students at least one meeting ahead.",
-            "thisWeeksTopics": "This week's topics",
-            "beforeClass": "Before class",
-            "reviewTheReadingsSee": "Review the readings (see materials below)",
-            "prepareupdateSlidesAndLivedemo": "Prepare/update slides and live-demo code",
-            "printOrOpenThe": "Print or open the {link}",
-            "speakerNotesSheet": "speaker notes sheet",
-            "stageStarterFilesOr": "Stage starter files or lab handout if needed",
-            "checkForStudentQuestions": "Check {lms} for student questions or submissions",
-            "lessonOutline": "Lesson outline",
-            "lessonOutlineMinutes": "Lesson outline ({minutes} minutes)",
-            "time": "Time",
-            "segment": "Segment",
-            "min": "{minutes} min",
-            "afterClass": "After class",
-            "postHandoutsToAnd": "Post handouts to {resources} and link them in {schedule}'s {list} for the week; the slide deck publishes itself from {slides}, so it only needs a link there if students should see it from the schedule",
-            "noteAnythingNotCovered": "Note anything not covered and roll it into the next lesson",
-            "postOrGradeLabhomework": "Post or grade lab/homework in {lms} as needed",
-            "lessonTools": "Lesson tools",
-            "onThisPage": "On this page",
-            "materialsLinks": "Materials &amp; links"
-          },
-          "lessonMaterials": { "slidesForThisMeeting": "Slides for this meeting", "speakerNotes": "speaker notes", "printable": "(printable)", "demosFromThisMeeting": "Demos from this meeting", "exercisesDue": "Exercises due", "readingForThisMeeting": "Reading for this meeting", "due": "due {when}", "deadlinesToAnnounce": "Deadlines to announce", "assignedBeforeThisWeek": "Assigned before this week", "postedForTheClass": "Posted for the class", "nothingPostedForThis": "Nothing posted for this week yet." },
-          "lessons": {
-            "welcomeRecapThePrevious": "Welcome, recap the previous class, open questions",
-            "welcomeIntroductionsHowThe": "Welcome, introductions, how the course runs",
-            "instructionThisWeeksTopics": "Instruction: this week's topics (see above)",
-            "guidedPracticeLabWork": "Guided practice / lab work",
-            "wrapupRecapPreviewNext": "Wrap-up: recap, preview next class, assignment reminders",
-            "buffer": "Buffer",
-            "collegeHoliday": "College holiday",
-            "introduceThisWeeksMaterial": "Introduce this week's material",
-            "continuePracticeAndLab": "Continue, practice, and lab work",
-            "tbd": "TBD"
-          },
-          "term": { "classesBegin": "Classes begin", "collegeHoliday": "College holiday", "lastDayOfClasses": "Last day of classes", "readingDaysNoClasses": "Reading days (no classes or exams)", "finalExaminationPeriod": "Final examination period", "preregistrationForTheNext": "Pre-registration for the next term opens" },
-          "deckNotes": { "speakerNotes": "Speaker notes", "speakerNotesTitle": "Speaker notes: {title}", "weekDay": "Week {week}, Day {day}", "speakerNotesInstructorOnly": "Speaker notes · instructor only", "slideOpenInThe": "Slide {number}, open in the deck", "untitledSlide": "Untitled slide" },
-          "lessonPlans": { "lessonPlans": "Lesson plans", "navTitle": "Lesson Plans" },
-          "markdown": { "permalinkToThisHeading": "Permalink to this heading" },
-          "pdf": { "footer": "{course}: {name} — {term} syllabus · Generated {generated} ({version}) · Page {page} of {pages}" },
-          "themePanel": {
-            "brand": "Brand",
-            "brandColor": "Brand color",
-            "brandColorForText": "Brand color for text",
-            "textOnBrandColor": "Text on brand color",
-            "wayfindingColor": "Wayfinding color",
-            "textOnWayfindingColor": "Text on wayfinding color",
-            "page": "Page",
-            "pageBackground": "Page background",
-            "cardsAndPanels": "Cards and panels",
-            "linesAndBorders": "Lines and borders",
-            "text": "Text",
-            "bodyText": "Body text",
-            "secondaryText": "Secondary text",
-            "links": "Links",
-            "theme": "Theme",
-            "unsavedChanges": "Unsaved changes",
-            "preview": "Preview",
-            "light": "Light",
-            "dark": "Dark",
-            "everyColor": "Every color",
-            "allTokens": "All tokens",
-            "gradient": "Gradient",
-            "addAColor": "Add a color",
-            "undo": "Undo",
-            "reset": "Reset",
-            "save": "Save",
-            "download": "Download",
-            "hideTheThemePanel": "Hide the theme panel",
-            "notACssColor": "Not a CSS color",
-            "cssValue": "{name}, CSS value",
-            "backToTheSaved": "Back to the saved theme.",
-            "thePage": "the page",
-            "theBrandColor": "the brand color",
-            "passes": "passes",
-            "below": "below {minimum} : 1",
-            "contrast": "{ratio} : 1 on {ground}, {verdict}",
-            "color": "Color {n}",
-            "removeColor": "Remove color {n}",
-            "saving": "Saving…",
-            "savedToThe": "Saved to {file}. The site is rebuilding.",
-            "notSaved": "Not saved: {message}",
-            "downloadedPutItIn": "Downloaded. Put it in {folder} to keep it."
-          },
-          "promptCopy": { "copyThisPrompt": "Copy this prompt", "promptCopied": "Prompt copied", "promptCopiedToThe": "Prompt copied to the clipboard.", "promptSelectedPressYour": "Prompt selected — press your copy shortcut." }
+          }
         }
       </script>
+      <script>
+        window.ckCopy ??= (function () {
+          var data = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
+          var rules = new Intl.PluralRules(document.documentElement.lang || "en-US");
+          function t(ns, key, vars) {
+            vars = vars || {};
+            var table = data[ns] || {};
+            var text = table[key];
+            if ("count" in vars) if (key + "_other" in table) text = table[key + "_" + rules.select(vars.count)] ?? table[key + "_other"];
+            return String(text ?? "").replace(/\{(\w+)\}/g, function (match, name) {
+              return String(vars[name] ?? "");
+            });
+          }
+          return { data: data, t: t };
+        })();
+      </script>
       <script type="module">
+        (() => {
+          const registry = (window.ckPractice ??= { kinds: {} });
+          registry.kinds.match = {
+            /** Mark this kind's controls and report what was found. */
+            grade(question, key, _id, { mark }) {
+              let right = 0;
+              let blank = 0;
+              let answered = false;
+              for (const [index, expected] of key.items.entries()) {
+                const select = question.querySelector(`select[data-blank="${index}"]`);
+                if (!select.value) {
+                  blank += 1;
+                  continue;
+                }
+                answered = true;
+                const correct = select.value === expected;
+                if (correct) right += 1;
+                mark(select.closest("li"), correct);
+              }
+              return { answered, right, total: key.items.length, blank };
+            },
+            /** Drag a bank entry onto a row. */
+            enhance(question, { dragDrop }) {
+              dragDrop(question);
+            },
+          };
+        })();
+        (() => {
+          const registry = (window.ckPractice ??= { kinds: {} });
+          // A tree is a fill whose blanks are laid out as a diagram: it grades and enhances as a fill does.
+          registry.kinds.tree = {
+            grade: (...args) => registry.kinds.fill.grade(...args),
+            enhance: (...args) => registry.kinds.fill.enhance(...args),
+          };
+        })();
+        (() => {
+          const registry = (window.ckPractice ??= { kinds: {} });
+          registry.kinds.grid = {
+            /** Mark this kind's controls and report what was found. */
+            grade(question, key, id, { mark, checkedValue }) {
+              let right = 0;
+              let blank = 0;
+              let answered = false;
+              for (const [index, expected] of key.rows.entries()) {
+                const picked = checkedValue(question, `${id}-row-${index}`);
+                if (picked === null) {
+                  blank += 1;
+                  continue;
+                }
+                answered = true;
+                const correct = Number(picked) === expected;
+                if (correct) right += 1;
+                mark(question.querySelector(`tr[data-row="${index}"]`), correct);
+              }
+              return { answered, right, total: key.rows.length, blank };
+            },
+          };
+        })();
+        (() => {
+          const registry = (window.ckPractice ??= { kinds: {} });
+          registry.kinds.choice = {
+            /** Mark this kind's controls and report what was found. */
+            grade(question, key, id, { mark, checkedValue }) {
+              const picked = checkedValue(question, `${id}-choice`);
+              if (picked === null) return { answered: false, right: 0, total: 1, blank: 1 };
+              for (const label of question.querySelectorAll(".choice")) {
+                const value = Number(label.querySelector("input").value);
+                if (value === key.answer) mark(label, true);
+                else if (value === Number(picked)) mark(label, false);
+              }
+              return { answered: true, right: Number(picked) === key.answer ? 1 : 0, total: 1, blank: 0 };
+            },
+          };
+        })();
+        (() => {
+          const registry = (window.ckPractice ??= { kinds: {} });
+          registry.kinds.fill = {
+            /** Mark this kind's controls and report what was found. */
+            grade(question, key, _id, { mark, normalize }) {
+              let right = 0;
+              let blank = 0;
+              let answered = false;
+              for (const [index, accepted] of key.blanks.entries()) {
+                const input = question.querySelector(`input[data-blank="${index}"]`);
+                if (!input.value.trim()) {
+                  blank += 1;
+                  continue;
+                }
+                answered = true;
+                const typed = normalize(input.value);
+                const correct = accepted.some((option) => normalize(option) === typed);
+                if (correct) right += 1;
+                mark(input.closest("li"), correct);
+              }
+              return { answered, right, total: key.blanks.length, blank };
+            },
+            /** Drag a bank entry onto a row, and keep the word bank honest as the student types. */
+            enhance(question, { dragDrop, markUsedWords }) {
+              dragDrop(question);
+              question.addEventListener("input", () => markUsedWords(question));
+              markUsedWords(question);
+            },
+          };
+        })();
+        (() => {
+          const registry = (window.ckPractice ??= { kinds: {} });
+          registry.kinds.judge = {
+            /** Mark this kind's controls and report what was found. */
+            grade(question, key, id, { mark, checkedValue }) {
+              const verdict = checkedValue(question, `${id}-choice`);
+              const line = checkedValue(question, `${id}-line`);
+              if (verdict === null && line === null) return { answered: false, right: 0, total: 2, blank: 2 };
+              let right = 0;
+
+              for (const label of question.querySelectorAll(".verdicts .choice")) {
+                const value = Number(label.querySelector("input").value);
+                if (value === key.answer) mark(label, true);
+                else if (value === Number(verdict)) mark(label, false);
+              }
+              if (Number(verdict) === key.answer) right += 1;
+
+              // A snippet with no offending line makes "none" the right pick.
+              const expected = key.lines.length ? key.lines.map(String) : ["none"];
+              for (const label of question.querySelectorAll(".code-lines .code-line")) {
+                const value = label.querySelector("input").value;
+                if (expected.includes(value)) mark(label, true);
+                else if (value === line) mark(label, false);
+              }
+              if (line !== null && expected.includes(line)) right += 1;
+
+              return { answered: true, right, total: 2, blank: (verdict === null ? 1 : 0) + (line === null ? 1 : 0) };
+            },
+          };
+        })();
         // Print every disclosure expanded, then restore the reader's own
         // state (tracked per element — bundle scripts share one module
         // scope, so no top-level variables).
@@ -2387,7 +2421,7 @@
       </script>
     </footer>
     <script type="module" src="/course-kit/preview/25/components/js/email.js"></script>
-    <script type="module" src="/course-kit/preview/25/components/js/code-copy.js"></script>
+    <script type="module" src="/course-kit/preview/25/components/js/copy.js"></script>
     <theme-panel context="site"></theme-panel>
     <script type="module" src="/course-kit/preview/25/components/js/theme-panel.js"></script>
   </body>
