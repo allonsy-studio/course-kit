@@ -30,7 +30,7 @@ Match each element to what it is.
 
 why: Each element names one kind of content.
 
-::: bank
+::: bank drag
 - A. A list of links
 - B. The page's footer
 :::
@@ -51,6 +51,10 @@ Complete the markup.
 ```
 
 why: A list's only valid child is `li`.
+
+::: bank drag
+ul · li
+:::
 
 1. The list's tag — `ul`
 2. The child's tag — `li`

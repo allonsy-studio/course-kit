@@ -1,23 +1,22 @@
----
-title: "Speaker notes"
----
-
+<script webc:setup>
+	const copy = $data.copy.deckNotes;
+</script>
 <article class="notes-sheet">
 	<header>
 		<p class="meta">
 			<span @text="$data.course.code"></span> ·
-			Week <span @text="$data.notesDeck.data.week"></span>, Day <span @text="$data.notesDeck.data.day"></span><template webc:nokeep webc:if="$data.notesLesson?.display"> · <span @text="$data.notesLesson.display"></span></template>
+			<span @text="fill(copy.weekDay, { week: $data.notesDeck.data.week, day: $data.notesDeck.data.day })"></span><template webc:nokeep webc:if="$data.notesLesson?.display"> · <span @text="$data.notesLesson.display"></span></template>
 		</p>
 		<h1 @text="$data.notesDeck.data.title"></h1>
-		<p>Speaker notes · instructor only</p>
+		<p @text="copy.speakerNotesInstructorOnly"></p>
 	</header>
 
 	<ol class="notes-sheet-slides" role="list">
 		<li webc:for="slide of $data.notesSlides" :class="slide.notes.length ? '' : 'no-notes'">
-			<a class="slide-number" :href="`${$data.notesDeck.url}#s${slide.number}`" :aria-label="`Slide ${slide.number}, open in the deck`" @text="slide.number"></a>
+			<a class="slide-number" :href="`${$data.notesDeck.url}#s${slide.number}`" :aria-label="fill(copy.slideOpenInThe, { number: slide.number })" @text="slide.number"></a>
 			<div class="slide-notes">
 				<p class="slide-title">
-					<span @html="slide.title || 'Untitled slide'"></span>
+					<span @html="slide.title || copy.untitledSlide"></span>
 					<span webc:if="slide.kind" @text="`(${slide.kind})`"></span>
 				</p>
 				<template webc:nokeep webc:for="note of slide.notes">

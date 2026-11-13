@@ -11,7 +11,7 @@ export default [
 	// Written by `yarn docs` and `yarn schema`.
 	{ ignores: ["docs/components-reference.md", "docs/tokens.md"] },
 	// Placeholders and task lists in templates and the sample worksheet that the Markdown rules misread.
-	{ ignores: ["skills/test-generator/templates/**", "preview/stories/practice/sample.worksheet.md"] },
+	{ ignores: ["skills/test-generator/templates/**", "preview/stories/practice/sample.worksheet.md", "preview/_slides/**"] },
 	{
 		// Scripts the kit publishes, and the preview's own, run in the browser.
 		files: ["assets/scripts/**/*.js", "preview/content/assets/**/*.js"],
@@ -20,6 +20,6 @@ export default [
 	{
 		// The landing site's accessibility check runs in Cypress.
 		files: ["website/cypress/**/*.js"],
-		languageOptions: { globals: { cy: "readonly", Cypress: "readonly", describe: "readonly", it: "readonly" } },
+		languageOptions: { globals: { cy: "readonly", Cypress: "readonly", describe: "readonly", it: "readonly", expect: "readonly", window: "readonly", beforeEach: "readonly" } },
 	},
 ];

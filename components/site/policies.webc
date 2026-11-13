@@ -6,12 +6,12 @@
 	 */
 </script>
 <section webc:root="override" class="content-column" aria-labelledby="policies-heading" webc:if="$data.policies">
-	<h2 id="policies-heading">Policies</h2>
+	<h2 id="policies-heading" @text="$data.copy.policies.policies"></h2>
 	<div class="disclosures">
 		<details webc:for="entry of Object.entries($data.policies).filter(([key]) => key !== '$schema')" :id="`policy-${entry[0]}`" open>
 			<summary @text="entry[1].title"></summary>
-			<p @text="entry[1].body"></p>
-			<p webc:if="entry[1].href"><a :href="entry[1].href" @text="entry[1].hrefText ?? 'Read the full policy'"></a></p>
+			<p @text="expandTokens(entry[1].body, $data)"></p>
+			<p webc:if="entry[1].href"><a :href="entry[1].href" @text="entry[1].hrefText ?? $data.copy.policies.readTheFullPolicy"></a></p>
 		</details>
 	</div>
 </section>

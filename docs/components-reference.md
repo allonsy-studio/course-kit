@@ -21,25 +21,37 @@ A link with a trailing arrow. The label is the slot; `href` and any other attrib
 
 ### `<assigned-list>`
 
-A labelled list of readings or deadlines. Renders nothing when empty.
+A labelled list of readings or deadlines. Renders nothing when empty. Give it the `items` array, or write the list as a `<dl>` in the default slot: each `<dt>` holds the title or its link (give it `data-kind` and, before the title, `<span class="due-chip" data-kind="test">Test</span>` for a chip), each `<dd>` only the check or due detail. The array wins when it has items; when it is missing or empty the slot is rendered instead, so the list still shows if the data does not load.
 
 | Prop | Type | |
 |---|---|---|
 | `label` | `string` | the heading above the list |
-| `items` | `{ title: string, href?: string, check?: string, dueLabel?: string }[]` | the readings or deadlines to list |
-| `[prefix]` | `string` | put before an item's due label ("due ") |
+| `items` | `{ title: string, href?: string, check?: string, dueLabel?: string, kind?: string }[]` | the readings or deadlines to list |
+| `[dueOn]` | `string` | how a due date reads after the check, with `{when}`: `copy.schedule.dueOn` ("due {when}"); without it the date stands alone |
+| `[chips]` | `boolean` | put a `.due-chip` for the item's `kind` before its title; a bare `@chips` turns them on |
+| `[kinds]` | `Record<string, string>` | the chip words by kind, from `copy.schedule.dueKind*`; needed with `chips` |
 
 ### `<callout>`
 
-A highlighted aside. The content is the slot.
+A highlighted aside. The content is the slot. A typed callout opens with its type in words, so the type is never told by color alone.
+
+| Prop | Type | |
+|---|---|---|
+| `[type]` | `'success' \| 'warn' \| 'error'` | the color of the edge and wash, and the opening word (`copy.callout`: Success, Warning, Error); none, or any other value, is the brand color with no word. Write it `@type="warn"` or as the attribute `:type="'warn'"`: both color it. |
+| `[label]` | `string` | the opening word in place of the default for the type; `label=""` (or a bare `@label`) shows none; a callout with no type shows none either way |
 
 ### `<card-list>`
 
-A list of cards, each linking to a page. A card shows the page's code, name and description unless the slot supplies its own content.
+A list of cards, each linking to a page. A card shows the page's code, name and description unless the slot supplies its own content. Instead of `items` you can write the cards yourself as a `<ul>` of `<li>` cards in the `cards` slot (the default slot is taken: it is each card's own content); the array wins when it has items, and when it is missing or empty the `cards` slot is rendered instead. A card written in the slot must name its overlay link, as the items form does: `<li><a href="/x/" aria-labelledby="x-name"></a><h3 id="x-name">Name</h3></li>`.
 
 | Prop | Type | |
 |---|---|---|
 | `items` | `object[]` | pages, each with `data` and `page.url` |
+
+Slots:
+
+- `cards`: the cards as a `<ul>`, used when `items` is missing or empty
+- `default`: each card's own content, in place of its code, name and description
 
 ### `<codepen-embed>`
 
@@ -47,11 +59,12 @@ A live code sample: a header with actions, then the CodePen embed prefilled with
 
 | Prop | Type | |
 |---|---|---|
-| `[heading]` | `string` | the header, default "The code" |
+| `[heading]` | `string` | the header, default `copy.theCode` |
 | `label` | `string` | the pen's title |
 | `summary` | `string` | the pen's description |
 | `[height]` | `number` | embed height in pixels, default 800 |
 | `[tags]` | `string[]` | tags added to the pen |
+| `copy` | `Record<string, string>` | the pane labels: `copy.codepenEmbed` (`theCode`, `html`, `css`, `javascript`, `htmlSource`, `cssSource`, `javascriptSource`) |
 
 Slots:
 
@@ -72,7 +85,7 @@ A small line above a heading. The content is the slot.
 
 ### `<link-list>`
 
-A list of links, each with a name and an optional description.
+A list of links, each with a name and an optional description. Give it the `items` array, or write the list in the default slot as a `<ul>` of links, or as a `<dl>` (`<dt>` the link, `<dd>` the description). The array wins when it has items; when it is missing or empty the slot is rendered instead.
 
 | Prop | Type | |
 |---|---|---|
@@ -108,6 +121,8 @@ A meeting's deck links, each on its own line: the slides, then any addendum. Ren
 | Prop | Type | |
 |---|---|---|
 | `meeting` | `{ slides?: string, addendum?: string }` | one meeting from `scheduleWeeks` |
+| `slidesLabel` | `string` | the slides link's text, `copy.schedule.slides` |
+| `addendumLabel` | `string` | the addendum link's text, `copy.schedule.addendum` |
 
 ### `<table-rubric>`
 
@@ -119,10 +134,15 @@ A grading rubric as a table: criteria down, performance levels or a due date and
 | `[levels]` | `string[]` | level names across the top |
 | `[caption]` | `string` | a screen-reader caption |
 | `[total]` | `number` | the points the rubric adds up to, shown in the footer |
+| `copy` | `Record<string, string>` | the table's wording: `copy.tableRubric` (`criteria`, `points`, `pointsEach`, `totalPointsPossible`, `milestone`, `due`, `whatIsGraded`) |
 
 ### `<today-link>`
 
 The page's Today shortcut: a button that jumps to the `#today` element `<today-marker>` picks. Hidden until there is one, and in print.
+
+| Prop | Type | |
+|---|---|---|
+| `label` | `string` | the link's text, `copy.schedule.today` |
 
 ### `<today-marker>`
 
@@ -134,7 +154,8 @@ One bordered block per week: a tinted header band, then the slot.
 
 | Prop | Type | |
 |---|---|---|
-| `number` | `number` | the week number (not `week`: slot content sees a component's props, and a host loops over `week`) |
+| `number` | `number` | the week number, for the anchor (not `week`: slot content sees a component's props, and a host loops over `week`) |
+| `label` | `string` | the heading, "Week 3" (`copy.schedule.weekHeading` filled in) |
 | `dates` | `string` | the week's date range, shown beside the heading |
 | `[level=3]` | `2 \| 3` | the heading level |
 
@@ -151,6 +172,19 @@ The copyright line: the build year and the site's author. Reads `site`.
 ### `<course-documents>`
 
 The "Additional resources" list: the entries of `course.documents`, each a link with an optional description. A PDF is listed only when the build produced PDFs. Renders nothing when there are none.
+
+| Prop | Type | |
+|---|---|---|
+| `[documents]` | `{ title: string, description?: string, href: string }[]` | defaults to `course.documents` |
+
+### `<course-now>`
+
+The home page's opening band: the next class, what is due soon and the week-by-week progress. Hidden until its script has judged "today" in the campus zone. Wording comes from `copy.home` and `copy.schedule`.
+
+| Prop | Type | |
+|---|---|---|
+| `[weeks]` | `object[]` | `scheduleWeeks` output; built from the page's lessons, schedule, decks and demos when left out |
+| `[scheduleUrl]` | `string` | where the schedule lives, default `/schedule/` |
 
 ### `<course-summary>`
 
@@ -174,7 +208,7 @@ One glossary term as a `<dt>`/`<dd>` pair: the term, its definition, an optional
 
 ### `<glossary-panel>`
 
-The glossary's element: the plain list it wraps (the slot) stays when scripts do not run, and `scripts/glossary.js` replaces it with Review and Flashcards. One stylesheet covers both, since the script renders the same markup the server does.
+The glossary's element: the grouped list it wraps (the slot), which the script at the foot of this file replaces with Review and Flashcards. One stylesheet covers both, since the script renders the same markup the server does.
 
 | Prop | Type | |
 |---|---|---|
@@ -186,7 +220,7 @@ Slots:
 
 ### `<glossary>`
 
-The course glossary page: every `vocab` and `api` slide as one tagged term, listed A to Z for readers without scripts and enhanced into Review and Flashcards by `<glossary-panel>`. Reads the `glossary` global.
+The course glossary page: every `vocab` and `api` slide as one tagged term, listed A to Z and enhanced into Review and Flashcards by `<glossary-panel>`. Reads the `glossary` global.
 
 ### `<grading>`
 
@@ -202,11 +236,11 @@ The instructor's details: photo, office, contact and hours. Reads `instructor`.
 
 ### `<masthead>`
 
-The page header: institution, term, course title and the navigation. Reads `site`, `term` and `course`.
+The page header: institution, term, course title and the navigation. Reads `site`, `term` and `course`. The menu is Home, Syllabus, then every page of the site menu that has not set `menu: false`.
 
 ### `<nav-links>`
 
-The site navigation as a list of links, marking the current page.
+The site navigation as a list of links, marking the current page. Give it the `navigation` array, or write the links in the default slot as a `<ul>` of `<li><a>`; the array wins when it has items, and when it is missing or empty the slot is rendered instead.
 
 | Prop | Type | |
 |---|---|---|
@@ -216,6 +250,10 @@ The site navigation as a list of links, marking the current page.
 ### `<policies>`
 
 The policies section: one disclosure per entry in `policies.json`, open by default, each with an optional link to the full policy. Renders nothing without `policies`.
+
+### `<practice-index>`
+
+The practice page's table: every practice sheet in `collections.practice`, by its worksheet `order` (then its URL), with what each is for. Says so when there are none. The page's own intro stays page content. Wording comes from `copy.practice`.
 
 ### `<schedule-overview>`
 
@@ -228,7 +266,7 @@ The schedule page's header: the meeting line, the key dates, and a row of jump l
 
 ### `<schedule-weeks>`
 
-Every week of the term as a bordered block: its meetings (topics, readings, deadlines, deck and demos) beside the week's materials.
+Every week of the term as a bordered block: one row per class meeting (when, topics, and what that class needs: reading, due items, materials) and a footer for the week's own resources. A "This week" card, the hide-past toggle and the Now and Done flags are added by the script. Deadlines carry a chip for their `kind`; the key above the weeks lists the kinds in use. Wording comes from `copy.schedule`.
 
 | Prop | Type | |
 |---|---|---|
@@ -256,14 +294,14 @@ The widgets a practice worksheet is made of. `<practice-worksheet>` assembles th
 
 ### `<check-controls>`
 
-The Check and Reset buttons and the score line for one worksheet scope. `practice.js` shows them and fills the tally.
+The Check and Reset buttons and the score line for one worksheet scope. `practice.js` wires them and fills the tally.
 
 | Prop | Type | |
 |---|---|---|
 | `scope` | `string` | ties the buttons and tally to a question or section |
 | `label` | `string` | the check button's text |
 | `reset` | `string` | the reset button's text |
-| `[note]` | `string` | text shown with the tally |
+| `confirm` | `string` | the question Reset asks before it clears anything |
 
 ### `<choice-list>`
 
@@ -329,7 +367,7 @@ A match question: a lettered bank and items that each take a letter.
 
 ### `<practice-question>`
 
-One worksheet question: its prompt, sources, snippet and figure, then the control its kind needs.
+One worksheet question: its prompt, sources, snippet and figure, then the control its kind needs, then the feedback and the reasoning. `practice.js` grades it.
 
 | Prop | Type | |
 |---|---|---|
@@ -363,4 +401,4 @@ A tree question: a snippet and its DOM tree with blanks to fill in.
 
 ### `<practice-worksheet>`
 
-The practice worksheet page: heading, sections of questions, and the check controls. Reads the `worksheet` data a worksheet's `.11tydata.js` supplies.
+The practice worksheet page: heading, results summary, question list, sections of questions and the check controls. Reads the `worksheet` data a worksheet's `.11tydata.js` supplies; `practice.js` grades, saves and restores the answers in this browser. With `checkMode: "question"` (front matter, or `worksheets.checkMode` in the course config) each gradable question also has a Check answer button; the default, `"end"`, checks only from See results at the end.

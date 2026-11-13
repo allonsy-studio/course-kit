@@ -25,8 +25,10 @@
 	 */
 	(() => {
 		try {
-			/** @type {string} today on campus (not the reader's zone), as YYYY-MM-DD; <html data-timezone> comes from `site.timezone` */
-			const today = new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone || undefined });
+			/** Today in the campus zone, as "YYYY-MM-DD". */
+			const campusToday = () => new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone });
+						const { t } = window.ckCopy;
+			const today = campusToday();
 
 			/** The node that can hold a flag or an anchor: a table row can't, its first cell can. */
 			const holder = (el) => (el instanceof HTMLTableRowElement ? el.cells[0] : el);
@@ -42,7 +44,7 @@
 				el.setAttribute("aria-current", "date");
 				const flag = document.createElement("strong");
 				flag.className = "today-flag";
-				flag.textContent = el.dataset.todayLabel ?? "Today";
+				flag.textContent = el.dataset.todayLabel ?? t("schedule", "today");
 				holder(el)?.prepend(flag);
 			}
 
@@ -71,7 +73,7 @@
 			}
 
 			// Opened as /page/#today before the target existed: the browser has already missed it.
-			if (location.hash === "#today") document.getElementById("today")?.scrollIntoView();
+			if (location.hash === "#today") document.getElementById("today")?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
 		} catch {
 			// Never let the marker break the scripts bundled after it.
 		}
@@ -84,8 +86,8 @@
 	   look per host. */
 
 	[data-today] {
-		background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
-		box-shadow: inset var(--border-width) 0 0 var(--color-accent);
+		background-color: var(--color-surface-accent-secondary);
+		box-shadow: inset var(--border-width) 0 0 var(--color-accent-secondary);
 	}
 
 	/* A table row can't carry a shadow of its own: wash its cells, edge the first. */
@@ -94,17 +96,17 @@
 		box-shadow: none;
 
 		> :is(th, td) {
-			background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
+			background-color: var(--color-surface-accent-secondary);
 		}
 
 		> :first-child {
-			box-shadow: inset var(--border-width) 0 0 var(--color-accent);
+			box-shadow: inset var(--border-width) 0 0 var(--color-accent-secondary);
 		}
 	}
 
 	.today-flag {
 		display: block;
-		color: var(--color-accent-text);
+		color: var(--color-accent-secondary);
 	}
 
 	/* host: a list of meetings (schedule-weeks, demo-weeks). The meeting holds
@@ -116,8 +118,8 @@
 		}
 
 		[data-today-scope]:has([data-today]) {
-			background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
-			box-shadow: inset var(--border-width) 0 0 var(--color-accent);
+			background-color: var(--color-surface-accent-secondary);
+			box-shadow: inset var(--border-width) 0 0 var(--color-accent-secondary);
 		}
 
 		.today-flag {
@@ -128,7 +130,7 @@
 	/* host: a grid of day cells (slide-timetable). The edge runs along the top. */
 	[data-today-host="timetable"] {
 		[data-today] {
-			box-shadow: inset 0 var(--border-width) 0 var(--color-accent);
+			box-shadow: inset 0 var(--border-width) 0 var(--color-accent-secondary);
 		}
 
 		.today-flag {

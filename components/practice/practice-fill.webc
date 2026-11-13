@@ -119,3 +119,36 @@
 		}
 	}
 </style>
+
+<script>
+(() => {
+	const registry = (window.ckPractice ??= { kinds: {} });
+	registry.kinds.fill = {
+		/** Mark this kind's controls and report what was found. */
+		grade(question, key, _id, { mark, normalize }) {
+			let right = 0;
+			let blank = 0;
+			let answered = false;
+			for (const [index, accepted] of key.blanks.entries()) {
+				const input = question.querySelector(`input[data-blank="${index}"]`);
+				if (!input.value.trim()) {
+					blank += 1;
+					continue;
+				}
+				answered = true;
+				const typed = normalize(input.value);
+				const correct = accepted.some((option) => normalize(option) === typed);
+				if (correct) right += 1;
+				mark(input.closest("li"), correct);
+			}
+			return { answered, right, total: key.blanks.length, blank };
+		},
+		/** Drag a bank entry onto a row, and keep the word bank honest as the student types. */
+		enhance(question, { dragDrop, markUsedWords }) {
+			dragDrop(question);
+			question.addEventListener("input", () => markUsedWords(question));
+			markUsedWords(question);
+		},
+	};
+})();
+</script>

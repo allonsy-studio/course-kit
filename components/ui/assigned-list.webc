@@ -1,40 +1,91 @@
 <script webc:setup>
 	/**
 	 * A labelled list of readings or deadlines. Renders nothing when empty.
+	 * Give it the `items` array, or write the list as a `<dl>` in the default slot: each `<dt>` holds the title or its link (give it `data-kind` and,
+	 * before the title, `<span class="due-chip" data-kind="test">Test</span>` for a chip), each `<dd>` only the check or due detail. The array wins when
+	 * it has items; when it is missing or empty the slot is rendered instead, so the list still shows if the data does not load.
 	 * @prop {string} label the heading above the list
-	 * @prop {{ title: string, href?: string, check?: string, dueLabel?: string }[]} items the readings or deadlines to list
-	 * @prop {string} [prefix] put before an item's due label ("due ")
+	 * @prop {{ title: string, href?: string, check?: string, dueLabel?: string, kind?: string }[]} items the readings or deadlines to list
+	 * @prop {string} [dueOn] how a due date reads after the check, with `{when}`: `copy.schedule.dueOn` ("due {when}"); without it the date stands alone
+	 * @prop {boolean} [chips] put a `.due-chip` for the item's `kind` before its title; a bare `@chips` turns them on
+	 * @prop {Record<string, string>} [kinds] the chip words by kind, from `copy.schedule.dueKind*`; needed with `chips`
 	 */
 
-	/** The muted line under an item: its check, then when it is due. Props are not in scope here, so the template passes `prefix`. */
-	const detail = (item, lead = "") => [item.check, item.dueLabel && `${lead ?? ""}${item.dueLabel}`].filter(Boolean).join(", ");
+	/** The muted line under an item: its check, then when it is due. Props are not in scope here, so the template passes `dueOn`. */
+	/** A bare `@chips` reaches the template as "", so only an absent, null, `false` or "false" value turns chips off. */
+	const on = (value) => value !== undefined && value !== null && value !== false && value !== "false";
+
+	const detail = (item, dueOn) => [item.check, item.dueLabel && (dueOn ? dueOn.replace("{when}", item.dueLabel) : item.dueLabel)].filter(Boolean).join(", ");
 </script>
-<div webc:root="override" class="assigned" webc:if="items?.length">
+<div webc:root="override" class="assigned">
 	<p class="label" @text="label"></p>
-	<ul role="list">
-		<li webc:for="item of items">
+	<slot webc:if="!items?.length"></slot>
+	<ul role="list" webc:if="items?.length">
+		<li webc:for="item of items" @attributes="on(chips) && item.kind ? { class: 'due-item', 'data-kind': item.kind } : {}">
+			<span class="due-chip" webc:if="on(chips) && item.kind" :data-kind="item.kind" @text="kinds?.[item.kind]"></span>
 			<a webc:if="item.href" :href="item.href" @text="item.title"></a>
 			<span webc:if="!item.href" @text="item.title"></span>
-			<span class="check" webc:if="detail(item, prefix)" @text="detail(item, prefix)"></span>
+			<span class="check" webc:if="detail(item, dueOn)" @text="detail(item, dueOn)"></span>
 		</li>
 	</ul>
 </div>
 
 <style webc:scoped>
 	:host {
-		ul {
+		/* Items sit clearly further apart than the lines inside one (WCAG 1.4.8). */
+		/* Nothing to list, in either form: nothing to show. */
+		&:not(:has(li, dt)) {
+			display: none;
+		}
+
+		ul,
+		dl {
+			display: grid;
+			/* The links are 44px tall, so the rows already carry most of the space between items. */
+			gap: calc(var(--content-space) * 0.25);
 			list-style: none;
 			margin: 0;
 			padding: 0;
 		}
 
-		li + li {
-			margin-block-start: 0.25em;
+		/* A chip and its title share a row that wraps, so a long title never runs under the chip. */
+		li,
+		dt {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 0 0.5em;
+		}
+
+		/* A link is an operable target: 44px tall (WCAG 2.5.5). */
+		li a,
+		dt a {
+			display: inline-flex;
+			align-items: center;
+			min-block-size: var(--target-min);
+			min-inline-size: var(--target-min);
+		}
+
+		/* The slot form: a title and its detail stay a pair, and the pairs are spaced like the list's items. */
+		dl {
+			gap: 0;
+			margin: 0;
+		}
+
+		dt:not(:first-child) {
+			margin-block-start: calc(var(--content-space) * 0.25);
+		}
+
+		dd {
+			margin: 0;
+			color: var(--color-text-muted);
+			font-size: max(var(--base-font-size), 0.9em);
+			line-height: var(--font-height);
 		}
 	}
 
 	.label {
-		margin: 0 0 0.2em;
+		margin: 0 0 calc(var(--content-space) * 0.5);
 		color: var(--color-text-muted);
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
@@ -42,7 +93,8 @@
 	}
 
 	.check {
-		display: block;
+		flex-basis: 100%;
+		line-height: var(--font-height);
 		color: var(--color-text-muted);
 		font-size: max(var(--base-font-size), 0.9em);
 	}

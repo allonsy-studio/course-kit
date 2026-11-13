@@ -8,24 +8,24 @@
 </script>
 <div webc:root="override" class="demo-weeks" data-today-host="meetings" webc:if="(weeks ?? defaultWeeks)?.length">
     <today-marker></today-marker>
-    <week-block webc:for="week of (weeks ?? defaultWeeks)" :@number="week.week" :@dates="week.dates" @level="2">
+    <week-block webc:for="week of (weeks ?? defaultWeeks)" :@number="week.week" :@label="fill($data.copy.schedule.weekHeading, { week: week.week })" :@dates="week.dates" @level="2">
         <ol class="meetings" role="list">
             <meeting-card webc:for="meeting of week.meetings" :@meeting="meeting">
-                <a slot="when" class="lesson" webc:if="$data.audience.instructor" :href="`/lessons/week-${meeting.week}/day-${meeting.day}/`">Lesson plan</a>
+                <a slot="when" class="lesson" webc:if="$data.audience.instructor" :href="`/lessons/week-${meeting.week}/day-${meeting.day}/`" @text="$data.copy.demoWeeks.lessonPlan"></a>
                 <ul class="demos" role="list">
                     <li class="demo" webc:for="demo of meeting.demos">
                         <p class="demo-title"><arrow-link :href="demo.url"><span @text="demo.title"></span></arrow-link></p>
-                        <p class="repeat" webc:if="demo.firstShown">Shown again, first used <span @text="demo.firstShown"></span></p>
+                        <p class="repeat" webc:if="demo.firstShown" @text="fill($data.copy.demoWeeks.shownAgainFirstUsed, { date: demo.firstShown })"></p>
                         <template webc:nokeep webc:if="!demo.firstShown">
                             <p class="description" webc:if="demo.description" @text="demo.description"></p>
                             <p class="meta">
-                                <a :href="demo.download" download>Download the HTML file</a>
-                                <span webc:if="demo.alsoOn?.length">Used again <span @text="demo.alsoOn.join(', ')"></span></span>
+                                <a :href="demo.download" download @text="$data.copy.demoWeeks.downloadTheHtmlFile"></a>
+                                <span webc:if="demo.alsoOn?.length" @text="fill($data.copy.demoWeeks.usedAgain, { dates: demo.alsoOn.join(', ') })"></span>
                             </p>
                         </template>
                     </li>
                 </ul>
-                <meeting-decks :@meeting="meeting"></meeting-decks>
+                <meeting-decks :@meeting="meeting" :@slides-label="$data.copy.schedule.slides" :@addendum-label="$data.copy.schedule.addendum"></meeting-decks>
             </meeting-card>
         </ol>
     </week-block>
@@ -55,12 +55,17 @@
         font-size: max(var(--base-font-size), 0.9em);
     }
 
-    .lesson {
-        margin-block-start: 0.35em;
+    /* Each link is an operable target: 44px tall (WCAG 2.5.5), so the rows carry the spacing. */
+    .lesson,
+    .demo-title a,
+    .meta a {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: var(--target-min);
     }
 
     .demo + .demo {
-        margin-block-start: 0.8em;
+        margin-block-start: 0.25em;
     }
 
     .demo p {

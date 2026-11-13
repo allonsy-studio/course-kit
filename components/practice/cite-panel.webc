@@ -38,18 +38,21 @@
 			&[open] summary {
 				background: var(--color-accent);
 				color: var(--color-on-accent);
+				--color-focus-ring: var(--color-on-accent);
 			}
 		}
 
 		summary {
 			background: var(--color-surface);
-			block-size: 1.7em;
-			border: var(--thin-border-width) solid var(--color-border);
+			block-size: var(--target-min);
+			border: var(--thin-border-width) solid var(--color-border-strong);
 			border-radius: var(--circle-border-radius);
 			cursor: pointer;
 			font-weight: var(--font-weight--bold);
-			inline-size: 1.7em;
-			line-height: 1.6;
+			display: grid;
+			inline-size: var(--target-min);
+			place-items: center;
+			line-height: 1;
 			list-style: none;
 			padding: 0;
 			text-align: center;
@@ -66,7 +69,7 @@
 			box-shadow: var(--box-shadow);
 			font-size: 0.9em;
 			inline-size: min(34rem, 80vw);
-			inset-block-start: 2.2em;
+			inset-block-start: calc(var(--target-min) + 0.25em);
 			inset-inline-end: 0;
 			padding: 0.8em 1em;
 			position: absolute;

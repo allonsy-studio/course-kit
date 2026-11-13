@@ -65,6 +65,12 @@
     --outline-width: max(var(--border-width), 2px);
     --outline-offset: calc(var(--outline-width) * 1.8);
 
+    /* Focus, targets and shape shared by every component (WCAG 2.2 AAA). */
+    --target-min: 2.75rem; /* 44px */
+    --focus-ring-width: max(2px, 0.125rem);
+    --focus-ring-offset: 2px;
+    --radius-pill: 9999px;
+
     /* Composite shadows (color baked in) */
     --box-shadow: 0 10px 15px -10px light-dark(hsl(0deg 0% 60% / 60%), hsl(0deg 0% 30% / 60%));
     --box-shadow-light: 0 5px 5px -10px light-dark(hsl(0deg 0% 80% / 50%), hsl(0deg 0% 50% / 50%));
@@ -285,17 +291,28 @@ main {
     color: var(--color-text);
 }
 
-:focus-visible {
-	outline: var(--outline-width) solid;
-	outline-color: var(--color-accent-active);
-	outline-offset: var(--outline-offset);
-	border-color: var(--color-accent-active);
-	border-radius: var(--hairline-border-radius);
+html {
+	/* A sticky element never covers the focused control (2.4.12). */
+	scroll-padding-block: 6rem;
+}
 
-	@supports (corner-shape: squircle) {
-		corner-shape: squircle;
-		border-radius: var(--squircle-border-radius);
-	}
+:focus-visible {
+	outline: var(--focus-ring-width) solid var(--color-focus-ring);
+	outline-offset: var(--focus-ring-offset);
+}
+
+/* On a brand or wayfinding fill the ring takes the fill's text color. */
+:where(.on-accent, .now-card, .switch-option:has(:checked), .switch-option[aria-selected="true"]) {
+	--color-focus-ring: var(--color-on-accent);
+}
+
+/* Radios and checkboxes are never stretched; their label is the 44px target. */
+:where(textarea, select, input:not([type="radio"], [type="checkbox"], [type="range"], [type="color"])) { min-block-size: var(--target-min); }
+:where(input[type="radio"], input[type="checkbox"]) { inline-size: 1.25em; block-size: 1.25em; min-block-size: 0; flex: none; }
+:where(label:has(> input[type="radio"], > input[type="checkbox"])) { min-block-size: var(--target-min); display: inline-flex; align-items: center; gap: 0.5em; }
+
+@media (prefers-reduced-motion: reduce) {
+	*, ::before, ::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
 
 :where(ul).tags {
@@ -351,14 +368,6 @@ a {
         text-decoration: underline;
         text-decoration-color: var(--color-link-focus);
         color: var(--color-link-focus);
-        outline: var(--outline-width) solid var(--color-accent-active);
-        outline-offset: var(--outline-offset);
-        border-radius: var(--standard-border-radius);
-
-		@supports (corner-shape: squircle) {
-			corner-shape: squircle;
-			border-radius: var(--squircle-border-radius);
-		}
     }
 
 	&[name]:not([href]) {
@@ -369,7 +378,7 @@ a {
         color: inherit;
         font-weight: var(--font-weight--semi-bold);
         text-decoration: underline;
-        text-decoration-color: var(--color-link-active);
+        text-decoration-color: var(--color-accent-secondary);
     }
 
     :where(img) {
@@ -397,12 +406,22 @@ a {
 	}
 }
 
-:where(svg) {
+/* The 2.5em floor and full width are for a figure or logo that sets no size of its own. An svg with a `width` or `height` keeps it, and one with a `fill` keeps that. */
+:where(svg:not([width], [height])) {
 	inline-size: 100%;
 	block-size: auto;
 	min-block-size: 2.5em;
-	fill: currentColor;
 	align-self: center;
+}
+
+:where(svg:not([fill])) {
+	fill: currentColor;
+}
+
+/* An icon inside a control or an icon component is sized by that component. */
+:where(norn-icon, [data-icon], button, [role="button"]) svg {
+	inline-size: auto;
+	min-block-size: 0;
 }
 
 :where(label) {
@@ -662,7 +681,7 @@ main {
 		margin-block-start: calc(var(--content-space) * 2.5);
 		padding-block-start: calc(var(--content-space) * 0.75);
 		border-block-start: var(--thin-border-width) solid var(--color-border);
-		background: linear-gradient(var(--color-accent), var(--color-accent)) top left / 2.75rem var(--border-width) no-repeat;
+		background: linear-gradient(var(--color-accent-secondary), var(--color-accent-secondary)) top left / 2.75rem var(--border-width) no-repeat;
 		background-origin: border-box;
 	}
 
@@ -962,6 +981,122 @@ eyebrow + :where(h1, h2, h3, h4, h5, h6) {
 	}
 }
 
+/* ---- Side columns ----
+   A contents column beside a document, and an outline and a tools rail beside
+   a lesson plan. Nothing is sticky, and each falls to one column on a narrow
+   screen, the side columns first. */
+.rail-label {
+	margin: 0 0 0.5em;
+	color: var(--color-text-muted);
+	font-family: var(--sans-font, inherit);
+	font-size: var(--font-size-6);
+	font-weight: var(--font-weight--medium);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+body:has(.doc-layout[data-contents="true"], .lesson-layout) {
+	--page-column: min(var(--container-max), 95%);
+}
+
+.doc-layout[data-contents="true"],
+.lesson-layout {
+	display: grid;
+	align-items: start;
+	gap: 0 calc(var(--content-space) * 3);
+
+	@media print {
+		display: block;
+	}
+}
+
+.doc-layout[data-contents="true"] {
+	grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+
+	@media screen and (width <= 900px) {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.lesson-layout {
+	grid-template-columns: minmax(0, 13rem) minmax(0, 1fr) minmax(0, 16rem);
+
+	@media screen and (width <= 1100px) {
+		grid-template-columns: minmax(0, 13rem) minmax(0, 1fr);
+
+		.lesson-rail {
+			grid-column: 2;
+		}
+	}
+
+	@media screen and (width <= 900px) {
+		grid-template-columns: minmax(0, 1fr);
+
+		.lesson-rail {
+			grid-column: auto;
+		}
+	}
+}
+
+.doc-contents,
+.lesson-outline,
+.lesson-rail {
+	padding-block: calc(var(--section-space) / 2) 0;
+	font-size: max(var(--base-font-size), 0.95em);
+
+	@media print {
+		display: none;
+	}
+}
+
+:is(.doc-contents nav, .lesson-outline, .lesson-rail nav) > :is(ol, ul) {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border-inline-start: var(--border-width) solid var(--color-border);
+
+	:is(ol, ul) {
+		margin: 0 0 0 0.9em;
+		padding: 0;
+		list-style: none;
+	}
+
+	li a[href] {
+		display: block;
+		margin-inline-start: calc(var(--border-width) * -1);
+		padding: 0.35em 0.9em;
+		border-inline-start: var(--border-width) solid transparent;
+		color: var(--color-text-muted);
+		text-decoration: none;
+
+		&:is(:hover, :focus-visible) {
+			color: var(--color-text);
+			text-decoration: underline;
+		}
+
+		&[aria-current] {
+			border-inline-start-color: var(--color-accent-secondary);
+			color: var(--color-text);
+			font-weight: var(--font-weight--semi-bold);
+		}
+
+	}
+}
+
+.lesson-rail {
+	display: grid;
+	gap: var(--section-space);
+	inline-size: auto;
+	margin: 0;
+	padding-inline: 0;
+	border: 0;
+	background: none;
+
+	@media screen and (width <= 900px) {
+		padding-block-end: var(--section-space);
+	}
+}
+
 /* ---- Lesson plans (instructor) ---- */
 .lesson-nav {
 	display: flex;
@@ -1131,7 +1266,7 @@ figure > :where(table) {
 	}
 
 	/* The examples to recognize and not use: same shape, dashed and muted,
-	   and prompt-copy.js gives them no copy control. */
+	   and copy.js gives them no copy control. */
 	&.prompt-avoid {
 		border-style: dashed;
 		background-color: transparent;
@@ -1214,6 +1349,7 @@ blockquote {
 		margin-block-end: 0;
 	}
 
+
 	@media print {
 		&::before {
 			background-color: var(--color-text);
@@ -1274,7 +1410,7 @@ blockquote {
 	}
 
 	&:is(.warn, [type="warn"]) {
-		--color-callout: var(--color-warning);
+		--color-callout: var(--color-warning-edge);
 	}
 
 	&:is(.error, [type="error"]) {
@@ -1287,6 +1423,20 @@ blockquote {
 
 	> :last-child {
 		margin-block-end: 0;
+	}
+
+	/* The type in words, so it is never told by color alone. */
+	> .callout-label {
+		margin-block-end: 0.35em;
+		color: var(--color-text);
+		font-size: var(--font-size-6);
+		font-weight: var(--font-weight--semi-bold);
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+
+		+ * {
+			margin-block-start: 0;
+		}
 	}
 
 	@media print {
@@ -1308,7 +1458,8 @@ blockquote {
 	details {
 		margin-block: 0;
 		padding: 0;
-		padding-block: 1.05em;
+		/* The summary is 44px tall (WCAG 2.5.5), so the rows need little more space. */
+		padding-block: 0.25em;
 
 		background: none;
 		border: none;
@@ -1328,7 +1479,8 @@ blockquote {
 
 	summary {
 		display: flex;
-		align-items: baseline;
+		align-items: center;
+		min-block-size: var(--target-min);
 		margin: 0;
 		padding: 0;
 
@@ -1387,6 +1539,127 @@ blockquote {
 	padding-inline: 1.4rem;
 	max-inline-size: 100%;
 	overflow: auto;
+}
+
+/* ---- Code blocks ----
+   A fenced sample (lib/markdown.js): a bar in the language's color inside the
+   top border, a title bar (language, then file name, then the copy button
+   added by /js/copy.js), and the lines. Line numbers are CSS counters, so
+   selecting or copying never takes them. */
+.code-block {
+	--code-edge: var(--color-code-edge-neutral);
+
+	position: relative;
+	margin-block: 0 1rem;
+	margin-inline: 0;
+	max-inline-size: 100%;
+	border: var(--thin-border-width) solid var(--color-border);
+	border-radius: 3px;
+	background-color: var(--color-code-surface);
+	color: var(--color-code-text);
+	overflow: hidden;
+
+	&::before {
+		content: "";
+		display: block;
+		block-size: 4px;
+		background-color: var(--code-edge);
+	}
+
+	&[data-edge="css"] { --code-edge: var(--color-code-edge-css); }
+	&[data-edge="js"] { --code-edge: var(--color-code-edge-js); }
+	&[data-edge="html"] { --code-edge: var(--color-code-edge-html); }
+	&[data-edge="shell"] { --code-edge: var(--color-code-edge-shell); }
+
+	.code-block-head {
+		display: flex;
+		align-items: center;
+		gap: 0.75em;
+		min-block-size: var(--target-min);
+		padding-inline: 1rem 3.25rem;
+		border-block-end: var(--thin-border-width) solid var(--color-border);
+		font-size: 0.875rem;
+		max-inline-size: none;
+	}
+
+	.code-block-lang {
+		font-family: var(--sans-font);
+		font-weight: var(--font-weight--semi-bold);
+		color: var(--color-text);
+	}
+
+	.code-block-file {
+		font-family: var(--mono-font);
+		color: var(--color-text-muted);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.code-copy {
+		position: absolute;
+		inset-block-start: 4px;
+		inset-inline-end: 0;
+		display: grid;
+		place-items: center;
+		inline-size: var(--target-min);
+		block-size: var(--target-min);
+		padding: 0;
+		border: 0;
+		border-radius: 50%;
+		background: none;
+		color: var(--color-code-keyword);
+		cursor: pointer;
+
+		svg { inline-size: 1.2em; block-size: 1.2em; }
+
+		@media print { display: none; }
+	}
+
+	pre {
+		margin: 0;
+		border: 0;
+		border-radius: 0;
+		background: none;
+		padding-inline: 0;
+	}
+
+	code {
+		display: block;
+		min-inline-size: max-content;
+		counter-reset: line;
+	}
+
+	br { display: none; }
+
+	.highlight-line {
+		display: block;
+		padding-inline: 1.25rem;
+		border-inline-start: 3px solid transparent;
+	}
+
+	&[data-line-numbers] .highlight-line::before {
+		counter-increment: line;
+		content: counter(line);
+		display: inline-block;
+		inline-size: 2.5em;
+		margin-inline: -0.5rem 1.25em;
+		text-align: end;
+		color: var(--color-code-comment);
+		user-select: none;
+	}
+
+	/* The 3px start edge carries the signal; the wash stays faint enough for every token to keep 7:1. */
+	.highlight-line-active {
+		background: var(--color-highlight-line);
+		border-inline-start: 3px solid var(--color-accent-secondary);
+	}
+
+	.token:is(.keyword, .atrule, .rule, .important, .selector) { color: var(--color-code-keyword); }
+	.token:is(.string, .attr-value, .char, .regex, .url) { color: var(--color-code-string); }
+	.token:is(.function, .class-name, .tag, .property, .attr-name, .builtin) { color: var(--color-code-function); }
+	.token:is(.number, .boolean, .constant, .unit) { color: var(--color-code-number); }
+	.token:is(.comment, .prolog, .doctype) { color: var(--color-code-comment); font-style: italic; }
 }
 
 :where(kbd) {
@@ -1581,14 +1854,237 @@ blockquote {
 
 	&::-webkit-progress-value {
 		border-radius: var(--standard-border-radius);
-		background-color: var(--color-accent);
+		background-color: var(--color-accent-secondary);
 	}
 
 	&::-moz-progress-bar {
 		border-radius: var(--standard-border-radius);
-		background-color: var(--color-accent);
+		background-color: var(--color-accent-secondary);
 		transition-property: inline-size;
 		transition-duration: 0.3s;
 	}
 }
 
+
+/* ---- Due chips and their key ----
+   A deadline's kind as a pill: tests outlined in the accent, graded work on
+   an accent wash, readings on a strong outline, practice dashed (not graded).
+   The word carries the meaning; the shape only reinforces it. Used by
+   schedule-weeks, assigned-list and course-now. */
+.due-chip {
+	display: inline-block;
+	padding-inline: 0.5em;
+	border: var(--thin-border-width) solid transparent;
+	border-radius: var(--radius-pill);
+	color: var(--color-text);
+	font-size: max(var(--base-font-size), 0.875em);
+	font-weight: var(--font-weight--semi-bold);
+	line-height: 1.4;
+	vertical-align: 0.05em;
+
+	&[data-kind="test"] { border: var(--border-width) solid var(--color-accent); }
+	&[data-kind="graded"] { background-color: var(--color-surface-accent); border-color: var(--color-accent); }
+	&[data-kind="reading"] { border-color: var(--color-border-strong); }
+	&[data-kind="practice"] { border: var(--thin-border-width) dashed var(--color-border-strong); font-weight: var(--font-weight); }
+}
+
+.due-key {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5em 1.25em;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-size: max(var(--base-font-size), 0.875em);
+	color: var(--color-text-muted);
+}
+
+/* ---- The switch ----
+   One pill track holding two to four options: native radios for a choice that
+   filters (Group by), tabs for one that swaps a panel (Review / Flashcards).
+   Selected is `:has(:checked)` or `[aria-selected="true"]`, nothing else.
+   Where anchor positioning exists one pill slides to the selected option and
+   squishes on the way (it jumps under reduced motion). The squish keyframes
+   cover up to 4 options; a fifth would still slide, without the squish. */
+.switch {
+	display: flow-root;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	min-inline-size: 0;
+}
+
+.switch-label {
+	display: inline-block;
+	margin-inline-end: 0.75em;
+	color: var(--color-text-muted);
+	font-size: var(--font-size-6);
+	font-weight: var(--font-weight--semi-bold);
+	letter-spacing: 0.08em;
+	line-height: calc(var(--target-min) + var(--gutter) * 2 + 2px);
+	text-transform: uppercase;
+	vertical-align: middle;
+}
+
+legend.switch-label {
+	float: inline-start;
+	padding: 0;
+	margin-inline-end: 0.75em;
+}
+
+.switch-track {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: var(--gutter);
+	padding: var(--gutter);
+	border: var(--thin-border-width) solid var(--color-border-strong);
+	border-radius: var(--radius-pill);
+	vertical-align: middle;
+}
+
+.switch-option {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0;
+	min-block-size: var(--target-min);
+	min-inline-size: var(--target-min);
+	margin: 0;
+	padding: 0.3em 0.9em;
+	border: 0;
+	border-radius: var(--radius-pill);
+	background: none;
+	color: var(--color-text);
+	font-size: max(var(--base-font-size), 0.875em);
+	font-weight: var(--font-weight);
+	line-height: var(--font-height--dense);
+	cursor: pointer;
+
+	&:hover { background-color: var(--color-surface-accent); }
+
+	/* The radio is the option's whole hit area, drawn by the label. */
+	input[type="radio"] {
+		position: absolute;
+		inset: 0;
+		inline-size: 100%;
+		block-size: 100%;
+		margin: 0;
+		opacity: 0;
+		cursor: pointer;
+	}
+
+	&:has(:focus-visible) {
+		outline: var(--focus-ring-width) solid var(--color-focus-ring);
+		outline-offset: var(--focus-ring-offset);
+	}
+
+	&:is(:has(:checked), [aria-selected="true"]) {
+		background-color: var(--color-accent);
+		color: var(--color-on-accent);
+		font-weight: var(--font-weight--semi-bold);
+
+		&:hover { background-color: var(--color-accent-fill-hover); }
+	}
+}
+
+@supports (anchor-name: --switch-on) {
+	.switch-track {
+		position: relative;
+		isolation: isolate;
+		anchor-scope: --switch-on;
+	}
+
+	.switch-option {
+		z-index: 1;
+
+		&:is(:has(:checked), [aria-selected="true"]) {
+			anchor-name: --switch-on;
+			background-color: transparent;
+		}
+	}
+
+	.switch-track::before {
+		content: "";
+		position: absolute;
+		z-index: 0;
+		position-anchor: --switch-on;
+		inset-block-start: anchor(start);
+		inset-block-end: anchor(end);
+		inset-inline-start: anchor(start);
+		inline-size: anchor-size(inline);
+		border-radius: var(--radius-pill);
+		background-color: var(--color-accent);
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.switch-track {
+			--squish: cubic-bezier(0.65, 0, 0.35, 1);
+
+			&::before {
+				transform-origin: center;
+				transition:
+					inset-inline-start 300ms var(--squish),
+					inline-size 340ms var(--squish) 90ms;
+			}
+
+			.switch-option { transition: color 200ms ease-out; }
+
+			/* A keyframes copy per option, so each change restarts the squish. */
+			&:has(.switch-option:nth-child(1):is(:has(:checked), [aria-selected="true"]))::before { animation: switch-squish-a 340ms var(--squish); }
+			&:has(.switch-option:nth-child(2):is(:has(:checked), [aria-selected="true"]))::before { animation: switch-squish-b 340ms var(--squish); }
+			&:has(.switch-option:nth-child(3):is(:has(:checked), [aria-selected="true"]))::before { animation: switch-squish-c 340ms var(--squish); }
+			&:has(.switch-option:nth-child(4):is(:has(:checked), [aria-selected="true"]))::before { animation: switch-squish-d 340ms var(--squish); }
+		}
+
+		@keyframes switch-squish-a { 45% { scale: 0.88 0.8; } }
+		@keyframes switch-squish-b { 45% { scale: 0.88 0.8; } }
+		@keyframes switch-squish-c { 45% { scale: 0.88 0.8; } }
+		@keyframes switch-squish-d { 45% { scale: 0.88 0.8; } }
+	}
+}
+
+/* On a phone each switch takes its own row, with its label above it. */
+@media (width <= 600px) {
+	.switch { display: block; }
+
+	.switch-label,
+	legend.switch-label {
+		display: block;
+		float: none;
+		margin-block-end: 0.25em;
+		line-height: var(--font-height);
+	}
+}
+
+@media (forced-colors: active) {
+	.switch-option:has(:checked),
+	.switch-option[aria-selected="true"] {
+		forced-color-adjust: none;
+		background: SelectedItem;
+		color: SelectedItemText;
+	}
+
+	.switch::before,
+	.switch-track::before { display: none; }
+
+	.due-chip { border-color: CanvasText; }
+}
+
+/* Prism code outside a `.code-block` (a worksheet figure, a glossary example) wears the same tokens, so every token keeps 7:1 on the same ground. */
+pre[class*="language-"],
+code[class*="language-"] {
+	color: var(--color-code-text);
+	text-shadow: none;
+}
+
+pre[class*="language-"] {
+	background: var(--color-code-surface);
+}
+
+pre .token:is(.keyword, .atrule, .rule, .important, .selector) { color: var(--color-code-keyword); }
+pre .token:is(.string, .attr-value, .char, .regex, .url) { color: var(--color-code-string); }
+pre .token:is(.function, .class-name, .tag, .property, .attr-name, .builtin) { color: var(--color-code-function); }
+pre .token:is(.number, .boolean, .constant, .unit) { color: var(--color-code-number); }
+pre .token:is(.comment, .prolog, .doctype) { color: var(--color-code-comment); font-style: italic; }
+pre .token:is(.punctuation, .operator) { color: var(--color-code-text); }

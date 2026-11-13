@@ -3,15 +3,25 @@
 	 * The "Additional resources" list: the entries of `course.documents`, each a
 	 * link with an optional description. A PDF is listed only when the build
 	 * produced PDFs. Renders nothing when there are none.
+	 * @prop {{ title: string, description?: string, href: string }[]} [documents] defaults to `course.documents`
 	 */
-	const listed = ($data.course?.documents ?? []).filter((doc) => $data.pdf?.available || !doc.href?.endsWith(".pdf"));
+	const visibleDocs = (docs) => (docs ?? []).filter((doc) => $data.pdf?.available || !doc.href?.endsWith(".pdf"));
 </script>
-<section webc:root="override" id="documents" aria-labelledby="documents-heading" webc:if="listed.length">
-	<h2 id="documents-heading">Additional resources</h2>
+<section webc:root="override" id="documents" aria-labelledby="documents-heading" webc:if="visibleDocs(documents ?? $data.course?.documents).length">
+	<h2 id="documents-heading" @text="$data.copy.courseDocuments.additionalResources"></h2>
 	<dl>
-		<template webc:for="doc of listed" webc:nokeep>
+		<template webc:for="doc of visibleDocs(documents ?? $data.course?.documents)" webc:nokeep>
 			<dt><a :href="doc.href" @text="doc.title"></a></dt>
 			<dd webc:if="doc.description" @text="doc.description"></dd>
 		</template>
 	</dl>
 </section>
+
+<style webc:scoped>
+	/* Each link is an operable target: 44px tall (WCAG 2.5.5). */
+	dt a {
+		display: inline-flex;
+		align-items: center;
+		min-block-size: var(--target-min);
+	}
+</style>

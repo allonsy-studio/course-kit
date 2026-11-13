@@ -22,7 +22,9 @@ const literal = (text) => `'${text.replace(/\\/g, "\\\\").replace(/'/g, "\\'").r
  * @param {unknown} value
  * @returns {string}
  */
-function prop(name, value) {
+function prop(rawName, value) {
+	// HTML lowercases attribute names, so a camelCase prop is written kebab-case: `dueOn` is `@due-on`.
+	const name = rawName.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
 	if (value === undefined || value === null || value === false) return "";
 	if (value === true) return `@${name}`;
 	if (typeof value === "string") return value.includes("\n") ? `:@${name}="${attribute(literal(value))}"` : `@${name}="${attribute(value)}"`;

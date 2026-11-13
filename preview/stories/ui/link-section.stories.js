@@ -1,6 +1,7 @@
 export default { title: "Building blocks/link-section" };
 
 export const Default = {
+	wrap: "<h2>Page</h2>\n{story}",
 	args: {
 		title: "Read before class",
 		items: [
@@ -11,4 +12,4 @@ export const Default = {
 	},
 };
 
-export const Empty = { args: { empty: "Nothing to read this week.", items: [] } };
+export const Empty = { wrap: "<h2>Page</h2>\n{story}", args: { empty: "Nothing to read this week.", items: [] } };

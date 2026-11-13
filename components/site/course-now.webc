@@ -1,0 +1,393 @@
+<script webc:setup>
+    /**
+     * The home page's opening band: the next class, what is due soon and the
+     * week-by-week progress. Hidden until its script has judged "today" in the
+     * campus zone. Wording comes from `copy.home` and `copy.schedule`.
+     * @prop {object[]} [weeks] `scheduleWeeks` output; built from the page's lessons, schedule, decks and demos when left out
+     * @prop {string} [scheduleUrl] where the schedule lives, default `/schedule/`
+     */
+    const defaultWeeks = scheduleWeeks($data.lessons, $data.schedule?.weeks, $data.collections?.deck, $data.demos);
+    /** A meeting's first topic as plain text, for the card's title. */
+    const firstTopic = (meeting) => String(meeting?.topics?.[0] ?? "").replace(/<[^>]+>/g, "").trim();
+    /** Every meeting that holds class, flat. */
+    const flatMeetings = (weeks) =>
+        (weeks ?? []).flatMap((week) =>
+            (week.meetings ?? [])
+                .filter((meeting) => !meeting.noClass && meeting.iso)
+                .map((meeting) => ({
+                    iso: meeting.iso,
+                    week: week.week,
+                    weekday: meeting.weekday,
+                    date: meeting.date,
+                    title: firstTopic(meeting),
+                    slides: meeting.slides ?? "",
+                })),
+        );
+    /** The script's data: meetings and deadlines, safe inside a <script> element. */
+    const nowData = (weeks, schedule, copy) =>
+        JSON.stringify({ meetings: flatMeetings(weeks), deadlines: courseDeadlines(weeks, schedule, copy) }).replaceAll("<", "\\u003c");
+    /** Every class date in a week, for the progress track. */
+    const datesOf = (week) => (week?.meetings ?? []).map((meeting) => meeting.iso).filter(Boolean).join(" ");
+</script>
+<section webc:root="override" class="course-now screen-only" aria-labelledby="course-now-heading" data-course-now webc:if="(weeks ?? defaultWeeks)?.length" hidden>
+    <h2 id="course-now-heading" class="sr-only" @text="$data.copy.home.heading"></h2>
+    <div class="now-card on-accent" data-now-card hidden>
+        <p class="label" data-now-label></p>
+        <p class="when" data-now-when></p>
+        <p class="topic" data-now-title></p>
+        <p class="actions">
+            <a class="primary" data-now-slides hidden><span @text="$data.copy.home.openSlides"></span> <span aria-hidden="true">→</span></a>
+            <a class="secondary" data-now-week @text="$data.copy.home.seeWeek"></a>
+        </p>
+    </div>
+    <div class="coming-up" data-coming-up>
+        <h2 @text="$data.copy.home.comingUp"></h2>
+        <ul role="list" data-coming-list></ul>
+        <p class="empty" data-coming-empty hidden @text="$data.copy.home.nothingDue"></p>
+        <p><a :href="scheduleUrl ?? '/schedule/'"><span @text="$data.copy.home.fullSchedule"></span> <span aria-hidden="true">→</span></a></p>
+    </div>
+    <div class="progress" data-progress>
+        <h2 @text="$data.copy.home.progress"></h2>
+        <p class="count" data-progress-count role="status"></p>
+        <ol role="list">
+            <li webc:for="week of (weeks ?? defaultWeeks)" :data-week-dates="datesOf(week)">
+                <a :href="`/schedule/#week-${week.week}`">
+                    <span class="bar" aria-hidden="true"></span>
+                    <span class="name" @text="fill($data.copy.home.week, { week: week.week })"></span>
+                    <span class="state" data-state></span>
+                </a>
+            </li>
+        </ol>
+    </div>
+    <script type="application/json" data-course-now-data webc:keep @raw="nowData(weeks ?? defaultWeeks, $data.schedule, $data.copy)"></script>
+</section>
+
+<script>
+    /**
+     * <course-now>: the home page's class card, the next due items and the
+     * week-by-week progress track. Everything comes from the schedule data
+     * already on the page; dates compare in the campus zone, as
+     * <today-marker> does. Screen only.
+     */
+    (() => {
+        try {
+            const root = document.querySelector("[data-course-now]");
+            if (!root) return;
+            /** Today in the campus zone, as "YYYY-MM-DD". */
+            const campusToday = () => new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone });
+                        const { t } = window.ckCopy;
+            const today = campusToday();
+            const { meetings, deadlines } = JSON.parse(root.querySelector("[data-course-now-data]").textContent);
+            const DAY_MS = 86_400_000;
+            const day = (iso) => Date.parse(`${iso}T00:00:00Z`);
+            const inDays = (iso) => Math.round((day(iso) - day(today)) / DAY_MS);
+
+            // The class card: today's class, else the next, else (before the term) the first.
+            const next = meetings.find((meeting) => meeting.iso >= today);
+            const card = root.querySelector("[data-now-card]");
+            if (next) {
+                const label = next.iso === today ? "todayLabel" : meetings.some((meeting) => meeting.iso < today) ? "nextLabel" : "firstLabel";
+                root.querySelector("[data-now-label]").textContent = t("home", label);
+                root.querySelector("[data-now-when]").textContent = t("home", "when", { week: next.week, weekday: next.weekday, date: next.date });
+                root.querySelector("[data-now-title]").textContent = next.title;
+                root.querySelector("[data-now-week]").href = `/schedule/#week-${next.week}`;
+                const slides = root.querySelector("[data-now-slides]");
+                if (next.slides) {
+                    slides.href = next.slides;
+                    slides.hidden = false;
+                }
+                card.hidden = false;
+            }
+
+            // Coming up: a week ahead, at least three, and always the next test.
+            const up = deadlines.filter((item) => item.iso >= today);
+            let shown = up.filter((item) => inDays(item.iso) <= 7);
+            if (shown.length < 3) shown = up.slice(0, 3);
+            shown = shown.slice(0, 6);
+            if (!shown.some((item) => item.kind === "test")) {
+                const test = up.find((item) => item.kind === "test");
+                if (test) shown = [...shown.slice(0, 5), test];
+            }
+            const list = root.querySelector("[data-coming-list]");
+            for (const item of shown) {
+                const row = document.createElement("li");
+                row.dataset.kind = item.kind;
+                const chip = document.createElement("span");
+                chip.className = "due-chip";
+                chip.dataset.kind = item.kind;
+                chip.textContent = t("schedule", `dueKind${item.kind.charAt(0).toUpperCase()}${item.kind.slice(1)}`);
+                const name = document.createElement(item.href ? "a" : "span");
+                if (item.href) name.href = item.href;
+                name.className = "what";
+                name.textContent = item.title;
+                const days = inDays(item.iso);
+                const relative = days <= 0 ? t("home", "dueToday") : days === 1 ? t("home", "dueTomorrow") : t("home", "dueInDays", { count: days });
+                const when = document.createElement("span");
+                when.className = "due";
+                when.textContent = `${item.label}${t("common", "sep")}${relative}`;
+                row.append(chip, " ", name, " ", when);
+                list.append(row);
+            }
+            root.querySelector("[data-coming-empty]").hidden = shown.length > 0;
+
+            // Progress: one bar per week, from each week's class dates.
+            const weeks = [...root.querySelectorAll("[data-progress] li")];
+            let done = 0;
+            for (const week of weeks) {
+                const dates = week.dataset.weekDates.split(/\s+/).filter(Boolean).sort();
+                const state = !dates.length ? "" : dates.at(-1) < today ? "done" : dates[0] <= today ? "now" : "";
+                if (state) week.dataset.state = state;
+                if (state === "done") done += 1;
+                week.querySelector("[data-state]").textContent = state === "done" ? t("home", "stateDone") : state === "now" ? t("home", "stateNow") : "";
+                if (state === "now") week.querySelector("a").setAttribute("aria-current", "step");
+            }
+            root.querySelector("[data-progress-count]").textContent = t("home", "weeksDone", { done, total: weeks.length });
+            root.hidden = false;
+            // The track scrolls sideways when the weeks don't fit: open it
+            // with the current week (or the last finished one) centered.
+            const track = root.querySelector("[data-progress] ol");
+            const active = weeks.find((week) => week.dataset.state === "now") ?? weeks.filter((week) => week.dataset.state === "done").at(-1);
+            if (active && track.scrollWidth > track.clientWidth) {
+                track.scrollLeft = active.offsetLeft - (track.clientWidth - active.offsetWidth) / 2;
+            }
+        } catch {
+            // Never let the card break the scripts bundled after this one.
+        }
+    })();
+</script>
+
+<style webc:scoped>
+    /* The home page's opening band: a filled card for the next class beside
+       what is due, then one bar per week. Screen only. */
+    /* `hidden` has to win outside the :host nesting too, or an empty card shows.
+       The band is for the screen; its own `display` would beat `.screen-only`, so print hides it here. */
+    :host[hidden],
+    .course-now[hidden] {
+        display: none;
+    }
+
+    :host {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
+        gap: var(--content-space);
+        margin-block-end: var(--section-space);
+
+        @media (width <= 768px) {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        h2:not(.sr-only) {
+            margin: 0;
+            font-size: var(--font-size-4);
+        }
+    }
+
+    .now-card {
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--gutter) * 2);
+        padding: calc(var(--content-space) * 1.75);
+        border-radius: calc(var(--standard-border-radius) * 4);
+        background-color: var(--color-accent);
+        color: var(--color-on-accent);
+
+        &[hidden] {
+            display: none;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .label {
+            font-size: max(var(--base-font-size), 0.875em);
+            font-weight: var(--font-weight--medium);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .topic {
+            color: inherit;
+            text-transform: none;
+            font-size: var(--font-size-2, 1.9em);
+            font-weight: var(--font-weight--semi-bold);
+            line-height: 1.15;
+            text-wrap: balance;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: calc(var(--gutter) * 2.5);
+            /* Pinned to the card's bottom edge when the card is stretched. */
+            margin-block-start: auto;
+            padding-block-start: calc(var(--gutter) * 2);
+        }
+
+        a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5em;
+            min-block-size: var(--target-min);
+            min-inline-size: var(--target-min);
+            justify-content: center;
+            padding-inline: 1.25em;
+            border: var(--border-width) solid var(--color-on-accent);
+            border-radius: var(--radius-pill);
+            color: var(--color-on-accent);
+            font-weight: var(--font-weight--semi-bold);
+            text-decoration: none;
+
+            &[hidden] {
+                display: none;
+            }
+
+            &.primary {
+                background-color: var(--color-on-accent);
+                color: var(--color-accent);
+            }
+        }
+    }
+
+    .coming-up p > a {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: var(--target-min);
+    }
+
+    .coming-up {
+        display: grid;
+        gap: calc(var(--gutter) * 3);
+        align-content: start;
+        padding: calc(var(--content-space) * 1.4);
+        border: var(--thin-border-width) solid var(--color-border);
+        border-radius: calc(var(--standard-border-radius) * 4);
+        background-color: var(--color-surface);
+
+        &[hidden] {
+            display: none;
+        }
+
+        ul {
+            display: grid;
+            gap: calc(var(--gutter) * 2);
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        li {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.25em 0.6em;
+            padding: 0.6em 0.8em;
+        }
+
+        .what {
+            font-weight: var(--font-weight--semi-bold);
+        }
+
+        .due {
+            flex-basis: 100%;
+            color: var(--color-text-muted);
+            font-size: max(var(--base-font-size), 0.875em);
+        }
+
+        p {
+            margin: 0;
+            font-weight: var(--font-weight--semi-bold);
+
+            &[hidden] {
+                display: none;
+            }
+        }
+
+        .empty {
+            color: var(--color-text-muted);
+            font-weight: var(--font-weight);
+        }
+    }
+
+    .progress {
+        display: grid;
+        grid-column: 1 / -1;
+        grid-template-columns: 1fr auto;
+        gap: calc(var(--gutter) * 3) var(--content-space);
+        align-items: baseline;
+
+        .count {
+            margin: 0;
+            color: var(--color-text-muted);
+        }
+
+        /* One row that scrolls sideways when the weeks don't fit; the
+           script opens it with the current week centered. */
+        ol {
+            position: relative;
+            display: flex;
+            grid-column: 1 / -1;
+            gap: calc(var(--gutter) * 2);
+            margin: 0;
+            /* Room for the focus ring, so the scroll box never clips it. */
+            padding: calc(var(--focus-ring-width) + var(--focus-ring-offset));
+            overflow-x: auto;
+            list-style: none;
+        }
+
+        li {
+            flex: 1 0 5.5rem;
+        }
+
+        a {
+            display: grid;
+            gap: 0.35em;
+            padding-block: 0.25em;
+            color: var(--color-text);
+            font-size: max(var(--base-font-size), 0.875em);
+            text-decoration: none;
+        }
+
+        .bar {
+            block-size: 0.6rem;
+            border-radius: var(--radius-pill);
+            background-color: var(--color-border);
+        }
+
+        .name {
+            font-weight: var(--font-weight--semi-bold);
+        }
+
+        .state {
+            min-block-size: 1.5em;
+            color: var(--color-text-muted);
+        }
+
+        [data-state="done"] .bar {
+            background-color: var(--color-text);
+        }
+
+        [data-state="now"] .bar {
+            background-color: var(--color-accent-secondary);
+            outline: var(--border-width) solid var(--color-accent-secondary);
+            outline-offset: 2px;
+        }
+    }
+
+    @media (forced-colors: active) {
+        .progress [data-state="now"] .bar {
+            background: Highlight;
+        }
+
+        .progress [data-state="done"] .bar {
+            background: CanvasText;
+        }
+    }
+
+    @media print {
+        :host,
+        .course-now {
+            display: none;
+        }
+    }
+</style>

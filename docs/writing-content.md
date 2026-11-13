@@ -186,7 +186,11 @@ date: Last Modified
 
 The worksheet's heading, the intro and the questions all live in `test-1.worksheet.md`: its front matter holds the title and wording, and the body holds the intro, a list of terms, and the questions. A question can be multiple choice, matching, fill in the blank, a diagram to label, a tree to complete, a code line to judge, or a self-check. The kit checks the worksheet when it builds, and a mistake is reported with the file and line.
 
+Students' answers are saved in their own browser only (`localStorage`, one key per question) and restored on their next visit; nothing is sent anywhere. Set `checkMode` in the front matter to `question` to add a Check answer button to every gradable question; the default, `end`, checks everything from See results at the end. Set the site default with `worksheets: { checkMode }` in `eleventy.config.js`.
+
 ## Prompts and filtered glossary links
+
+A fence of code in a page renders as a code block (a language label, a color edge, line numbers on long samples and a copy button). Add `title="path/file.ext"` to the fence for a file name, and `/2-3` after the language (`js/2-3`) to highlight lines 2 to 3. A fence with no language is labelled "Code" and a shell fence "Terminal". Fences inside slides and decks stay plain.
 
 A fenced block labeled `prompt` renders as a figure of ordinary text with a Copy button, for text students paste into a tool. Label a block `prompt-avoid` for an example of what not to paste: it looks the same and has no Copy button.
 

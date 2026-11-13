@@ -2,9 +2,10 @@
 	/**
 	 * The page's Today shortcut: a button that jumps to the `#today` element
 	 * `<today-marker>` picks. Hidden until there is one, and in print.
+	 * @prop {string} label the link's text, `copy.schedule.today`
 	 */
 </script>
-<a webc:root="override" href="#today" class="today-link">Today</a>
+<a webc:root="override" href="#today" class="today-link" @text="label"></a>
 
 <style>
 	/* The primary action, shown only once a #today exists. The :not(:has())
@@ -18,8 +19,8 @@
 	:root:has(#today) .today-link {
 		display: grid;
 		place-items: center;
-		min-inline-size: 2.75rem;
-		min-block-size: 2.75rem;
+		min-inline-size: var(--target-min);
+		min-block-size: var(--target-min);
 		padding-inline: 1em;
 		border: var(--thin-border-width) solid var(--color-accent);
 		border-radius: var(--standard-border-radius);

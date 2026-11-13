@@ -1,9 +1,10 @@
 <script webc:setup>
 	/**
-	 * The practice worksheet page: heading, sections of questions, and the check controls. Reads the `worksheet` data a worksheet's `.11tydata.js` supplies.
+	 * The practice worksheet page: heading, results summary, question list, sections of questions and the check controls. Reads the `worksheet` data a worksheet's `.11tydata.js` supplies; `practice.js` grades, saves and restores the answers in this browser. With `checkMode: "question"` (front matter, or `worksheets.checkMode` in the course config) each gradable question also has a Check answer button; the default, `"end"`, checks only from See results at the end.
 	 */
 </script>
-<article class="content-column practice" id="worksheet" webc:if="$data.worksheet">
+<article class="content-column practice" id="worksheet" data-worksheet webc:if="$data.worksheet"
+	:data-storage-id="`${$data.course.code.toLowerCase()}/${$data.page.fileSlug}`">
 	<header class="practice-head">
 		<eyebrow class="separators">
 			<span @text="$data.term.label"></span>
@@ -11,6 +12,7 @@
 			<span @text="$data.worksheet.eyebrow"></span>
 		</eyebrow>
 		<h1 @text="$data.worksheet.heading"></h1>
+		<p class="not-graded" @text="$data.worksheet.copy.notGraded"></p>
 		<p class="lede" @text="$data.worksheet.lede"></p>
 		<p webc:for="paragraph of $data.worksheet.intro" @text="paragraph"></p>
 
@@ -23,7 +25,29 @@
 			:@hint="$data.worksheet.copy.termsHint" :@sourceprefix="$data.worksheet.copy.termSource"></practice-terms>
 
 		<check-controls @scope="#worksheet" :@label="$data.worksheet.copy.checkAll"
-			:@reset="$data.worksheet.copy.resetAll" :@note="$data.worksheet.copy.selfMarked"></check-controls>
+			:@reset="$data.worksheet.copy.resetAll" :@confirm="$data.worksheet.copy.confirmClearAll"></check-controls>
+		<p class="restore-note" data-restore-note role="status" hidden></p>
+
+		<section class="practice-summary" data-summary="#worksheet" aria-labelledby="practice-summary-heading" hidden>
+			<h2 id="practice-summary-heading" @text="$data.worksheet.copy.resultsHeading"></h2>
+			<p class="score"><strong data-score></strong> <span data-score-of></span></p>
+			<ol role="list" data-summary-list></ol>
+			<button type="button" data-retry="#worksheet" hidden @text="$data.worksheet.copy.retryMissed"></button>
+		</section>
+
+		<nav class="question-nav" aria-labelledby="question-nav-heading" data-question-nav>
+			<h2 id="question-nav-heading" @text="$data.worksheet.copy.navHeading"></h2>
+			<ol role="list">
+				<template webc:nokeep webc:for="section of $data.worksheet.sections">
+					<li webc:for="question of section.questions" :data-nav-for="question.id" data-state="unattempted">
+						<a :href="`#q-${question.id}`">
+							<span class="nav-badge" @text="question.id"></span>
+							<span class="nav-status" @text="$data.worksheet.copy.statusUnattempted"></span>
+						</a>
+					</li>
+				</template>
+			</ol>
+		</nav>
 	</header>
 
 	<section webc:for="section of $data.worksheet.sections" :id="`section-${section.n}`" class="practice-section">
@@ -40,7 +64,7 @@
 		<practice-question webc:for="question of section.questions" :@q="question"></practice-question>
 
 		<check-controls :@scope="`#section-${section.n}`" :@label="`${$data.worksheet.copy.checkSection} ${section.n}`"
-			:@reset="$data.worksheet.copy.resetSection" :@note="$data.worksheet.copy.selfMarked"></check-controls>
+			:@reset="$data.worksheet.copy.resetSection" :@confirm="$data.worksheet.copy.confirmClearSection"></check-controls>
 	</section>
 
 	<footer class="practice-foot" webc:if="$data.worksheet.footer?.length || $data.worksheet.links?.length">
@@ -96,6 +120,226 @@
 			text-transform: uppercase;
 		}
 
+		.not-graded {
+			display: inline-block;
+			margin-block: 0;
+			padding: 0.1em 0.75em;
+			border: var(--thin-border-width) solid var(--color-border);
+			border-radius: 999px;
+			color: var(--color-text-muted);
+			font-size: max(var(--base-font-size), 0.875em);
+		}
+
+		/* The question list: one tile per question, its status mirrored from
+		   the question by practice.js. The word carries the state; color only
+		   reinforces it. */
+		.question-nav {
+			margin-block: var(--content-space);
+
+			h2 {
+				margin-block: 0 0.5em;
+				font-size: max(var(--base-font-size), 0.875em);
+				font-weight: var(--font-weight--medium);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: var(--color-text-muted);
+			}
+
+			ol {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+				gap: 0.5em;
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+
+			a[href] {
+				display: flex;
+				text-decoration: none;
+				align-items: center;
+				gap: 0.6em;
+				min-block-size: var(--target-min);
+				padding: 0.35em 0.6em;
+				border: var(--thin-border-width) solid var(--color-border-strong);
+				border-radius: var(--standard-border-radius);
+				color: var(--color-text);
+				text-decoration: none;
+
+				&:is(:hover, :focus-visible) {
+					border-color: var(--color-text);
+				}
+			}
+
+			.nav-badge {
+				display: grid;
+				flex: none;
+				place-items: center;
+				min-inline-size: 2em;
+				block-size: 2em;
+				padding-inline: 0.3em;
+				border-radius: 999px;
+				background: var(--color-surface);
+				font-family: var(--mono-font);
+				font-size: 0.875em;
+				font-weight: var(--font-weight--bold);
+			}
+
+			.nav-status {
+				font-size: max(var(--base-font-size), 0.875em);
+				color: var(--color-text-muted);
+			}
+
+			[data-state="right"] a {
+				border-color: var(--color-success);
+
+				.nav-badge {
+					background: color-mix(in oklab, var(--color-success) 16%, var(--color-page));
+				}
+
+				.nav-status::before {
+					content: "✓ ";
+				}
+			}
+
+			[data-state="wrong"] a {
+				border-color: var(--color-error);
+
+				.nav-badge {
+					background: color-mix(in oklab, var(--color-error) 14%, var(--color-page));
+				}
+
+				.nav-status::before {
+					content: "✕ ";
+				}
+			}
+
+			[data-state="partial"] a {
+				border-color: var(--color-border-strong);
+				border-style: dashed;
+
+				.nav-status::before {
+					content: "✕ ";
+				}
+			}
+
+			/* Not yet looked at is not wrong: no color, only the word. */
+			[data-state="unattempted"] a {
+				border-color: var(--color-border);
+			}
+		}
+
+		.practice-summary {
+			.score {
+				display: inline-flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				inline-size: 5.5rem;
+				block-size: 5.5rem;
+				box-sizing: border-box;
+				margin: 0;
+				border: 0.4rem solid var(--color-accent-secondary);
+				border-radius: 50%;
+				line-height: var(--font-height--dense);
+
+				strong {
+					font-size: var(--font-size-3);
+				}
+
+				span {
+					color: var(--color-text-muted);
+					font-size: max(var(--base-font-size), 0.85em);
+				}
+			}
+
+			h2 {
+				flex: 1 1 12rem;
+				margin: 0;
+				font-size: var(--font-size-4);
+			}
+
+			flex-basis: 100%;
+			display: flex;
+
+			&[hidden] {
+				display: none;
+			}
+
+			flex-wrap: wrap;
+			align-items: center;
+			gap: var(--content-space);
+			padding: 0.8em 1em;
+			border: var(--thin-border-width) solid var(--color-border);
+			border-radius: var(--standard-border-radius);
+			background-color: var(--color-surface);
+
+			ol {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.4em;
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+
+			li {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.35em;
+				padding: 0.15em 0.6em;
+				border-radius: var(--radius-pill);
+				border: var(--thin-border-width) solid var(--color-border);
+				font-size: max(var(--base-font-size), 0.9em);
+
+				a {
+					font-family: var(--mono-font);
+					font-weight: var(--font-weight--bold);
+				}
+			}
+
+			[data-status="right"] {
+				border-color: var(--color-success);
+				color: var(--color-success);
+			}
+
+			[data-status="wrong"] {
+				border-color: var(--color-error);
+				color: var(--color-error);
+			}
+
+			[data-status="partial"] {
+				border-style: dashed;
+				border-color: var(--color-border-strong);
+			}
+
+			[data-status="unattempted"] {
+				border-style: dashed;
+				color: var(--color-text-muted);
+			}
+
+			button {
+				min-block-size: var(--target-min);
+				padding-inline: 1.2em;
+				margin: 0;
+				border: var(--border-width) solid var(--color-accent);
+				border-radius: var(--radius-pill);
+				background-color: var(--color-accent);
+				color: var(--color-on-accent);
+				font-weight: var(--font-weight--semi-bold);
+				cursor: pointer;
+			}
+		}
+
+		.restore-note {
+			margin-block: 0 var(--content-space);
+			color: var(--color-text-muted);
+
+			&[hidden] {
+				display: none;
+			}
+		}
+
 		.practice-foot {
 			border-block-start: var(--thin-border-width) solid var(--color-border);
 			margin-block-start: var(--section-space);
@@ -112,6 +356,10 @@
 
 		@media print {
 			check-controls,
+			.restore-note,
+			.question-nav,
+			.practice-summary,
+			.check-one,
 			.feedback,
 			.why {
 				display: none;

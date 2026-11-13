@@ -1,12 +1,17 @@
 <script webc:setup>
 	/**
 	 * A list of cards, each linking to a page. A card shows the page's code, name and description unless the slot supplies its own content.
+	 * Instead of `items` you can write the cards yourself as a `<ul>` of `<li>` cards in the `cards` slot (the default slot is taken: it is each card's
+	 * own content); the array wins when it has items, and when it is missing or empty the `cards` slot is rendered instead. A card written in the slot
+	 * must name its overlay link, as the items form does: `<li><a href="/x/" aria-labelledby="x-name"></a><h3 id="x-name">Name</h3></li>`.
 	 * @prop {object[]} items pages, each with `data` and `page.url`
+	 * @slot cards the cards as a `<ul>`, used when `items` is missing or empty
+	 * @slot default each card's own content, in place of its code, name and description
 	 */
 </script>
-<ul role="list" webc:root="override" webc:if="items">
+<ul role="list" webc:root="override" webc:if="items?.length">
     <li webc:for="item of items">
-        <a :href="item.page.url" webc:if="item.page.url" aria-labelledby="slugify(item.data.name)"></a>
+        <a :href="item.page.url" webc:if="item.page.url" :aria-labelledby="slugify(item.data.name)"></a>
         <slot :@item="item">
             <eyebrow @text="item.data.code"></eyebrow>
             <h3 @text="item.data.name" :id="slugify(item.data.name)"></h3>
@@ -14,9 +19,15 @@
         </slot>
     </li>
 </ul>
+<div webc:root="override" webc:else><slot name="cards"></slot></div>
 
 <style webc:scoped>
-    :host {
+    :host:not(:has(li)) {
+        display: none;
+    }
+
+    :host,
+    :host > ul {
         list-style: none;
         margin: 0;
         padding: 0;

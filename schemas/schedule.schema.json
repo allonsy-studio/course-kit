@@ -122,6 +122,10 @@
           "type": "string",
           "description": "What the Brightspace reading check for this reading asks for, phrased for students (e.g. \"3 questions, due by the next class\"). Omit for a reading with no check. Keep the questions themselves in your instructor-only notes, not in this file."
         },
+        "kind": {
+          "enum": ["test", "graded", "practice", "reading"],
+          "description": "What kind of item this is, for its chip on the schedule and the home page. Omit for the default: a due item is \"graded\", a reading with a due date is \"reading\". A reading without a due date has no chip."
+        },
         "due": {
           "$ref": "#/$defs/isoDate"
         },
@@ -155,6 +159,10 @@
         "href": {
           "type": "string",
           "description": "Optional page for the item: the spec, the brief, or the Brightspace assignment."
+        },
+        "kind": {
+          "enum": ["test", "graded", "practice", "reading"],
+          "description": "What kind of item this is, for its chip on the schedule and the home page. Omit for the default: a due item is \"graded\", a reading with a due date is \"reading\". A reading without a due date has no chip."
         },
         "due": {
           "$ref": "#/$defs/isoDate"

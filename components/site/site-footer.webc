@@ -13,13 +13,13 @@
         <copyright></copyright>
     </div>
     <div class="group">
-        <p class="label" id="footer-pages">Pages</p>
+        <p class="label" id="footer-pages" @text="$data.copy.siteFooter.pages"></p>
         <nav-links column aria-labelledby="footer-pages" @context="footer" :@navigation="eleventyNavigation($data.collections.all)"></nav-links>
     </div>
     <nav class="group" aria-labelledby="footer-policies" webc:if="$data.policies">
-        <p class="label" id="footer-policies">Policies</p>
+        <p class="label" id="footer-policies" @text="$data.copy.siteFooter.policies"></p>
         <ul role="list">
-            <li webc:for="(key, policy) in $data.policies">
+            <li webc:for="(key, policy) in Object.fromEntries(Object.entries($data.policies).filter(([name]) => name !== '$schema'))">
                 <a :href="policy.href?.startsWith('/') ? policy.href : `/#policy-${key}`" @text="policy.title"></a>
             </li>
         </ul>
@@ -87,14 +87,14 @@
         display: flex;
         flex-direction: column;
         align-items: start;
-        gap: calc(var(--content-space) * 0.35);
+        gap: 0;
 
         @media screen and (width <= 768px) {
             flex-direction: row;
             flex-wrap: wrap;
-            align-items: baseline;
+            align-items: center;
             column-gap: calc(var(--content-space) * 1.25);
-            row-gap: calc(var(--content-space) * 0.25);
+            row-gap: 0;
         }
     }
 
@@ -102,9 +102,11 @@
         font-size: 1em;
     }
 
-    nav.group a {
-        display: inline-block;
-        padding-block: 0.2em;
+    nav.group a,
+    .course a {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: var(--target-min);
         font-size: max(var(--base-font-size), 1em);
         color: inherit;
         text-decoration: none;

@@ -6,4 +6,25 @@ const items = [
 	{ url: "/schedule/", name: "Schedule" },
 ];
 
-export const Default = { args: { items } };
+export const Default = { wrap: "<h2>Resources</h2>\n<h3>Readings</h3>\n{story}", args: { items } };
+
+/** The list written as a `<ul>` of links in the slot. */
+export const ListInSlot = {
+	wrap: "<h2>Resources</h2>\n<h3>Readings</h3>\n{story}",
+	name: "List in the slot",
+	args: { items: undefined, default: '<ul>\n\t<li><h4><a href="#">Welcome</a></h4><p>What we build, and how the course runs.</p></li>\n\t<li><h4><a href="#">Schedule</a></h4></li>\n</ul>' },
+};
+
+/** The list written as a `<dl>`: each `<dt>` is the link, each `<dd>` its description. */
+export const DefinitionListInSlot = {
+	wrap: "<h2>Resources</h2>\n<h3>Readings</h3>\n{story}",
+	name: "Definition list in the slot",
+	args: { items: undefined, default: '<dl>\n\t<dt><a href="#">Welcome</a></dt>\n\t<dd>What we build, and how the course runs.</dd>\n\t<dt><a href="#">Schedule</a></dt>\n</dl>' },
+};
+
+/** An empty `items` array falls back to the slot. */
+export const EmptyItemsFallback = {
+	wrap: "<h2>Resources</h2>\n<h3>Readings</h3>\n{story}",
+	name: "Empty items falls back to the slot",
+	args: { items: [], default: '<ul>\n\t<li><h4><a href="#">From the slot</a></h4></li>\n</ul>' },
+};

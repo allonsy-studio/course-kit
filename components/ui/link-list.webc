@@ -1,23 +1,41 @@
 <script webc:setup>
 	/**
-	 * A list of links, each with a name and an optional description.
+	 * A list of links, each with a name and an optional description. Give it the `items` array, or write the list in the default slot as a
+	 * `<ul>` of links, or as a `<dl>` (`<dt>` the link, `<dd>` the description). The array wins when it has items; when it is missing or empty
+	 * the slot is rendered instead.
 	 * @prop {{ url: string, name: string, description?: string }[]} items the links to list
 	 */
 </script>
-<ul role="list" webc:root="override" webc:if="items">
+<ul role="list" webc:root="override" webc:if="items?.length">
     <li webc:for="item of items">
         <h4><a :href="item.url" @text="item.name"></a></h4>
         <p @text="item.description" webc:if="item.description"></p>
     </li>
 </ul>
+<div webc:root="override" webc:else><slot></slot></div>
 
 <style webc:scoped>
-    :host {
+    :host:not(:has(li, dt)) {
+        display: none;
+    }
+
+    :host,
+    :host > ul,
+    :host > dl {
         list-style: none;
         margin: 0;
         padding: 0;
         display: grid;
         gap: calc(var(--content-space) * .5);
+
+        > dt {
+            font-weight: normal;
+        }
+
+        > dd {
+            margin: 0;
+            color: var(--color-text-muted);
+        }
 
         > li {
             font-size: 1em;
@@ -32,7 +50,21 @@
         }
     }
 
-    :host([cards]) {
+    /* A link is an operable target: 44px tall (WCAG 2.5.5), and the rows carry the spacing. The cards variant stretches its own link. */
+    :host:not([cards]) a {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: var(--target-min);
+    }
+
+    :host:not([cards]),
+    :host:not([cards]) > ul,
+    :host:not([cards]) > dl {
+        gap: 0;
+    }
+
+    :host([cards]),
+    :host([cards]) > ul {
         grid-template-columns: repeat(auto-fill, minmax(min(100%, 15em), 1fr));
         gap: var(--content-space);
 
@@ -69,8 +101,8 @@
 
             &:has(a:focus-visible) {
                 border-color: var(--color-accent);
-                outline: var(--outline-width) solid var(--color-accent);
-                outline-offset: 2px;
+                outline: var(--focus-ring-width) solid var(--color-focus-ring);
+                outline-offset: var(--focus-ring-offset);
             }
 
             a {

@@ -23,8 +23,9 @@ test("every token name is --color- plus its key, and no name is a hue", () => {
 test("the defaults render in both stylesheets, each with only the tokens it uses", () => {
 	const site = renderColors("site", resolveTheme());
 	const deck = renderColors("deck", resolveTheme());
-	assert.ok(site.includes("--color-page: light-dark(#fff, hsl(228deg 20% 12%));"));
-	assert.ok(deck.includes("--color-page: light-dark(#FBF9F3, #14131a);"));
+	assert.ok(site.includes("--color-page: light-dark(#FBF9F3, #1C1613);"));
+	assert.ok(site.includes("--color-accent-secondary: light-dark(#1F4E9C, #84B0F7);"));
+	assert.ok(deck.includes("--color-page: light-dark(#FBF9F3, #1C1613);"));
 	assert.ok(!deck.includes("--color-link:"));
 	assert.ok(!site.includes("--color-accent-strong:"));
 });
@@ -41,7 +42,7 @@ test("an override reaches both stylesheets; a deck override reaches decks only",
 test("a site override stays off the decks", () => {
 	const theme = resolveTheme({ dataDir: dirWith({ site: { border: "#C2B1A6" }, accent: "#7BD1E6" }) });
 	assert.ok(renderColors("site", theme).includes("--color-border: #C2B1A6;"));
-	assert.ok(renderColors("deck", theme).includes("--color-border: light-dark(#EFEBDF, #33313e);"));
+	assert.ok(renderColors("deck", theme).includes("--color-border: light-dark(#EFEBDF, #3A2E27);"));
 	assert.ok(renderColors("deck", theme).includes("--color-accent: #7BD1E6;"));
 	assert.throws(() => resolveTheme({ dataDir: dirWith({ site: { magenta: "#f0f" } }) }), /theme\.site: "magenta" is not a color token/);
 });
@@ -104,4 +105,129 @@ test("the committed schema matches the token table", () => {
 
 test("the committed token reference matches the token table", () => {
 	assert.equal(fs.readFileSync(new URL("../docs/tokens.md", import.meta.url), "utf8"), tokensDoc());
+});
+
+/* ---- WCAG contrast (AAA) ---- */
+
+const clampByte = (x) => Math.min(255, Math.max(0, x));
+const toLinear = (c) => ((c /= 255) <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+const fromLinear = (c) => clampByte(255 * (c <= 0.0031308 ? 12.92 * c : 1.055 * c ** (1 / 2.4) - 0.055));
+const hex = (value) => {
+	const h = value.replace("#", "");
+	const full = h.length === 3 ? [...h].map((c) => c + c).join("") : h;
+	return [0, 2, 4].map((i) => parseInt(full.slice(i, i + 2), 16));
+};
+const toOklab = ([r, g, b]) => {
+	const [lr, lg, lb] = [r, g, b].map(toLinear);
+	const l = Math.cbrt(0.4122214708 * lr + 0.5363325363 * lg + 0.0514459929 * lb);
+	const m = Math.cbrt(0.2119034982 * lr + 0.6806995451 * lg + 0.1073969566 * lb);
+	const s = Math.cbrt(0.0883024619 * lr + 0.2817188376 * lg + 0.6299787005 * lb);
+	return [0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s, 1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s, 0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s];
+};
+const fromOklab = ([L, a, b]) => {
+	const l = (L + 0.3963377774 * a + 0.2158037573 * b) ** 3;
+	const m = (L - 0.1055613458 * a - 0.0638541728 * b) ** 3;
+	const s = (L - 0.0894841775 * a - 1.291485548 * b) ** 3;
+	return [4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s].map(fromLinear);
+};
+/** `color-mix(in oklab, a p%, b)` */
+const mix = (a, p, b) => fromOklab(toOklab(a).map((v, i) => v * p + toOklab(b)[i] * (1 - p)));
+const luminance = (rgb) => {
+	const [r, g, b] = rgb.map(toLinear);
+	return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+const ratio = (a, b) => {
+	const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+	return (hi + 0.05) / (lo + 0.05);
+};
+
+/** The site color of a token in one mode, as sRGB. Resolves `var()` aliases and `color-mix(in oklab, …)`. */
+const resolveColor = (key, mode, seen = []) => {
+	const token = TOKENS.find((item) => item.key === key);
+	let value = token.site;
+	if (value && typeof value === "object") value = value[mode];
+	const alias = /^var\(--color-([a-z-]+)\)$/.exec(value);
+	if (alias) return resolveColor(alias[1], mode, seen);
+	const blend = /^color-mix\(in oklab, var\(--color-([a-z-]+)\) (\d+)%, var\(--color-([a-z-]+)\)\)$/.exec(value);
+	if (blend) return mix(resolveColor(blend[1], mode), Number(blend[2]) / 100, resolveColor(blend[3], mode));
+	return hex(value);
+};
+
+const MODES = ["light", "dark"];
+const GROUNDS = ["page", "surface", "code-surface", "surface-overlay"];
+
+test("every text token reads at 7:1 or better on page, surface, code surface and overlay, in both modes", () => {
+	for (const mode of MODES) {
+		for (const key of ["text", "text-muted", "accent-text", "accent-secondary", "link", "success", "error", "code-text", "code-keyword", "code-string", "code-function", "code-number", "code-comment"]) {
+			for (const ground of GROUNDS) {
+				const got = ratio(resolveColor(key, mode), resolveColor(ground, mode));
+				assert.ok(got >= 7, `${key} on ${ground} (${mode}) is ${got.toFixed(2)}:1`);
+			}
+		}
+	}
+});
+
+test("text on a fill reads at 7:1 or better", () => {
+	const pairs = [["on-accent", "accent"], ["on-accent", "accent-fill-hover"], ["on-accent-secondary", "accent-secondary"], ["on-success", "success"], ["on-error", "error"], ["on-warning", "warning"], ["on-highlight", "highlight"]];
+	for (const mode of MODES) {
+		for (const [text, fill] of pairs) {
+			const got = ratio(resolveColor(text, mode), resolveColor(fill, mode));
+			assert.ok(got >= 7, `${text} on ${fill} (${mode}) is ${got.toFixed(2)}:1`);
+		}
+	}
+});
+
+test("text on the accent washes and the highlighted code line stays at 7:1", () => {
+	for (const mode of MODES) {
+		for (const [wash, accent] of [["surface-accent", "accent-text"], ["surface-accent-secondary", "accent-secondary"]]) {
+			for (const key of ["text", "text-muted", accent]) {
+				const got = ratio(resolveColor(key, mode), resolveColor(wash, mode));
+				assert.ok(got >= 7, `${key} on ${wash} (${mode}) is ${got.toFixed(2)}:1`);
+			}
+		}
+		for (const key of ["code-text", "code-keyword", "code-string", "code-function", "code-number", "code-comment"]) {
+			const got = ratio(resolveColor(key, mode), resolveColor("highlight-line", mode));
+			assert.ok(got >= 7, `${key} on highlight-line (${mode}) is ${got.toFixed(2)}:1`);
+		}
+	}
+});
+
+test("the focus ring and the edge of an operable control are 3:1 against page and surface", () => {
+	for (const mode of MODES) {
+		for (const key of ["focus-ring", "border-strong"]) {
+			for (const ground of ["page", "surface"]) {
+				const got = ratio(resolveColor(key, mode), resolveColor(ground, mode));
+				assert.ok(got >= 3, `${key} on ${ground} (${mode}) is ${got.toFixed(2)}:1`);
+			}
+		}
+	}
+});
+
+test("the link color follows the accent text, and the new tokens render", () => {
+	const site = renderColors("site", resolveTheme());
+	assert.ok(site.includes("--color-link: var(--color-accent-text);"));
+	for (const key of ["focus-ring", "border-strong", "on-highlight", "accent-fill-hover", "surface-accent-secondary", "code-surface", "code-edge-neutral", "highlight-line"]) assert.ok(site.includes(`--color-${key}:`), key);
+});
+
+/** `color-mix(in sRGB, a p%, b)`, as the callout wash is written. */
+const mixSrgb = (a, p, b) => a.map((v, i) => v * p + b[i] * (1 - p));
+
+test("every callout edge is 3:1 against the page and its own wash, in both modes, with the starter's overrides too", () => {
+	const starter = JSON.parse(fs.readFileSync(new URL("../examples/starter/_data/theme.json", import.meta.url), "utf8"));
+	const edge = (key, mode, overrides) => {
+		const own = overrides?.[key];
+		return own ? hex(typeof own === "string" ? own : own[mode]) : resolveColor(key, mode);
+	};
+	for (const mode of MODES) {
+		for (const [name, overrides] of [["defaults", undefined], ["the starter", starter]]) {
+			const page = overrides?.page ? hex(typeof overrides.page === "string" ? overrides.page : overrides.page[mode]) : resolveColor("page", mode);
+			for (const key of ["accent", "success", "warning-edge", "error"]) {
+				const color = edge(key, mode, overrides);
+				for (const [ground, rgb] of [["page", page], ["wash", mixSrgb(color, 0.1, page)]]) {
+					const got = ratio(color, rgb);
+					assert.ok(got >= 3, `${key} on ${ground} (${mode}, ${name}) is ${got.toFixed(2)}:1`);
+				}
+			}
+		}
+	}
 });

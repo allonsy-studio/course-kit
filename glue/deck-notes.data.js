@@ -1,3 +1,4 @@
+import { fill } from "../lib/copy.js";
 import { deckNotesUrl } from "../lib/filters.js";
 import { deckNotes } from "../lib/markdown.js";
 
@@ -24,7 +25,7 @@ export default {
 			const deck = deckOf(data);
 			return deck ? deckNotesUrl(deck.data.week, deck.data.day, deck.data.addendum === true) : data.permalink;
 		},
-		title: (data) => (deckOf(data) ? `Speaker notes: ${deckOf(data).data.title}` : "Speaker notes"),
+		title: (data) => (deckOf(data) ? fill(data.copy.deckNotes.speakerNotesTitle, { title: deckOf(data).data.title }) : data.copy.deckNotes.speakerNotes),
 		// One entry per slide, numbered to match the deck's `#sN`.
 		notesSlides: (data) => {
 			const deck = deckOf(data);

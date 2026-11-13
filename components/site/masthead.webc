@@ -1,7 +1,14 @@
 <script webc:setup>
 	/**
 	 * The page header: institution, term, course title and the navigation. Reads `site`, `term` and `course`.
+	 * The menu is Home, Syllabus, then every page of the site menu that has not set `menu: false`.
 	 */
+	const navItems = (() => {
+		const items = eleventyNavigation($data.collections.all);
+		const home = items.find((item) => item.url === "/");
+		const rest = items.filter((item) => item.url !== "/");
+		return [...(home ? [home] : []), { url: "/#syllabus", title: $data.copy.nav.syllabus }, ...rest.filter((item) => item.menu !== false)];
+	})();
 </script>
 <header webc:root="override" id="header">
     <div class="container">
@@ -23,7 +30,7 @@
             </p>
         </div>
         <div class="links">
-            <nav-links column aria-label="Site" @context="hero" :@navigation="[{ url: '/#syllabus', title: 'Syllabus' }, ...eleventyNavigation($data.collections.all).filter((item) => item.url !== '/')]"></nav-links>
+            <nav-links column :aria-label="$data.copy.nav.site" @context="hero" :@navigation="navItems"></nav-links>
         </div>
     </div>
 </header>

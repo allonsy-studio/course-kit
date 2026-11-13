@@ -5,5 +5,9 @@ export default {
 	indexed: false,
 	instructorOnly: true,
 	tags: ["lesson-plans"],
-	eleventyNavigation: { title: "Lesson Plans", order: 8 },
+	eleventyComputed: {
+		title: (data) => data.copy.lessonPlans.lessonPlans,
+		// Instructor-only: in the footer, never the top menu.
+		eleventyNavigation: (data) => ({ title: data.copy.lessonPlans.navTitle, order: 9, menu: false }),
+	},
 };

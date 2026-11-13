@@ -33,7 +33,7 @@ test("every story has a frame that rendered with no leftover error", () => {
 
 test("a component page lists its props, slots and examples", () => {
 	const html = pages["/components/ui/assigned-list/"];
-	for (const text of ["&lt;assigned-list&gt;", "label", "items", "prefix", "data-canvas"]) assert.ok(html.includes(text), `the assigned-list page is missing "${text}"`);
+	for (const text of ["&lt;assigned-list&gt;", "label", "items", "dueOn", "data-canvas"]) assert.ok(html.includes(text), `the assigned-list page is missing "${text}"`);
 });
 
 test("the theme page lists every color token", () => {
@@ -71,4 +71,13 @@ test("built under a path prefix, every link and asset stays under it", async () 
 	} finally {
 		delete process.env.PATH_PREFIX;
 	}
+});
+
+test("a story's wrap and note frame it; the Today link story has a target, and its twin has none", () => {
+	const html = (url) => pages[url].replace(/<(script|style)[\s\S]*?<\/\1>/g, "");
+	const withTarget = catalog.frames.find((frame) => frame.title === "today-link: Default");
+	const without = catalog.frames.find((frame) => frame.title === "today-link: No target");
+	assert.match(html(withTarget.url), /id="today"/);
+	assert.doesNotMatch(html(without.url), /id="today"/);
+	for (const frame of [withTarget, without]) assert.match(html(frame.url), /class="story-note"/, `${frame.url} says what it shows`);
 });

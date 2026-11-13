@@ -9,19 +9,19 @@
         <div class="who">
             <img class="photo screen-only" webc:if="$data.instructor.photo" :src="$data.instructor.photo" :alt="$data.instructor.name" width="160" height="160">
             <div class="facts-column">
-                <h2 id="instructor-heading">Your instructor</h2>
+                <h2 id="instructor-heading" @text="$data.copy.instructor.yourInstructor"></h2>
                 <dl class="facts">
                     <div class="name">
-                        <dt class="sr-only">Name</dt>
+                        <dt class="sr-only" @text="$data.copy.instructor.name"></dt>
                         <dd><strong><span webc:if="!$data.instructor.profile" @text="$data.instructor.name"></span><a
                             webc:if="$data.instructor.profile" :href="$data.instructor.profile" @text="$data.instructor.name"></a></strong></dd>
                     </div>
                     <div webc:if="$data.instructor.office">
-                        <dt>Office</dt>
+                        <dt @text="$data.copy.instructor.office"></dt>
                         <dd @text="$data.instructor.office"></dd>
                     </div>
                     <div webc:if="$data.instructor.hours?.length">
-                        <dt>Office hours</dt>
+                        <dt @text="$data.copy.instructor.officeHours"></dt>
                         <dd>
                             <ul role="list">
                                 <li webc:for="block of $data.instructor.hours" @text="block"></li>
@@ -29,15 +29,15 @@
                         </dd>
                     </div>
                     <div webc:if="$data.instructor.email" :class="$data.instructor.contact ? 'print-only' : ''">
-                        <dt>Email</dt>
+                        <dt @text="$data.copy.instructor.email"></dt>
                         <dd><a :data-email="encodeEmail($data.instructor.email)"></a></dd>
                     </div>
                     <div webc:if="$data.instructor.contact" :class="$data.instructor.email ? 'screen-only' : ''">
-                        <dt>Message</dt>
-                        <dd><a :href="$data.instructor.contact">Send me a message</a></dd>
+                        <dt @text="$data.copy.instructor.message"></dt>
+                        <dd><a :href="$data.instructor.contact" @text="$data.copy.instructor.sendMeAMessage"></a></dd>
                     </div>
                     <div webc:if="$data.instructor.blog">
-                        <dt>Blog</dt>
+                        <dt @text="$data.copy.instructor.blog"></dt>
                         <dd><a :href="$data.instructor.blog" @text="$data.instructor.blog.replace(/^https?:\/\//, '').replace(/\/$/, '')"></a></dd>
                     </div>
                 </dl>
@@ -55,12 +55,12 @@
                     webc:if="!$data.instructor.profile" @text="$data.instructor.name"></span><a
                     webc:if="$data.instructor.profile" :href="$data.instructor.profile" @text="$data.instructor.name"></a></h2>
                 <p class="instructor-meta separators">
-                    <span>Instructor</span>
+                    <span @text="$data.copy.instructor.instructor"></span>
                     <span webc:if="$data.instructor.office" @text="$data.instructor.office"></span>
                     <span webc:if="$data.instructor.hours?.length" @text="$data.instructor.hours.join('; ')"></span>
                 </p>
                 <p class="instructor-contact" webc:if="$data.instructor.contact || $data.instructor.email || $data.instructor.blog">
-                    <a webc:if="$data.instructor.contact" :href="$data.instructor.contact" :class="$data.instructor.email ? 'cta screen-only' : 'cta'">Send me a message</a>
+                    <a webc:if="$data.instructor.contact" :href="$data.instructor.contact" :class="$data.instructor.email ? 'cta screen-only' : 'cta'" @text="$data.copy.instructor.sendMeAMessage"></a>
                     <a webc:if="$data.instructor.email" :data-email="encodeEmail($data.instructor.email)" :class="$data.instructor.contact ? 'print-only' : ''"></a>
                     <a webc:if="$data.instructor.blog" class="cta" :href="$data.instructor.blog" @text="$data.instructor.blog.replace(/^https?:\/\//, '').replace(/\/$/, '')"></a>
                 </p>
@@ -194,7 +194,7 @@
         block-size: 2.75em;
         margin: 0;
 
-        background-color: color-mix(in sRGB, var(--color-accent) 14%, transparent);
+        background-color: var(--color-surface-accent);
         border-radius: 50%;
         color: var(--color-accent-text);
         font-weight: var(--font-weight--semi-bold);
@@ -215,6 +215,37 @@
         color: var(--color-link);
     }
 
+    /* The address is an operable target: 44px tall (WCAG 2.5.5). */
+    :host a[data-email] {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: var(--target-min);
+        /* The address breaks at its <wbr>s; this is the last resort for one unbreakable token. */
+        overflow-wrap: anywhere;
+        min-inline-size: 0;
+    }
+
+    /* On a phone the card and the fact list stack, and their children may shrink below their content. */
+    :host .instructor-card > *,
+    :host .who > * {
+        min-inline-size: 0;
+    }
+
+    @media screen and (width < 30em) {
+        :host .instructor-card,
+        :host .who {
+            flex-direction: column;
+        }
+
+        :host .facts {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        :host .facts dt {
+            padding-block-start: 0.4em;
+        }
+    }
+
     /* print.css collapses the facts to one inline run by id selector; match
        its specificity to drop a screen-only row. */
     @media print {
@@ -228,6 +259,11 @@
 	for (const link of document.querySelectorAll("a[data-email]")) {
 		const email = atob(link.dataset.email);
 		link.href = `mailto:${email}`;
-		link.textContent = email;
+		// Break opportunities before "@" and after each ".": a narrow screen wraps the address there, not mid-word.
+		link.textContent = "";
+		email.split(/(?=@)|(?<=\.)/).forEach((part, index) => {
+			if (index) link.append(document.createElement("wbr"));
+			link.append(part);
+		});
 	}
 </script>

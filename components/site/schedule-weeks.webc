@@ -1,79 +1,357 @@
 <script webc:setup>
 	/**
-	 * Every week of the term as a bordered block: its meetings (topics,
-	 * readings, deadlines, deck and demos) beside the week's materials.
+	 * Every week of the term as a bordered block: one row per class meeting
+	 * (when, topics, and what that class needs: reading, due items, materials)
+	 * and a footer for the week's own resources. A "This week" card, the
+	 * hide-past toggle and the Now and Done flags are added by the script.
+	 * Deadlines carry a chip for their `kind`; the key above the weeks lists
+	 * the kinds in use. Wording comes from `copy.schedule`.
 	 * @prop {object[]} [weeks] `scheduleWeeks` output; built from the page's
 	 *   lessons, schedule, decks and demos when left out
 	 */
 	const defaultWeeks = scheduleWeeks($data.lessons, $data.schedule?.weeks, $data.collections?.deck, $data.demos);
+	const copy = $data.copy?.schedule ?? {};
+	/** Every class date in a week, for the client script's past and current marks. */
+	const weekDates = (week) => (week?.meetings ?? []).map((meeting) => meeting.iso).filter(Boolean).join(" ");
+	/** A reading's check and due date, as one line: "3 questions, due Tue, Sep 1". */
+	const detail = (item) => [item.check, item.dueLabel && fill(copy.dueOn, { when: item.dueLabel })].filter(Boolean).join(", ");
 </script>
 <div webc:root="override" class="schedule-weeks" data-today-host="meetings" webc:if="(weeks ?? defaultWeeks)?.length">
     <today-marker></today-marker>
-    <week-block webc:for="week of (weeks ?? defaultWeeks)" :@number="week.week" :@dates="week.dates">
-        <div class="week-body">
-            <ol class="meetings" role="list">
-                <meeting-card webc:for="meeting of week.meetings" :@meeting="meeting">
-                    <span slot="when" class="note" webc:if="meeting.substitution">Runs a <span @text="meeting.substitution"></span> schedule</span>
-                    <p class="no-class" webc:if="meeting.noClass">No class — <span @text="meeting.noClass"></span></p>
+    <div class="schedule-tools screen-only" data-schedule-tools hidden>
+        <p class="schedule-status" data-schedule-status role="status"></p>
+        <button type="button" class="hide-past" data-hide-past aria-pressed="false" @text="copy.hidePast"></button>
+    </div>
+    <section class="this-week screen-only" data-this-week aria-labelledby="this-week-heading" hidden>
+        <header class="this-head">
+            <p class="label" data-this-label @text="copy.thisWeek"></p>
+            <h3 id="this-week-heading"><a href="#" data-this-link></a> <span class="week-of" data-this-dates></span></h3>
+        </header>
+        <ol class="this-days" role="list" data-this-days></ol>
+        <div class="this-groups" data-this-groups hidden>
+            <div class="group" data-this-read hidden>
+                <p class="label" @text="copy.read"></p>
+                <ul role="list"></ul>
+            </div>
+            <div class="group" data-this-due hidden>
+                <p class="label" @text="copy.dueThisWeek"></p>
+                <ul role="list"></ul>
+            </div>
+        </div>
+    </section>
+    <ul class="due-key" :aria-label="copy.dueKeyLabel" role="list" webc:if="dueKeyItems(weeks ?? defaultWeeks, $data.copy).length">
+        <li webc:for="entry of dueKeyItems(weeks ?? defaultWeeks, $data.copy)"><span class="due-chip" :data-kind="entry.kind" @text="entry.label"></span> <span @text="entry.graded"></span></li>
+    </ul>
+    <section class="week" webc:for="week of (weeks ?? defaultWeeks)" :id="`week-${week.week}`" :aria-labelledby="`week-${week.week}-heading`" :data-week-dates="weekDates(week)">
+        <header class="week-head">
+            <h3 :id="`week-${week.week}-heading`" @text="fill(copy.weekHeading, { week: week.week })"></h3>
+            <p class="week-of" @text="week.dates"></p>
+        </header>
+        <div class="week-cols screen-only" aria-hidden="true">
+            <span @text="copy.colClass"></span>
+            <span @text="copy.colTopics"></span>
+            <span @text="copy.colFor"></span>
+        </div>
+        <ol class="meetings" role="list">
+            <li class="meeting" data-today-scope webc:for="meeting of week.meetings">
+                <p class="when" :data-date="meeting.iso">
+                    <span class="weekday" @text="meeting.weekday"></span>
+                    <span class="date" @text="meeting.date"></span>
+                    <span class="note" webc:if="meeting.substitution" @text="fill(copy.substitution, { weekday: meeting.substitution })"></span>
+                </p>
+                <div class="about">
+                    <p class="no-class" webc:if="meeting.noClass" @text="fill(copy.noClass, { reason: meeting.noClass })"></p>
                     <ul class="topics" role="list" webc:if="!meeting.noClass">
                         <li webc:for="topic of meeting.topics" @raw="topic"></li>
                     </ul>
-                    <assigned-list @label="Read before class" @prefix="due " :@items="meeting.noClass ? [] : meeting.readings"></assigned-list>
-                    <assigned-list @label="Due" :@items="meeting.noClass ? [] : meeting.due"></assigned-list>
-                    <meeting-decks :@meeting="meeting"></meeting-decks>
-                    <div class="demos" webc:if="meeting.demos?.length">
-                        <p class="label">Demos</p>
+                </div>
+                <div class="for-class" webc:if="!meeting.noClass && (meeting.readings?.length || meeting.due?.length || meeting.slides || meeting.addendum || meeting.demos?.length)">
+                    <div class="group" data-group="read" webc:if="meeting.readings?.length">
+                        <p class="label" @text="copy.readBefore"></p>
                         <ul role="list">
-                            <li webc:for="demo of meeting.demos"><arrow-link :href="demo.url"><span @text="demo.title"></span></arrow-link></li>
+                            <li webc:for="reading of meeting.readings" @attributes="reading.kind ? { class: 'due-item', 'data-kind': reading.kind } : {}">
+                                <span class="due-chip" webc:if="reading.kind" :data-kind="reading.kind" @text="dueKindLabel(reading.kind, $data.copy)"></span>
+                                <a :href="reading.href" @text="reading.title"></a>
+                                <span class="check" webc:if="detail(reading)" @text="detail(reading)"></span>
+                            </li>
                         </ul>
                     </div>
-                </meeting-card>
-            </ol>
-            <div class="materials">
-                <assigned-list @label="Read before class" @prefix="due " :@items="week.readings"></assigned-list>
-                <hr webc:if="week.readings?.length">
-                <div class="group">
-                    <p class="label">Resources</p>
-                    <p class="pending" webc:if="!week.resources?.length">Nothing posted yet.</p>
-                    <ul role="list" webc:if="week.resources?.length">
-                        <li webc:for="resource of week.resources">
-                            <a :href="resource.href" @text="resource.title"></a>
-                        </li>
-                    </ul>
+                    <div class="group" data-group="due" webc:if="meeting.due?.length">
+                        <p class="label" @text="copy.due"></p>
+                        <ul role="list">
+                            <li webc:for="item of meeting.due" class="due-item" :data-kind="item.kind">
+                                <span class="due-chip" :data-kind="item.kind" @text="dueKindLabel(item.kind, $data.copy)"></span>
+                                <a webc:if="item.href" :href="item.href" @text="item.title"></a>
+                                <span webc:if="!item.href" @text="item.title"></span>
+                                <span class="check" @text="item.dueLabel"></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="group" data-group="materials" webc:if="meeting.slides || meeting.addendum || meeting.demos?.length">
+                        <p class="label" @text="copy.materials"></p>
+                        <ul role="list">
+                            <li webc:if="meeting.slides"><a class="arrow" data-slides :href="meeting.slides"><span @text="copy.slides"></span> <span aria-hidden="true">→</span></a></li>
+                            <li webc:if="meeting.addendum"><a class="arrow" :href="meeting.addendum"><span @text="copy.addendum"></span> <span aria-hidden="true">→</span></a></li>
+                            <li webc:for="demo of (meeting.demos ?? [])"><a class="arrow" :href="demo.url"><span @text="demo.title"></span> <span aria-hidden="true">→</span></a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </week-block>
+            </li>
+        </ol>
+        <footer class="week-resources" webc:if="week.readings?.length || week.resources?.length">
+            <p class="label" @text="copy.weekResources"></p>
+            <ul role="list">
+                <li data-reading webc:for="reading of (week.readings ?? [])" @attributes="reading.kind ? { class: 'due-item', 'data-kind': reading.kind } : {}">
+                    <span class="due-chip" webc:if="reading.kind" :data-kind="reading.kind" @text="dueKindLabel(reading.kind, $data.copy)"></span>
+                    <a :href="reading.href" @text="reading.title"></a>
+                    <span class="check" webc:if="detail(reading)" @text="detail(reading)"></span>
+                </li>
+                <li webc:for="resource of (week.resources ?? [])">
+                    <a :href="resource.href" @text="resource.title"></a>
+                </li>
+            </ul>
+        </footer>
+    </section>
 </div>
 
+<script>
+    /**
+     * <schedule-weeks>: mark finished weeks "Done" and the current one "Now",
+     * fill the "This week" card from that week's meetings, and let readers
+     * hide past weeks (every visit starts with all weeks shown). Dates compare
+     * in the campus zone, as <today-marker> does. The tools are
+     * screen only.
+     */
+    (() => {
+        try {
+            /** Today in the campus zone, as "YYYY-MM-DD". */
+            const campusToday = () => new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone });
+                        const { t } = window.ckCopy;
+            const root = document.querySelector(".schedule-weeks");
+            const tools = root?.querySelector("[data-schedule-tools]");
+            if (!root || !tools) return;
+            const today = campusToday();
+            const weeks = [...root.querySelectorAll(".week[data-week-dates]")]
+                .map((el) => ({ el, dates: el.dataset.weekDates.split(/\s+/).filter(Boolean).sort() }))
+                .filter(({ dates }) => dates.length);
+            const make = (tag, className, text) => {
+                const el = document.createElement(tag);
+                if (className) el.className = className;
+                if (text) el.textContent = text;
+                return el;
+            };
+            const flag = (el, text, kind) => el.querySelector(".week-head h3")?.after(make("span", `week-flag ${kind}`, text));
+            const current = weeks.find(({ dates }) => dates.at(-1) >= today);
+            for (const week of weeks) {
+                if (week.dates.at(-1) < today) {
+                    week.el.dataset.past = "";
+                    flag(week.el, t("schedule", "stateDone"), "done");
+                }
+            }
+            const started = Boolean(current && current.dates[0] <= today);
+            if (started) {
+                current.el.dataset.current = "";
+                flag(current.el, t("schedule", "stateNow"), "now");
+            }
+
+            const card = root.querySelector("[data-this-week]");
+            if (current && card) {
+                if (!started) card.querySelector("[data-this-label]").textContent = t("schedule", "upNext");
+                const link = card.querySelector("[data-this-link]");
+                link.href = `#${current.el.id}`;
+                link.textContent = current.el.querySelector(".week-head h3")?.textContent.trim() ?? "";
+                card.querySelector("[data-this-dates]").textContent = current.el.querySelector(".week-of")?.textContent.trim() ?? "";
+
+                // One column per meeting: when, a Today or Next flag, its first topics, its slides.
+                const days = card.querySelector("[data-this-days]");
+                const meetings = [...current.el.querySelectorAll(".meeting")];
+                const isos = meetings.map((meeting) => meeting.querySelector("[data-date]")?.dataset.date ?? "");
+                const next = isos.includes(today) ? "" : isos.filter((iso) => iso > today).sort()[0];
+                meetings.forEach((meeting, index) => {
+                    const day = make("li", "this-day");
+                    const when = make("p", "when");
+                    when.append(make("span", "weekday", meeting.querySelector(".weekday")?.textContent), " ", make("span", "date", meeting.querySelector(".date")?.textContent));
+                    if (isos[index] === today) when.append(" ", make("span", "day-flag", t("schedule", "today")));
+                    else if (isos[index] && isos[index] === next) when.append(" ", make("span", "day-flag", t("schedule", "next")));
+                    day.append(when);
+                    const none = meeting.querySelector(".no-class");
+                    if (none) day.append(make("p", "no-class", none.textContent.trim()));
+                    const topics = [...meeting.querySelectorAll(".topics > li")].slice(0, 2);
+                    if (topics.length) {
+                        const list = make("ul", "topics");
+                        list.setAttribute("role", "list");
+                        for (const topic of topics) list.append(make("li", "", topic.textContent.trim()));
+                        day.append(list);
+                    }
+                    const slides = meeting.querySelector("a[data-slides]");
+                    if (slides) {
+                        const line = make("p", "slides");
+                        const copy = slides.cloneNode(true);
+                        copy.removeAttribute("data-slides");
+                        line.append(copy);
+                        day.append(line);
+                    }
+                    days.append(day);
+                });
+
+                // The week's reading and due items, copied with their labels and chips.
+                const fill = (group, sources) => {
+                    const list = group.querySelector("ul");
+                    for (const source of sources) list.append(source.cloneNode(true));
+                    group.hidden = sources.length === 0;
+                    return sources.length;
+                };
+                const read = fill(card.querySelector("[data-this-read]"), [...current.el.querySelectorAll('[data-group="read"] li, .week-resources li[data-reading]')]);
+                const due = fill(card.querySelector("[data-this-due]"), [...current.el.querySelectorAll('[data-group="due"] li')]);
+                card.querySelector("[data-this-groups]").hidden = read + due === 0;
+                card.hidden = false;
+            }
+
+            // One label, "Hide past weeks"; the state is aria-pressed. Not saved: every visit starts with all weeks shown.
+            const button = tools.querySelector("[data-hide-past]");
+            const status = tools.querySelector("[data-schedule-status]");
+            const past = weeks.filter(({ el }) => el.hasAttribute("data-past"));
+            const apply = (hide) => {
+                button.setAttribute("aria-pressed", String(hide));
+                for (const { el } of past) el.hidden = hide;
+                status.textContent = hide ? t("schedule", "pastHidden", { count: past.length }) : t("schedule", "weeksDone", { done: past.length, total: weeks.length });
+            };
+            if (past.length) {
+                apply(false);
+                button.addEventListener("click", () => apply(button.getAttribute("aria-pressed") !== "true"));
+                tools.hidden = false;
+            }
+        } catch {
+            // Never let the marks break the scripts bundled after this one.
+        }
+    })();
+</script>
+
 <style webc:scoped>
-    /* The meetings down the left and the week's reading and materials on the
-       right. Stacks to a single column on narrow screens, so nothing scrolls
+    /* One bordered block per week: a tinted header band, then one row per
+       class meeting on a shared three-area grid (when, topics, and what that
+       class needs: reading, due items, materials), and a footer for the
+       week's own resources. Rows stack on narrow screens, so nothing scrolls
        sideways. */
     :host {
+        --week-grid: 8.5em minmax(0, 7fr) minmax(0, 5fr);
         display: grid;
         gap: var(--content-space);
     }
 
-    .week-body {
-        display: grid;
-        grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-
-        @media screen and (width <= 860px) {
-            grid-template-columns: minmax(0, 1fr);
-        }
-    }
-
-    .meetings {
+    ul,
+    ol {
         list-style: none;
         margin: 0;
         padding: 0;
     }
 
+    .label {
+        margin: 0 0 0.3em;
+        color: var(--color-text-muted);
+        font-size: var(--font-size-6);
+        font-weight: var(--font-weight--medium);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .week {
+        margin: 0;
+        padding: 0;
+        border: var(--thin-border-width) solid var(--color-border);
+        border-radius: var(--standard-border-radius);
+        overflow: hidden;
+    }
+
+    .week-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.25em 1em;
+        padding: 0.55em 1em;
+        background-color: var(--color-surface);
+        border-block-end: var(--border-width) solid var(--color-accent);
+
+        h3 {
+            margin: 0;
+            font-size: var(--font-size-4);
+            font-weight: var(--font-weight--medium);
+        }
+    }
+
+    .week-of {
+        margin: 0;
+        color: var(--color-text-muted);
+        font-size: max(var(--base-font-size), 0.9em);
+    }
+
+    /* The column heads, once per week: a booktabs header over the rows. */
+    .week-cols {
+        display: grid;
+        grid-template-columns: var(--week-grid);
+        gap: 0 1.5em;
+        padding: 0.5em 1em 0.4em;
+        border-block-end: var(--thin-border-width) solid var(--color-text);
+        color: var(--color-text-muted);
+        font-size: var(--font-size-6);
+        font-weight: var(--font-weight--medium);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+
+        @media (width <= 860px) {
+            display: none;
+        }
+    }
+
+    .meeting {
+        display: grid;
+        grid-template-columns: var(--week-grid);
+        gap: 0.6em 1.5em;
+        align-items: start;
+        padding: 0.9em 1em;
+
+        & + .meeting {
+            border-block-start: var(--thin-border-width) solid var(--color-border);
+        }
+
+        @media (width <= 860px) {
+            grid-template-columns: 8.5em minmax(0, 1fr);
+
+            .for-class {
+                grid-column: 2;
+            }
+        }
+
+        @media (width <= 520px) {
+            grid-template-columns: minmax(0, 1fr);
+
+            .for-class {
+                grid-column: auto;
+            }
+        }
+    }
+
+    .when {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+
+        @media (width <= 520px) {
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 0 0.5em;
+            align-items: baseline;
+        }
+    }
+
+    .weekday {
+        font-weight: var(--font-weight--semi-bold);
+    }
+
+    .date,
     .note,
     .no-class,
-    .pending,
-    .label {
+    .check {
         color: var(--color-text-muted);
         font-size: max(var(--base-font-size), 0.9em);
     }
@@ -86,70 +364,226 @@
         margin: 0;
     }
 
-    .topics {
-        list-style: none;
-        margin: 0;
-        padding: 0;
+    .topics li + li {
+        margin-block-start: 0.3em;
+    }
 
-        li + li {
-            margin-block-start: 0.25em;
+    /* What this class needs, always in the same order: reading, due items,
+       materials. Each group carries its own label, so the row still reads
+       when it stacks. */
+    .for-class {
+        display: grid;
+        gap: 0.8em;
+        font-size: max(var(--base-font-size), 0.94em);
+
+        @media (860px < width) {
+            padding-inline-start: 1.5em;
+            border-inline-start: var(--thin-border-width) solid var(--color-border);
+        }
+
+        /* Each link is an operable target: 44px tall (WCAG 2.5.5), so the rows carry the spacing. */
+        li a {
+            display: inline-flex;
+            align-items: center;
+            min-block-size: var(--target-min);
         }
     }
 
-    /* A meeting's demos sit under its deck links in a labelled region. */
-    .demos {
-        margin: 0.6em 0 0;
-        font-size: max(var(--base-font-size), 0.92em);
+    .check {
+        display: block;
+    }
+
+    .arrow {
+        color: var(--color-accent-text);
+        text-decoration: none;
+        font-weight: var(--font-weight--medium);
+
+        &:is(:hover, :focus-visible) {
+            text-decoration: underline;
+        }
+    }
+
+    /* The week's own reading and links, under every meeting. */
+    .week-resources {
+        padding: 0.8em 1em;
+        border-block-start: var(--thin-border-width) solid var(--color-border);
+        background-color: var(--color-surface);
+        font-size: max(var(--base-font-size), 0.94em);
 
         ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0 2em;
         }
 
-        li + li {
-            margin-block-start: 0.2em;
+        /* A link is an operable target: 44px tall (WCAG 2.5.5). */
+        a {
+            display: inline-flex;
+            align-items: center;
+            min-block-size: var(--target-min);
         }
     }
 
-    .materials {
+    /* The toolbar over the weeks: the count and the hide-past toggle. */
+    .schedule-tools {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: calc(var(--gutter) * 2) var(--content-space);
+
+        &[hidden] {
+            display: none;
+        }
+    }
+
+    .schedule-status {
+        margin: 0;
+        color: var(--color-text-muted);
+    }
+
+    .hide-past {
+        min-block-size: var(--target-min);
+        min-inline-size: var(--target-min);
+        padding-inline: 1.1em;
+        border: var(--thin-border-width) solid var(--color-border-strong);
+        border-radius: var(--radius-pill);
+        background: transparent;
+        color: var(--color-text);
+        font: inherit;
+        font-weight: var(--font-weight--semi-bold);
+        cursor: pointer;
+
+        &[aria-pressed="true"] {
+            border-color: var(--color-accent-secondary);
+            background-color: var(--color-accent-secondary);
+            color: var(--color-on-accent-secondary);
+            --color-focus-ring: var(--color-on-accent-secondary);
+        }
+    }
+
+    /* "This week": the current week's classes side by side, then what to
+       read and what is due. Filled and revealed by the script. */
+    .this-week {
+        display: grid;
+        gap: var(--content-space);
+        padding: calc(var(--content-space) * 1.4);
+        border: var(--border-width) solid var(--color-accent-secondary);
+        border-radius: calc(var(--standard-border-radius) * 4);
+        background-color: var(--color-surface-accent-secondary);
+
+        &[hidden] {
+            display: none;
+        }
+
+        h3 {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.2em 0.6em;
+            margin: 0;
+            font-size: var(--font-size-3);
+        }
+
+        .week-of {
+            font-weight: var(--font-weight);
+        }
+    }
+
+    .this-days {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 16em), 1fr));
+        gap: var(--content-space);
+    }
+
+    .this-day {
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
-        padding: 0.8em 1em;
-        border-inline-start: var(--thin-border-width) solid var(--color-border);
+        gap: 0.5em;
+        padding: 1em;
+        border: var(--thin-border-width) solid var(--color-border);
+        border-radius: calc(var(--standard-border-radius) * 2);
+        background-color: var(--color-page);
 
-        @media screen and (width <= 860px) {
-            border-inline-start: none;
-            border-block-start: var(--thin-border-width) solid var(--color-border);
+        .when {
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0 0.5em;
         }
 
-        ul {
-            list-style: none;
+        .slides {
             margin: 0;
-            padding: 0;
+            margin-block-start: auto;
+            padding-block-start: 0.3em;
+        }
+
+        .arrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35em;
+            min-block-size: var(--target-min);
+            font-weight: var(--font-weight--semi-bold);
+        }
+    }
+
+    .day-flag {
+        padding: 0.05em 0.65em;
+        border-radius: var(--radius-pill);
+        background-color: var(--color-accent-secondary);
+        color: var(--color-on-accent-secondary);
+        font-size: max(var(--base-font-size), 0.85em);
+        font-weight: var(--font-weight--semi-bold);
+    }
+
+    .this-groups {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 16em), 1fr));
+        gap: var(--content-space);
+        padding-block-start: var(--content-space);
+        border-block-start: var(--thin-border-width) solid var(--color-border-strong);
+
+        &[hidden],
+        [hidden] {
+            display: none;
         }
 
         li + li {
-            margin-block-start: 0.25em;
-        }
-
-        hr {
-            inline-size: 100%;
-            margin-block: 0.8em;
-            border: 0;
-            border-block-start: var(--thin-border-width) solid var(--color-border);
+            margin-block-start: 0.4em;
         }
     }
 
-    .label {
-        margin: 0 0 0.2em;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        font-size: var(--font-size-6);
+    .week[data-current] {
+        border-color: var(--color-accent-secondary);
+        box-shadow: inset var(--border-width) 0 0 var(--color-accent-secondary);
     }
 
-    .pending {
-        margin: 0;
+    .week-flag {
+        padding: 0.1em 0.65em;
+        border-radius: var(--radius-pill);
+        font-size: max(var(--base-font-size), 0.85em);
+        font-weight: var(--font-weight--semi-bold);
+
+        &.now {
+            background-color: var(--color-accent-secondary);
+            color: var(--color-on-accent-secondary);
+        }
+
+        &.done {
+            color: var(--color-text-muted);
+        }
+
+        &.done::before {
+            content: "✓ " / "";
+        }
+    }
+
+    /* Print: the weeks as a plain list, without the card, tools or heads. */
+    @media print {
+        .this-week,
+        .schedule-tools,
+        .week-cols {
+            display: none;
+        }
     }
 </style>

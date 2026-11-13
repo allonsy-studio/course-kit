@@ -1,6 +1,7 @@
 export default { title: "Site sections/glossary-entry" };
 
 export const Default = {
+	wrap: "<dl>{story}</dl>",
 	args: {
 		entry: {
 			term: "landmark",

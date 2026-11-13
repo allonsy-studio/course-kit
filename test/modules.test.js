@@ -97,3 +97,10 @@ test("scheduleKeyDates groups tests, milestones, the exam and no-class days, and
 	assert.equal(groups[1].items[0].label, "Plan");
 	assert.deepEqual(scheduleKeyDates([], undefined, undefined), []);
 });
+
+test("prepareWorksheet supplies the quiz wording a worksheet can override", () => {
+	const { copy } = prepareWorksheet({ title: "T", sections: [], copy: { seeResults: "Show my score" } }).worksheet;
+	assert.equal(copy.checkOne, "Check answer");
+	assert.equal(copy.notGraded, "Not graded");
+	assert.equal(copy.seeResults, "Show my score");
+});

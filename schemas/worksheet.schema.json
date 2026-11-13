@@ -73,6 +73,10 @@
         "$ref": "#/$defs/source"
       }
     },
+    "checkMode": {
+      "enum": ["question", "end"],
+      "description": "How a student checks answers. \"end\" (the default, or the site's `worksheets.checkMode`): only See results at the end. \"question\": also a Check answer button on each gradable question."
+    },
     "copy": {
       "type": "object",
       "description": "Overrides for the components' own wording — button labels, the privacy notice, the \"Answer:\" prefix. Every key has a course-neutral default in prepareWorksheet; set only what this worksheet says differently.",

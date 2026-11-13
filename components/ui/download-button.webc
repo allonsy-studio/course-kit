@@ -22,6 +22,7 @@
 		align-items: center;
 		justify-content: center;
 		gap: 0.4em;
+		min-block-size: var(--target-min);
 		padding: 0.6em 1.4em;
 		border: var(--thin-border-width) solid var(--color-border);
 		border-radius: var(--pill-border-radius);
@@ -37,15 +38,12 @@
 			color: var(--color-accent-text);
 		}
 
-		/* Focus gets the site's outline on top of the hover wash, so a
-		   keyboard user can tell the two apart. */
-		&:focus-visible {
-			outline: var(--outline-width) solid var(--color-accent);
-			outline-offset: var(--outline-offset);
-		}
-
 		.download-icon {
-			min-block-size: 1em;
+			flex: none;
+			inline-size: 1em;
+			block-size: 1em;
+			min-block-size: 0;
+			fill: none;
 		}
 	}
 </style>

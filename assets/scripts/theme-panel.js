@@ -4,13 +4,16 @@
  */
 
 const ENDPOINT = "/.course-kit/theme";
+
+/** `t("color", { n: 2 })`: a `themePanel` string with its `{name}` placeholders filled. */
+const t = (key, vars = {}) => window.ckCopy.t("themePanel", key, vars);
 const STORE = "course-kit:theme-panel";
 
 /** Plain-language groups for the most used tokens; every token is also under "Every color". */
 const GROUPS = [
-	{ legend: "Brand", tokens: [["accent", "Brand color"], ["accent-text", "Brand color for text"], ["on-accent", "Text on brand color"]] },
-	{ legend: "Page", tokens: [["page", "Page background"], ["surface", "Cards and panels"], ["border", "Lines and borders"]] },
-	{ legend: "Text", tokens: [["text", "Body text"], ["text-muted", "Secondary text"], ["link", "Links"]] },
+	{ legend: "brand", tokens: [["accent", "brandColor"], ["accent-text", "brandColorForText"], ["on-accent", "textOnBrandColor"], ["accent-secondary", "wayfindingColor"], ["on-accent-secondary", "textOnWayfindingColor"]] },
+	{ legend: "page", tokens: [["page", "pageBackground"], ["surface", "cardsAndPanels"], ["border", "linesAndBorders"]] },
+	{ legend: "text", tokens: [["text", "bodyText"], ["text-muted", "secondaryText"], ["link", "links"]] },
 ];
 
 /** Text and background pairs whose contrast is reported, shown beside the first token. */
@@ -336,36 +339,36 @@ class ThemePanel extends HTMLElement {
 		const supportsPopover = "popover" in HTMLElement.prototype;
 		root.innerHTML = `
 			<style>${STYLES}</style>
-			<button type="button" class="launcher" ${supportsPopover ? 'popovertarget="panel" popovertargetaction="show"' : ""}>Theme</button>
+			<button type="button" class="launcher" ${supportsPopover ? 'popovertarget="panel" popovertargetaction="show"' : ""}>${t("theme")}</button>
 			<aside class="panel" id="panel" ${supportsPopover ? 'popover="manual"' : "hidden"} aria-labelledby="title">
 				<details class="main" open>
-					<summary><h2 id="title">Theme</h2><span class="flag" hidden>Unsaved changes</span></summary>
+					<summary><h2 id="title">${t("theme")}</h2><span class="flag" hidden>${t("unsavedChanges")}</span></summary>
 					<div class="body">
 						<fieldset class="modes-set">
-							<legend>Preview</legend>
+							<legend>${t("preview")}</legend>
 							<div class="modes">
-								<label><input type="radio" name="mode" value="light"> Light</label>
-								<label><input type="radio" name="mode" value="dark"> Dark</label>
+								<label><input type="radio" name="mode" value="light"> ${t("light")}</label>
+								<label><input type="radio" name="mode" value="dark"> ${t("dark")}</label>
 							</div>
 						</fieldset>
-						${GROUPS.map((group) => this.fieldset(group.legend, group.tokens.filter(([key]) => this.roles[key]))).join("")}
+						${GROUPS.map((group) => this.fieldset(t(group.legend), group.tokens.filter(([key]) => this.roles[key]).map(([key, label]) => [key, t(label)]))).join("")}
 						<details class="advanced" name="theme-panel-section">
-							<summary>Every color</summary>
+							<summary>${t("everyColor")}</summary>
 							<div>
-								${this.fieldset("All tokens", this.tokens.map((token) => [token.key, token.role]), true)}
-								${this.context === "site" ? "<fieldset><legend>Gradient</legend><div class=\"stops\"></div><button type=\"button\" data-action=\"add-stop\">Add a color</button></fieldset>" : ""}
+								${this.fieldset(t("allTokens"), this.tokens.map((token) => [token.key, token.role]), true)}
+								${this.context === "site" ? `<fieldset><legend>${t("gradient")}</legend><div class="stops"></div><button type="button" data-action="add-stop">${t("addAColor")}</button></fieldset>` : ""}
 							</div>
 						</details>
 						<menu>
-							<li><button type="button" data-action="undo">Undo</button></li>
-							<li><button type="button" data-action="reset">Reset</button></li>
-							<li><button type="button" class="save" data-action="save">Save</button></li>
-							<li><button type="button" data-action="download">Download</button></li>
+							<li><button type="button" data-action="undo">${t("undo")}</button></li>
+							<li><button type="button" data-action="reset">${t("reset")}</button></li>
+							<li><button type="button" class="save" data-action="save">${t("save")}</button></li>
+							<li><button type="button" data-action="download">${t("download")}</button></li>
 						</menu>
 						<output class="status" role="status"></output>
 					</div>
 				</details>
-				<button type="button" class="close" aria-label="Hide the theme panel" ${supportsPopover ? 'popovertarget="panel" popovertargetaction="hide"' : ""}>&times;</button>
+				<button type="button" class="close" aria-label="${t("hideTheThemePanel")}" ${supportsPopover ? 'popovertarget="panel" popovertargetaction="hide"' : ""}>&times;</button>
 			</aside>
 			<div class="probe" aria-hidden="true"></div>`;
 
@@ -415,7 +418,7 @@ class ThemePanel extends HTMLElement {
 			if (input.dataset.stop !== undefined) return this.setStop(Number(input.dataset.stop), input.value.trim());
 			if (!input.dataset.key) return;
 			const value = input.value.trim();
-			input.setCustomValidity(CSS.supports("color", value) ? "" : "Not a CSS color");
+			input.setCustomValidity(CSS.supports("color", value) ? "" : t("notACssColor"));
 			if (input.checkValidity()) this.set(input.dataset.key, value);
 			else input.reportValidity();
 		});
@@ -437,7 +440,7 @@ class ThemePanel extends HTMLElement {
 			return `<div class="row">
 				<label for="${id}">${name}</label>
 				<input type="color" id="${id}" data-key="${key}" title="${this.roles[key]}">
-				<input type="text" data-key="${key}" aria-label="${name}, CSS value" spellcheck="false" autocomplete="off">
+				<input type="text" data-key="${key}" aria-label="${t("cssValue", { name })}" spellcheck="false" autocomplete="off">
 				${roles ? `<span class="role">${label}</span>` : `<output for="${id}" data-contrast="${key}"></output>`}
 			</div>`;
 		});
@@ -532,7 +535,7 @@ class ThemePanel extends HTMLElement {
 		this.remember();
 		this.draft = clone(this.saved);
 		this.changed();
-		this.say("Back to the saved theme.");
+		this.say(t("backToTheSaved"));
 	}
 
 	changed() {
@@ -591,7 +594,7 @@ class ThemePanel extends HTMLElement {
 			const value = ratio(over(this.resolve(`var(--color-${text})`, mode), back), back);
 			const pass = value >= minimum;
 			output.dataset.pass = String(pass);
-			output.textContent = `${value.toFixed(1)} : 1 on ${background === "page" ? "the page" : "the brand color"}, ${pass ? "passes" : `below ${minimum} : 1`}`;
+			output.textContent = t("contrast", { ratio: value.toFixed(1), ground: background === "page" ? t("thePage") : t("theBrandColor"), verdict: pass ? t("passes") : t("below", { minimum }) });
 		}
 		const stops = root.querySelector(".stops");
 		if (stops) {
@@ -599,9 +602,9 @@ class ThemePanel extends HTMLElement {
 			stops.innerHTML = list
 				.map(
 					(stop, index) => `<div class="stop">
-						<label for="stop-${index}">Color ${index + 1}</label>
+						<label for="stop-${index}">${t("color", { n: index + 1 })}</label>
 						<input type="text" id="stop-${index}" data-stop="${index}" value="${toCss(stop)}" spellcheck="false" autocomplete="off">
-						<button type="button" data-action="remove-stop" data-stop="${index}" aria-label="Remove color ${index + 1}" ${list.length <= 1 ? "disabled" : ""}>&minus;</button>
+						<button type="button" data-action="remove-stop" data-stop="${index}" aria-label="${t("removeColor", { n: index + 1 })}" ${list.length <= 1 ? "disabled" : ""}>&minus;</button>
 					</div>`,
 				)
 				.join("");
@@ -613,7 +616,7 @@ class ThemePanel extends HTMLElement {
 	}
 
 	async save() {
-		this.say("Saving…");
+		this.say(t("saving"));
 		try {
 			const response = await fetch(ENDPOINT, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(this.draft) });
 			const result = await response.json();
@@ -622,9 +625,9 @@ class ThemePanel extends HTMLElement {
 			this.history = [];
 			write(sessionStorage, "draft", undefined);
 			this.refresh();
-			this.say(`Saved to ${result.file}. The site is rebuilding.`);
+			this.say(t("savedToThe", { file: result.file }));
 		} catch (error) {
-			this.say(`Not saved: ${error.message}`);
+			this.say(t("notSaved", { message: error.message }));
 		}
 	}
 
@@ -633,7 +636,7 @@ class ThemePanel extends HTMLElement {
 		const link = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: "theme.json" });
 		link.click();
 		URL.revokeObjectURL(link.href);
-		this.say(`Downloaded. Put it in ${this.file.replace(/theme\.json$/, "")} to keep it.`);
+		this.say(t("downloadedPutItIn", { folder: this.file.replace(/theme\.json$/, "") }));
 	}
 
 	say(message) {

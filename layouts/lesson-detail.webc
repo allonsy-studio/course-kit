@@ -1,83 +1,109 @@
 ---
 layout: "base"
-title: "Instructor lesson plan"
 ---
+<script webc:setup>
+	const copy = $data.copy.lessonDetail;
+	const code = (text) => `<code>${String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;")}</code>`;
+	const strong = (text) => `<strong>${String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;")}</strong>`;
+</script>
 
-
+<div class="lesson-layout">
+<nav class="lesson-outline" aria-labelledby="lesson-outline-heading">
+	<p class="rail-label" id="lesson-outline-heading" @text="fill(copy.week, { week: $data.lesson.week })"></p>
+	<ol role="list">
+		<li webc:for="day of ($data.lessons ?? []).filter((item) => item.week === $data.lesson.week)">
+			<a :href="`/lessons/week-${day.week}/day-${day.day}/`" @attributes="({ 'aria-current': day.day === $data.lesson.day ? 'page' : undefined })">
+				<span @text="day.display"></span>
+				<span class="muted" webc:if="day.noClass" @text="copy.noClass"></span>
+			</a>
+		</li>
+	</ol>
+</nav>
 <article class="lesson-plan content-column">
 	<header class="stacked">
-		<nav class="lesson-nav" aria-label="Lesson navigation">
-			<a href="/lessons/">All lessons</a>
-			<a :href="$data.pagination.href.previous" webc:if="$data.pagination.href.previous">Previous day</a>
-			<a :href="$data.pagination.href.next" webc:if="$data.pagination.href.next">Next day</a>
+		<nav class="lesson-nav" :aria-label="copy.lessonNavigation">
+			<a href="/lessons/" @text="copy.allLessons"></a>
+			<a :href="$data.pagination.href.previous" webc:if="$data.pagination.href.previous" @text="copy.previousDay"></a>
+			<a :href="$data.pagination.href.next" webc:if="$data.pagination.href.next" @text="copy.nextDay"></a>
 		</nav>
 		<eyebrow @text="$data.title"></eyebrow>
-		<h1 class="lesson-heading">Week <span @text="$data.lesson.week"></span>, Day <span @text="$data.lesson.day"></span></h1>
+		<h1 class="lesson-heading" @text="fill(copy.weekDay, { week: $data.lesson.week, day: $data.lesson.day })"></h1>
 		<p class="lesson-when separators">
 			<span @text="$data.lesson.display"></span>
 			<span @text="timeOfDay($data.lesson.time)"></span>
-			<span webc:if="$data.lesson.meeting">Class meeting #<span @text="$data.lesson.meeting"></span> of the term</span>
+			<span webc:if="$data.lesson.meeting" @text="fill(copy.classMeetingOfThe, { meeting: $data.lesson.meeting })"></span>
 		</p>
 	</header>
 
 	<callout webc:if="$data.lesson.noClass">
-		<p>No class on <span @text="$data.lesson.noClass"></span>. Use this day to prep the next lesson or catch up on grading.</p>
+		<p @text="fill(copy.noClassOn, { reason: $data.lesson.noClass })"></p>
 	</callout>
 
 	<template webc:nokeep webc:if="!$data.lesson.noClass">
-		<p class="focus"><strong>Focus:</strong> <span @text="$data.lesson.focus"></span></p>
+		<p class="focus"><strong @text="copy.focus"></strong> <span @text="$data.lesson.focus"></span></p>
 		<callout :type="'warn'" webc:if="$data.lesson.substitution">
-			<p>This meeting runs a <strong @text="$data.lesson.substitution"></strong> schedule (college-wide) — plan the substituted day's session, not this weekday's usual rhythm.</p>
+			<p @raw="fill(copy.thisMeetingRunsA, { weekday: strong($data.lesson.substitution) })"></p>
 		</callout>
 		<callout :type="'warn'" webc:if="$data.lesson.testWeek">
-			<p>A test is scheduled this week — confirm day, reserve class time, and remind students at least one meeting ahead.</p>
+			<p @text="copy.aTestIsScheduledThis"></p>
 		</callout>
 
 		<section aria-labelledby="topics-heading">
-			<h2 id="topics-heading">This week's topics</h2>
+			<h2 id="topics-heading" @text="copy.thisWeeksTopics"></h2>
 			<ul>
 				<li webc:for="topic of $data.lesson.topics" @raw="topic"></li>
 			</ul>
 		</section>
 
 		<section aria-labelledby="before-heading">
-			<h2 id="before-heading">Before class</h2>
+			<h2 id="before-heading" @text="copy.beforeClass"></h2>
 			<ul class="checklist" role="list">
-				<li webc:if="$data.lesson.readings?.length || $data.lesson.meetingReadings?.length">Review the readings (see materials below)</li>
-				<li>Prepare/update slides and live-demo code</li>
-				<li webc:for="deck of $data.lessonDecks">Print or open the <a :href="deck.notesUrl">speaker notes sheet</a></li>
-				<li>Stage starter files or lab handout if needed</li>
-				<li>Check <span @text="$data.site.lms"></span> for student questions or submissions</li>
+				<li webc:if="$data.lesson.readings?.length || $data.lesson.meetingReadings?.length" @text="copy.reviewTheReadingsSee"></li>
+				<li @text="copy.prepareupdateSlidesAndLivedemo"></li>
+				<li webc:for="deck of $data.lessonDecks" @raw="fill(copy.printOrOpenThe, { link: `<a href='${deck.notesUrl}'>${copy.speakerNotesSheet}</a>` })"></li>
+				<li @text="copy.stageStarterFilesOr"></li>
+				<li @text="fill(copy.checkForStudentQuestions, { lms: $data.site.lms })"></li>
 			</ul>
 		</section>
 
 		<section aria-labelledby="outline-heading">
-			<h2 id="outline-heading">Lesson outline (<span @text="$data.lesson.minutes"></span> minutes)</h2>
+			<h2 id="outline-heading" @text="fill(copy.lessonOutlineMinutes, { minutes: $data.lesson.minutes })"></h2>
 			<table>
 				<thead>
-					<tr><th scope="col">Time</th><th scope="col">Segment</th></tr>
+					<tr><th scope="col" @text="copy.time"></th><th scope="col" @text="copy.segment"></th></tr>
 				</thead>
 				<tbody>
 					<tr webc:for="row of $data.lesson.outline">
-						<td @text="`${row.minutes} min`"></td>
+						<td @text="fill(copy.min, { minutes: row.minutes })"></td>
 						<td @text="row.segment"></td>
 					</tr>
 				</tbody>
 			</table>
 		</section>
 
-		<section aria-labelledby="materials-heading">
-			<h2 id="materials-heading">Materials &amp; links</h2>
-			<link-section webc:for="section of $data.lessonMaterials" :@title="section.title" :@items="section.items" :@empty="section.empty"></link-section>
-		</section>
-
 		<section aria-labelledby="after-heading">
-			<h2 id="after-heading">After class</h2>
+			<h2 id="after-heading" @text="copy.afterClass"></h2>
 			<ul class="checklist" role="list">
-				<li>Post handouts to <code>content/resources/</code> and link them in <code>_data/schedule.json</code>'s <code>resources[]</code> for the week; the slide deck publishes itself from <code>content/slides/</code>, so it only needs a link there if students should see it from the schedule</li>
-				<li>Note anything not covered and roll it into the next lesson</li>
-				<li>Post or grade lab/homework in <span @text="$data.site.lms"></span> as needed</li>
+				<li @raw="fill(copy.postHandoutsToAnd, { resources: code('content/resources/'), schedule: code('_data/schedule.json'), list: code('resources[]'), slides: code('content/slides/') })"></li>
+				<li @text="copy.noteAnythingNotCovered"></li>
+				<li @text="fill(copy.postOrGradeLabhomework, { lms: $data.site.lms })"></li>
 			</ul>
 		</section>
 	</template>
 </article>
+<aside class="lesson-rail" :aria-label="copy.lessonTools" webc:if="!$data.lesson.noClass">
+	<nav aria-labelledby="on-this-page-heading">
+		<p class="rail-label" id="on-this-page-heading" @text="copy.onThisPage"></p>
+		<ul role="list">
+			<li><a href="#topics-heading" @text="copy.thisWeeksTopics"></a></li>
+			<li><a href="#before-heading" @text="copy.beforeClass"></a></li>
+			<li><a href="#outline-heading" @text="copy.lessonOutline"></a></li>
+			<li><a href="#after-heading" @text="copy.afterClass"></a></li>
+		</ul>
+	</nav>
+	<section aria-labelledby="materials-heading">
+		<h2 class="rail-label" id="materials-heading" @text="copy.materialsLinks"></h2>
+		<link-section webc:for="section of $data.lessonMaterials" :@title="section.title" :@items="section.items" :@empty="section.empty"></link-section>
+	</section>
+</aside>
+</div>

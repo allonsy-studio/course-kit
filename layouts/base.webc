@@ -39,7 +39,7 @@
 </head>
 
 <body>
-    <a href="#main-content" id="to-content" class="sr-only">Skip to content</a>
+    <a href="#main-content" id="to-content" class="sr-only" @text="$data.copy.base.skipToContent"></a>
 
     <masthead></masthead>
 
@@ -66,9 +66,12 @@
             });
         </script>
 
+        <script type="application/json" id="copy-data" webc:keep @raw="copyJson($data)"></script>
+        <script webc:keep @raw="copyReader()"></script>
         <script type="module" webc:keep @raw="getBundle('js')"></script>
     </footer>
     <script type="module" src="/js/email.js" webc:keep></script>
+    <script type="module" src="/js/copy.js" webc:keep></script>
 	<theme-panel webc:if="$data.themePanel" context="site"></theme-panel>
 	<script type="module" src="/js/theme-panel.js" webc:keep webc:if="$data.themePanel"></script>
 </body>

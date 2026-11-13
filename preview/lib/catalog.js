@@ -3,6 +3,7 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 
 import { readHeader } from "../../scripts/component-docs.js";
+import { markdown } from "../../lib/markdown.js";
 import { TOKENS } from "../../lib/theme.js";
 import { matrixCells, PROPS, renderMatrix, renderStory, SLOTS } from "./render-story.js";
 
@@ -62,6 +63,21 @@ async function readStories(file) {
 }
 
 /**
+ * A story's frame: the component, inside the page context the story gives it.
+ * `wrap` is markup with `{story}` where the component goes (a `#today` target for the Today link, a list for a `<dt>`);
+ * `note` is a line of explanation shown above it, for a component whose real output depends on the page or the reader's clock.
+ * `empty` marks a story whose frame is meant to render nothing visible, and says why.
+ * @param {string} markup
+ * @param {{ wrap?: string, note?: string, empty?: string }} story
+ */
+function framed(markup, story) {
+	// A frame that renders nothing visible fails the audit, unless its story says why: `empty: "reason"`.
+	if (story.empty) return `${markup}\n<template data-story-empty>${story.empty}</template>`;
+	const wrapped = story.wrap ? story.wrap.replace("{story}", () => markup) : markup;
+	return story.note ? `<p class="story-note" style="margin: 0 0 1rem; padding: 0.5rem 0.75rem; border-inline-start: 3px solid var(--color-accent); font-size: 0.9em">${story.note}</p>\n${wrapped}` : wrapped;
+}
+
+/**
  * The argTypes the header derives: each prop and slot, with its type and description.
  * @param {ReturnType<typeof readHeader>} header
  */
@@ -103,11 +119,12 @@ export async function buildCatalog() {
 				const args = { ...baseline, ...story.args };
 				const frameUrl = `/frames/${group.id}/${tag}/${kebabCase(story.exportName)}/`;
 				const markup = renderStory(tag, args, argTypes);
-				frames.push({ groupId: group.id, url: frameUrl, title: `${tag}: ${story.name ?? startCase(story.exportName)}`, source: markup });
+				frames.push({ groupId: group.id, url: frameUrl, title: `${tag}: ${story.name ?? startCase(story.exportName)}`, source: framed(markup, story) });
 				return { name: story.name ?? startCase(story.exportName), frameUrl, source: markup, language: "html", height: story.height ?? csf.meta.height };
 			});
 
-			const cells = csf ? matrixCells({ args: baseline, argTypes }, csf.stories.find((story) => story.exportName === "Default")) : [];
+			// `matrixCell(args, index)` in a story file's default export makes each cell's args its own (a heading or landmark name that must be unique on the page).
+			const cells = (csf ? matrixCells({ args: baseline, argTypes }, csf.stories.find((story) => story.exportName === "Default")) : []).map((cell, index) => (csf.meta.matrixCell ? { ...cell, args: csf.meta.matrixCell(cell.args, index) } : cell));
 			if (cells.length) {
 				const matrixUrl = `/frames/${group.id}/${tag}/matrix/`;
 				frames.push({ groupId: group.id, url: matrixUrl, title: `${tag}: matrix`, source: renderMatrix(tag, cells, argTypes) });
@@ -130,5 +147,8 @@ export async function buildCatalog() {
 			});
 		}
 	}
+	// A code fence is Markdown, not a component, so it has a frame of its own: the figure the renderer writes, with its copy button.
+	const fences = '```js title="tag-filter.js"\nconst tags = ["html", "css"];\nconst first = tags[0];\nconsole.log(first);\n```\n\n```bash\n$ yarn install\n```\n';
+	frames.push({ groupId: "ui", url: "/frames/ui/code-block/default/", title: "code-block: sample", source: markdown.render(fences, { page: { inputPath: "./content/guide.md" } }) });
 	return { groups: GROUPS.map((group) => ({ ...group, components: components.filter((c) => c.group === group.id) })), components, frames };
 }

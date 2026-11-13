@@ -15,7 +15,7 @@
 		<p class="sig" webc:if="entry.sig" @raw="entry.sig"></p>
 		<p class="definition" @raw="entry.definition"></p>
 		<p class="meta" webc:if="entry.meta" @raw="entry.meta"></p>
-		<p class="example" webc:if="entry.example"><span class="label">Example</span> <span @raw="entry.example"></span></p>
+		<p class="example" webc:if="entry.example"><span class="label" @text="$data.copy.glossary.example"></span> <span @raw="entry.example"></span></p>
 		<ul class="tags" role="list">
 			<li webc:for="tag of entry.tags.test" data-kind="test" @text="tag.label"></li>
 			<li webc:for="tag of entry.tags.chapter" data-kind="chapter" @text="tag.label"></li>
@@ -23,7 +23,8 @@
 			<li webc:for="tag of entry.tags.topic" data-kind="topic" @text="tag.label"></li>
 		</ul>
 		<p class="links">
-			<a webc:for="place of entry.taught" :href="place.href"><span @text="`Week ${place.week} · ${place.weekday}, slide ${place.slide}`"></span></a>
+			<span class="label" webc:if="entry.taught?.length || entry.ref" @text="$data.copy.glossary.taughtIn"></span>
+			<a webc:for="place of entry.taught" :href="place.href"><span @text="fill($data.copy.glossary.slideRef, { week: place.week, weekday: place.weekday, slide: place.slide })"></span></a>
 			<a webc:if="entry.ref" :href="entry.ref.href" @text="entry.ref.label"></a>
 		</p>
 	</dd>

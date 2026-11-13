@@ -8,7 +8,7 @@
 	 * @prop {object[]} [weeks] `scheduleWeeks` output, for the month links;
 	 *   built from the page when left out
 	 */
-	const defaultGroups = scheduleKeyDates($data.lessons, $data.project, $data.schedule?.finalExam);
+	const defaultGroups = scheduleKeyDates($data.lessons, $data.project, $data.schedule?.finalExam, $data.copy);
 	const defaultWeeks = scheduleWeeks($data.lessons, $data.schedule?.weeks, $data.collections?.deck, $data.demos);
 </script>
 <header webc:root="override" class="schedule-overview">
@@ -17,7 +17,7 @@
 		<span @text="$data.term.label"></span>
 		<span @text="$data.course.code"></span>
 	</eyebrow>
-	<h1>Schedule</h1>
+	<h1 @text="$data.copy.scheduleOverview.schedule"></h1>
 	<p class="meets" webc:if="$data.schedule?.meetings?.days?.length">
 		<span @text="$data.schedule.meetings.days.length > 1 ? `${$data.schedule.meetings.days.slice(0, -1).join(', ')} & ${$data.schedule.meetings.days.at(-1)}` : $data.schedule.meetings.days[0]"></span>
 		<span webc:if="$data.schedule.meetings.time" @text="$data.schedule.meetings.time"></span>
@@ -25,7 +25,7 @@
 	</p>
 
 	<section class="key-dates" aria-labelledby="schedule-key-dates" webc:if="(groups ?? defaultGroups)?.length">
-		<h2 id="schedule-key-dates">Key dates</h2>
+		<h2 id="schedule-key-dates" @text="$data.copy.scheduleOverview.keyDates"></h2>
 		<div class="group" webc:for="group of (groups ?? defaultGroups)">
 			<h3 @text="group.title"></h3>
 			<ul role="list">
@@ -38,10 +38,10 @@
 		</div>
 	</section>
 
-	<nav class="schedule-jump" aria-label="Jump to" webc:if="scheduleMonths(weeks ?? defaultWeeks).length">
-		<h2>Jump to</h2>
+	<nav class="schedule-jump" :aria-label="$data.copy.scheduleOverview.jumpTo" webc:if="scheduleMonths(weeks ?? defaultWeeks).length">
+		<h2 @text="$data.copy.scheduleOverview.jumpTo"></h2>
 		<ul role="list">
-			<li><today-link></today-link></li>
+			<li><today-link :@label="$data.copy.schedule.today"></today-link></li>
 			<li webc:for="entry of scheduleMonths(weeks ?? defaultWeeks)"><a :href="`#week-${entry.week}`" @text="entry.name"></a></li>
 		</ul>
 	</nav>

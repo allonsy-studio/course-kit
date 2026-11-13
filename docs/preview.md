@@ -39,7 +39,8 @@ export const Default = { args: { default: "<p>Bring a laptop.</p>" } };
 - `args` are the component's props and slots. A string prop is written `@name="…"`, `true` as a bare `@name`, and any other value (an array, an object) as `:@name`. The `default` arg is the content between the tags; any other slot is a `<template slot="name">`.
 - An arg must be a prop or slot in the component's header. A prop the header does not list (such as `href` on `<arrow-link>`) is declared under `argTypes` in the default export.
 - `export const Name = { name: "A better title", args }` adds more examples. `height` in the default export gives the frame a minimum height in pixels.
-- A component that reads the course's data (`<masthead>`, `<grading>`) needs no args: its story is `export const Default = {}`, and it shows the starter course.
+- `wrap` puts the component inside page context the story needs: markup with `{story}` where the component goes. The Today link story uses it to supply the `#today` element the link points at. `note` adds a line above the frame saying what it shows, for a component whose output depends on the page or the date. `empty: "reason"` marks a story whose frame is meant to show nothing visible; any other frame with no visible text or control fails the audit (`visible.cy.js`).
+- A component that reads the course's data (`<masthead>`, `<grading>`) needs no args: its story is `export const Default = {}`, and it shows the starter course. If the starter has no such data (no `course.documents`, no vocab slides), the story passes it as args (`<course-documents>`, `<demo-weeks>`), or the preview adds sample content outside the input folder (`preview/_slides` holds the glossary's two vocab slides).
 - Practice components read a worksheet from the page. The preview supplies the sample worksheet at `preview/stories/practice/sample.worksheet.md`; a story takes a question from it with `question("2.1")`.
 
 ## How it is built
