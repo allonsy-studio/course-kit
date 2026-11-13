@@ -57,6 +57,7 @@ You need [Node.js](https://nodejs.org) 22 or newer, and a terminal.
 | Make a component accessible, and know what is checked | [Accessibility](docs/accessibility.md) |
 | See what is decided but not done | [Backlog](docs/backlog.md) |
 | Fix an error message | [Troubleshooting](docs/troubleshooting.md) |
+| Pin a version, or cut a release | [Releasing](docs/releasing.md) |
 
 ## Words used here
 
@@ -77,7 +78,7 @@ yarn schema    # rewrite the theme schema and docs/tokens.md from lib/theme.js
 yarn preview   # the landing site and every component rendered, at http://localhost:8080
 ```
 
-How the code is organized, and the quirks it works around, is in [`docs/components.md`](docs/components.md) and [`docs/internals.md`](docs/internals.md). [`docs/testing.md`](docs/testing.md) says how to check a change against a real course.
+How the code is organized, and the quirks it works around, is in [`docs/components.md`](docs/components.md) and [`docs/internals.md`](docs/internals.md). [`docs/testing.md`](docs/testing.md) says how to check a change against a real course. [`docs/releasing.md`](docs/releasing.md) says how a change becomes a release, and how a course should depend on the kit.
 
 | Path | What |
 |---|---|
