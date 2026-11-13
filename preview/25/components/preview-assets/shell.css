@@ -632,7 +632,7 @@ oss-credit a {
 /* The frame renders at three times the card's width and is scaled down to fit. */
 .example-frame {
 	position: relative;
-	aspect-ratio: 16 / 10;
+	aspect-ratio: 4 / 5;
 	overflow: hidden;
 	border: 1px solid var(--p-line);
 	border-radius: 6px;

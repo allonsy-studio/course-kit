@@ -75,7 +75,7 @@ norn-card > norn-icon {
 
 .example-frame {
 	position: relative;
-	aspect-ratio: 16 / 10;
+	aspect-ratio: 4 / 5;
 	overflow: hidden;
 	border: 1px solid color-mix(in oklab, currentcolor 25%, transparent);
 	border-radius: 6px;
