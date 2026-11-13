@@ -1,6 +1,6 @@
 {
   "name": "@allons-y/course-kit",
-  "version": "0.1.0-alpha.0",
+  "version": "0.1.0",
   "description": "Shared layouts, components, styles and build helpers for Eleventy course sites.",
   "license": "MPL-2.0",
   "author": "Cassondra Roberts <castastrophe@users.noreply.github.com> (https://allons-y.studio)",
