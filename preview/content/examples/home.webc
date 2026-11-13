@@ -1,0 +1,12 @@
+---
+layout: base
+title: Home
+permalink: /examples/home/index.html
+example: true
+---
+
+<h1 class="sr-only" @text="$data.course.code + ': ' + $data.course.name"></h1>
+<course-now></course-now>
+<course-summary></course-summary>
+<policies></policies>
+<course-documents></course-documents>

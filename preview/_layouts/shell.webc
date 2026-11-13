@@ -26,7 +26,7 @@
 		</norn-header>
 		<preview-overrides></preview-overrides>
 		<div class="app">
-			<preview-nav :@groups="$data.catalog.groups"></preview-nav>
+			<preview-nav :@groups="$data.catalog.groups" :@current="$data.page.url"></preview-nav>
 			<main id="main" tabindex="-1"><template webc:nokeep @raw="content"></template></main>
 		</div>
 		<norn-footer>

@@ -1,0 +1,10 @@
+---
+layout: base
+title: Glossary
+permalink: /examples/glossary/index.html
+example: true
+---
+
+<article class="content-column wide">
+	<glossary></glossary>
+</article>
