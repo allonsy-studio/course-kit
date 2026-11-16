@@ -21,3 +21,11 @@ test("every link directly in a light table's cell is a 44px target, not only a l
 	assert.match(css, /\.table-light \{.*?:where\(td, th\) > a \{ display: inline-flex; align-items: center; min-block-size: var\(--target-min\); \}/);
 	assert.doesNotMatch(css, /:where\(td, th\) > a:only-child/);
 });
+
+test("on a phone a document's page comes before its contents list, as it does in the source", () => {
+	const phone = /@media screen and \(width <= 900px\) \{ grid-template-columns: minmax\(0, 1fr\); grid-template-areas: "page" "contents";/;
+	assert.match(css, phone);
+	assert.match(css, /\.doc-layout\[data-contents="true"\] \{.*?grid-template-areas: "contents page";/, "beside the page on a wide screen");
+	const layout = fs.readFileSync(path.join(packageRoot, "layouts", "document.webc"), "utf8");
+	assert.ok(layout.indexOf('class="content-column"') < layout.indexOf('class="doc-contents"'), "the page is first in the source, so a screen reader reaches its h1 before the list");
+});

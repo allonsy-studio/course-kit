@@ -2,7 +2,7 @@
 layout: "base"
 ---
 <div class="doc-layout" :data-contents="toc(content) ? 'true' : 'false'">
-	<!-- The page comes first in the source, so its h1 is the first thing a screen reader reaches; the contents rail is placed beside or above it by the grid. -->
+	<!-- The page comes first in the source, so its h1 is the first thing a screen reader reaches; the contents rail is placed beside it, or after it on a phone, by the grid. -->
 	<article class="content-column" @raw="content"></article>
 	<div class="doc-contents" webc:if="toc(content)">
 		<p class="rail-label" id="doc-contents-label" @text="$data.copy.document.contents"></p>

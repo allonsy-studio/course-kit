@@ -985,7 +985,8 @@ eyebrow + :where(h1, h2, h3, h4, h5, h6) {
    A contents column beside a document (and beside the syllabus, whose own
    component sets where it sits), and an outline and a tools rail beside
    a lesson plan. Only the syllabus's list is sticky, and each falls to one
-   column on a narrow screen, the side columns first. */
+   column on a narrow screen: a document's contents go after the page, the
+   lesson plan's side columns first. */
 .rail-label {
 	margin: 0 0 0.5em;
 	color: var(--color-text-muted);
@@ -1013,14 +1014,19 @@ body:has(.doc-layout[data-contents="true"], .lesson-layout) {
 
 .doc-layout[data-contents="true"] {
 	grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
-	/* The page is first in the source; the grid puts the contents beside it, or above it on a narrow screen. */
+	/* The page is first in the source; the grid puts the contents beside it, or after it on a narrow screen, so the h1 is the first thing on a phone and the visual order is the reading order. */
 	grid-template-areas: "contents page";
 
 	@media screen and (width <= 900px) {
 		grid-template-columns: minmax(0, 1fr);
 		grid-template-areas:
-			"contents"
-			"page";
+			"page"
+			"contents";
+
+		> .doc-contents {
+			margin-block-start: var(--section-space);
+			border-block-start: var(--thin-border-width) solid var(--color-border);
+		}
 	}
 
 	@media print {
