@@ -39,7 +39,7 @@ Findings that need a design decision, or that come from a story showing a compon
 
 - **Not the kit's** (the preview shell and the landing page use the Norn design system): Norn's table header text, current-page link and card text sit at 6.3 to 6.5:1.
 - **Stories**: a story renders a component alone, so `glossary-entry` and `demo-weeks` show `<dt>` and `<dd>` with no `<dl>`, `meeting-card` an `<li>` with no list, and several components a heading with no heading above it.
-- **Standalone links and summaries under 44px** (`KNOWN_TARGETS`): links in lists (assigned items, link lists, the footer, readings, glossary slide links, the instructor's email) and disclosure summaries (policies, Show the answer) are text-height. Making each a 44px row changes the density of every list, which is a design call.
+- **Standalone links and summaries under 44px** (`KNOWN_TARGETS`): links in lists (assigned items, link lists, the footer, readings, glossary slide links, and the message and blog rows of the instructor's fact list, whose 44px form is the opt-in icon links) and disclosure summaries (policies, Show the answer) are text-height. Making each a 44px row changes the density of every list, which is a design call.
 - **The selected pill** (`.switch-option`) was measured once with a system accent behind white text; it needs a look in a real browser.
 
 ## What is manual
