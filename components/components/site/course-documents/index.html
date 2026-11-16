@@ -1417,16 +1417,14 @@
         <a rel="home" href="../../../../">course-kit</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-2DWKC">
-            <span data-label="" id="norn-header-webc-2DWKC">Primary</span>
+          <nav aria-labelledby="norn-header-webc-F9ASs">
+            <span data-label="" id="norn-header-webc-F9ASs">Primary</span>
 
-            <a href="../../../../#install">Install</a>
-            <a href="../../../../#usage">Usage</a>
+            <a href="../../../../#quick-start">Quick start</a>
             <a href="../../../../#features">Features</a>
+            <a href="../../../../#accessibility">Accessibility</a>
             <a href="../../../">Components</a>
             <a href="../../../theme/">Theme</a>
-            <a href="https://github.com/allonsy-studio/course-kit">GitHub</a>
-            <a href="https://www.npmjs.com/package/@allons-y/course-kit">npm</a>
           </nav>
         </details>
       </header>
@@ -1438,13 +1436,12 @@
     </p>
 
     <div class="app">
-      <details open="" class="nav">
-        <summary>Components</summary>
-        <section aria-labelledby="nav-ui">
-          <h2 id="nav-ui">Building blocks</h2>
+      <nav aria-label="Components" class="nav">
+        <details>
+          <summary>Building blocks</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-EEbKH">
-              <span data-label="" id="norn-side-nav-webc-EEbKH"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-C5XhY">
+              <span data-label="" id="norn-side-nav-webc-C5XhY"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -1495,12 +1492,12 @@
               </ul>
             </nav>
           </norn-side-nav>
-        </section>
-        <section aria-labelledby="nav-site">
-          <h2 id="nav-site">Site sections</h2>
+        </details>
+        <details open="true" data-current="">
+          <summary>Site sections</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-4p0lE">
-              <span data-label="" id="norn-side-nav-webc-4p0lE"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-1ueAA">
+              <span data-label="" id="norn-side-nav-webc-1ueAA"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -1563,12 +1560,12 @@
               </ul>
             </nav>
           </norn-side-nav>
-        </section>
-        <section aria-labelledby="nav-practice">
-          <h2 id="nav-practice">Practice worksheets</h2>
+        </details>
+        <details>
+          <summary>Practice worksheets</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-yEecH">
-              <span data-label="" id="norn-side-nav-webc-yEecH"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-X2gC5">
+              <span data-label="" id="norn-side-nav-webc-X2gC5"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -1613,8 +1610,8 @@
               </ul>
             </nav>
           </norn-side-nav>
-        </section>
-      </details>
+        </details>
+      </nav>
 
       <main id="main" tabindex="-1">
         <div class="component">
@@ -1691,28 +1688,28 @@
                     >
                   </fieldset>
                 </norn-segmented-control>
-                <button type="button" data-axe="" data-state="idle">
+                <button type="button" data-axe="" data-state="idle" title="Check accessibility">
                   <norn-icon data-for="idle">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M12 7v.5M7.5 10l4.5 1l4.5-1M12 11v3M9.5 18l2.5-4l2.5 4"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="running">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-9-9"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="pass">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M8 12l3 3l5-6"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="fail">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M15 9l-6 6M9 9l6 6"></path>
                     </svg>
                   </norn-icon>
-                  Check accessibility
+                  <span class="sr-only">Check accessibility</span>
                 </button>
               </form>
               <div class="stage"><iframe src="/course-kit/components/frames/site/course-documents/default/" title="Default" loading="lazy"></iframe></div>
@@ -1729,7 +1726,7 @@
                       type="button"
                       hidden=""
                       data-value='<course-documents :@documents="([{&amp;quot;title&amp;quot;:&amp;quot;Style guide&amp;quot;,&amp;quot;description&amp;quot;:&amp;quot;How to format the code you hand in.&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;https://example.edu/style-guide&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;Accessibility checklist&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;https://example.edu/a11y&amp;quot;}])"></course-documents>'
-                      data-strings="norn-code-block-webc-GPY8T"
+                      data-strings="norn-code-block-webc-NtMzn"
                       data-compact=""
                       data-surface="code">
                       <span data-icons=""
@@ -1748,8 +1745,8 @@
                   <pre
                     dir="ltr"
                     data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,16,2,1,11,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,11,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,11,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,35,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,31,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,23,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,24,0,0,1,3,0,4,0,0,1,3,0,4,0,0,3,1,0,16,0,0,1]]">&lt;course-documents :@documents="([{&amp;quot;title&amp;quot;:&amp;quot;Style guide&amp;quot;,&amp;quot;description&amp;quot;:&amp;quot;How to format the code you hand in.&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;https://example.edu/style-guide&amp;quot;},{&amp;quot;title&amp;quot;:&amp;quot;Accessibility checklist&amp;quot;,&amp;quot;href&amp;quot;:&amp;quot;https://example.edu/a11y&amp;quot;}])"&gt;&lt;/course-documents&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-GPY8T">
-                    <span data-string="label" id="norn-code-block-webc-GPY8T-copy">Copy {name} to clipboard</span>
+                  <span hidden="" id="norn-code-block-webc-NtMzn">
+                    <span data-string="label" id="norn-code-block-webc-NtMzn-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -1763,7 +1760,7 @@
           <h2>Props</h2>
           <p>Write them with the <code>@</code> prefix, and <code>:@</code> for an expression. A prop in square brackets is optional.</p>
           <norn-simple-table class="spec"
-            ><span hidden="" id="norn-simple-table-webc-GLq4q"></span>
+            ><span hidden="" id="norn-simple-table-webc-ESRsP"></span>
             <div>
               <table>
                 <thead>

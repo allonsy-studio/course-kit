@@ -1417,16 +1417,14 @@
         <a rel="home" href="../../../../">course-kit</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-I1ntW">
-            <span data-label="" id="norn-header-webc-I1ntW">Primary</span>
+          <nav aria-labelledby="norn-header-webc-o6fal">
+            <span data-label="" id="norn-header-webc-o6fal">Primary</span>
 
-            <a href="../../../../#install">Install</a>
-            <a href="../../../../#usage">Usage</a>
+            <a href="../../../../#quick-start">Quick start</a>
             <a href="../../../../#features">Features</a>
+            <a href="../../../../#accessibility">Accessibility</a>
             <a href="../../../">Components</a>
             <a href="../../../theme/">Theme</a>
-            <a href="https://github.com/allonsy-studio/course-kit">GitHub</a>
-            <a href="https://www.npmjs.com/package/@allons-y/course-kit">npm</a>
           </nav>
         </details>
       </header>
@@ -1438,13 +1436,12 @@
     </p>
 
     <div class="app">
-      <details open="" class="nav">
-        <summary>Components</summary>
-        <section aria-labelledby="nav-ui">
-          <h2 id="nav-ui">Building blocks</h2>
+      <nav aria-label="Components" class="nav">
+        <details>
+          <summary>Building blocks</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-3sQFY">
-              <span data-label="" id="norn-side-nav-webc-3sQFY"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-mX2zV">
+              <span data-label="" id="norn-side-nav-webc-mX2zV"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -1495,12 +1492,12 @@
               </ul>
             </nav>
           </norn-side-nav>
-        </section>
-        <section aria-labelledby="nav-site">
-          <h2 id="nav-site">Site sections</h2>
+        </details>
+        <details open="true" data-current="">
+          <summary>Site sections</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-G_sjU">
-              <span data-label="" id="norn-side-nav-webc-G_sjU"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-21bSl">
+              <span data-label="" id="norn-side-nav-webc-21bSl"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -1563,12 +1560,12 @@
               </ul>
             </nav>
           </norn-side-nav>
-        </section>
-        <section aria-labelledby="nav-practice">
-          <h2 id="nav-practice">Practice worksheets</h2>
+        </details>
+        <details>
+          <summary>Practice worksheets</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-vP73G">
-              <span data-label="" id="norn-side-nav-webc-vP73G"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-x0YJ9">
+              <span data-label="" id="norn-side-nav-webc-x0YJ9"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -1613,8 +1610,8 @@
               </ul>
             </nav>
           </norn-side-nav>
-        </section>
-      </details>
+        </details>
+      </nav>
 
       <main id="main" tabindex="-1">
         <div class="component">
@@ -1691,28 +1688,28 @@
                     >
                   </fieldset>
                 </norn-segmented-control>
-                <button type="button" data-axe="" data-state="idle">
+                <button type="button" data-axe="" data-state="idle" title="Check accessibility">
                   <norn-icon data-for="idle">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M12 7v.5M7.5 10l4.5 1l4.5-1M12 11v3M9.5 18l2.5-4l2.5 4"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="running">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-9-9"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="pass">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M8 12l3 3l5-6"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="fail">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M15 9l-6 6M9 9l6 6"></path>
                     </svg>
                   </norn-icon>
-                  Check accessibility
+                  <span class="sr-only">Check accessibility</span>
                 </button>
               </form>
               <div class="stage"><iframe src="/course-kit/components/frames/site/schedule-weeks/default/" title="Default" loading="lazy"></iframe></div>
@@ -1725,7 +1722,7 @@
               <norn-code-block>
                 <figure>
                   <norn-copy-button>
-                    <button type="button" hidden="" data-value="<schedule-weeks></schedule-weeks>" data-strings="norn-code-block-webc-Rrqgt" data-compact="" data-surface="code">
+                    <button type="button" hidden="" data-value="<schedule-weeks></schedule-weeks>" data-strings="norn-code-block-webc-56QOl" data-compact="" data-surface="code">
                       <span data-icons=""
                         ><norn-icon>
                           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1740,8 +1737,8 @@
                     <span role="status"></span>
                   </norn-copy-button>
                   <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;],[0,0,1,1,0,14,0,0,3,1,0,14,0,0,1]]">&lt;schedule-weeks&gt;&lt;/schedule-weeks&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-Rrqgt">
-                    <span data-string="label" id="norn-code-block-webc-Rrqgt-copy">Copy {name} to clipboard</span>
+                  <span hidden="" id="norn-code-block-webc-56QOl">
+                    <span data-string="label" id="norn-code-block-webc-56QOl-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -1755,7 +1752,7 @@
           <h2>Props</h2>
           <p>Write them with the <code>@</code> prefix, and <code>:@</code> for an expression. A prop in square brackets is optional.</p>
           <norn-simple-table class="spec"
-            ><span hidden="" id="norn-simple-table-webc-wZwzU"></span>
+            ><span hidden="" id="norn-simple-table-webc-X3B7K"></span>
             <div>
               <table>
                 <thead>

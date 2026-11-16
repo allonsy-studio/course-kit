@@ -23,8 +23,7 @@
 
 <meta name="twitter:card" content="summary">
 
-<link rel="stylesheet" href="/course-kit/bundle/HNBe3cvUJE.css">
-<script src="/course-kit/bundle/UZNdDKU1l9.js" defer=""></script>
+<link rel="stylesheet" href="/course-kit/bundle/fFh3XS7qcU.css">
 
 		<meta property="og:site_name" content="course-kit">
 		<meta property="og:locale" content="en_US">
@@ -32,7 +31,22 @@
 		<link rel="icon" href="data:,">
 		
 		
+
 <link rel="stylesheet" href="/course-kit/assets/styles/project.css">
+<script type="application/json" id="copy-data">{"code":{"copy":"Copy code","copied":"Copied","selected":"Code selected. Press your copy shortcut.","plain":"Code","languages":{"bash":"Terminal","sh":"Terminal","shell":"Terminal","zsh":"Terminal","console":"Terminal","shellsession":"Terminal","css":"CSS","scss":"SCSS","html":"HTML","markup":"HTML","webc":"WebC","njk":"Nunjucks","xml":"XML","svg":"SVG","js":"JavaScript","javascript":"JavaScript","jsx":"JSX","ts":"TypeScript","typescript":"TypeScript","json":"JSON","md":"Markdown","markdown":"Markdown","php":"PHP","py":"Python","python":"Python","java":"Java","sql":"SQL","http":"HTTP","yaml":"YAML","yml":"YAML","text":"Text"}}}</script>
+<script>window.ckCopy ??= (function () {
+	var data = JSON.parse(document.getElementById("copy-data")?.textContent || "{}");
+	var rules = new Intl.PluralRules(document.documentElement.lang || "en-US");
+	function t(ns, key, vars) {
+		vars = vars || {};
+		var table = data[ns] || {};
+		var text = table[key];
+		if ("count" in vars) if (key + "_other" in table) text = table[key + "_" + rules.select(vars.count)] ?? table[key + "_other"];
+		return String(text ?? "").replace(/\{(\w+)\}/g, function (match, name) { return String(vars[name] ?? ""); });
+	}
+	return { data: data, t: t };
+})();</script>
+<script type="module" src="/course-kit/assets/scripts/copy.js"></script>
 <link rel="preload" href="/course-kit/assets/fonts/pt-mono.woff2" as="font" type="font/woff2" crossorigin="">
 
 
@@ -55,33 +69,37 @@
 			</a>
 	<details>
 		<summary>Menu</summary>
-		<nav aria-labelledby="norn-header-webc-xWZDz"><span data-label="" id="norn-header-webc-xWZDz">Primary</span>
+		<nav aria-labelledby="norn-header-webc-BFWBC"><span data-label="" id="norn-header-webc-BFWBC">Primary</span>
 			
-			<a href="#install">Install</a>
-<a href="#usage">Usage</a>
+			<a href="#quick-start">Quick start</a>
 <a href="#features">Features</a>
+<a href="#accessibility">Accessibility</a>
 <a href="/course-kit/components/">Components</a>
 <a href="/course-kit/components/theme/">Theme</a>
-<a href="https://github.com/allonsy-studio/course-kit">GitHub</a>
-<a href="https://www.npmjs.com/package/@allons-y/course-kit">npm</a>
 		</nav>
 	</details>
 </header>
 
 </norn-header>
-		<main id="main" tabindex="-1"><norn-hero><header>
+		<main id="main" tabindex="-1">
+<norn-hero><header>
 	<h1>
 		<span>course-kit</span>
 		<span>A course website from a few data files.</span>
 	</h1>
 	<p>Describe your course in a few JSON files and write your slides in Markdown. Course kit builds the home page, schedule, slide decks, practice worksheets and instructor lesson plans, with light and dark themes and a syllabus that prints clean.</p>
-	<nav aria-labelledby="norn-landing-actions">
-		<span id="norn-landing-actions" hidden="">Get started</span>
+	<nav aria-label="Get started">
 		<ul role="list">
-			<li><norn-link-button><a href="#install" data-variant="primary">Get started</a>
+			<li><norn-link-button><a href="/course-kit/components/" data-variant="primary">Explore the components</a>
 
 </norn-link-button></li>
-			<li><norn-link-button><a href="https://github.com/allonsy-studio/course-kit" data-variant="secondary">View on GitHub</a>
+			<li><norn-link-button><a href="https://github.com/allonsy-studio/course-kit" data-variant="secondary"><norn-icon>
+<svg viewBox="0 0 24 24" aria-hidden="true" data-project="">
+	<g fill="currentColor" stroke="none"><path d="M12 2a10 10 0 0 0-3.16 19.5c.5.1.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.9.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"></path></g>
+</svg>
+
+
+</norn-icon>View on GitHub</a>
 
 </norn-link-button></li>
 		</ul>
@@ -93,7 +111,7 @@
 </svg>
 
 
-</norn-icon>Free &amp; open source</li>
+</norn-icon><span>Free &amp; open source</span></li>
 		<li><norn-icon>
 <svg viewBox="0 0 24 24" aria-hidden="true">
 	<path d="M5 12l5 5L20 7"></path>
@@ -111,102 +129,61 @@
 	</ul>
 
 </norn-fact-list>
-	
-		<norn-code-block id="usage">
-<figure>
-	<figcaption>eleventy.config.js: the whole setup. Then fill in _data/ and write your pages.</figcaption>
-	<norn-copy-button>
-<button type="button" hidden="" data-value="import courseKit from &quot;@allons-y/course-kit&quot;;
-
-export default function (config) {
-  courseKit(config, {
-    institution: { name: &quot;Example College&quot;, timezone: &quot;America/New_York&quot; },
-  });
-}" data-strings="norn-code-block-webc-ZxzGG" data-compact="" data-surface="code"><span data-icons=""><norn-icon>
-<svg viewBox="0 0 24 24" aria-hidden="true">
-	<path d="M9 9h11v11H9zM15 9V4H4v11h5"></path>
-</svg>
-
-
-</norn-icon><norn-icon>
-<svg viewBox="0 0 24 24" aria-hidden="true">
-	<path d="M5 12l5 5L20 7"></path>
-</svg>
-
-
-</norn-icon></span><span data-label=""></span></button>
-<span role="status"></span>
-
-
-</norn-copy-button>
-	<pre dir="ltr" data-language="js"><code data-tokens="[[&quot;keyword&quot;,&quot;string&quot;,&quot;punctuation&quot;,&quot;function&quot;],[0,0,6,0,11,4,1,1,22,2,0,1,0,2,6,0,1,7,0,1,8,2,1,1,2,6,1,2,1,1,3,3,9,2,7,1,2,1,1,3,5,11,2,0,1,2,1,1,3,1,4,2,0,1,1,1,17,2,0,1,3,1,8,2,0,1,1,1,18,2,1,2,2,3,1,2,1,1,2,1,1]]">import courseKit from "@allons-y/course-kit";
-
-export default function (config) {
-  courseKit(config, {
-    institution: { name: "Example College", timezone: "America/New_York" },
-  });
-}</code></pre>
-	<span hidden="" id="norn-code-block-webc-ZxzGG">
-		<span data-string="label" id="norn-code-block-webc-ZxzGG-copy">Copy {name} to clipboard</span>
-		<span data-string="copy">Copy</span>
-		<span data-string="copied">Copied</span>
-		<span data-string="failed">Copy failed</span>
-	</span>
-	<span data-name="" hidden=""><span data-default="">js code</span></span>
-</figure>
-
-
-</norn-code-block>
-		
-	
 </header>
 
 </norn-hero>
-<section id="install">
-	<h2>Install</h2>
-	<norn-code-block>
-<figure>
-	
-	<norn-copy-button>
-<button type="button" hidden="" data-value="npm install github:allonsy-studio/course-kit" data-strings="norn-code-block-webc-oRXF2" data-compact="" data-surface="code"><span data-icons=""><norn-icon>
-<svg viewBox="0 0 24 24" aria-hidden="true">
-	<path d="M9 9h11v11H9zM15 9V4H4v11h5"></path>
-</svg>
-
-
-</norn-icon><norn-icon>
-<svg viewBox="0 0 24 24" aria-hidden="true">
-	<path d="M5 12l5 5L20 7"></path>
-</svg>
-
-
-</norn-icon></span><span data-label=""></span></button>
-<span role="status"></span>
-
-
-</norn-copy-button>
-	<pre dir="ltr" data-language="sh"><code data-tokens="[[&quot;function&quot;,&quot;keyword&quot;,&quot;string&quot;],[0,0,3,1,1,7,2,1,32]]">npm install github:allonsy-studio/course-kit</code></pre>
-	<span hidden="" id="norn-code-block-webc-oRXF2">
-		<span data-string="label" id="norn-code-block-webc-oRXF2-copy">Copy {name} to clipboard</span>
-		<span data-string="copy">Copy</span>
-		<span data-string="copied">Copied</span>
-		<span data-string="failed">Copy failed</span>
-	</span>
-	<span data-name="" hidden=""><span data-default="">sh code</span></span>
-</figure>
-
-
-</norn-code-block>
+<section id="audience" aria-labelledby="audience-title">
+	<h2 id="audience-title">Built for the people who teach, and the students who read it</h2>
+	<p>Course kit is for instructors who want a course site that stays current without a web team. Students get one place for the syllabus, the schedule, slides, practice and a glossary, on a phone, a laptop or paper.</p>
+	<ul>
+		<li>Instructors keep the course in small JSON files and Markdown, and the site follows.</li>
+<li>Students read a calm, high-contrast site that works without an account and without a network for printed pages.</li>
+<li>Departments share one kit, so every section looks and behaves the same.</li>
+	</ul>
 </section>
-<section id="features">
-	<h2>Features</h2>
+<section id="quick-start" aria-labelledby="quick-start-title">
+	<h2 id="quick-start-title">Quick start</h2>
+	<p>Three steps from an empty folder to a course site you can edit. Node 24 or later.</p>
+	<ol role="list" class="steps">
+		<li>
+			<h3>Install the kit</h3>
+			<div><figure data-edge="shell" class="code-block">
+<figcaption class="code-block-head"><span class="code-block-lang">Terminal</span></figcaption>
+<pre tabindex="0" class="language-sh"><code class="language-sh"><span class="highlight-line">$ <span class="token function">npm</span> <span class="token function">install</span> github:allonsy-studio/course-kit</span></code></pre>
+</figure>
+</div>
+		</li>
+<li>
+			<h3>Add it to Eleventy</h3>
+			<div><figure data-edge="js" data-line-numbers="" class="code-block">
+<figcaption class="code-block-head"><span class="code-block-lang">JavaScript</span><span class="code-block-file">eleventy.config.js</span></figcaption>
+<pre tabindex="0" class="language-js"><code class="language-js"><span class="highlight-line"><span class="token keyword">import</span> courseKit <span class="token keyword">from</span> <span class="token string">"@allons-y/course-kit"</span><span class="token punctuation">;</span></span><br><span class="highlight-line"></span><br><span class="highlight-line"><span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">config</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">  <span class="token function">courseKit</span><span class="token punctuation">(</span>config<span class="token punctuation">,</span> <span class="token punctuation">{</span></span><br><span class="highlight-line">    <span class="token literal-property property">institution</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">"Example College"</span><span class="token punctuation">,</span> <span class="token literal-property property">timezone</span><span class="token operator">:</span> <span class="token string">"America/New_York"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span></span><br><span class="highlight-line">  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span><br><span class="highlight-line"><span class="token punctuation">}</span></span></code></pre>
+</figure>
+</div>
+		</li>
+<li>
+			<h3>Start from the starter course</h3>
+			<div><figure data-edge="shell" class="code-block">
+<figcaption class="code-block-head"><span class="code-block-lang">Terminal</span></figcaption>
+<pre tabindex="0" class="language-sh"><code class="language-sh"><span class="highlight-line">$ <span class="token function">cp</span> <span class="token parameter variable">-rn</span> node_modules/@allons-y/course-kit/examples/starter/. <span class="token builtin class-name">.</span></span><br><span class="highlight-line">$ npx eleventy <span class="token parameter variable">--serve</span></span></code></pre>
+</figure>
+</div>
+		</li>
+	</ol>
+</section>
+<section id="features" aria-labelledby="features-title">
+	<h2 id="features-title">Features</h2>
 	<norn-card-grid><ul role="list">
 		<li>
 			<norn-card><article>
-				<h3>
-					<a href="https://github.com/allonsy-studio/course-kit/blob/main/docs/data-files.md">A syllabus and schedule from data</a>
-					
-				</h3>
+				<norn-icon>
+<svg viewBox="0 0 24 24" aria-hidden="true" data-size="m" data-project="">
+	<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v15H4zM4 10h16M8 3v4M16 3v4M8 14h2M14 14h2"></path></g>
+</svg>
+
+
+</norn-icon>
+				<h3><a href="https://github.com/allonsy-studio/course-kit/blob/main/docs/data-files.md">A syllabus and schedule from data</a></h3>
 				<p>Put the course, the calendar, grading and policies in small JSON files. The kit works out each meeting's date, skips holidays, marks today's class and prints the syllabus to PDF.</p>
 			</article>
 
@@ -214,10 +191,14 @@ export default function (config) {
 		</li>
 <li>
 			<norn-card><article>
-				<h3>
-					<a href="https://github.com/allonsy-studio/course-kit/blob/main/docs/writing-content.md#slide-decks">Slides you present from</a>
-					
-				</h3>
+				<norn-icon>
+<svg viewBox="0 0 24 24" aria-hidden="true" data-size="m" data-project="">
+	<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18v12H3zM8 20h8M12 16v4M8 12l3-3l2 2l3-4"></path></g>
+</svg>
+
+
+</norn-icon>
+				<h3><a href="https://github.com/allonsy-studio/course-kit/blob/main/docs/slides.md">Slides you present from</a></h3>
 				<p>Write each deck in Markdown. Speaker notes stay off the slide and land on a printable notes sheet, and every vocabulary slide becomes a glossary entry.</p>
 			</article>
 
@@ -225,21 +206,29 @@ export default function (config) {
 		</li>
 <li>
 			<norn-card><article>
-				<h3>
-					<a href="https://github.com/allonsy-studio/course-kit/blob/main/docs/writing-content.md#practice-worksheets">Practice worksheets students check themselves</a>
-					
-				</h3>
-				<p>Write questions in Markdown: choice, matching, fill in the blank, diagrams and code. Each answer links back to the slide that taught it, and nothing is recorded or submitted.</p>
+				<norn-icon>
+<svg viewBox="0 0 24 24" aria-hidden="true" data-size="m" data-project="">
+	<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18H6zM9 8l1.5 1.5L13 7M9 14l1.5 1.5L13 13M15 8h1M15 14h1"></path></g>
+</svg>
+
+
+</norn-icon>
+				<h3><a href="https://github.com/allonsy-studio/course-kit/blob/main/docs/writing-content.md#practice-worksheets">Practice worksheets students check themselves</a></h3>
+				<p>Write questions in Markdown: choice, matching, fill in the blank, diagrams and code. Each answer links back to the slide that taught it, and answers stay in the student's browser.</p>
 			</article>
 
 </norn-card>
 		</li>
 <li>
 			<norn-card><article>
-				<h3>
-					<a href="https://github.com/allonsy-studio/course-kit/blob/main/docs/configuration.md#instructor-and-student-builds">Lesson plans only you see</a>
-					
-				</h3>
+				<norn-icon>
+<svg viewBox="0 0 24 24" aria-hidden="true" data-size="m" data-project="">
+	<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11h14v10H5zM8 11V7a4 4 0 0 1 8 0v4M12 15v2"></path></g>
+</svg>
+
+
+</norn-icon>
+				<h3><a href="https://github.com/allonsy-studio/course-kit/blob/main/docs/configuration.md#instructor-and-student-builds">Lesson plans only you see</a></h3>
 				<p>Every class meeting gets a lesson plan and the speaker notes. The instructor build includes them and the student build leaves them out.</p>
 			</article>
 
@@ -247,10 +236,14 @@ export default function (config) {
 		</li>
 <li>
 			<norn-card><article>
-				<h3>
-					<a href="https://github.com/allonsy-studio/course-kit/blob/main/docs/design.md">Your college's colors, light and dark</a>
-					
-				</h3>
+				<norn-icon>
+<svg viewBox="0 0 24 24" aria-hidden="true" data-size="m" data-project="">
+	<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 1.5-2s0-2 1.5-2h2a3 3 0 0 0 3-3c0-5-4-11-8-11zM7.5 11h.01M10 7h.01M15 7h.01"></path></g>
+</svg>
+
+
+</norn-icon>
+				<h3><a href="https://github.com/allonsy-studio/course-kit/blob/main/docs/design.md">Your college's colors, light and dark</a></h3>
 				<p>Set a handful of color tokens and every page, slide and worksheet follows, in light, dark and print. Each pair is checked for contrast.</p>
 			</article>
 
@@ -258,10 +251,14 @@ export default function (config) {
 		</li>
 <li>
 			<norn-card><article>
-				<h3>
-					<a href="/course-kit/components/">Every component, rendered</a>
-					
-				</h3>
+				<norn-icon>
+<svg viewBox="0 0 24 24" aria-hidden="true" data-size="m" data-project="">
+	<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM15 13h4v4h-4z"></path></g>
+</svg>
+
+
+</norn-icon>
+				<h3><a href="/course-kit/components/">Every component, rendered</a></h3>
 				<p>A page for each component with its props and slots, examples in light, dark and phone widths, an accessibility check, and the color tokens it reads.</p>
 			</article>
 
@@ -271,8 +268,144 @@ export default function (config) {
 
 </norn-card-grid>
 </section>
+<section id="gallery" aria-labelledby="gallery-title">
+	<h2 id="gallery-title">What you can build</h2>
+	<p>Four pages from the starter course, rendered by the kit. Open one, or browse every component.</p>
+	<ul role="list" class="examples">
+		<li>
+			<article>
+				<div class="example-frame">
+					<iframe src="/course-kit/components/examples/home/" title="Course home and syllabus preview" loading="lazy" tabindex="-1" inert=""></iframe>
+				</div>
+				<h3><a href="/course-kit/components/examples/home/">Course home and syllabus</a></h3>
+			</article>
+		</li>
+<li>
+			<article>
+				<div class="example-frame">
+					<iframe src="/course-kit/components/examples/schedule/" title="Schedule preview" loading="lazy" tabindex="-1" inert=""></iframe>
+				</div>
+				<h3><a href="/course-kit/components/examples/schedule/">Schedule</a></h3>
+			</article>
+		</li>
+<li>
+			<article>
+				<div class="example-frame">
+					<iframe src="/course-kit/components/examples/practice/" title="Practice worksheet preview" loading="lazy" tabindex="-1" inert=""></iframe>
+				</div>
+				<h3><a href="/course-kit/components/examples/practice/">Practice worksheet</a></h3>
+			</article>
+		</li>
+<li>
+			<article>
+				<div class="example-frame">
+					<iframe src="/course-kit/components/examples/glossary/" title="Glossary preview" loading="lazy" tabindex="-1" inert=""></iframe>
+				</div>
+				<h3><a href="/course-kit/components/examples/glossary/">Glossary</a></h3>
+			</article>
+		</li>
+	</ul>
+	<p><norn-link-button><a href="/course-kit/components/" data-variant="primary">Explore the components<norn-icon>
+<svg viewBox="0 0 24 24" aria-hidden="true" data-mirror="">
+	<path d="M5 12h14M13 6l6 6l-6 6"></path>
+</svg>
 
 
+</norn-icon></a>
+
+</norn-link-button></p>
+</section>
+<section id="accessibility" aria-labelledby="accessibility-title">
+	<h2 id="accessibility-title">Accessibility is the baseline</h2>
+	<p>The kit targets WCAG 2.2 level AAA, or stricter, for every component, because its readers are students working on whatever device and in whatever light they have.</p>
+	<norn-card-grid><ul role="list">
+		<li>
+			<norn-card><article>
+				<h3>7:1 text contrast</h3>
+				<p>Every text token holds 7:1 or better on every ground it is used on, in light and dark. Unit tests check each pair.</p>
+			</article>
+
+</norn-card>
+		</li>
+<li>
+			<norn-card><article>
+				<h3>Targets and focus</h3>
+				<p>Controls are at least 44 pixels, with one solid focus ring that holds 3:1 or better.</p>
+			</article>
+
+</norn-card>
+		</li>
+<li>
+			<norn-card><article>
+				<h3>Checked on every change</h3>
+				<p>axe-core runs against every page in light, dark and forced colors. Reduced motion is honored.</p>
+			</article>
+
+</norn-card>
+		</li>
+	</ul>
+
+</norn-card-grid>
+	<ul role="list" class="inline-links">
+		<li><a href="https://github.com/allonsy-studio/course-kit/blob/main/docs/design.md">How the colors are chosen</a></li>
+<li><a href="https://github.com/allonsy-studio/course-kit/blob/main/docs/testing.md">How a change is tested</a></li>
+	</ul>
+</section>
+<section id="docs" aria-labelledby="docs-title">
+	<h2 id="docs-title">Read the docs</h2>
+	<norn-card-grid><ul role="list">
+		<li>
+			<norn-card><article>
+				<h3><a href="https://github.com/allonsy-studio/course-kit/blob/main/docs/getting-started.md">Getting started</a></h3>
+				<p>From install to a built site.</p>
+			</article>
+
+</norn-card>
+		</li>
+<li>
+			<norn-card><article>
+				<h3><a href="https://github.com/allonsy-studio/course-kit/blob/main/docs/data-files.md">Data files</a></h3>
+				<p>The course, schedule, grading and policy files.</p>
+			</article>
+
+</norn-card>
+		</li>
+<li>
+			<norn-card><article>
+				<h3><a href="https://github.com/allonsy-studio/course-kit/blob/main/docs/writing-content.md">Writing content</a></h3>
+				<p>Slides, worksheets and glossary terms in Markdown.</p>
+			</article>
+
+</norn-card>
+		</li>
+<li>
+			<norn-card><article>
+				<h3><a href="https://github.com/allonsy-studio/course-kit/blob/main/docs/configuration.md">Configuration</a></h3>
+				<p>Options, audiences and the syllabus PDF.</p>
+			</article>
+
+</norn-card>
+		</li>
+<li>
+			<norn-card><article>
+				<h3><a href="https://github.com/allonsy-studio/course-kit/blob/main/docs/tokens.md">Theme</a></h3>
+				<p>Color tokens, light and dark.</p>
+			</article>
+
+</norn-card>
+		</li>
+<li>
+			<norn-card><article>
+				<h3><a href="https://github.com/allonsy-studio/course-kit/blob/main/CHANGELOG.md">Changelog</a></h3>
+				<p>What changed, and how to migrate.</p>
+			</article>
+
+</norn-card>
+		</li>
+	</ul>
+
+</norn-card-grid>
+</section>
 <oss-cta><section>
 	<svg aria-hidden="true" width="72" height="72" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M 433.41 375.67 A 214 214 0 0 1 209.68 464.93" fill="none" stroke="#7BD1E6" stroke-width="42" stroke-linecap="butt"></path><circle cx="433.41" cy="375.67" r="21.00" fill="#7BD1E6"></circle><path d="M 188.10 458.94 A 214 214 0 0 1 42.29 267.20" fill="none" stroke="#C92C6B" stroke-width="42" stroke-linecap="butt"></path><path d="M 42.29 244.80 A 214 214 0 0 1 188.10 53.06" fill="none" stroke="#FF9A56" stroke-width="42" stroke-linecap="butt"></path><path d="M 209.68 47.07 A 214 214 0 0 1 433.41 136.33" fill="none" stroke="#FFD36C" stroke-width="42" stroke-linecap="butt"></path><circle cx="433.41" cy="136.33" r="21.00" fill="#FFD36C"></circle><rect x="374" y="224" width="118" height="64" rx="26" fill="#EFEBDF" stroke="#33394E" stroke-width="16"></rect><circle cx="256" cy="256" r="150" fill="#EFEBDF" stroke="#33394E" stroke-width="16"></circle><circle cx="256" cy="256" r="104" fill="#C2B1A6"></circle></svg>
 	<div>
@@ -299,8 +432,8 @@ export default function (config) {
 				<p><strong>@allons-y/course-kit</strong></p>
 				<p>A course website from a few data files.</p>
 				<p data-badges="">
-					<a href="https://www.npmjs.com/package/@allons-y/course-kit"><img alt="npm version of @allons-y/course-kit" src="https://img.shields.io/npm/v/@allons-y/course-kit?logo=npm&amp;labelColor=black&amp;color=%237a1f34" width="105" height="20" loading="lazy"></a>
-<a href="https://www.npmjs.com/package/@allons-y/course-kit"><img alt="weekly npm downloads of @allons-y/course-kit" src="https://img.shields.io/npm/dw/@allons-y/course-kit?logo=npm&amp;labelColor=black&amp;color=%237a1f34" width="157" height="20" loading="lazy"></a>
+					<a href="https://www.npmjs.com/package/@allons-y/course-kit"><img alt="npm version of @allons-y/course-kit" src="https://img.shields.io/npm/v/@allons-y/course-kit?logo=npm&amp;labelColor=black&amp;color=%238b1e5e" width="105" height="20" loading="lazy"></a>
+<a href="https://www.npmjs.com/package/@allons-y/course-kit"><img alt="weekly npm downloads of @allons-y/course-kit" src="https://img.shields.io/npm/dw/@allons-y/course-kit?logo=npm&amp;labelColor=black&amp;color=%238b1e5e" width="157" height="20" loading="lazy"></a>
 				</p>
 				<p>
 					<small>Licensed under <a href="https://github.com/allonsy-studio/course-kit/blob/main/LICENSE">MPL-2.0</a></small>

@@ -1417,16 +1417,14 @@
         <a rel="home" href="../../../../">course-kit</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-mN41H">
-            <span data-label="" id="norn-header-webc-mN41H">Primary</span>
+          <nav aria-labelledby="norn-header-webc-vCImD">
+            <span data-label="" id="norn-header-webc-vCImD">Primary</span>
 
-            <a href="../../../../#install">Install</a>
-            <a href="../../../../#usage">Usage</a>
+            <a href="../../../../#quick-start">Quick start</a>
             <a href="../../../../#features">Features</a>
+            <a href="../../../../#accessibility">Accessibility</a>
             <a href="../../../">Components</a>
             <a href="../../../theme/">Theme</a>
-            <a href="https://github.com/allonsy-studio/course-kit">GitHub</a>
-            <a href="https://www.npmjs.com/package/@allons-y/course-kit">npm</a>
           </nav>
         </details>
       </header>
@@ -1438,13 +1436,12 @@
     </p>
 
     <div class="app">
-      <details open="" class="nav">
-        <summary>Components</summary>
-        <section aria-labelledby="nav-ui">
-          <h2 id="nav-ui">Building blocks</h2>
+      <nav aria-label="Components" class="nav">
+        <details open="true" data-current="">
+          <summary>Building blocks</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-7kxt-">
-              <span data-label="" id="norn-side-nav-webc-7kxt-"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-Ca4nS">
+              <span data-label="" id="norn-side-nav-webc-Ca4nS"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -1495,12 +1492,12 @@
               </ul>
             </nav>
           </norn-side-nav>
-        </section>
-        <section aria-labelledby="nav-site">
-          <h2 id="nav-site">Site sections</h2>
+        </details>
+        <details>
+          <summary>Site sections</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-KJoRw">
-              <span data-label="" id="norn-side-nav-webc-KJoRw"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-Z3GPd">
+              <span data-label="" id="norn-side-nav-webc-Z3GPd"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -1563,12 +1560,12 @@
               </ul>
             </nav>
           </norn-side-nav>
-        </section>
-        <section aria-labelledby="nav-practice">
-          <h2 id="nav-practice">Practice worksheets</h2>
+        </details>
+        <details>
+          <summary>Practice worksheets</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-4ac9S">
-              <span data-label="" id="norn-side-nav-webc-4ac9S"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-A5IvJ">
+              <span data-label="" id="norn-side-nav-webc-A5IvJ"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -1613,8 +1610,8 @@
               </ul>
             </nav>
           </norn-side-nav>
-        </section>
-      </details>
+        </details>
+      </nav>
 
       <main id="main" tabindex="-1">
         <div class="component">
@@ -1691,28 +1688,28 @@
                     >
                   </fieldset>
                 </norn-segmented-control>
-                <button type="button" data-axe="" data-state="idle">
+                <button type="button" data-axe="" data-state="idle" title="Check accessibility">
                   <norn-icon data-for="idle">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M12 7v.5M7.5 10l4.5 1l4.5-1M12 11v3M9.5 18l2.5-4l2.5 4"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="running">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-9-9"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="pass">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M8 12l3 3l5-6"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="fail">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M15 9l-6 6M9 9l6 6"></path>
                     </svg>
                   </norn-icon>
-                  Check accessibility
+                  <span class="sr-only">Check accessibility</span>
                 </button>
               </form>
               <div class="stage"><iframe src="/course-kit/components/frames/ui/callout/default/" title="Default" loading="lazy"></iframe></div>
@@ -1725,7 +1722,7 @@
               <norn-code-block>
                 <figure>
                   <norn-copy-button>
-                    <button type="button" hidden="" data-value="<callout><p><strong>Bring a laptop.</strong> We build something in every class.</p></callout>" data-strings="norn-code-block-webc-dg5My" data-compact="" data-surface="code">
+                    <button type="button" hidden="" data-value="<callout><p><strong>Bring a laptop.</strong> We build something in every class.</p></callout>" data-strings="norn-code-block-webc-ZfZK0" data-compact="" data-surface="code">
                       <span data-icons=""
                         ><norn-icon>
                           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1740,8 +1737,8 @@
                     <span role="status"></span>
                   </norn-copy-button>
                   <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;],[0,0,1,1,0,7,0,0,2,1,0,1,0,0,2,1,0,6,0,0,1,0,15,2,1,0,6,0,0,1,0,35,2,1,0,1,0,0,3,1,0,7,0,0,1]]">&lt;callout&gt;&lt;p&gt;&lt;strong&gt;Bring a laptop.&lt;/strong&gt; We build something in every class.&lt;/p&gt;&lt;/callout&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-dg5My">
-                    <span data-string="label" id="norn-code-block-webc-dg5My-copy">Copy {name} to clipboard</span>
+                  <span hidden="" id="norn-code-block-webc-ZfZK0">
+                    <span data-string="label" id="norn-code-block-webc-ZfZK0-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -1819,28 +1816,28 @@
                     >
                   </fieldset>
                 </norn-segmented-control>
-                <button type="button" data-axe="" data-state="idle">
+                <button type="button" data-axe="" data-state="idle" title="Check accessibility">
                   <norn-icon data-for="idle">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M12 7v.5M7.5 10l4.5 1l4.5-1M12 11v3M9.5 18l2.5-4l2.5 4"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="running">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-9-9"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="pass">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M8 12l3 3l5-6"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="fail">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M15 9l-6 6M9 9l6 6"></path>
                     </svg>
                   </norn-icon>
-                  Check accessibility
+                  <span class="sr-only">Check accessibility</span>
                 </button>
               </form>
               <div class="stage"><iframe src="/course-kit/components/frames/ui/callout/long/" title="Long" loading="lazy"></iframe></div>
@@ -1853,7 +1850,7 @@
               <norn-code-block>
                 <figure>
                   <norn-copy-button>
-                    <button type="button" hidden="" data-value='<callout @type="warn"><p><strong>Read this before the test.</strong> The test covers every slide from the first four weeks, including the ones marked optional, and the practice sheets are the best preview of how the questions are worded.</p><ul><li>Bring a pencil.</li><li>Arrive five minutes early, because the doors close when the test starts.</li></ul></callout>' data-strings="norn-code-block-webc-uksdz" data-compact="" data-surface="code">
+                    <button type="button" hidden="" data-value='<callout @type="warn"><p><strong>Read this before the test.</strong> The test covers every slide from the first four weeks, including the ones marked optional, and the practice sheets are the best preview of how the questions are worded.</p><ul><li>Bring a pencil.</li><li>Arrive five minutes early, because the doors close when the test starts.</li></ul></callout>' data-strings="norn-code-block-webc-b1jNb" data-compact="" data-surface="code">
                       <span data-icons=""
                         ><norn-icon>
                           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1870,8 +1867,8 @@
                   <pre
                     dir="ltr"
                     data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,7,2,1,5,0,0,1,3,0,6,0,0,2,1,0,1,0,0,2,1,0,6,0,0,1,0,26,2,1,0,6,0,0,1,0,169,2,1,0,1,0,0,2,1,0,2,0,0,2,1,0,2,0,0,1,0,15,2,1,0,2,0,0,2,1,0,2,0,0,1,0,72,2,1,0,2,0,0,3,1,0,2,0,0,3,1,0,7,0,0,1]]">&lt;callout @type="warn"&gt;&lt;p&gt;&lt;strong&gt;Read this before the test.&lt;/strong&gt; The test covers every slide from the first four weeks, including the ones marked optional, and the practice sheets are the best preview of how the questions are worded.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Bring a pencil.&lt;/li&gt;&lt;li&gt;Arrive five minutes early, because the doors close when the test starts.&lt;/li&gt;&lt;/ul&gt;&lt;/callout&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-uksdz">
-                    <span data-string="label" id="norn-code-block-webc-uksdz-copy">Copy {name} to clipboard</span>
+                  <span hidden="" id="norn-code-block-webc-b1jNb">
+                    <span data-string="label" id="norn-code-block-webc-b1jNb-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -1949,28 +1946,28 @@
                     >
                   </fieldset>
                 </norn-segmented-control>
-                <button type="button" data-axe="" data-state="idle">
+                <button type="button" data-axe="" data-state="idle" title="Check accessibility">
                   <norn-icon data-for="idle">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M12 7v.5M7.5 10l4.5 1l4.5-1M12 11v3M9.5 18l2.5-4l2.5 4"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="running">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-9-9"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="pass">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M8 12l3 3l5-6"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="fail">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M15 9l-6 6M9 9l6 6"></path>
                     </svg>
                   </norn-icon>
-                  Check accessibility
+                  <span class="sr-only">Check accessibility</span>
                 </button>
               </form>
               <div class="stage"><iframe src="/course-kit/components/frames/ui/callout/success/" title="Success" loading="lazy"></iframe></div>
@@ -1983,7 +1980,7 @@
               <norn-code-block>
                 <figure>
                   <norn-copy-button>
-                    <button type="button" hidden="" data-value='<callout @type="success"><p>Your answers are saved in this browser.</p></callout>' data-strings="norn-code-block-webc-tuwIu" data-compact="" data-surface="code">
+                    <button type="button" hidden="" data-value='<callout @type="success"><p>Your answers are saved in this browser.</p></callout>' data-strings="norn-code-block-webc-q0gvM" data-compact="" data-surface="code">
                       <span data-icons=""
                         ><norn-icon>
                           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1998,8 +1995,8 @@
                     <span role="status"></span>
                   </norn-copy-button>
                   <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,7,2,1,5,0,0,1,3,0,9,0,0,2,1,0,1,0,0,1,0,39,2,1,0,1,0,0,3,1,0,7,0,0,1]]">&lt;callout @type="success"&gt;&lt;p&gt;Your answers are saved in this browser.&lt;/p&gt;&lt;/callout&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-tuwIu">
-                    <span data-string="label" id="norn-code-block-webc-tuwIu-copy">Copy {name} to clipboard</span>
+                  <span hidden="" id="norn-code-block-webc-q0gvM">
+                    <span data-string="label" id="norn-code-block-webc-q0gvM-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -2077,28 +2074,28 @@
                     >
                   </fieldset>
                 </norn-segmented-control>
-                <button type="button" data-axe="" data-state="idle">
+                <button type="button" data-axe="" data-state="idle" title="Check accessibility">
                   <norn-icon data-for="idle">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M12 7v.5M7.5 10l4.5 1l4.5-1M12 11v3M9.5 18l2.5-4l2.5 4"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="running">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-9-9"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="pass">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M8 12l3 3l5-6"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="fail">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M15 9l-6 6M9 9l6 6"></path>
                     </svg>
                   </norn-icon>
-                  Check accessibility
+                  <span class="sr-only">Check accessibility</span>
                 </button>
               </form>
               <div class="stage"><iframe src="/course-kit/components/frames/ui/callout/warning/" title="Warning" loading="lazy"></iframe></div>
@@ -2111,7 +2108,7 @@
               <norn-code-block>
                 <figure>
                   <norn-copy-button>
-                    <button type="button" hidden="" data-value='<callout @type="warn"><p>This section&apos;s final exam is on a different day.</p></callout>' data-strings="norn-code-block-webc-HairD" data-compact="" data-surface="code">
+                    <button type="button" hidden="" data-value='<callout @type="warn"><p>This section&apos;s final exam is on a different day.</p></callout>' data-strings="norn-code-block-webc-5QN7y" data-compact="" data-surface="code">
                       <span data-icons=""
                         ><norn-icon>
                           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -2126,8 +2123,8 @@
                     <span role="status"></span>
                   </norn-copy-button>
                   <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,7,2,1,5,0,0,1,3,0,6,0,0,2,1,0,1,0,0,1,0,48,2,1,0,1,0,0,3,1,0,7,0,0,1]]">&lt;callout @type="warn"&gt;&lt;p&gt;This section's final exam is on a different day.&lt;/p&gt;&lt;/callout&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-HairD">
-                    <span data-string="label" id="norn-code-block-webc-HairD-copy">Copy {name} to clipboard</span>
+                  <span hidden="" id="norn-code-block-webc-5QN7y">
+                    <span data-string="label" id="norn-code-block-webc-5QN7y-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -2205,28 +2202,28 @@
                     >
                   </fieldset>
                 </norn-segmented-control>
-                <button type="button" data-axe="" data-state="idle">
+                <button type="button" data-axe="" data-state="idle" title="Check accessibility">
                   <norn-icon data-for="idle">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M12 7v.5M7.5 10l4.5 1l4.5-1M12 11v3M9.5 18l2.5-4l2.5 4"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="running">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-9-9"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="pass">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M8 12l3 3l5-6"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="fail">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M15 9l-6 6M9 9l6 6"></path>
                     </svg>
                   </norn-icon>
-                  Check accessibility
+                  <span class="sr-only">Check accessibility</span>
                 </button>
               </form>
               <div class="stage"><iframe src="/course-kit/components/frames/ui/callout/error/" title="Error" loading="lazy"></iframe></div>
@@ -2239,7 +2236,7 @@
               <norn-code-block>
                 <figure>
                   <norn-copy-button>
-                    <button type="button" hidden="" data-value='<callout @type="error"><p>The file could not be read.</p></callout>' data-strings="norn-code-block-webc-TtfPS" data-compact="" data-surface="code">
+                    <button type="button" hidden="" data-value='<callout @type="error"><p>The file could not be read.</p></callout>' data-strings="norn-code-block-webc-V2PTi" data-compact="" data-surface="code">
                       <span data-icons=""
                         ><norn-icon>
                           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -2254,8 +2251,8 @@
                     <span role="status"></span>
                   </norn-copy-button>
                   <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,7,2,1,5,0,0,1,3,0,7,0,0,2,1,0,1,0,0,1,0,27,2,1,0,1,0,0,3,1,0,7,0,0,1]]">&lt;callout @type="error"&gt;&lt;p&gt;The file could not be read.&lt;/p&gt;&lt;/callout&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-TtfPS">
-                    <span data-string="label" id="norn-code-block-webc-TtfPS-copy">Copy {name} to clipboard</span>
+                  <span hidden="" id="norn-code-block-webc-V2PTi">
+                    <span data-string="label" id="norn-code-block-webc-V2PTi-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -2333,28 +2330,28 @@
                     >
                   </fieldset>
                 </norn-segmented-control>
-                <button type="button" data-axe="" data-state="idle">
+                <button type="button" data-axe="" data-state="idle" title="Check accessibility">
                   <norn-icon data-for="idle">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M12 7v.5M7.5 10l4.5 1l4.5-1M12 11v3M9.5 18l2.5-4l2.5 4"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="running">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-9-9"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="pass">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M8 12l3 3l5-6"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="fail">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M15 9l-6 6M9 9l6 6"></path>
                     </svg>
                   </norn-icon>
-                  Check accessibility
+                  <span class="sr-only">Check accessibility</span>
                 </button>
               </form>
               <div class="stage"><iframe src="/course-kit/components/frames/ui/callout/custom-label/" title="Custom label" loading="lazy"></iframe></div>
@@ -2367,7 +2364,7 @@
               <norn-code-block>
                 <figure>
                   <norn-copy-button>
-                    <button type="button" hidden="" data-value='<callout @type="warn" @label="Heads up"><p>Bring a laptop.</p></callout>' data-strings="norn-code-block-webc-pyoWw" data-compact="" data-surface="code">
+                    <button type="button" hidden="" data-value='<callout @type="warn" @label="Heads up"><p>Bring a laptop.</p></callout>' data-strings="norn-code-block-webc-HAWPf" data-compact="" data-surface="code">
                       <span data-icons=""
                         ><norn-icon>
                           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -2382,8 +2379,8 @@
                     <span role="status"></span>
                   </norn-copy-button>
                   <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,7,2,1,5,0,0,1,3,0,6,2,1,6,0,0,1,3,0,10,0,0,2,1,0,1,0,0,1,0,15,2,1,0,1,0,0,3,1,0,7,0,0,1]]">&lt;callout @type="warn" @label="Heads up"&gt;&lt;p&gt;Bring a laptop.&lt;/p&gt;&lt;/callout&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-pyoWw">
-                    <span data-string="label" id="norn-code-block-webc-pyoWw-copy">Copy {name} to clipboard</span>
+                  <span hidden="" id="norn-code-block-webc-HAWPf">
+                    <span data-string="label" id="norn-code-block-webc-HAWPf-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -2461,28 +2458,28 @@
                     >
                   </fieldset>
                 </norn-segmented-control>
-                <button type="button" data-axe="" data-state="idle">
+                <button type="button" data-axe="" data-state="idle" title="Check accessibility">
                   <norn-icon data-for="idle">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M12 7v.5M7.5 10l4.5 1l4.5-1M12 11v3M9.5 18l2.5-4l2.5 4"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="running">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-9-9"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="pass">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M8 12l3 3l5-6"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="fail">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M15 9l-6 6M9 9l6 6"></path>
                     </svg>
                   </norn-icon>
-                  Check accessibility
+                  <span class="sr-only">Check accessibility</span>
                 </button>
               </form>
               <div class="stage"><iframe src="/course-kit/components/frames/ui/callout/no-label/" title="No label" loading="lazy"></iframe></div>
@@ -2495,7 +2492,7 @@
               <norn-code-block>
                 <figure>
                   <norn-copy-button>
-                    <button type="button" hidden="" data-value='<callout @type="warn" @label=""><p>Bring a laptop.</p></callout>' data-strings="norn-code-block-webc-rpmKt" data-compact="" data-surface="code">
+                    <button type="button" hidden="" data-value='<callout @type="warn" @label=""><p>Bring a laptop.</p></callout>' data-strings="norn-code-block-webc-LGKpG" data-compact="" data-surface="code">
                       <span data-icons=""
                         ><norn-icon>
                           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -2510,8 +2507,8 @@
                     <span role="status"></span>
                   </norn-copy-button>
                   <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,7,2,1,5,0,0,1,3,0,6,2,1,6,0,0,1,3,0,2,0,0,2,1,0,1,0,0,1,0,15,2,1,0,1,0,0,3,1,0,7,0,0,1]]">&lt;callout @type="warn" @label=""&gt;&lt;p&gt;Bring a laptop.&lt;/p&gt;&lt;/callout&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-rpmKt">
-                    <span data-string="label" id="norn-code-block-webc-rpmKt-copy">Copy {name} to clipboard</span>
+                  <span hidden="" id="norn-code-block-webc-LGKpG">
+                    <span data-string="label" id="norn-code-block-webc-LGKpG-copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -2589,28 +2586,28 @@
                     >
                   </fieldset>
                 </norn-segmented-control>
-                <button type="button" data-axe="" data-state="idle">
+                <button type="button" data-axe="" data-state="idle" title="Check accessibility">
                   <norn-icon data-for="idle">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M12 7v.5M7.5 10l4.5 1l4.5-1M12 11v3M9.5 18l2.5-4l2.5 4"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="running">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-9-9"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="pass">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M8 12l3 3l5-6"></path>
                     </svg>
                   </norn-icon>
                   <norn-icon data-for="fail">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
                       <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M15 9l-6 6M9 9l6 6"></path>
                     </svg>
                   </norn-icon>
-                  Check accessibility
+                  <span class="sr-only">Check accessibility</span>
                 </button>
               </form>
               <div class="stage"><iframe src="/course-kit/components/frames/ui/callout/matrix/" title="Every option" loading="lazy"></iframe></div>
@@ -2622,7 +2619,7 @@
           <h2>Props</h2>
           <p>Write them with the <code>@</code> prefix, and <code>:@</code> for an expression. A prop in square brackets is optional.</p>
           <norn-simple-table class="spec"
-            ><span hidden="" id="norn-simple-table-webc-5YOsB"></span>
+            ><span hidden="" id="norn-simple-table-webc-hY37x"></span>
             <div>
               <table>
                 <thead>

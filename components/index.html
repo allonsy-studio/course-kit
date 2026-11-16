@@ -695,16 +695,14 @@
         <a rel="home" href="../">course-kit</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-w4xme">
-            <span data-label="" id="norn-header-webc-w4xme">Primary</span>
+          <nav aria-labelledby="norn-header-webc-sjjRr">
+            <span data-label="" id="norn-header-webc-sjjRr">Primary</span>
 
-            <a href="../#install">Install</a>
-            <a href="../#usage">Usage</a>
+            <a href="../#quick-start">Quick start</a>
             <a href="../#features">Features</a>
+            <a href="../#accessibility">Accessibility</a>
             <a href="./">Components</a>
             <a href="theme/">Theme</a>
-            <a href="https://github.com/allonsy-studio/course-kit">GitHub</a>
-            <a href="https://www.npmjs.com/package/@allons-y/course-kit">npm</a>
           </nav>
         </details>
       </header>
@@ -716,13 +714,12 @@
     </p>
 
     <div class="app">
-      <details open="" class="nav">
-        <summary>Components</summary>
-        <section aria-labelledby="nav-ui">
-          <h2 id="nav-ui">Building blocks</h2>
+      <nav aria-label="Components" class="nav">
+        <details open="true">
+          <summary>Building blocks</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-RRmi4">
-              <span data-label="" id="norn-side-nav-webc-RRmi4"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-N3_Jk">
+              <span data-label="" id="norn-side-nav-webc-N3_Jk"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -773,12 +770,12 @@
               </ul>
             </nav>
           </norn-side-nav>
-        </section>
-        <section aria-labelledby="nav-site">
-          <h2 id="nav-site">Site sections</h2>
+        </details>
+        <details open="true">
+          <summary>Site sections</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-QEOc9">
-              <span data-label="" id="norn-side-nav-webc-QEOc9"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-YueKH">
+              <span data-label="" id="norn-side-nav-webc-YueKH"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -841,12 +838,12 @@
               </ul>
             </nav>
           </norn-side-nav>
-        </section>
-        <section aria-labelledby="nav-practice">
-          <h2 id="nav-practice">Practice worksheets</h2>
+        </details>
+        <details open="true">
+          <summary>Practice worksheets</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-iiD_n">
-              <span data-label="" id="norn-side-nav-webc-iiD_n"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-C0Hwn">
+              <span data-label="" id="norn-side-nav-webc-C0Hwn"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -891,12 +888,77 @@
               </ul>
             </nav>
           </norn-side-nav>
-        </section>
-      </details>
+        </details>
+      </nav>
 
       <main id="main" tabindex="-1">
         <h1>Components</h1>
         <p class="lead">Every component the kit ships, rendered by the kit's own plugin with the starter course's data. What you see here is what a course's build produces.</p>
+        <section aria-labelledby="examples">
+          <h2 id="examples">What you can build</h2>
+          <p>Whole pages from the starter course. Open one to use it at full size.</p>
+          <ul role="list" class="examples">
+            <li>
+              <article>
+                <div class="example-frame">
+                  <iframe src="/course-kit/components/examples/home/" title="Course home and syllabus preview" loading="lazy" tabindex="-1" inert=""></iframe>
+                </div>
+                <h3><a href="/course-kit/components/examples/home/">Course home and syllabus</a></h3>
+                <p>Today's class, what is due next, the syllabus, grading, key dates and policies, from the course's data files.</p>
+                <p class="example-uses">
+                  <span class="sr-only">Built with </span><a href="/course-kit/components/components/site/masthead/"><code>masthead</code></a>
+                  <a href="/course-kit/components/components/site/course-now/"><code>course-now</code></a>
+                  <a href="/course-kit/components/components/site/course-summary/"><code>course-summary</code></a>
+                  <a href="/course-kit/components/components/site/syllabus/"><code>syllabus</code></a>
+                  <a href="/course-kit/components/components/site/grading/"><code>grading</code></a>
+                  <a href="/course-kit/components/components/site/policies/"><code>policies</code></a>
+                </p>
+              </article>
+            </li>
+            <li>
+              <article>
+                <div class="example-frame">
+                  <iframe src="/course-kit/components/examples/schedule/" title="Schedule preview" loading="lazy" tabindex="-1" inert=""></iframe>
+                </div>
+                <h3><a href="/course-kit/components/examples/schedule/">Schedule</a></h3>
+                <p>Every week of the term with its meetings, readings and deadlines. Today is marked, and past weeks can be hidden.</p>
+                <p class="example-uses">
+                  <span class="sr-only">Built with </span><a href="/course-kit/components/components/site/schedule-overview/"><code>schedule-overview</code></a>
+                  <a href="/course-kit/components/components/site/schedule-weeks/"><code>schedule-weeks</code></a>
+                  <a href="/course-kit/components/components/ui/today-marker/"><code>today-marker</code></a>
+                </p>
+              </article>
+            </li>
+            <li>
+              <article>
+                <div class="example-frame">
+                  <iframe src="/course-kit/components/examples/practice/" title="Practice worksheet preview" loading="lazy" tabindex="-1" inert=""></iframe>
+                </div>
+                <h3><a href="/course-kit/components/examples/practice/">Practice worksheet</a></h3>
+                <p>Questions written in Markdown that students check themselves, each linked to the slide that taught it.</p>
+                <p class="example-uses">
+                  <span class="sr-only">Built with </span><a href="/course-kit/components/components/practice/practice-worksheet/"><code>practice-worksheet</code></a>
+                  <a href="/course-kit/components/components/practice/practice-question/"><code>practice-question</code></a>
+                  <a href="/course-kit/components/components/practice/check-controls/"><code>check-controls</code></a>
+                </p>
+              </article>
+            </li>
+            <li>
+              <article>
+                <div class="example-frame">
+                  <iframe src="/course-kit/components/examples/glossary/" title="Glossary preview" loading="lazy" tabindex="-1" inert=""></iframe>
+                </div>
+                <h3><a href="/course-kit/components/examples/glossary/">Glossary</a></h3>
+                <p>Every vocabulary slide as one term, to review as a list or study as flashcards.</p>
+                <p class="example-uses">
+                  <span class="sr-only">Built with </span><a href="/course-kit/components/components/site/glossary/"><code>glossary</code></a>
+                  <a href="/course-kit/components/components/site/glossary-panel/"><code>glossary-panel</code></a>
+                  <a href="/course-kit/components/components/site/glossary-entry/"><code>glossary-entry</code></a>
+                </p>
+              </article>
+            </li>
+          </ul>
+        </section>
         <section>
           <h2>Building blocks</h2>
           <p>Props and slots only; they never read the page's data. Use them anywhere.</p>
