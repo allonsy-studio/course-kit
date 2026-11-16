@@ -58,6 +58,8 @@ npm can add a trusted publisher only to a package that already exists, so the fi
 
 Do not add an `NPM_TOKEN` secret.
 
+A release published from CI carries a provenance attestation, which npm shows on the package page. `0.1.0` was published by hand, so it has none, and npm cannot add one to a published version.
+
 If the publish step fails, run the workflow again: each step skips what is already done.
 
 ## Depending on the kit
@@ -75,7 +77,6 @@ A course site pins a version and updates it on purpose.
 - In `0.x`, `~0.1.0` takes patches only. A minor is breaking, so a course moves to it by hand, after reading the changelog entry and its migration guide.
 - Commit the lockfile. A course's build should never change because the kit published.
 - Let Renovate or Dependabot open the update pull request, so a course sees each release.
-- Until `0.1.0` is published, install from GitHub, at a tag once there is one: `github:allonsy-studio/course-kit#v0.1.0`. Avoid a branch: it moves.
 - After `1.0.0`, `^1.0.0` is the usual range.
 
 ## Trying a branch before it merges
