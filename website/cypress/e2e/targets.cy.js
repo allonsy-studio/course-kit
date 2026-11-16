@@ -17,12 +17,13 @@ describe("target size", () => {
 });
 
 /**
- * Whole pages as a course ships them, not a component alone: the home page with its band, the document layout's contents rail, and the lesson plans
+ * Whole pages as a course ships them, not a component alone: the home page with its band, the document layout's contents rail, the practice index (a `.table-light` table of links), and the lesson plans
  * with their rail, outline and day navigation. Their links are in lists and navs, so no inline-in-text exemption applies.
  */
 const LAYOUT_PAGES = [
 	"/components/examples/home/",
 	"/components/examples/document/",
+	"/components/examples/practice-index/",
 	"/components/lessons/",
 	"/components/lessons/week-1/day-1/",
 	"/components/lessons/week-1/day-2/",
