@@ -25,7 +25,7 @@ CS230 adds a one-on-one booking button to the instructor panel with `<book-appoi
 
 Found migrating CS230. Not done.
 
-- **A nav layout for eight or more items.** The header's menu is one column of links, so a course with eight pages makes the masthead about 150px taller than its own did. Options: (a) a two-row or wrapping menu above a width; (b) a "More" disclosure that holds the last items (it must stay reachable with no script: a `<details>`); (c) a `nav.layout` option (`column`, `wrap`) in `courseKit`. Re-measure at 320px, 400% zoom and print before choosing.
+- **A nav layout option for eight or more items.** Done in part: the hero menu folds into two columns above six links on a wide screen (`nav-links.webc`). Not done: a third column or a "More" disclosure for a dozen pages, and a `nav.layout` option to turn the fold off.
 - **A header treatment option.** The kit's one-column nav also drops the tinted header wash the courses had behind the masthead. Offer the wash as a theme token (`surface-header`) and a `header: "tinted" | "plain"` option, at 7:1 for the nav links in light, dark and forced colors.
 
 ## Course content colors
