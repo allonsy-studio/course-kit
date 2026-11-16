@@ -123,6 +123,22 @@
     display: block;
 }
 
+/* Two columns (`two-column`, used by the hero): the same stack split into two
+   newspaper columns, read top to bottom then across, so a long list stays
+   short. Narrow screens keep the column variant's wrapped row. */
+@media screen and (width > 768px) {
+    :host([column][two-column]) ul {
+        display: block;
+        columns: 2;
+        column-gap: calc(var(--content-space) * 2);
+    }
+
+    :host([column][two-column]) li {
+        break-inside: avoid;
+        margin-block-end: calc(var(--content-space) * 0.35);
+    }
+}
+
 /* A stack of plain links, not pills — no border, no background. */
 :host([column]) a,
 :host([column]) a:visited {

@@ -239,6 +239,10 @@ The instructor's details: photo, office, contact and hours. Reads `instructor`.
 
 The page header: institution, term, course title and the navigation. Reads `site`, `term` and `course`. The menu is Home, Syllabus, then every page of the site menu that has not set `menu: false`.
 
+| Prop | Type | |
+|---|---|---|
+| `[navColumns]` | `1 \| 2` | how many columns the menu is set in: `1` (the default) is a single stack, `2` splits a long menu in two so the header stays short. The same as `"navColumns": 2` in `course.json`, and wins over it |
+
 ### `<nav-links>`
 
 The site navigation as a list of links, marking the current page. Give it the `navigation` array, or write the links in the default slot as a `<ul>` of `<li><a>`; the array wins when it has items, and when it is missing or empty the slot is rendered instead.

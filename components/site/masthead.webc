@@ -2,7 +2,10 @@
 	/**
 	 * The page header: institution, term, course title and the navigation. Reads `site`, `term` and `course`.
 	 * The menu is Home, Syllabus, then every page of the site menu that has not set `menu: false`.
+	 * @prop {1 | 2} [navColumns] how many columns the menu is set in: `1` (the default) is a single stack, `2` splits a long menu in two so the header stays short. The same as `"navColumns": 2` in `course.json`, and wins over it
 	 */
+	/** The prop wins over the course's `navColumns`; only `2` turns the second column on. */
+	const twoColumns = (data, prop) => Number(prop ?? data.course?.navColumns) === 2;
 	const navItems = (() => {
 		const items = eleventyNavigation($data.collections.all);
 		const home = items.find((item) => item.url === "/");
@@ -30,7 +33,8 @@
             </p>
         </div>
         <div class="links">
-            <nav-links column :aria-label="$data.copy.nav.site" @context="hero" :@navigation="navItems"></nav-links>
+            <nav-links column two-column webc:if="twoColumns($data, typeof navColumns === 'undefined' ? undefined : navColumns)" :aria-label="$data.copy.nav.site" @context="hero" :@navigation="navItems"></nav-links>
+            <nav-links column webc:else :aria-label="$data.copy.nav.site" @context="hero" :@navigation="navItems"></nav-links>
         </div>
     </div>
 </header>
