@@ -73,11 +73,11 @@ Slots:
 
 ### `<download-button>`
 
-A download link with an icon. The label is the slot.
+A download link with an icon. The label is the slot. With no file there is no link: a download button that points nowhere is not shown.
 
 | Prop | Type | |
 |---|---|---|
-| `url` | `string` | the file to download |
+| `url` | `string` | the file to download. Only a string counts: a prop that is not given can resolve to Eleventy's `url` filter, which would print as the function's source |
 
 ### `<eyebrow>`
 

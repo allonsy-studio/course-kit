@@ -1,10 +1,10 @@
 <script webc:setup>
 	/**
-	 * A download link with an icon. The label is the slot.
-	 * @prop {string} url the file to download
+	 * A download link with an icon. The label is the slot. With no file there is no link: a download button that points nowhere is not shown.
+	 * @prop {string} url the file to download. Only a string counts: a prop that is not given can resolve to Eleventy's `url` filter, which would print as the function's source
 	 */
 </script>
-<a webc:root="override" :href="url" download>
+<a webc:root="override" :href="typeof url === 'string' && url ? url : undefined" webc:if="typeof url === 'string' && url" download>
 	<svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="download-icon">
 		<path d="M8 2v8" />
 		<path d="M4.5 7 8 10.5 11.5 7" />
