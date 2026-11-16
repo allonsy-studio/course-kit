@@ -31,7 +31,7 @@ You need [Node.js](https://nodejs.org) 24 or newer, and a terminal.
    	},
    	"dependencies": {
    		"@11ty/eleventy": "^3.1.0",
-   		"@allons-y/course-kit": "~0.1.0"
+   		"@allons-y/course-kit": "0.1.1"
    	}
    }
    ```

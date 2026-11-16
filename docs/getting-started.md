@@ -7,7 +7,7 @@ This walks you through the sample course in [`examples/starter`](../examples/sta
 You need [Node.js](https://nodejs.org) 22 or newer.
 
 1. Copy `examples/starter` to a new folder for your course.
-2. Add the `package.json` from the [README](../README.md#start-here) to that folder.
+2. Add the `package.json` from the [README](../README.md#start-here) to that folder. It names the kit's version exactly (`"0.1.1"`, no `~` or `^`): you move to a newer release on purpose, by changing that number, after reading [what changed](../CHANGELOG.md). [Releasing](releasing.md#depending-on-the-kit) says why.
 3. In a terminal in that folder, run `npm install`, then `npm start`.
 4. Open the address it prints. When you save a file, the page reloads.
 
