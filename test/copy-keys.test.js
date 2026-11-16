@@ -24,8 +24,8 @@ for (const dir of ["components", "layouts", "glue", "lib", "assets/scripts"]) {
 /** Keys built from a prefix at run time (`schedule.dueKind` + a kind), so no source names them whole. */
 const DYNAMIC_PREFIXES = { schedule: ["dueKind"] };
 
-/** Keys the courses use and the kit's own components do not: the footer's "Open source" link is each course's, not the kit's. */
-const COURSE_ONLY = new Set(["nav.openSource"]);
+/** Keys the courses use and the kit's own components do not. None now: the footer's "Open source" link is the kit's, shown when `institution.sourceUrl` is set. */
+const COURSE_ONLY = new Set([]);
 
 /** A key's name without its plural variant: `dueInDays_one` is used as `dueInDays`. */
 const base = (key) => key.replace(/_(one|other|zero|two|few|many)$/, "");

@@ -29,6 +29,7 @@ Every option is optional.
 | `institution.name` | none | The college's name, shown in the header, the footer and the page metadata. |
 | `institution.timezone` | `UTC` | The time zone "today" is judged in, such as `America/New_York`. Set it: without it the schedule marks UTC's day, which is the wrong day for a campus in the evening. The build never reads the computer's own zone, so a CI build and a laptop agree. |
 | `institution.lms` | `Brightspace` | The name of your learning management system, used in the syllabus and lesson plans. |
+| `institution.sourceUrl` | none | A web address, such as your course's repository. When set, every page's footer links to it with the words "Open source" (change them with the `nav.openSource` copy key). Without it the footer has no such link. |
 | `site` | derived from your course | `{ description, keywords, language }` for the page metadata. |
 | `lessons` | built in | `{ segments, defaultDays }`: how a class meeting's time is divided in the lesson plan, and the meeting days used when `schedule.json` names none. |
 | `pdf` | on in production builds | `false` skips the syllabus PDF. Without it, a production build needs the `puppeteer` package installed. |

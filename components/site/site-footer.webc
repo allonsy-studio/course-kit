@@ -1,6 +1,6 @@
 <script webc:setup>
 	/**
-	 * The page footer: course, institution, term, copyright and the links. Reads `course`, `site` and `term`.
+	 * The page footer: course, institution, term, copyright and the links. Reads `course`, `site` and `term`. With `institution.sourceUrl` set it also links to the course's source.
 	 */
 </script>
 <div webc:root="override">
@@ -11,6 +11,7 @@
             <span @text="$data.term.label"></span>
         </p>
         <copyright></copyright>
+        <p class="source" webc:if="$data.site.sourceUrl"><a :href="$data.site.sourceUrl" rel="noopener" @text="$data.copy.nav.openSource"></a></p>
     </div>
     <div class="group">
         <p class="label" id="footer-pages" @text="$data.copy.siteFooter.pages"></p>
@@ -102,8 +103,14 @@
         font-size: 1em;
     }
 
+    .source {
+        margin: 0;
+        max-inline-size: none;
+    }
+
     nav.group a,
-    .course a {
+    .course a,
+    .source a {
         display: inline-flex;
         align-items: center;
         min-block-size: var(--target-min);

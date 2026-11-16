@@ -275,7 +275,7 @@ Every week of the term as a bordered block: one row per class meeting (when, top
 
 ### `<site-footer>`
 
-The page footer: course, institution, term, copyright and the links. Reads `course`, `site` and `term`.
+The page footer: course, institution, term, copyright and the links. Reads `course`, `site` and `term`. With `institution.sourceUrl` set it also links to the course's source.
 
 ### `<slide-timetable>`
 
