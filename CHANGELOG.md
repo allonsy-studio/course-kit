@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.1
+
+📅 _Released 16 November 2026_
+
+### Patch Changes
+
+- 📝 Point the install instructions at the published package: `npm install @allons-y/course-kit`, pinned with `~0.1.0`, and Node 24 or later. (📝 [#30](https://github.com/allonsy-studio/course-kit/pull/30))
+
 ## 0.1.0
 
 📅 _Released 13 November 2026_
