@@ -46,7 +46,7 @@ function chromeFor(url) {
 }
 
 /** The global data a story can replace for its own frame, with `data` on the story. */
-const STORY_DATA = ["instructor"];
+const STORY_DATA = ["instructor", "course", "grading"];
 
 /**
  * The component preview: the kit's own plugin and the starter's data, plus a page per component and a frame per story.
@@ -92,7 +92,7 @@ export default async function (config) {
 			permalink: (data) => `${data.frame.url}index.html`,
 			title: (data) => data.frame.title,
 			// A story's own `data` replaces the starter's for its frame.
-			...Object.fromEntries(STORY_DATA.map((key) => [key, (data) => data.frame.data?.[key] ?? data[key]])),
+			...Object.fromEntries(STORY_DATA.map((key) => [key, (data) => (data.frame.data && key in data.frame.data ? data.frame.data[key] : data[key])])),
 		},
 	});
 
