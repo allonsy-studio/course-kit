@@ -23,7 +23,7 @@ export const PEOPLE = {
  */
 export async function renderInstructor(instructor, attrs = "") {
 	const page = new WebC();
-	page.defineComponents(path.join(packageRoot, "components", "site", "instructor.webc"));
+	page.defineComponents(["instructor.webc", "book-appointment.webc"].map((name) => path.join(packageRoot, "components", "site", name)));
 	page.setHelper("encodeEmail", encodeEmail);
 	page.setHelper("fill", fill);
 	page.setContent(`<instructor ${attrs}></instructor>`);

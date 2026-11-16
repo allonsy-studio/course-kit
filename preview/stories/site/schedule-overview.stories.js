@@ -5,6 +5,9 @@ export default { title: "Site sections/schedule-overview" };
 /** Reads the course's data files, so it needs no props. The starter's three weeks span two months. */
 export const Default = {};
 
+/** `date-style="short"`: the project and exam dates as "Fri, Oct 23, 12:00PM" instead of the long form. */
+export const ShortDates = { name: "Key dates, short form", args: { dateStyle: "short" } };
+
 /** A fall term of fifteen weeks, Tuesdays and Thursdays from August 25, 2020: five months of class meetings, all of them past, so the Hide past weeks toggle is always there. */
 const lessons = [];
 const WEEKDAYS = ["Tuesday", "Thursday"];

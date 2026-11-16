@@ -985,7 +985,8 @@ eyebrow + :where(h1, h2, h3, h4, h5, h6) {
    A contents column beside a document (and beside the syllabus, whose own
    component sets where it sits), and an outline and a tools rail beside
    a lesson plan. Only the syllabus's list is sticky, and each falls to one
-   column on a narrow screen, the side columns first. */
+   column on a narrow screen: a document's contents go after the page, the
+   lesson plan's side columns first. */
 .rail-label {
 	margin: 0 0 0.5em;
 	color: var(--color-text-muted);
@@ -1013,14 +1014,19 @@ body:has(.doc-layout[data-contents="true"], .lesson-layout) {
 
 .doc-layout[data-contents="true"] {
 	grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
-	/* The page is first in the source; the grid puts the contents beside it, or above it on a narrow screen. */
+	/* The page is first in the source; the grid puts the contents beside it, or after it on a narrow screen, so the h1 is the first thing on a phone and the visual order is the reading order. */
 	grid-template-areas: "contents page";
 
 	@media screen and (width <= 900px) {
 		grid-template-columns: minmax(0, 1fr);
 		grid-template-areas:
-			"contents"
-			"page";
+			"page"
+			"contents";
+
+		> .doc-contents {
+			margin-block-start: var(--section-space);
+			border-block-start: var(--thin-border-width) solid var(--color-border);
+		}
 	}
 
 	@media print {
@@ -1179,6 +1185,23 @@ body:has(.doc-layout[data-contents="true"], .lesson-layout) {
 	}
 }
 
+/* `.separators` sets `display: flex` after the utility classes above and outranks them, so a row that is for one medium only needs its own rules. */
+.separators.print-only {
+	display: none;
+}
+
+.separators.screen-only {
+	@media print {
+		display: none;
+	}
+}
+
+.separators.print-only {
+	@media print {
+		display: flex;
+	}
+}
+
 .lesson-list {
 	td {
 		font-size: max(var(--base-font-size), 0.95em);
@@ -1250,8 +1273,8 @@ body:has(.doc-layout[data-contents="true"], .lesson-layout) {
 		border-inline: none;
 	}
 
-	/* A link that is the whole cell is an operable target: 44px tall (WCAG 2.5.5); print sets --target-min to 0. */
-	:where(td, th) > a:only-child {
+	/* A link that is a direct child of a cell is an operable target: 44px tall (WCAG 2.5.5); print sets --target-min to 0. */
+	:where(td, th) > a {
 		display: inline-flex;
 		align-items: center;
 		min-block-size: var(--target-min);
@@ -1951,6 +1974,63 @@ blockquote {
 	list-style: none;
 	font-size: max(var(--base-font-size), 0.875em);
 	color: var(--color-text-muted);
+}
+
+/* ---- The call-to-action button ----
+   One primary action as a link: the accent pill, 44px tall, in the brand fill under its own text color (7:1). It needs its words, so it
+   is never an icon. `a.cta-button[href]` outranks the prose link rules above, which underline and recolor a link inside a paragraph or
+   list item and on hover. Motion only where the reader has not asked for less; print shows a plain underlined link. */
+a.cta-button[href] {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	min-block-size: var(--target-min);
+	min-inline-size: var(--target-min);
+	padding: 0.6em 1.4em;
+	border: var(--border-width) solid var(--color-accent);
+	border-radius: var(--radius-pill);
+	background-color: var(--color-accent);
+	color: var(--color-on-accent);
+	font-weight: var(--font-weight--semi-bold);
+	line-height: var(--font-height);
+	text-align: center;
+	text-decoration: none;
+
+	@media (prefers-reduced-motion: no-preference) {
+		transition:
+			background-color 150ms ease-out,
+			border-color 150ms ease-out;
+	}
+
+	&:is(:hover, :focus, :focus-visible) {
+		background-color: var(--color-accent-fill-hover);
+		border-color: var(--color-accent-fill-hover);
+		color: var(--color-on-accent);
+		text-decoration: none;
+	}
+
+	/* A forced palette drops the fill, so the pill is its outline and its text. */
+	@media (forced-colors: active) {
+		border-color: LinkText;
+		color: LinkText;
+
+		&:is(:hover, :focus, :focus-visible) {
+			border-color: Highlight;
+			color: LinkText;
+		}
+	}
+
+	@media print {
+		display: inline;
+		min-block-size: 0;
+		min-inline-size: 0;
+		padding: 0;
+		border: 0;
+		background: none;
+		color: inherit;
+		text-decoration: underline;
+	}
 }
 
 /* ---- The switch ----

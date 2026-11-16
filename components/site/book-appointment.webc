@@ -1,0 +1,26 @@
+<script webc:setup>
+	/**
+	 * The one-on-one booking button: a link to `instructor.booking.url`, labelled by `instructor.booking.label` or the `instructor.bookAnAppointment` copy key. Renders nothing when the instructor has no `booking`. `<instructor>` places it as the last line of the panel; a page, such as the contact page, can place it anywhere.
+	 */
+</script>
+<div webc:root="override" class="book-appointment" webc:if="$data.instructor?.booking?.url">
+    <a class="cta-button" :href="$data.instructor.booking.url" @text="$data.instructor.booking.label || $data.copy.instructor.bookAnAppointment"></a>
+</div>
+
+<style webc:scoped>
+    /* Aligned with the content's start edge, with space above it. In the instructor panel with icon links on, the column is a wrapping
+       flex row (the kit orders heading 0, icons 1, facts 2, note 3), and the button takes its own line last; anywhere else the two
+       flex properties do nothing. The pill itself is `.cta-button` in the base stylesheet. */
+    :host {
+        display: flex;
+        justify-content: flex-start;
+        flex: 1 1 100%;
+        order: 4;
+        margin-block-start: var(--content-space);
+
+        @media print {
+            display: block;
+            margin-block-start: 0.4em;
+        }
+    }
+</style>
