@@ -5,6 +5,8 @@ permalink: /examples/document/index.html
 example: true
 ---
 
+# Course policies
+
 ## Attendance
 
 Come to class. If you cannot, tell the instructor before class when you can.
