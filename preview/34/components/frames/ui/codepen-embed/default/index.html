@@ -82,11 +82,10 @@
         <div data-prefill='{"title":"A first page in HTML","description":"Open the pen and change the heading.","stylesheets":[],"scripts":[]}' data-height="300" data-default-tab="html,result" data-editable="true" data-preview="true" class="codepen"></div>
 
         <script>
-          /* Set the editor theme before ei.js builds the iframe. */
+          /* Set the editor theme before ei.js builds the iframe: it follows the system. */
           (function () {
             try {
-              var forced = document.documentElement.dataset.theme;
-              var dark = forced === "dark" || (forced !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+              var dark = matchMedia("(prefers-color-scheme: dark)").matches;
               document.querySelectorAll(".codepen[data-prefill]").forEach(function (embed) {
                 embed.dataset.themeId = dark ? "dark" : "light";
               });
