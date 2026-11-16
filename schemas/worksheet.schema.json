@@ -33,7 +33,7 @@
     },
     "eyebrow": {
       "type": "string",
-      "description": "Small-caps label above the heading, after the term and course code."
+      "description": "Small-caps label above the heading, such as the kind of page (\"Practice\"). The masthead already gives the term and course code, so the page does not repeat them."
     },
     "heading": {
       "type": "string",

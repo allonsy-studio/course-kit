@@ -6,11 +6,7 @@
 <article class="content-column practice" id="worksheet" data-worksheet webc:if="$data.worksheet"
 	:data-storage-id="`${$data.course.code.toLowerCase()}/${$data.page.fileSlug}`">
 	<header class="practice-head">
-		<eyebrow class="separators">
-			<span @text="$data.term.label"></span>
-			<span @text="$data.course.code"></span>
-			<span @text="$data.worksheet.eyebrow"></span>
-		</eyebrow>
+		<eyebrow webc:if="$data.worksheet.eyebrow" @text="$data.worksheet.eyebrow"></eyebrow>
 		<h1 @text="$data.worksheet.heading"></h1>
 		<p class="not-graded" @text="$data.worksheet.copy.notGraded"></p>
 		<p class="lede" @text="$data.worksheet.lede"></p>

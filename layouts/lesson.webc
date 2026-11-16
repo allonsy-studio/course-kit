@@ -7,10 +7,6 @@ layout: "base"
 </script>
 
 <section class="lesson-list content-column wide">
-	<eyebrow class="separators">
-		<span @text="$data.term.label"></span>
-		<span @text="$data.code"></span>
-	</eyebrow>
 	<h1 @text="copy.lessonPlans"></h1>
 	<p @text="fill(copy.onePlanPerClass, { time: timeOfDay($data.schedule?.meetings?.time) })"></p>
 	<p webc:if="$data.collections.deck?.length" @raw="fill(copy.everyDeckInMeeting, { link: link('/slides/', copy.slideIndex) })"></p>

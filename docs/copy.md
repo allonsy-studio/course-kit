@@ -149,7 +149,6 @@ A page's `#copy-data` block carries only the namespaces its scripts read: `code`
 | `hint` | `Space reveals · arrows move` |
 | `defShown` | `Definition shown for {term}` |
 | `symbols` | `Symbols` |
-| `glossary` | `Glossary` |
 | `courseGlossary` | `Course glossary` |
 | `slidesOnly` | `Slides only` |
 | `finalExam` | `Final exam` |
