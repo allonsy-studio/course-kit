@@ -1,0 +1,11 @@
+---
+layout: base
+title: Schedule
+permalink: /examples/schedule/index.html
+example: true
+---
+
+<article class="content-column wide">
+	<schedule-overview></schedule-overview>
+	<schedule-weeks></schedule-weeks>
+</article>

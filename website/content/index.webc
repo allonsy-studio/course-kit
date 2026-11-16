@@ -1,0 +1,97 @@
+---
+layout: norn-base.webc
+permalink: /index.html
+anchors: true
+---
+<script webc:setup>
+	/** The landing's copy and the kit's own code blocks. */
+	const landing = $data.landing;
+</script>
+<norn-hero>
+	<h1>
+		<span @text="$data.norn.name"></span>
+		<span @text="$data.norn.tagline"></span>
+	</h1>
+	<p @text="$data.norn.lede"></p>
+	<nav aria-label="Get started">
+		<ul role="list">
+			<li><norn-link-button @href="/components/"><span webc:nokeep @text="landing.gallery.cta"></span></norn-link-button></li>
+			<li><norn-link-button :@href="$data.norn.repo" @variant="secondary"><norn-icon @name="github"></norn-icon><span webc:nokeep>View on GitHub</span></norn-link-button></li>
+		</ul>
+	</nav>
+	<norn-fact-list @gap="l">
+		<li><norn-icon @name="check"></norn-icon><span>Free &amp; open source</span></li>
+		<li><norn-icon @name="check"></norn-icon><span @text="'License: ' + $data.norn.license"></span></li>
+		<li><norn-icon @name="check"></norn-icon><span>Node 24+</span></li>
+	</norn-fact-list>
+</norn-hero>
+<section id="audience" aria-labelledby="audience-title">
+	<h2 id="audience-title" @text="landing.audience.title"></h2>
+	<p @text="landing.audience.body"></p>
+	<ul>
+		<li webc:for="point of landing.audience.points" @text="point"></li>
+	</ul>
+</section>
+<section id="quick-start" aria-labelledby="quick-start-title">
+	<h2 id="quick-start-title" @text="landing.quickStart.title"></h2>
+	<p @text="landing.quickStart.intro"></p>
+	<ol role="list" class="steps">
+		<li webc:for="step of landing.quickStart.steps">
+			<h3 @text="step.title"></h3>
+			<div @html="kitCode(step.code, step.language, step.file)"></div>
+		</li>
+	</ol>
+</section>
+<section id="features" aria-labelledby="features-title">
+	<h2 id="features-title" @text="landing.features.title"></h2>
+	<norn-card-grid>
+		<li webc:for="feature of landing.features.items">
+			<norn-card>
+				<norn-icon :@name="feature.icon" @size="m"></norn-icon>
+				<h3><a :href="feature.href" @text="feature.title"></a></h3>
+				<p @text="feature.description"></p>
+			</norn-card>
+		</li>
+	</norn-card-grid>
+</section>
+<section id="gallery" aria-labelledby="gallery-title">
+	<h2 id="gallery-title" @text="landing.gallery.title"></h2>
+	<p @text="landing.gallery.intro"></p>
+	<ul role="list" class="examples">
+		<li webc:for="example of landing.gallery.examples">
+			<article>
+				<div class="example-frame">
+					<iframe :src="example.href" :title="example.title + ' preview'" loading="lazy" tabindex="-1" inert></iframe>
+				</div>
+				<h3><a :href="example.href" @text="example.title"></a></h3>
+			</article>
+		</li>
+	</ul>
+	<p><norn-link-button @href="/components/"><span webc:nokeep @text="landing.gallery.cta"></span><norn-icon @name="arrow-end"></norn-icon></norn-link-button></p>
+</section>
+<section id="accessibility" aria-labelledby="accessibility-title">
+	<h2 id="accessibility-title" @text="landing.accessibility.title"></h2>
+	<p @text="landing.accessibility.body"></p>
+	<norn-card-grid>
+		<li webc:for="point of landing.accessibility.points">
+			<norn-card>
+				<h3 @text="point.title"></h3>
+				<p @text="point.body"></p>
+			</norn-card>
+		</li>
+	</norn-card-grid>
+	<ul role="list" class="inline-links">
+		<li webc:for="link of landing.accessibility.links"><a :href="link.href" @text="link.title"></a></li>
+	</ul>
+</section>
+<section id="docs" aria-labelledby="docs-title">
+	<h2 id="docs-title" @text="landing.docs.title"></h2>
+	<norn-card-grid>
+		<li webc:for="link of landing.docs.links">
+			<norn-card>
+				<h3><a :href="link.href" @text="link.title"></a></h3>
+				<p @text="link.description"></p>
+			</norn-card>
+		</li>
+	</norn-card-grid>
+</section>

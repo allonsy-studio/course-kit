@@ -1,0 +1,160 @@
+{
+	"audience": {
+		"title": "Built for the people who teach, and the students who read it",
+		"body": "Course kit is for instructors who want a course site that stays current without a web team. Students get one place for the syllabus, the schedule, slides, practice and a glossary, on a phone, a laptop or paper.",
+		"points": [
+			"Instructors keep the course in small JSON files and Markdown, and the site follows.",
+			"Students read a calm, high-contrast site that works without an account and without a network for printed pages.",
+			"Departments share one kit, so every section looks and behaves the same."
+		]
+	},
+	"quickStart": {
+		"title": "Quick start",
+		"intro": "Three steps from an empty folder to a course site you can edit. Node 24 or later.",
+		"steps": [
+			{
+				"title": "Install the kit",
+				"language": "sh",
+				"code": "$ npm install github:allonsy-studio/course-kit"
+			},
+			{
+				"title": "Add it to Eleventy",
+				"language": "js",
+				"file": "eleventy.config.js",
+				"code": "import courseKit from \"@allons-y/course-kit\";\n\nexport default function (config) {\n  courseKit(config, {\n    institution: { name: \"Example College\", timezone: \"America/New_York\" },\n  });\n}"
+			},
+			{
+				"title": "Start from the starter course",
+				"language": "sh",
+				"code": "$ cp -rn node_modules/@allons-y/course-kit/examples/starter/. .\n$ npx eleventy --serve"
+			}
+		]
+	},
+	"features": {
+		"title": "Features",
+		"items": [
+			{
+				"icon": "calendar",
+				"title": "A syllabus and schedule from data",
+				"description": "Put the course, the calendar, grading and policies in small JSON files. The kit works out each meeting's date, skips holidays, marks today's class and prints the syllabus to PDF.",
+				"href": "https://github.com/allonsy-studio/course-kit/blob/main/docs/data-files.md"
+			},
+			{
+				"icon": "slides",
+				"title": "Slides you present from",
+				"description": "Write each deck in Markdown. Speaker notes stay off the slide and land on a printable notes sheet, and every vocabulary slide becomes a glossary entry.",
+				"href": "https://github.com/allonsy-studio/course-kit/blob/main/docs/slides.md"
+			},
+			{
+				"icon": "worksheet",
+				"title": "Practice worksheets students check themselves",
+				"description": "Write questions in Markdown: choice, matching, fill in the blank, diagrams and code. Each answer links back to the slide that taught it, and answers stay in the student's browser.",
+				"href": "https://github.com/allonsy-studio/course-kit/blob/main/docs/writing-content.md#practice-worksheets"
+			},
+			{
+				"icon": "lock",
+				"title": "Lesson plans only you see",
+				"description": "Every class meeting gets a lesson plan and the speaker notes. The instructor build includes them and the student build leaves them out.",
+				"href": "https://github.com/allonsy-studio/course-kit/blob/main/docs/configuration.md#instructor-and-student-builds"
+			},
+			{
+				"icon": "palette",
+				"title": "Your college's colors, light and dark",
+				"description": "Set a handful of color tokens and every page, slide and worksheet follows, in light, dark and print. Each pair is checked for contrast.",
+				"href": "https://github.com/allonsy-studio/course-kit/blob/main/docs/design.md"
+			},
+			{
+				"icon": "blocks",
+				"title": "Every component, rendered",
+				"description": "A page for each component with its props and slots, examples in light, dark and phone widths, an accessibility check, and the color tokens it reads.",
+				"href": "/components/"
+			}
+		]
+	},
+	"gallery": {
+		"title": "What you can build",
+		"intro": "Four pages from the starter course, rendered by the kit. Open one, or browse every component.",
+		"cta": "Explore the components",
+		"examples": [
+			{
+				"title": "Course home and syllabus",
+				"href": "/components/examples/home/"
+			},
+			{
+				"title": "Schedule",
+				"href": "/components/examples/schedule/"
+			},
+			{
+				"title": "Practice worksheet",
+				"href": "/components/examples/practice/"
+			},
+			{
+				"title": "Glossary",
+				"href": "/components/examples/glossary/"
+			}
+		]
+	},
+	"accessibility": {
+		"title": "Accessibility is the baseline",
+		"body": "The kit targets WCAG 2.2 level AAA, or stricter, for every component, because its readers are students working on whatever device and in whatever light they have.",
+		"points": [
+			{
+				"title": "7:1 text contrast",
+				"body": "Every text token holds 7:1 or better on every ground it is used on, in light and dark. Unit tests check each pair."
+			},
+			{
+				"title": "Targets and focus",
+				"body": "Controls are at least 44 pixels, with one solid focus ring that holds 3:1 or better."
+			},
+			{
+				"title": "Checked on every change",
+				"body": "axe-core runs against every page in light, dark and forced colors. Reduced motion is honored."
+			}
+		],
+		"links": [
+			{
+				"title": "How the colors are chosen",
+				"href": "https://github.com/allonsy-studio/course-kit/blob/main/docs/design.md"
+			},
+			{
+				"title": "How a change is tested",
+				"href": "https://github.com/allonsy-studio/course-kit/blob/main/docs/testing.md"
+			}
+		]
+	},
+	"docs": {
+		"title": "Read the docs",
+		"links": [
+			{
+				"title": "Getting started",
+				"description": "From install to a built site.",
+				"href": "https://github.com/allonsy-studio/course-kit/blob/main/docs/getting-started.md"
+			},
+			{
+				"title": "Data files",
+				"description": "The course, schedule, grading and policy files.",
+				"href": "https://github.com/allonsy-studio/course-kit/blob/main/docs/data-files.md"
+			},
+			{
+				"title": "Writing content",
+				"description": "Slides, worksheets and glossary terms in Markdown.",
+				"href": "https://github.com/allonsy-studio/course-kit/blob/main/docs/writing-content.md"
+			},
+			{
+				"title": "Configuration",
+				"description": "Options, audiences and the syllabus PDF.",
+				"href": "https://github.com/allonsy-studio/course-kit/blob/main/docs/configuration.md"
+			},
+			{
+				"title": "Theme",
+				"description": "Color tokens, light and dark.",
+				"href": "https://github.com/allonsy-studio/course-kit/blob/main/docs/tokens.md"
+			},
+			{
+				"title": "Changelog",
+				"description": "What changed, and how to migrate.",
+				"href": "https://github.com/allonsy-studio/course-kit/blob/main/CHANGELOG.md"
+			}
+		]
+	}
+}

@@ -69,3 +69,7 @@ The workflow builds with `PATH_PREFIX` set to the path it serves from. `preview/
 The two builds look like one site. The preview's header, banner and footer come from the landing's data (`website/_data/`, through `ossProps` and `website/lib/chrome.js`), and its links back to the landing are relative, so they work under any prefix.  `yarn preview`, `yarn docs:start` and `yarn pages:build` all run `scripts/site.js`, so the landing is at <http://localhost:8080/> and the preview at <http://localhost:8080/components/>.
 
 Turn on GitHub Pages for the repository with the `gh-pages` branch as the source (Settings, Pages) before the first run.
+
+## Example pages
+
+The index opens with "What you can build": four pages from the starter course (home and syllabus, schedule, practice worksheet, glossary), each shown live in a scaled frame. They are templates in `preview/content/examples/` that use the same layouts and components a course does. The landing's gallery links to the same pages.

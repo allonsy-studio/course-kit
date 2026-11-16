@@ -3,8 +3,34 @@ layout: shell
 title: Components
 permalink: /index.html
 ---
+<script webc:setup>
+	/** Pages from the starter course, each built from the components listed beside it. */
+	const examples = [
+		{ href: "/examples/home/", title: "Course home and syllabus", body: "Today's class, what is due next, the syllabus, grading, key dates and policies, from the course's data files.", tags: ["masthead", "course-now", "course-summary", "syllabus", "grading", "policies"] },
+		{ href: "/examples/schedule/", title: "Schedule", body: "Every week of the term with its meetings, readings and deadlines. Today is marked, and past weeks can be hidden.", tags: ["schedule-overview", "schedule-weeks", "today-marker"] },
+		{ href: "/examples/practice/", title: "Practice worksheet", body: "Questions written in Markdown that students check themselves, each linked to the slide that taught it.", tags: ["practice-worksheet", "practice-question", "check-controls"] },
+		{ href: "/examples/glossary/", title: "Glossary", body: "Every vocabulary slide as one term, to review as a list or study as flashcards.", tags: ["glossary", "glossary-panel", "glossary-entry"] },
+	];
+	const urlOf = (tag) => $data.catalog.components.find((component) => component.tag === tag)?.url;
+</script>
 <h1>Components</h1>
 <p class="lead">Every component the kit ships, rendered by the kit's own plugin with the starter course's data. What you see here is what a course's build produces.</p>
+<section aria-labelledby="examples">
+	<h2 id="examples">What you can build</h2>
+	<p>Whole pages from the starter course. Open one to use it at full size.</p>
+	<ul role="list" class="examples">
+		<li webc:for="example of examples">
+			<article>
+				<div class="example-frame">
+					<iframe :src="example.href" :title="example.title + ' preview'" loading="lazy" tabindex="-1" inert></iframe>
+				</div>
+				<h3><a :href="example.href" @text="example.title"></a></h3>
+				<p @text="example.body"></p>
+				<p class="example-uses"><span class="sr-only">Built with </span><template webc:nokeep webc:for="tag of example.tags"><a :href="urlOf(tag)"><code @text="tag"></code></a> </template></p>
+			</article>
+		</li>
+	</ul>
+</section>
 <section webc:for="group of $data.catalog.groups">
 	<h2 @text="group.title"></h2>
 	<p @text="group.description"></p>

@@ -1,15 +1,18 @@
 <script webc:setup>
 	/**
-	 * The component list: a sidebar on a wide screen, one closed disclosure on a phone. Each group is a `norn-side-nav`.
+	 * The component list: one collapsible group per catalog section, each a `norn-side-nav`.
+	 * The group holding the current page starts open; on the index every group does (a phone closes them, see canvas.js).
 	 * @prop {object[]} groups the catalog's groups
+	 * @prop {string} current the page's URL
 	 */
+	const holds = (group, url) => group.components.some((component) => component.url === url);
+	const isOpen = (group, all, url) => !all.some((item) => holds(item, url)) || holds(group, url);
 </script>
-<details webc:root="override" class="nav" open>
-	<summary>Components</summary>
-	<section webc:for="group of groups" :aria-labelledby="'nav-' + group.id">
-		<h2 :id="'nav-' + group.id" @text="group.title"></h2>
+<nav webc:root="override" class="nav" aria-label="Components">
+	<details webc:for="group of groups" :open="isOpen(group, groups, current)" :data-current="holds(group, current) ? '' : undefined">
+		<summary @text="group.title"></summary>
 		<norn-side-nav :@items="group.components.map((component) => ({ href: component.url, title: component.tag }))">
 			<span slot="label" @text="group.title"></span>
 		</norn-side-nav>
-	</section>
-</details>
+	</details>
+</nav>

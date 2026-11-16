@@ -138,8 +138,8 @@ bar?.querySelector("[data-overrides-reset]").addEventListener("click", () => win
 window.addEventListener("previewtokenschange", sync);
 sync();
 
-// On a phone the list of components starts closed, so the page is the first thing on screen.
-if (matchMedia("(max-width: 48rem)").matches) document.querySelector("details.nav")?.removeAttribute("open");
+// On a phone the list sits above the page, so only the current group stays open.
+if (matchMedia("(max-width: 48rem)").matches) for (const group of document.querySelectorAll(".nav details:not([data-current])")) group.removeAttribute("open");
 
 // A table that scrolls sideways must be reachable by keyboard: make its scroll box a labelled, focusable region.
 for (const box of document.querySelectorAll("norn-simple-table > div")) {
