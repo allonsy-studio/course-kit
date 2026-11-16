@@ -5,6 +5,7 @@
 	 * @prop {string[]} [levels] level names across the top
 	 * @prop {string} [caption] a screen-reader caption
 	 * @prop {number} [total] the points the rubric adds up to, shown in the footer
+	 * @prop {'short' | 'full'} [dateStyle] how a milestone's due date is written in the narrow Due column: `short` (the default, "Fri, Oct 23, 12:00PM") or `full` ("Friday, October 23, 2026, 12:00PM"). Written `@date-style`
 	 * @prop {Record<string, string>} copy the table's wording: `copy.tableRubric` (`criteria`, `points`, `pointsEach`, `totalPointsPossible`, `milestone`, `due`, `whatIsGraded`)
 	 */
 </script>
@@ -47,7 +48,7 @@
                 <span class="id" webc:if="criterion.id" @text="criterion.id"></span>
                 <span @text="criterion.title"></span>
             </th>
-            <td role="cell" class="due"><span class="cell-label" aria-hidden="true" @text="copy.due"></span><span @text="criterion.due ? fullDate(criterion.due) + (criterion.dueTime ? `, ${criterion.dueTime}` : '') : ''"></span></td>
+            <td role="cell" class="due"><span class="cell-label" aria-hidden="true" @text="copy.due"></span><span @text="criterion.due ? dateIn(criterion.due, typeof dateStyle === 'undefined' ? 'short' : dateStyle) + (criterion.dueTime ? `, ${timeOfDay(criterion.dueTime)}` : '') : ''"></span></td>
             <td role="cell" class="num"><span class="cell-label" aria-hidden="true" @text="copy.points"></span><span @text="criterion.points"></span></td>
             <td role="cell"><span class="cell-label" aria-hidden="true" @text="copy.whatIsGraded"></span><span @text="criterion.description"></span></td>
         </tr>

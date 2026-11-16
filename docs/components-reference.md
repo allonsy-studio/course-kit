@@ -134,6 +134,7 @@ A grading rubric as a table: criteria down, performance levels or a due date and
 | `[levels]` | `string[]` | level names across the top |
 | `[caption]` | `string` | a screen-reader caption |
 | `[total]` | `number` | the points the rubric adds up to, shown in the footer |
+| `[dateStyle]` | `'short' \| 'full'` | how a milestone's due date is written in the narrow Due column: `short` (the default, "Fri, Oct 23, 12:00PM") or `full` ("Friday, October 23, 2026, 12:00PM"). Written `@date-style` |
 | `copy` | `Record<string, string>` | the table's wording: `copy.tableRubric` (`criteria`, `points`, `pointsEach`, `totalPointsPossible`, `milestone`, `due`, `whatIsGraded`) |
 
 ### `<today-link>`
@@ -268,6 +269,7 @@ The schedule page's header: the meeting line, the key dates, and a sticky row of
 |---|---|---|
 | `[groups]` | `{ title: string, items: object[] }[]` | `scheduleKeyDates` output; built from the page's lessons, project and exam slot when left out |
 | `[weeks]` | `object[]` | `scheduleWeeks` output, for the month links; built from the page when left out |
+| `[dateStyle]` | `'short' \| 'full'` | how the key dates write a project milestone's and the final exam's date: `full` (the default, "Friday, October 23, 2026, 12:00PM") or `short` ("Fri, Oct 23, 12:00PM"). Written `@date-style` |
 
 ### `<schedule-weeks>`
 

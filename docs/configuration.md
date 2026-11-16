@@ -38,6 +38,7 @@ Every option is optional.
 | `worksheets.checkMode` | `end` | How students check a practice worksheet: `end` shows only See results at the end; `question` also puts a Check answer button on every gradable question. A worksheet's own `checkMode` front matter wins. |
 | `clientCopy` | none | More copy namespaces for the page's `#copy-data` block, for a course script that reads them. The kit carries only the namespaces its own scripts read. See [Copy keys](copy.md#what-a-page-carries). |
 | `copy` | none | A course's own copy namespaces, for components only it has. See [Course-only copy](#course-only-copy). |
+| `dateFormats` | English, long and short forms | `{ locale, full, short }`: the language dates are written in (`locale`, a tag such as `fr-CA`) and the long and short forms (`full`, `short`), each as [`Intl.DateTimeFormat` options](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options). See [Date formats](#date-formats). |
 | `components` | none | Extra component file patterns, beyond your `_includes` folder. |
 | `theme` | `{}` | Color overrides, in the shape of `_data/theme.json`, which wins over them. See [color tokens](tokens.md). |
 | `inputDir`, `outputDir`, `dataDir` | `content`, `public`, `_data` | Where your pages, the built site and your data files live. |
@@ -106,6 +107,28 @@ A key that is not a copy key stops the build with `strings.json: "schedule.nope"
 #### Course-only copy
 
 A course with components the kit does not have gives their wording its own namespaces, passed as the `copy` option: `courseKit(config, { copy: { phpLab: { run: "Run", reset: "Reset" } } })`. They sit beside the shared ones (`$data.copy.phpLab.run`, and `COPY.phpLab` in scripts), and `_data/strings.json` can override them like any other. A name the kit already uses is refused, so a course can never change what a kit component reads.
+
+## Date formats
+
+Every date the kit writes comes from two named formats and a language, set with the `dateFormats` option. A date is an ISO string (`2026-10-23`) in your data files; the formats only change how it reads.
+
+| Format | Default | Used for |
+|---|---|---|
+| `full` | `Friday, October 23, 2026` | Prose and places with room: the syllabus, the key dates on the schedule page, the meeting dates. The `fullDate` filter. |
+| `short` | `Fri, Oct 23` | A narrow table column or a chip: due labels, and the rubric's Due column. The `compactDate` filter. The year is left out, because a term sits inside one. |
+
+```js
+courseKit(config, {
+	dateFormats: {
+		locale: "fr-CA", // the language of every date the kit writes
+		short: { month: "numeric", day: "numeric" }, // "10-23" in place of "ven. 23 oct."
+	},
+});
+```
+
+A format you leave out keeps its default. A bad locale or format stops the build with a message naming the option. In a template, `{{ due | compactDate }}` and `{{ due | fullDate }}` read the same settings, and `dateIn(date, "short")` picks by a name.
+
+Two places choose a form on their own tag, for a course that wants the other one: `<table-rubric @date-style="full">` writes the rubric's Due column long (it is short by default, because the column is narrow), and `<schedule-overview @date-style="short">` writes the project and exam key dates short (they are long by default, because each has a line to itself).
 
 ## Minifying inline code
 

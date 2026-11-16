@@ -10,8 +10,14 @@
 	 *   output; built from the page's lessons, project and exam slot when left out
 	 * @prop {object[]} [weeks] `scheduleWeeks` output, for the month links;
 	 *   built from the page when left out
+	 * @prop {'short' | 'full'} [dateStyle] how the key dates write a project
+	 *   milestone's and the final exam's date: `full` (the default, "Friday,
+	 *   October 23, 2026, 12:00PM") or `short` ("Fri, Oct 23, 12:00PM"). Written
+	 *   `@date-style`
 	 */
 	const defaultGroups = scheduleKeyDates($data.lessons, $data.project, $data.schedule?.finalExam, $data.copy);
+	/** The key dates for a date style; the setup script cannot see props, so the template calls this with its own. */
+	const groupsFor = (style) => (style === "short" ? scheduleKeyDates($data.lessons, $data.project, $data.schedule?.finalExam, $data.copy, "short") : defaultGroups);
 	const defaultWeeks = scheduleWeeks($data.lessons, $data.schedule?.weeks, $data.collections?.deck, $data.demos);
 </script>
 <header webc:root="override" class="schedule-overview">
@@ -23,9 +29,9 @@
 		<span webc:if="$data.instructor?.office" @text="$data.instructor.office"></span>
 	</p>
 
-	<section class="key-dates" aria-labelledby="schedule-key-dates" webc:if="(groups ?? defaultGroups)?.length">
+	<section class="key-dates" aria-labelledby="schedule-key-dates" webc:if="(groups ?? groupsFor(typeof dateStyle === 'undefined' ? undefined : dateStyle))?.length">
 		<h2 id="schedule-key-dates" @text="$data.copy.scheduleOverview.keyDates"></h2>
-		<div class="group" webc:for="group of (groups ?? defaultGroups)">
+		<div class="group" webc:for="group of (groups ?? groupsFor(typeof dateStyle === 'undefined' ? undefined : dateStyle))">
 			<h3 @text="group.title"></h3>
 			<ul role="list">
 				<li webc:for="item of group.items">
