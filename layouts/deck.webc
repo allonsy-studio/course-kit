@@ -11,8 +11,8 @@
 
 	<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
-	<template webc:nokeep @raw="bundleFile('js', 'content/scripts/theme-restore.js', $data, 'head')"></template>
-	<script webc:keep @raw="getBundle('js', 'head')"></script>
+	<template webc:nokeep webc:if="$data.themeToggle !== false" @raw="bundleFile('js', 'content/scripts/theme-restore.js', $data, 'head')"></template>
+	<script webc:keep webc:if="$data.themeToggle !== false" @raw="getBundle('js', 'head')"></script>
 
 	<template webc:nokeep @raw="bundleFile('css', 'content/styles/deck.css', $data)"></template>
 	<style webc:keep @raw="getBundle('css')"></style>
@@ -30,7 +30,7 @@
 		<button type="button" data-prev :aria-label="$data.copy.deck.previousSlide">&larr;</button>
 		<span data-count aria-live="polite">1 / 1</span>
 		<button type="button" data-next :aria-label="$data.copy.deck.nextSlide">&rarr;</button>
-		<button type="button" data-toggle-theme :aria-label="$data.copy.deck.cycleColorTheme">&#9681;</button>
+		<button type="button" data-toggle-theme webc:if="$data.themeToggle !== false" :aria-label="$data.copy.deck.cycleColorTheme">&#9681;</button>
 		<button type="button" data-toggle-fullscreen aria-pressed="false" :aria-label="$data.copy.deck.toggleFullscreen" hidden>&#x26F6;</button>
 	</div>
 

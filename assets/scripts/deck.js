@@ -40,6 +40,10 @@ const applyTheme = (theme) => {
 
 const cycleTheme = () => applyTheme(THEMES[(THEMES.indexOf(readTheme()) + 1) % THEMES.length]);
 
+/* A course turns the switcher off with `slides.themeToggle: false`: the layout then renders no button, so the deck follows the system and
+   stores nothing. */
+const themeToggle = document.querySelector("[data-toggle-theme]");
+
 /* lock() needs fullscreen and is Android-only; iOS has neither. Every step
    is feature-detected and fails quietly. */
 const toggleFullscreen = async () => {
@@ -133,7 +137,7 @@ document.addEventListener("keydown", (event) => {
 			return go(slides.length - 1);
 		case "t":
 		case "T":
-			return cycleTheme();
+			return themeToggle ? cycleTheme() : undefined;
 		case "f":
 		case "F":
 			event.preventDefault();
@@ -151,11 +155,11 @@ if (fullscreenToggle && document.fullscreenEnabled) {
 	fullscreenToggle.hidden = false;
 	fullscreenToggle.addEventListener("click", toggleFullscreen);
 }
-document.querySelector("[data-toggle-theme]").addEventListener("click", cycleTheme);
+themeToggle?.addEventListener("click", cycleTheme);
 document.querySelector("[data-prev]").addEventListener("click", () => setIndex(index - 1));
 document.querySelector("[data-next]").addEventListener("click", next);
 
-applyTheme(readTheme());
+if (themeToggle) applyTheme(readTheme());
 
 const fromHash = Number.parseInt(location.hash.replace("#s", ""), 10);
 setIndex(Number.isFinite(fromHash) ? fromHash - 1 : 0, Number.isFinite(fromHash));
