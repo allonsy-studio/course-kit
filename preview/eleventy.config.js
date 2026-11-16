@@ -45,6 +45,9 @@ function chromeFor(url) {
 	};
 }
 
+/** The global data a story can replace for its own frame, with `data` on the story. */
+const STORY_DATA = ["instructor", "course", "grading"];
+
 /**
  * The component preview: the kit's own plugin and the starter's data, plus a page per component and a frame per story.
  * Run from the repo root: `yarn preview`.
@@ -85,7 +88,12 @@ export default async function (config) {
 	config.addTemplate("frames/frame.webc", '<template webc:nokeep @html="frame.source"></template>', {
 		layout: "frame",
 		pagination: { data: "catalog.frames", size: 1, alias: "frame" },
-		eleventyComputed: { permalink: (data) => `${data.frame.url}index.html`, title: (data) => data.frame.title },
+		eleventyComputed: {
+			permalink: (data) => `${data.frame.url}index.html`,
+			title: (data) => data.frame.title,
+			// A story's own `data` replaces the starter's for its frame.
+			...Object.fromEntries(STORY_DATA.map((key) => [key, (data) => (data.frame.data && key in data.frame.data ? data.frame.data[key] : data[key])])),
+		},
 	});
 
 	config.addPassthroughCopy({ "preview/content/assets": "preview-assets" });

@@ -84,6 +84,11 @@
       },
       "description": "Section-specific outcomes layered on top of the committed catalog set."
     },
+    "syllabusContents": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the `<syllabus>` shows its contents list (a row of links above the syllabus, and from 1100px a sticky column beside it). `false` leaves it out. The tag's `contents=\"false\"` attribute does the same for one place and wins over this."
+    },
     "textbook": {
       "type": "object",
       "description": "Required text and how to get it — the textbook/materials element Meredith requires. Omit the whole key ONLY when the course has no text: the `<syllabus>` component then renders \"No text is required.\", which is still an explicit materials statement. Never leave the key present but empty.",

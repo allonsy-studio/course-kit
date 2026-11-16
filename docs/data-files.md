@@ -44,6 +44,7 @@ A page that uses a component whose file is missing simply shows nothing for it, 
 | `outcomes`, `additionalOutcomes` | What students will be able to do. `additionalOutcomes` is for ones beyond the catalog's. |
 | `textbook` | `{ "required": "…", "access": ["steps to get it"] }`. Leave the key out if there is no text. |
 | `requirements` | Software, hardware or accounts students need. |
+| `syllabusContents` | Optional: `false` leaves out the syllabus's contents list. It is shown by default; see [the syllabus](components-reference.md#syllabus). |
 | `documents` | Links shown under "Additional resources" on the home page. |
 
 ## `dates.json`
@@ -95,6 +96,19 @@ The college's calendar, keyed by year and then season. You can keep several term
 ## `instructor.json`
 
 `name`, `office`, `hours` (a list, one entry per block) and `email` are required. Write the email normally; the kit encodes it so it never appears in the page for spam bots to read. Optional: `photo` (a path under `/images/`), `profile`, `blog`, `note` (a response-time expectation) and `contact` (a path to a contact page, shown instead of the address on screen).
+
+By default the email, the message link and the blog are rows in the instructor's fact list. Set `contactLinks` to `"icons"` to show each as a round icon link in the top right of the panel instead:
+
+```json
+{
+	"name": "Dr. Sam Example",
+	"email": "sam.example@example.edu",
+	"blog": "https://sam.example.edu",
+	"contactLinks": "icons"
+}
+```
+
+Each icon is a 44px target with its name ("Email", "Send me a message", "Blog") from the [copy keys](copy.md#instructor), and the blog's tooltip is `instructor.blogUrl` ("Blog: sam.example.edu"). The address, the message label and the host are in the page as text behind the icon, so find-in-page reaches them and print shows them in place of the icons. The email stays encoded until the script decodes it. With both an `email` and a `contact`, the icons show both on screen; print shows the address only. The compact card (`<instructor variant="card">`) ignores `contactLinks`. A page that writes the tag itself can set it for that one place with `<instructor contact-links="icons">`, which wins over the data.
 
 ## `grading.json` and `scale.json`
 

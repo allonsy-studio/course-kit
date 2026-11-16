@@ -17,6 +17,7 @@ export const isKnown = (rule, target) => KNOWN.some((entry) => entry.rule === ru
 export const KNOWN_TARGETS = [
 	{ match: /^button\.term \d+x\d+: /, reason: "Worksheet term buttons sit inside a sentence of terms: the inline-in-text exception of WCAG 2.5.5 applies." },
 	{ match: /^a \d+x\d+: Week \d+ · /, reason: "Glossary slide links share a wrapping row with a gap between them (several per line), so they keep the 24px bar of WCAG 2.5.8 rather than 44px." },
+	{ match: /^a \d+x\d+: (Send me a message|sam\.example\.edu\/blog)$/, reason: "The message and blog rows of the instructor's fact list (the default, rows version) are text-height links. The icon-links version (`contactLinks: \"icons\"`) is the 44px form of the same contact methods; making each row 44px would change the density of every site that has not opted in." },
 	{ match: /^a \d+x\d+: Open in CodePen/, reason: "CodePen's own embed script writes this link; it is not the kit's markup." },
 ];
 

@@ -183,6 +183,7 @@ A page's `#copy-data` block carries only the namespaces its scripts read: `code`
 | `learningOutcomes` | `Learning outcomes` |
 | `uponCompletingThisCourse` | `Upon completing this course students will be able to:` |
 | `additionalOutcomesInThis` | `Additional outcomes in this section` |
+| `additionalOutcomes` | `Additional outcomes` |
 | `text` | `Text` |
 | `noTextIsRequired` | `No text is required.` |
 | `required` | `Required:` |
@@ -364,6 +365,8 @@ A page's `#copy-data` block carries only the namespaces its scripts read: `code`
 | `sendMeAMessage` | `Send me a message` |
 | `blog` | `Blog` |
 | `instructor` | `Instructor` |
+| `contact` | `Contact` |
+| `blogUrl` | `Blog: {url}` |
 
 ## `codepenEmbed`
 

@@ -67,6 +67,8 @@ async function readStories(file) {
  * `wrap` is markup with `{story}` where the component goes (a `#today` target for the Today link, a list for a `<dt>`);
  * `note` is a line of explanation shown above it, for a component whose real output depends on the page or the reader's clock.
  * `empty` marks a story whose frame is meant to render nothing visible, and says why.
+ * A story's `data` (`{ instructor: { … } }`) replaces that global for its frame alone, for a component that reads the course's data and needs other data
+ * to show a variant (an instructor with a photo, one with a long address); see `STORY_DATA` in `eleventy.config.js` for the keys it takes.
  * @param {string} markup
  * @param {{ wrap?: string, note?: string, empty?: string }} story
  */
@@ -119,7 +121,7 @@ export async function buildCatalog() {
 				const args = { ...baseline, ...story.args };
 				const frameUrl = `/frames/${group.id}/${tag}/${kebabCase(story.exportName)}/`;
 				const markup = renderStory(tag, args, argTypes);
-				frames.push({ groupId: group.id, url: frameUrl, title: `${tag}: ${story.name ?? startCase(story.exportName)}`, source: framed(markup, story) });
+				frames.push({ groupId: group.id, url: frameUrl, title: `${tag}: ${story.name ?? startCase(story.exportName)}`, source: framed(markup, story), data: story.data });
 				return { name: story.name ?? startCase(story.exportName), frameUrl, source: markup, language: "html", height: story.height ?? csf.meta.height };
 			});
 
