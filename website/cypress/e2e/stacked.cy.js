@@ -1,9 +1,11 @@
 import { A11Y_MODES, MODES, REFLOW_WIDTH } from "../support/config.js";
 
-/** The four frames that once scrolled sideways at 320px: the instructor card, the course summary and both rubric tables. */
+/** The frames that scroll sideways when a layout fails at 320px: the instructor card and its icon-link panels, the course summary and both rubric tables. */
 const FRAMES = [
 	"/components/frames/site/course-summary/default/",
 	"/components/frames/site/instructor/default/",
+	"/components/frames/site/instructor/icon-links-all/",
+	"/components/frames/site/instructor/icon-links-long-address/",
 	"/components/frames/ui/table-rubric/levels/",
 	"/components/frames/ui/table-rubric/milestones/",
 ];
