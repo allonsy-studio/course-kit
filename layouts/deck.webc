@@ -11,9 +11,6 @@
 
 	<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
-	<template webc:nokeep webc:if="$data.themeToggle !== false" @raw="bundleFile('js', 'content/scripts/theme-restore.js', $data, 'head')"></template>
-	<script webc:keep webc:if="$data.themeToggle !== false" @raw="getBundle('js', 'head')"></script>
-
 	<template webc:nokeep @raw="bundleFile('css', 'content/styles/deck.css', $data)"></template>
 	<style webc:keep @raw="getBundle('css')"></style>
 </head>
@@ -30,10 +27,6 @@
 		<button type="button" data-prev :aria-label="$data.copy.deck.previousSlide">&larr;</button>
 		<span data-count aria-live="polite">1 / 1</span>
 		<button type="button" data-next :aria-label="$data.copy.deck.nextSlide">&rarr;</button>
-		<button type="button" data-toggle-theme webc:if="$data.themeToggle !== false" :aria-label="$data.copy.deck.cycleColorTheme"
-			:data-name-system="fill($data.copy.deck.cycleColorThemeNow, { theme: $data.copy.deck.themeSystem })" :data-name-light="fill($data.copy.deck.cycleColorThemeNow, { theme: $data.copy.deck.themeLight })" :data-name-dark="fill($data.copy.deck.cycleColorThemeNow, { theme: $data.copy.deck.themeDark })"
-			:data-status-system="fill($data.copy.deck.colorThemeNow, { theme: $data.copy.deck.themeSystem })" :data-status-light="fill($data.copy.deck.colorThemeNow, { theme: $data.copy.deck.themeLight })" :data-status-dark="fill($data.copy.deck.colorThemeNow, { theme: $data.copy.deck.themeDark })">&#9681;</button>
-		<span class="sr-only" role="status" data-theme-status webc:if="$data.themeToggle !== false"></span>
 		<button type="button" data-toggle-fullscreen aria-pressed="false" :aria-label="$data.copy.deck.toggleFullscreen" hidden>&#x26F6;</button>
 	</div>
 

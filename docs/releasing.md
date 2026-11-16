@@ -87,7 +87,7 @@ A release changes a built slide deck only when it changes one of these, so a cou
 |---|---|
 | `layouts/deck.webc` | The deck page: its controls, head and scripts. |
 | `assets/styles/deck.css` | Every deck's look and print styles. |
-| `assets/scripts/deck.js`, `assets/scripts/theme-restore.js` | Slide navigation, speaker notes, the theme switcher. |
+| `assets/scripts/deck.js` | Slide navigation and speaker notes. |
 | `lib/markdown.js` | How a slide's Markdown becomes HTML (code blocks, notes, typography). |
 | `lib/theme.js` | The color tokens the decks use. |
 | `layouts/notes.webc`, `assets/styles/notes.css`, `glue/deck-notes.*` | The printable speaker-notes sheet. |

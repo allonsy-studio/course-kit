@@ -966,13 +966,3 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
     }
   }
 }
-
-/* Text for assistive technology only: the theme button's announcement. */
-.hud .sr-only {
-  position: absolute;
-  inline-size: 1px;
-  block-size: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}

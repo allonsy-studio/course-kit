@@ -164,21 +164,6 @@
     background-color: color-mix(in oklab, var(--color-accent-secondary) 10%, transparent);
 }
 
-/* More than six links: two columns, filled down the first and then the second, so the header does not grow a link taller for each page
-   (the menu is a column on a wide screen; below that it already wraps as a row). The source order is the reading order. */
-@media screen and (width > 768px) {
-    :host([data-context="hero"][column]) ul:has(> li:nth-child(7)) {
-        display: block;
-        column-count: 2;
-        column-gap: calc(var(--content-space) * 2);
-    }
-
-    :host([data-context="hero"][column]) ul:has(> li:nth-child(7)) > li {
-        break-inside: avoid;
-        margin-block-end: calc(var(--content-space) * 0.35);
-    }
-}
-
 @media (forced-colors: active) {
     :host([data-context="hero"][column]) a[href][aria-current="page"] {
         forced-color-adjust: none;
