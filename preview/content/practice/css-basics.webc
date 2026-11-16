@@ -1,0 +1,13 @@
+---
+layout: base
+title: CSS basics
+tags: practice
+permalink: /practice/css-basics/index.html
+worksheet:
+  heading: CSS basics
+  lede: Selectors, the cascade and the box model.
+  order: 2
+---
+
+<h1>CSS basics</h1>
+<p>A stand-in for a practice worksheet, so the preview's practice index has two sheets to list.</p>

@@ -9,7 +9,7 @@
     },
     {
       "topics": ["Writing HTML", "Headings, lists and links"],
-      "readings": [{ "title": "MDN: HTML basics", "href": "https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics", "check": "3 questions, due by the next class" }],
+      "readings": [{ "title": "MDN: HTML basics", "href": "https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics", "check": "3 questions, due by the next class", "due": "2026-09-03" }],
       "resources": []
     },
     {

@@ -81,3 +81,23 @@ test("a story's wrap and note frame it; the Today link story has a target, and i
 	assert.doesNotMatch(html(without.url), /id="today"/);
 	for (const frame of [withTarget, without]) assert.match(html(frame.url), /class="story-note"/, `${frame.url} says what it shows`);
 });
+
+/** The `<main>` of a built page. */
+const mainOf = (html) => /<main[\s\S]*<\/main>/.exec(html)?.[0] ?? "";
+
+test("no page repeats the masthead's term and course code in an eyebrow above its heading", () => {
+	for (const url of ["/examples/glossary/", "/examples/schedule/", "/examples/practice/", "/lessons/", "/lessons/week-1/day-1/", "/examples/document/", "/examples/practice-index/"]) {
+		const main = mainOf(pages[url]);
+		assert.ok(main, `${url} has a main`);
+		const eyebrows = [...main.matchAll(/<eyebrow[\s\S]*?<\/eyebrow>/g)].map((match) => match[0].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim());
+		for (const text of eyebrows) assert.ok(!/Fall 2026|CS101/.test(text), `${url} has the eyebrow "${text}"`);
+	}
+});
+
+test("every page still names the course and the term in its footer, which prints when the masthead does not", () => {
+	for (const url of ["/examples/glossary/", "/examples/schedule/", "/examples/practice/", "/lessons/"]) {
+		const footer = /<footer>[\s\S]*?<\/footer>/.exec(pages[url])?.[0] ?? "";
+		assert.match(footer, /CS101/, url);
+		assert.match(footer, /Fall 2026/, url);
+	}
+});

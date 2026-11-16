@@ -64,20 +64,35 @@ If the publish step fails, run the workflow again: each step skips what is alrea
 
 ## Depending on the kit
 
-A course site pins a version and updates it on purpose.
+A course site pins the **exact** version and updates it on purpose.
 
 ```json
 {
   "dependencies": {
-    "@allons-y/course-kit": "~0.1.0"
+    "@allons-y/course-kit": "0.2.0"
   }
 }
 ```
 
-- In `0.x`, `~0.1.0` takes patches only. A minor is breaking, so a course moves to it by hand, after reading the changelog entry and its migration guide.
-- Commit the lockfile. A course's build should never change because the kit published.
-- Let Renovate or Dependabot open the update pull request, so a course sees each release.
-- After `1.0.0`, `^1.0.0` is the usual range.
+- No `~` and no `^`. A course re-uploads what the kit builds (its slide decks, the syllabus PDF) when the version string in its `package.json` changes, so that string has to change only when the course decides to take a release. A range lets a lockfile refresh move the kit under it.
+- Commit the lockfile as well. A course's build should never change because the kit published.
+- Let Renovate decide when to bump: it opens one pull request per release, and the course merges it after reading the changelog entry and its migration guide. In `0.x` a minor is breaking; a patch is a fix or an addition.
+- After `1.0.0` the same rule holds: pin the exact version; the bump type says how careful the review should be.
+
+### Which files change a deck
+
+A release changes a built slide deck only when it changes one of these, so a course that wants to re-upload decks only then can compare them between two versions (`git diff v0.2.0 v0.2.1 -- <paths>` in the kit, or the same paths under `node_modules/@allons-y/course-kit` after the bump):
+
+| Path | What it does to a deck |
+|---|---|
+| `layouts/deck.webc` | The deck page: its controls, head and scripts. |
+| `assets/styles/deck.css` | Every deck's look and print styles. |
+| `assets/scripts/deck.js` | Slide navigation and speaker notes. |
+| `lib/markdown.js` | How a slide's Markdown becomes HTML (code blocks, notes, typography). |
+| `lib/theme.js` | The color tokens the decks use. |
+| `layouts/notes.webc`, `assets/styles/notes.css`, `glue/deck-notes.*` | The printable speaker-notes sheet. |
+
+A change to any other file under `components/`, `layouts/` or `assets/` leaves the decks as they were, but still changes the site, so the version string is the safe signal.
 
 ## Trying a branch before it merges
 

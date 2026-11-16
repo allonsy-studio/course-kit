@@ -1013,9 +1013,26 @@ body:has(.doc-layout[data-contents="true"], .lesson-layout) {
 
 .doc-layout[data-contents="true"] {
 	grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+	/* The page is first in the source; the grid puts the contents beside it, or above it on a narrow screen. */
+	grid-template-areas: "contents page";
 
 	@media screen and (width <= 900px) {
 		grid-template-columns: minmax(0, 1fr);
+		grid-template-areas:
+			"contents"
+			"page";
+	}
+
+	@media print {
+		grid-template-areas: none;
+	}
+
+	> .doc-contents {
+		grid-area: contents;
+	}
+
+	> .content-column {
+		grid-area: page;
 	}
 }
 
@@ -1063,7 +1080,10 @@ body:has(.doc-layout[data-contents="true"], .lesson-layout) {
 	}
 
 	li a[href] {
-		display: block;
+		display: flex;
+		align-items: center;
+		/* An operable target: 44px tall (WCAG 2.5.5); print sets --target-min to 0. */
+		min-block-size: var(--target-min);
 		margin-inline-start: calc(var(--border-width) * -1);
 		padding: 0.35em 0.9em;
 		border-inline-start: var(--border-width) solid transparent;
@@ -1099,6 +1119,19 @@ body:has(.doc-layout[data-contents="true"], .lesson-layout) {
 }
 
 /* ---- Lesson plans (instructor) ---- */
+/* A list of links in a table cell: each whole-item link is a 44px target, a link inside a sentence keeps its line. */
+.lesson-links {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	li > a:only-child {
+		display: inline-flex;
+		align-items: center;
+		min-block-size: var(--target-min);
+	}
+}
+
 .lesson-nav {
 	display: flex;
 	gap: calc(var(--content-space) * 2);
@@ -1107,6 +1140,12 @@ body:has(.doc-layout[data-contents="true"], .lesson-layout) {
 
 	header & a {
 		margin: 0;
+	}
+
+	a {
+		display: inline-flex;
+		align-items: center;
+		min-block-size: var(--target-min);
 	}
 
 	@media print {
@@ -1209,6 +1248,13 @@ body:has(.doc-layout[data-contents="true"], .lesson-layout) {
 	th,
 	td {
 		border-inline: none;
+	}
+
+	/* A link that is the whole cell is an operable target: 44px tall (WCAG 2.5.5); print sets --target-min to 0. */
+	:where(td, th) > a:only-child {
+		display: inline-flex;
+		align-items: center;
+		min-block-size: var(--target-min);
 	}
 }
 
@@ -1454,6 +1500,13 @@ blockquote {
 	/* A reading measure inside the wide page column. */
 	p {
 		max-inline-size: 80ch;
+	}
+
+	/* A link that is the whole paragraph (a policy's "full text") is a 44px target; a link inside a sentence keeps the line. */
+	p > a:only-child {
+		display: inline-flex;
+		align-items: center;
+		min-block-size: var(--target-min);
 	}
 
 	details {

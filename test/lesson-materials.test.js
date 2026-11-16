@@ -51,3 +51,11 @@ test("deadlines, per-meeting readings, exercises and demos carry a due note", ()
 	assert.deepEqual(byTitle["Deadlines to announce"].map((item) => item.note), ["due Thu, Sep 10", ""]);
 	assert.ok(!("Assigned before this week" in byTitle));
 });
+
+test("lessonDemos that is not a list is no demos: Eleventy passes a computed key as \"\" while it scans dependencies", () => {
+	const lesson = { week: 1, day: 1, date: "2026-09-01", display: "Tue, Sep 1" };
+	for (const lessonDemos of ["", undefined, null, {}, "grid"]) {
+		const sections = lessonMaterials({ lesson, lessons: [lesson], lessonDemos, collections: { deck: [], assignment: [] } });
+		assert.ok(!sections.some((section) => section.title === "Demos from this meeting"), `lessonDemos ${JSON.stringify(lessonDemos)}`);
+	}
+});

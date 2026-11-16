@@ -21,6 +21,17 @@ CS230 adds a one-on-one booking button to the instructor panel with `<book-appoi
 - **Not an `icon-links` entry**: an icon hides the label and a booking button is the page's one primary action.
 - **Bump**: patch while `0.x` (an optional addition); tests as for icon links, a golden for the off output plus a render test for on.
 
+## Navigation and header
+
+Found migrating CS230. Not done.
+
+- **A nav layout for eight or more items.** The header's menu is one column of links, so a course with eight pages makes the masthead about 150px taller than its own did. Options: (a) a two-row or wrapping menu above a width; (b) a "More" disclosure that holds the last items (it must stay reachable with no script: a `<details>`); (c) a `nav.layout` option (`column`, `wrap`) in `courseKit`. Re-measure at 320px, 400% zoom and print before choosing.
+- **A header treatment option.** The kit's one-column nav also drops the tinted header wash the courses had behind the masthead. Offer the wash as a theme token (`surface-header`) and a `header: "tinted" | "plain"` option, at 7:1 for the nav links in light, dark and forced colors.
+
+## Course content colors
+
+Categorical color tokens for course content. CS230's labs hard-code two category colors (for the two kinds of lab) in their own CSS, because the theme has only the semantic colors (accent, success, warning, error) and the three tag hues. Proposed: `category-1` to `category-4` tokens with a light and a dark value, each at 7:1 as text on `page` and `surface`, each with a tinted wash for fills (as `tag-*` have), documented in `docs/tokens.md` and settable in `theme.json`. A category must also carry a word or a shape, never color alone (see [accessibility](accessibility.md)).
+
 ## Accessibility
 
 The known findings that need a design decision are in `website/cypress/support/known.js`, each with its reason; [Accessibility](accessibility.md) says how the audit uses them.

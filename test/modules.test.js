@@ -75,13 +75,13 @@ test("dueLabel reads a due date and time, or nothing", () => {
 	assert.equal(dueLabel({}), "");
 });
 
-test("scheduleMonths links each month with a meeting to its first week", () => {
+test("scheduleMonths links each month with a meeting to its first week, and says which weeks it spans", () => {
 	const weeks = [
 		{ week: 1, meetings: [{ iso: "2026-08-31" }, { iso: "2026-09-01" }] },
 		{ week: 2, meetings: [{ iso: "2026-09-07", noClass: "Labor Day" }, { iso: "2026-09-08" }] },
 		{ week: 3, meetings: [{ iso: "2026-10-01", noClass: "Break" }] },
 	];
-	assert.deepEqual(scheduleMonths(weeks), [{ name: "August", week: 1 }, { name: "September", week: 1 }]);
+	assert.deepEqual(scheduleMonths(weeks), [{ name: "August", week: 1, last: 1 }, { name: "September", week: 1, last: 2 }]);
 	assert.deepEqual(scheduleMonths(), []);
 });
 

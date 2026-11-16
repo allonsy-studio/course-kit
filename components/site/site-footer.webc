@@ -1,6 +1,6 @@
 <script webc:setup>
 	/**
-	 * The page footer: course, institution, term, copyright and the links. Reads `course`, `site` and `term`.
+	 * The page footer: course, institution, term, copyright and the links. Reads `course`, `site` and `term`. With `institution.sourceUrl` set it also links to the course's source.
 	 */
 </script>
 <div webc:root="override">
@@ -11,6 +11,7 @@
             <span @text="$data.term.label"></span>
         </p>
         <copyright></copyright>
+        <p class="source" webc:if="$data.site.sourceUrl"><a :href="$data.site.sourceUrl" rel="noopener" @text="$data.copy.nav.openSource"></a></p>
     </div>
     <div class="group">
         <p class="label" id="footer-pages" @text="$data.copy.siteFooter.pages"></p>
@@ -102,8 +103,21 @@
         font-size: 1em;
     }
 
-    nav.group a,
+    .source {
+        margin: 0;
+        max-inline-size: none;
+    }
+
+    /* The course name is one run of text, "CS101: Introduction…": inline-flex would make each span a flex item and drop the spaces between them. */
     .course a {
+        display: inline-block;
+        /* 44px tall (WCAG 2.5.5) with the text centered, however many lines it wraps to. */
+        padding-block: max(0px, calc((var(--target-min) - 1lh) / 2));
+        font-size: max(var(--base-font-size), 1em);
+    }
+
+    nav.group a,
+    .source a {
         display: inline-flex;
         align-items: center;
         min-block-size: var(--target-min);

@@ -7,10 +7,6 @@ layout: "base"
 </script>
 
 <section class="lesson-list content-column wide">
-	<eyebrow class="separators">
-		<span @text="$data.term.label"></span>
-		<span @text="$data.code"></span>
-	</eyebrow>
 	<h1 @text="copy.lessonPlans"></h1>
 	<p @text="fill(copy.onePlanPerClass, { time: timeOfDay($data.schedule?.meetings?.time) })"></p>
 	<p webc:if="$data.collections.deck?.length" @raw="fill(copy.everyDeckInMeeting, { link: link('/slides/', copy.slideIndex) })"></p>
@@ -48,14 +44,14 @@ layout: "base"
 				<td webc:if="lesson.noClass" colspan="2" class="muted no-class" @text="fill(copy.noClass, { reason: lesson.noClass })"></td>
 				<template webc:else webc:nokeep>
 					<td>
-						<a :href="`/lessons/week-${lesson.week}/day-${lesson.day}/`" @text="copy.lessonPlan"></a>
-						<span webc:nokeep webc:for="deck of ($data.collections.deck ?? []).filter((d) => d.data.week === lesson.week && d.data.day === lesson.day)">
-							<br/><a :href="deck.url" @text="deck.data.addendum ? copy.addendum : copy.slides"></a>
-							<br/><a :href="deckNotesUrl(deck.data.week, deck.data.day, deck.data.addendum === true)" @text="deck.data.addendum ? copy.addendumNotes : copy.notes"></a>
-						</span>
-						<span webc:nokeep webc:for="assignment of assignmentsDue($data.collections.assignment, lesson, $data.lessons)">
-							<br/><span @text="copy.due"></span> <a :href="assignment.url" @text="assignment.title"></a> (<span @text="assignment.dueLabel"></span>)
-						</span>
+						<ul class="lesson-links" role="list">
+							<li><a :href="`/lessons/week-${lesson.week}/day-${lesson.day}/`" @text="copy.lessonPlan"></a></li>
+							<template webc:nokeep webc:for="deck of ($data.collections.deck ?? []).filter((d) => d.data.week === lesson.week && d.data.day === lesson.day)">
+								<li><a :href="deck.url" @text="deck.data.addendum ? copy.addendum : copy.slides"></a></li>
+								<li><a :href="deckNotesUrl(deck.data.week, deck.data.day, deck.data.addendum === true)" @text="deck.data.addendum ? copy.addendumNotes : copy.notes"></a></li>
+							</template>
+							<li webc:for="assignment of assignmentsDue($data.collections.assignment, lesson, $data.lessons)"><span @text="copy.due"></span> <a :href="assignment.url" @text="assignment.title"></a> (<span @text="assignment.dueLabel"></span>)</li>
+						</ul>
 					</td>
 					<td>
 						<span webc:for="(topic, index) of lesson.topics" webc:nokeep>
