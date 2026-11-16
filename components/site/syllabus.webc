@@ -1,13 +1,29 @@
 <script webc:setup>
 	/**
-	 * The syllabus: outcomes, text, technology, coursework and grading. Reads
-	 * the `course`, `grading`, `scale`, `schedule` and `project` data; it takes
-	 * no props.
+	 * The syllabus: outcomes, text, technology, coursework and grading, with a
+	 * contents list of its parts: a row of links above the document on a narrow
+	 * screen and, from 1100px, a sticky column beside it that marks the part on
+	 * screen. Reads the `course`, `grading`, `scale`, `schedule` and `project`
+	 * data. The list is built from the parts that render, so a part the course
+	 * leaves out is not listed.
+	 * @prop {'false'} [contents] `false` leaves the contents list out; shown otherwise. `"syllabusContents": false` in `course.json` does the same for every syllabus, and this prop wins over it
 	 */
-	const course = $data.course ?? {};
 	const copy = $data.copy.syllabus;
 	/** The project's due date and time: "Thursday, December 3, 2026, 11:59PM". */
 	const projectWhen = (project) => (project.dueTime ? fill(copy.projectDue, { date: fullDate(project.due), time: timeOfDay(project.dueTime) }) : fullDate(project.due));
+	/** The parts that render, in page order, for the contents list: the same conditions as the articles below. Takes the page's data, which a setup script's own `$data` is not. */
+	const partsOf = (data) =>
+		[
+			{ id: "outcomes", label: copy.learningOutcomes },
+			data.course?.additionalOutcomes?.length && { id: "additional-outcomes", label: copy.additionalOutcomes },
+			{ id: "text", label: copy.text },
+			{ id: "technology", label: copy.technology },
+			data.grading && { id: "coursework", label: copy.coursework },
+			data.grading && { id: "grading", label: copy.grading },
+			data.term?.keyDates?.length && { id: "key-dates", label: copy.keyDates },
+		].filter(Boolean);
+	/** The prop wins over the course's `syllabusContents`; anything but `false` shows the list. */
+	const showContents = (data, prop) => (prop === undefined ? data.course?.syllabusContents !== false : prop !== false && prop !== "false");
 	const escape = (text) => String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
 	/** "Full requirements, milestone dates, and the grading rubric are on the project page." with the link in place. */
 	const projectPage = (project) => fill(copy.projectPage, { link: `<a href="${escape(project?.url ?? "/projects/final/")}">${escape(copy.projectPageLink)}</a>` });
@@ -15,33 +31,40 @@
 <section id="syllabus" aria-labelledby="syllabus-heading" webc:root="override">
     <h2 id="syllabus-heading" @text="copy.syllabus"></h2>
 
+    <nav class="syllabus-contents screen-only" aria-labelledby="syllabus-contents-label" :style="`--parts: ${partsOf($data).length}`" webc:if="showContents($data, typeof contents === 'undefined' ? undefined : contents)">
+        <p class="rail-label" id="syllabus-contents-label" @text="$data.copy.document.contents"></p>
+        <ol role="list">
+            <li webc:for="part of partsOf($data)"><a :href="`#${part.id}`" @text="part.label"></a></li>
+        </ol>
+    </nav>
+
     <article>
-        <h3 @text="copy.learningOutcomes"></h3>
+        <h3 id="outcomes" @text="copy.learningOutcomes"></h3>
         <p @text="copy.uponCompletingThisCourse"></p>
         <ul>
-            <li webc:for="outcome of course.outcomes" @text="outcome"></li>
+            <li webc:for="outcome of $data.course?.outcomes" @text="outcome"></li>
         </ul>
     </article>
 
-    <article webc:if="course.additionalOutcomes?.length">
+    <article webc:if="$data.course?.additionalOutcomes?.length">
         <h3 id="additional-outcomes" @text="copy.additionalOutcomesInThis"></h3>
         <ul>
-            <li webc:for="outcome of course.additionalOutcomes" @text="outcome"></li>
+            <li webc:for="outcome of $data.course?.additionalOutcomes" @text="outcome"></li>
         </ul>
     </article>
 
     <article>
-        <h3 @text="copy.text"></h3>
-        <p webc:if="!course.textbook?.required" @text="copy.noTextIsRequired"></p>
-        <p webc:if="course.textbook?.required"><strong @text="copy.required"></strong> <span @text="course.textbook.required"></span></p>
-        <ol webc:if="course.textbook?.access?.length">
-            <li webc:for="step of course.textbook.access" @raw="step"></li>
+        <h3 id="text" @text="copy.text"></h3>
+        <p webc:if="!$data.course?.textbook?.required" @text="copy.noTextIsRequired"></p>
+        <p webc:if="$data.course?.textbook?.required"><strong @text="copy.required"></strong> <span @text="$data.course?.textbook.required"></span></p>
+        <ol webc:if="$data.course?.textbook?.access?.length">
+            <li webc:for="step of $data.course?.textbook.access" @raw="step"></li>
         </ol>
     </article>
 
     <article>
-        <h3 @text="copy.technology"></h3>
-        <p><span @text="fill(copy.bringALaptopMeeting, { institution: $data.site.institution || copy.theCollege })"></span> <span webc:for="req of course.requirements ?? []" @text="req"></span> <span webc:if="$data.grading?.homework" @text="fill(copy.accessIsRequired, { lms: $data.site.lms })"></span></p>
+        <h3 id="technology" @text="copy.technology"></h3>
+        <p><span @text="fill(copy.bringALaptopMeeting, { institution: $data.site.institution || copy.theCollege })"></span> <span webc:for="req of $data.course?.requirements ?? []" @text="req"></span> <span webc:if="$data.grading?.homework" @text="fill(copy.accessIsRequired, { lms: $data.site.lms })"></span></p>
     </article>
 
     <article webc:if="$data.grading">
@@ -192,6 +215,96 @@
             letter-spacing: 0.03em;
         }
 
+        /* The contents list: the document layout's rail (`.rail-label`, and
+           base.css's `.syllabus-contents` rules for the line, the links and
+           the current part) as a row of links above the syllabus on a narrow
+           screen, and a sticky column beside it from 1100px. The current part
+           changes color and the edge beside it, never the type's weight or
+           size, so the list does not move when the script marks a part. */
+        #syllabus > .syllabus-contents {
+            padding: 0;
+            font-size: max(var(--base-font-size), 0.95em);
+
+            > .rail-label {
+                margin-block-end: 0.25em;
+            }
+
+            > ol {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0 1.25em;
+                border-inline-start: 0;
+
+                li a[href] {
+                    display: flex;
+                    align-items: center;
+                    box-sizing: border-box;
+                    /* An operable target: 44px each way (WCAG 2.5.5). */
+                    min-block-size: var(--target-min);
+                    min-inline-size: var(--target-min);
+                    margin-inline-start: 0;
+                    padding: 0;
+                    border-inline-start: 0;
+                    border-block-end: var(--border-width) solid transparent;
+
+                    &[aria-current] {
+                        border-block-end-color: var(--color-accent-secondary);
+                        font-weight: inherit;
+                    }
+                }
+            }
+        }
+
+        @media (width > 1100px) {
+            #syllabus:has(> .syllabus-contents) {
+                display: grid;
+                grid-template-columns: 13rem minmax(0, 1fr);
+                column-gap: calc(var(--section-space) * 1.5);
+                clear: both;
+            }
+
+            #syllabus:has(> .syllabus-contents) > h2 {
+                grid-column: 1 / -1;
+            }
+
+            #syllabus:has(> .syllabus-contents) > article {
+                grid-column: 2;
+            }
+
+            #syllabus > .syllabus-contents {
+                grid-column: 1;
+                /* One row per part, so the column spans the document and sticks beside it. */
+                grid-row: 2 / span var(--parts);
+                align-self: start;
+                position: sticky;
+                inset-block-start: var(--content-space);
+                max-block-size: calc(100vb - var(--content-space) * 2);
+                overflow-y: auto;
+
+                > ol {
+                    flex-direction: column;
+                    border-inline-start: var(--border-width) solid var(--color-border);
+
+                    li a[href] {
+                        margin-inline-start: calc(var(--border-width) * -1);
+                        padding-inline: 0.9em;
+                        border-inline-start: var(--border-width) solid transparent;
+                        border-block-end: 0;
+
+                        &[aria-current] {
+                            border-inline-start-color: var(--color-accent-secondary);
+                        }
+                    }
+                }
+            }
+        }
+
+        @media (forced-colors: active) {
+            #syllabus > .syllabus-contents > ol li a[href][aria-current] {
+                border-color: Highlight;
+            }
+        }
+
         #key-dates + ul {
             list-style: none;
             margin: 0;
@@ -215,3 +328,43 @@
         }
     }
 </style>
+
+<script>
+    /**
+     * Marks the syllabus part on screen in the contents list with
+     * `aria-current="location"` as the page scrolls. The list is built when the
+     * page renders; this only moves the mark, so nothing shifts. With no list,
+     * or with it hidden, it does nothing.
+     */
+    (() => {
+        const rail = document.querySelector("#syllabus > .syllabus-contents");
+        if (!rail || !rail.getClientRects().length) return;
+        const links = [...rail.querySelectorAll("a[href^='#']")];
+        const parts = links.map((link) => document.getElementById(link.hash.slice(1)));
+        if (parts.some((part) => !part)) return;
+        const section = rail.closest("#syllabus");
+        const mark = () => {
+            const line = window.innerHeight * 0.3;
+            const end = section.getBoundingClientRect().bottom;
+            // A page scrolled to its foot can leave the last part below the line: then it is the one on screen.
+            const bottomed = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2 && end <= window.innerHeight + 2;
+            // Nothing is marked before the first part reaches the line, or once the syllabus has scrolled past it.
+            const inside = (parts[0].getBoundingClientRect().top <= line || bottomed) && end > line;
+            const current = !inside ? null : bottomed ? parts.at(-1) : parts.filter((part) => part.getBoundingClientRect().top <= line).at(-1);
+            for (const [index, link] of links.entries()) {
+                if (parts[index] === current) link.setAttribute("aria-current", "location");
+                else link.removeAttribute("aria-current");
+            }
+        };
+        let queued = false;
+        addEventListener("scroll", () => {
+            if (queued) return;
+            queued = true;
+            requestAnimationFrame(() => {
+                queued = false;
+                mark();
+            });
+        }, { passive: true });
+        mark();
+    })();
+</script>

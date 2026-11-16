@@ -982,9 +982,10 @@ eyebrow + :where(h1, h2, h3, h4, h5, h6) {
 }
 
 /* ---- Side columns ----
-   A contents column beside a document, and an outline and a tools rail beside
-   a lesson plan. Nothing is sticky, and each falls to one column on a narrow
-   screen, the side columns first. */
+   A contents column beside a document (and beside the syllabus, whose own
+   component sets where it sits), and an outline and a tools rail beside
+   a lesson plan. Only the syllabus's list is sticky, and each falls to one
+   column on a narrow screen, the side columns first. */
 .rail-label {
 	margin: 0 0 0.5em;
 	color: var(--color-text-muted);
@@ -1049,7 +1050,7 @@ body:has(.doc-layout[data-contents="true"], .lesson-layout) {
 	}
 }
 
-:is(.doc-contents nav, .lesson-outline, .lesson-rail nav) > :is(ol, ul) {
+:is(.doc-contents nav, .lesson-outline, .lesson-rail nav, .syllabus-contents) > :is(ol, ul) {
 	margin: 0;
 	padding: 0;
 	list-style: none;

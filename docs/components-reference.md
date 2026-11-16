@@ -287,7 +287,11 @@ Every slide deck as a timetable: one row per week, one column per meeting day.
 
 ### `<syllabus>`
 
-The syllabus: outcomes, text, technology, coursework and grading. Reads the `course`, `grading`, `scale`, `schedule` and `project` data; it takes no props.
+The syllabus: outcomes, text, technology, coursework and grading, with a contents list of its parts: a row of links above the document on a narrow screen and, from 1100px, a sticky column beside it that marks the part on screen. Reads the `course`, `grading`, `scale`, `schedule` and `project` data. The list is built from the parts that render, so a part the course leaves out is not listed.
+
+| Prop | Type | |
+|---|---|---|
+| `[contents]` | `'false'` | `false` leaves the contents list out; shown otherwise. `"syllabusContents": false` in `course.json` does the same for every syllabus, and this prop wins over it |
 
 ## Practice worksheets
 
