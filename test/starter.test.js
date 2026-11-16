@@ -60,6 +60,12 @@ test("the home page shows the course, the instructor, the syllabus and the polic
 	}
 });
 
+test("the home page's syllabus carries its contents list, linking to the parts it renders", () => {
+	const html = pages["/"];
+	assert.match(html, /<nav aria-labelledby="syllabus-contents-label"[^>]*class="syllabus-contents screen-only"/);
+	for (const id of [...html.matchAll(/<a href="#([\w-]+)">/g)].map((match) => match[1]).filter((id) => ["outcomes", "text", "technology", "coursework", "grading", "key-dates"].includes(id))) assert.ok(html.includes(`id="${id}"`), `no part has the id ${id}`);
+});
+
 test("the schedule lists the weeks, the meetings and the tests", () => {
 	const html = pages["/schedule/"];
 	for (const text of ["id=\"week-1\"", "id=\"week-3\"", "Welcome and how the course runs", "Test 1", "Key dates"]) {

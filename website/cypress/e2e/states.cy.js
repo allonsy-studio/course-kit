@@ -7,6 +7,7 @@ import { A11Y_MODES, MODES, VIEWPORTS } from "../support/config.js";
 const WORKSHEET = "/components/frames/practice/practice-worksheet/default/";
 const GLOSSARY = "/components/frames/site/glossary-panel/default/";
 const SCHEDULE = "/components/frames/site/schedule-weeks/default/";
+const SYLLABUS = "/components/frames/site/syllabus/default/";
 const CODE = "/components/frames/ui/code-block/default/";
 const CANVAS = "/components/components/ui/arrow-link/";
 
@@ -63,6 +64,11 @@ describe("interactive states", () => {
 		});
 	});
 
+	scanStates("syllabus scrolled to its last part, the contents list marking it", SYLLABUS, () => {
+		cy.scrollTo("bottom");
+		cy.get(".syllabus-contents a[aria-current]").should("have.attr", "href", "#key-dates");
+	});
+
 	scanStates("code block with its copy button", CODE, () => {
 		cy.get(".code-copy").first().focus();
 	});
@@ -77,6 +83,7 @@ describe("keyboard", () => {
 		["worksheet", WORKSHEET, "[data-worksheet]"],
 		["glossary", GLOSSARY, "main"],
 		["schedule", SCHEDULE, "main"],
+		["syllabus contents", SYLLABUS, ".syllabus-contents"],
 		["code block", CODE, "main"],
 		["preview canvas", CANVAS, "[data-canvas]"],
 	].forEach(([name, url, scope]) => {
