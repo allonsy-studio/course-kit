@@ -44,6 +44,7 @@ A page that uses a component whose file is missing simply shows nothing for it, 
 | `outcomes`, `additionalOutcomes` | What students will be able to do. `additionalOutcomes` is for ones beyond the catalog's. |
 | `textbook` | `{ "required": "…", "access": ["steps to get it"] }`. Leave the key out if there is no text. |
 | `requirements` | Software, hardware or accounts students need. |
+| `syllabusContents` | Optional: `false` leaves out the syllabus's contents list. It is shown by default; see [the syllabus](components-reference.md#syllabus). |
 | `documents` | Links shown under "Additional resources" on the home page. |
 
 ## `dates.json`
