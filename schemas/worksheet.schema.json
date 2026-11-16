@@ -26,6 +26,11 @@
       "default": true,
       "description": "Set false to keep the page out of the sitemap and search results. Does NOT gate publishing — the page is still served to anyone with the URL."
     },
+    "order": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Where the worksheet sits in the Practice page's list (`<practice-index>`): lower numbers first, then by address. A worksheet with no order comes after those that have one."
+    },
     "eyebrow": {
       "type": "string",
       "description": "Small-caps label above the heading, after the term and course code."
