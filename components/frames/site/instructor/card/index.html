@@ -159,6 +159,144 @@
           display: none;
         }
       }
+      /* Icon links (`contactLinks: "icons"`): the email, the message link and the
+       blog as 44px circles beside the "Your instructor" heading, at the top
+       right of the panel. They follow the facts in the source, so print, which
+       drops the photo and runs the facts into one line, reads facts first and
+       then the address and the host in place of the icons. Plain selectors,
+       not the scoped block above: that block is what every other site renders. */
+      /* The heading and the icons share the first line; when the column is too
+       narrow for both, the icons wrap onto a line of their own, still at the
+       right. The facts and the note take full lines. `order` puts the icons
+       after the heading on screen while they follow the facts in the source. */
+      #instructor .facts-column:has(> .links) {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        column-gap: var(--content-space);
+
+        @media print {
+          display: block;
+        }
+      }
+
+      #instructor .facts-column:has(> .links) > h2 {
+        flex: 1 1 auto;
+        margin-block: 0;
+      }
+
+      #instructor .facts-column:has(> .links) > .facts {
+        flex: 1 1 100%;
+        order: 2;
+        margin-block-start: 0.35em;
+      }
+
+      #instructor .facts-column:has(> .links) > .note {
+        flex: 1 1 100%;
+        order: 3;
+      }
+
+      #instructor .links {
+        flex: none;
+        order: 1;
+        margin: 0 0 0 auto;
+        padding: 0;
+        display: flex;
+        gap: 0.5em;
+        list-style: none;
+
+        @media print {
+          display: inline;
+        }
+      }
+
+      #instructor .links > li {
+        margin: 0;
+        padding: 0;
+
+        @media print {
+          display: inline;
+
+          &::before {
+            content: " · ";
+          }
+
+          /* The message link stands in for the address on screen only. */
+          &.screen-only {
+            display: none;
+          }
+        }
+      }
+
+      #instructor .icon-link {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        /* An operable target: 44px each way (WCAG 2.5.5), the icon 24px inside it. */
+        inline-size: var(--target-min);
+        block-size: var(--target-min);
+        aspect-ratio: auto;
+        border: var(--thin-border-width) solid var(--color-border-strong);
+        border-radius: var(--circle-border-radius);
+        color: var(--color-link);
+        text-decoration: none;
+
+        &:is(:hover, :focus-visible) {
+          border-color: var(--color-link);
+          background-color: var(--color-surface-accent);
+          text-decoration: none;
+        }
+
+        /* base.css gives an svg without a size a full-width, 2.5em-tall box and a currentColor fill. These carry a width, a height and fill="none"; say so
+           again for any rule that is looser. */
+        svg {
+          flex: none;
+          inline-size: 24px;
+          block-size: 24px;
+          min-block-size: 0;
+          fill: none;
+        }
+
+        @media print {
+          display: inline;
+          inline-size: auto;
+          block-size: auto;
+          border: none;
+          border-radius: 0;
+          color: inherit;
+          text-decoration: underline;
+
+          svg {
+            display: none;
+          }
+        }
+      }
+
+      /* The address, the message label or the host behind each icon: clipped on
+       screen, where the aria-label names the link, and printed in place of
+       the icon. It stays in the text, so find-in-page and copy reach it. */
+      @media screen {
+        #instructor .link-text {
+          position: absolute;
+          inline-size: 1px;
+          block-size: 1px;
+          overflow: hidden;
+          clip-path: inset(50%);
+          white-space: nowrap;
+        }
+      }
+
+      @media (forced-colors: active) {
+        #instructor .icon-link {
+          border-color: LinkText;
+        }
+
+        #instructor .icon-link:is(:hover, :focus-visible) {
+          border-color: Highlight;
+        }
+      }
     </style>
     <script src="/course-kit/components/preview-assets/tokens.js"></script>
   </head>
@@ -455,11 +593,13 @@
       for (const link of document.querySelectorAll("a[data-email]")) {
         const email = atob(link.dataset.email);
         link.href = `mailto:${email}`;
+        // An icon link keeps its svg and writes the address into its own text slot.
+        const target = link.querySelector("[data-email-text]") ?? link;
+        if (target.textContent.trim()) continue;
         // Break opportunities before "@" and after each ".": a narrow screen wraps the address there, not mid-word.
-        link.textContent = "";
         email.split(/(?=@)|(?<=\.)/).forEach((part, index) => {
-          if (index) link.append(document.createElement("wbr"));
-          link.append(part);
+          if (index) target.append(document.createElement("wbr"));
+          target.append(part);
         });
       }
       // assets/scripts/practice.js
