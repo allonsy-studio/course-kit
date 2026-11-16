@@ -6,13 +6,16 @@ import { WebC } from "@11ty/webc";
 
 import { packageRoot } from "../lib/paths.js";
 
+/** Stands in for Eleventy's `url` filter, a function whose source would print if it reached the markup. */
+function url(...args) {
+	return args.join("");
+}
+
 /** Render a page's markup with a `url` helper registered, as Eleventy registers its `url` filter. */
 async function render(markup, data = {}) {
 	const page = new WebC();
 	page.defineComponents(path.join(packageRoot, "components", "ui", "download-button.webc"));
-	page.setHelper("url", function url(...args) {
-		return args.join("");
-	});
+	page.setHelper("url", url);
 	page.setContent(markup);
 	return (await page.compile({ data })).html;
 }
@@ -28,7 +31,7 @@ test("download-button takes the file as url, from a literal or from page data, i
 	]) {
 		const html = await render(markup, data);
 		assert.match(link(html), /href="(\/a\.zip|\/demo\/cascade\/cascade\.html)" download/, markup);
-		assert.doesNotMatch(html, /function\s*\(/, markup);
+		assert.doesNotMatch(html, /function\b/, markup);
 	}
 });
 
@@ -36,6 +39,6 @@ test("download-button shows nothing when there is no file, rather than a link to
 	for (const markup of ["<download-button>Get</download-button>", '<download-button :@url="$data.demo.missing">Get</download-button>']) {
 		const html = await render(markup, { demo: {} });
 		assert.doesNotMatch(html, /<a\b/, markup);
-		assert.doesNotMatch(html, /function\s*\(/, markup);
+		assert.doesNotMatch(html, /function\b/, markup);
 	}
 });
