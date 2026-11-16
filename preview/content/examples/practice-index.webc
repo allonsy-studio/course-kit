@@ -1,0 +1,9 @@
+---
+layout: base
+title: Practice index
+permalink: /examples/practice-index/index.html
+---
+
+<h1>Practice</h1>
+<p>Every practice sheet, with what it is for.</p>
+<practice-index></practice-index>

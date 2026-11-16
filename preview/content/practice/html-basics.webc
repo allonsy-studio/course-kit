@@ -1,0 +1,13 @@
+---
+layout: base
+title: HTML basics
+tags: practice
+permalink: /practice/html-basics/index.html
+worksheet:
+  heading: HTML basics
+  lede: Headings, lists and links.
+  order: 1
+---
+
+<h1>HTML basics</h1>
+<p>A stand-in for a practice worksheet, so the preview's practice index has two sheets to list.</p>

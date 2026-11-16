@@ -108,8 +108,15 @@
         max-inline-size: none;
     }
 
+    /* The course name is one run of text, "CS101: Introduction…": inline-flex would make each span a flex item and drop the spaces between them. */
+    .course a {
+        display: inline-block;
+        /* 44px tall (WCAG 2.5.5) with the text centered, however many lines it wraps to. */
+        padding-block: max(0px, calc((var(--target-min) - 1lh) / 2));
+        font-size: max(var(--base-font-size), 1em);
+    }
+
     nav.group a,
-    .course a,
     .source a {
         display: inline-flex;
         align-items: center;
