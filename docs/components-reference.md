@@ -258,7 +258,7 @@ The practice page's table: every practice sheet in `collections.practice`, by it
 
 ### `<schedule-overview>`
 
-The schedule page's header: the meeting line, the key dates, and a row of jump links (Today, then one per month). Props are read in the template, since a setup script cannot see them.
+The schedule page's header: the meeting line, the key dates, and a sticky row of one jump link per month, with the Hide past weeks toggle at its end. The month on screen is marked as the page scrolls. The row is sticky from 40em wide and static below it, where it would take too much of a phone's height. Props are read in the template, since a setup script cannot see them.
 
 | Prop | Type | |
 |---|---|---|
@@ -267,7 +267,7 @@ The schedule page's header: the meeting line, the key dates, and a row of jump l
 
 ### `<schedule-weeks>`
 
-Every week of the term as a bordered block: one row per class meeting (when, topics, and what that class needs: reading, due items, materials) and a footer for the week's own resources. A "This week" card, the hide-past toggle and the Now and Done flags are added by the script. Deadlines carry a chip for their `kind`; the key above the weeks lists the kinds in use. Wording comes from `copy.schedule`.
+Every week of the term as a bordered block: one row per class meeting (when, topics, and what that class needs: reading, due items, materials) and a footer for the week's own resources. A "This week" card and the Now and Done flags are added by the script, which also works the hide-past toggle that <schedule-overview> puts in its sticky row. Deadlines carry a chip for their `kind`; the key above the weeks lists the kinds in use. Wording comes from `copy.schedule`.
 
 | Prop | Type | |
 |---|---|---|

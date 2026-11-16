@@ -141,6 +141,9 @@ test("the schedule gives a test a chip, a key above the weeks and a Hide past we
 	assert.match(html, /<span data-kind="test" class="due-chip">Test<\/span>/);
 	assert.match(html, /<ul aria-label="Key to due items"[^>]*class="due-key"/);
 	assert.ok(html.indexOf('class="due-key"') < html.indexOf('id="week-1"'));
+	const key = /<ul[^>]*class="due-key"[\s\S]*?<\/ul>/.exec(html)[0];
+	assert.ok(!/graded/i.test(key.replace(/Graded<\/span>/g, "")), "a graded kind is its chip alone, with no word after it");
+	assert.match(key, /<li><span data-kind="test" class="due-chip">Test<\/span><\/li>/);
 	assert.match(html, /<button[^>]*data-hide-past[^>]*aria-pressed="false"[^>]*>Hide past weeks<\/button>/);
 	assert.ok(!html.includes("Show past weeks"));
 	for (const gone of ["data-week-tools", "data-past-toggle", "past-toggle", "due-kind"]) assert.ok(!html.includes(gone), `still has ${gone}`);

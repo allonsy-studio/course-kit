@@ -94,7 +94,6 @@ A page's `#copy-data` block carries only the namespaces its scripts read: `code`
 | `noClass` | `No class — {reason}` |
 | `substitution` | `Runs a {weekday} schedule` |
 | `dueKeyLabel` | `Key to due items` |
-| `graded` | `graded` |
 | `notGraded` | `not graded` |
 | `dueKindTest` | `Test` |
 | `dueKindGraded` | `Graded` |

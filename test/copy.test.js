@@ -109,7 +109,7 @@ test("the due chips come from the kind table, never from a title", () => {
 	assert.equal(dueKindLabel("reading"), "Reading check");
 	assert.equal(dueKindLabel("practice", { schedule: { dueKindPractice: "Drill" } }), "Drill");
 	const keys = dueKeyItems(scheduleWeeks(lessons, weeks));
-	assert.deepEqual(keys.map((key) => [key.kind, key.graded]), [["test", "graded"], ["graded", "graded"], ["reading", "graded"], ["practice", "not graded"]]);
+	assert.deepEqual(keys.map((key) => [key.kind, key.note]), [["test", ""], ["graded", ""], ["reading", ""], ["practice", "not graded"]], "a graded kind is its chip alone; the practice chip says it is not graded");
 });
 
 test("data tokens in grading prose come from the course's data", () => {

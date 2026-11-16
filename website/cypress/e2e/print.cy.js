@@ -5,13 +5,14 @@ const PAGES = [
 	"/components/frames/practice/practice-worksheet/default/",
 	"/components/frames/site/glossary-panel/default/",
 	"/components/frames/site/schedule-weeks/default/",
+	"/components/frames/site/schedule-overview/sticky-row/",
 	"/components/frames/site/course-now/default/",
 	"/components/frames/ui/code-block/default/",
 	"/components/frames/ui/today-link/default/",
 ];
 
 /** Controls that make no sense on paper. */
-const CONTROLS = [".code-copy", ".prompt-copy", "[data-check]", "[data-reset]", "[data-retry]", "[data-check-one]", "[data-hide-past]", ".today-link", "[data-schedule-tools]", "[data-course-now]", ".practice-summary", ".restore-note", ".switch", ".clear-search"];
+const CONTROLS = [".code-copy", ".prompt-copy", "[data-check]", "[data-reset]", "[data-retry]", "[data-check-one]", "[data-hide-past]", ".today-link", "[data-schedule-tools]", "[data-schedule-bar]", "[data-course-now]", ".practice-summary", ".restore-note", ".switch", ".clear-search"];
 
 describe("print", () => {
 	PAGES.forEach((url) => {

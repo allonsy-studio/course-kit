@@ -7,6 +7,7 @@ import { A11Y_MODES, MODES, VIEWPORTS } from "../support/config.js";
 const WORKSHEET = "/components/frames/practice/practice-worksheet/default/";
 const GLOSSARY = "/components/frames/site/glossary-panel/default/";
 const SCHEDULE = "/components/frames/site/schedule-weeks/default/";
+const SCHEDULE_BAR = "/components/frames/site/schedule-overview/sticky-row/";
 const SYLLABUS = "/components/frames/site/syllabus/default/";
 const CODE = "/components/frames/ui/code-block/default/";
 const CANVAS = "/components/components/ui/arrow-link/";
@@ -58,10 +59,14 @@ describe("interactive states", () => {
 		cy.get("#glossary-panel-study").should("be.visible");
 	});
 
-	scanStates("schedule with Hide past weeks pressed", SCHEDULE, () => {
-		cy.get("body").then(($body) => {
-			if ($body.find("[data-hide-past]:visible").length) cy.get("[data-hide-past]").click().should("have.attr", "aria-pressed", "true");
-		});
+	scanStates("schedule with Hide past weeks pressed", SCHEDULE_BAR, () => {
+		cy.get("[data-hide-past]").should("be.visible").click().should("have.attr", "aria-pressed", "true");
+		cy.get("[data-schedule-status]").should("contain.text", "hidden");
+	});
+
+	scanStates("schedule scrolled, its row of months marking the month on screen", SCHEDULE_BAR, () => {
+		cy.scrollTo("bottom");
+		cy.get(".schedule-jump a[aria-current]").should("have.length", 1);
 	});
 
 	scanStates("syllabus scrolled to its last part, the contents list marking it", SYLLABUS, () => {

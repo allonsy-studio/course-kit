@@ -2,8 +2,9 @@
 	/**
 	 * Every week of the term as a bordered block: one row per class meeting
 	 * (when, topics, and what that class needs: reading, due items, materials)
-	 * and a footer for the week's own resources. A "This week" card, the
-	 * hide-past toggle and the Now and Done flags are added by the script.
+	 * and a footer for the week's own resources. A "This week" card and the
+	 * Now and Done flags are added by the script, which also works the
+	 * hide-past toggle that <schedule-overview> puts in its sticky row.
 	 * Deadlines carry a chip for their `kind`; the key above the weeks lists
 	 * the kinds in use. Wording comes from `copy.schedule`.
 	 * @prop {object[]} [weeks] `scheduleWeeks` output; built from the page's
@@ -18,10 +19,6 @@
 </script>
 <div webc:root="override" class="schedule-weeks" data-today-host="meetings" webc:if="(weeks ?? defaultWeeks)?.length">
     <today-marker></today-marker>
-    <div class="schedule-tools screen-only" data-schedule-tools hidden>
-        <p class="schedule-status" data-schedule-status role="status"></p>
-        <button type="button" class="hide-past" data-hide-past aria-pressed="false" @text="copy.hidePast"></button>
-    </div>
     <section class="this-week screen-only" data-this-week aria-labelledby="this-week-heading" hidden>
         <header class="this-head">
             <p class="label" data-this-label @text="copy.thisWeek"></p>
@@ -40,7 +37,7 @@
         </div>
     </section>
     <ul class="due-key" :aria-label="copy.dueKeyLabel" role="list" webc:if="dueKeyItems(weeks ?? defaultWeeks, $data.copy).length">
-        <li webc:for="entry of dueKeyItems(weeks ?? defaultWeeks, $data.copy)"><span class="due-chip" :data-kind="entry.kind" @text="entry.label"></span> <span @text="entry.graded"></span></li>
+        <li webc:for="entry of dueKeyItems(weeks ?? defaultWeeks, $data.copy)"><span class="due-chip" :data-kind="entry.kind" @text="entry.label"></span><template webc:nokeep webc:if="entry.note"> <span @text="entry.note"></span></template></li>
     </ul>
     <section class="week" webc:for="week of (weeks ?? defaultWeeks)" :id="`week-${week.week}`" :aria-labelledby="`week-${week.week}-heading`" :data-week-dates="weekDates(week)">
         <header class="week-head">
@@ -128,8 +125,9 @@
             const campusToday = () => new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone });
                         const { t } = window.ckCopy;
             const root = document.querySelector(".schedule-weeks");
-            const tools = root?.querySelector("[data-schedule-tools]");
-            if (!root || !tools) return;
+            if (!root) return;
+            // The hide-past toggle is in <schedule-overview>'s row, above the weeks; with no overview there is no toggle.
+            const tools = document.querySelector("[data-schedule-tools]");
             const today = campusToday();
             const weeks = [...root.querySelectorAll(".week[data-week-dates]")]
                 .map((el) => ({ el, dates: el.dataset.weekDates.split(/\s+/).filter(Boolean).sort() }))
@@ -208,15 +206,15 @@
             }
 
             // One label, "Hide past weeks"; the state is aria-pressed. Not saved: every visit starts with all weeks shown.
-            const button = tools.querySelector("[data-hide-past]");
-            const status = tools.querySelector("[data-schedule-status]");
+            const button = tools?.querySelector("[data-hide-past]");
+            const status = tools?.querySelector("[data-schedule-status]");
             const past = weeks.filter(({ el }) => el.hasAttribute("data-past"));
             const apply = (hide) => {
                 button.setAttribute("aria-pressed", String(hide));
                 for (const { el } of past) el.hidden = hide;
                 status.textContent = hide ? t("schedule", "pastHidden", { count: past.length }) : t("schedule", "weeksDone", { done: past.length, total: weeks.length });
             };
-            if (past.length) {
+            if (button && status && past.length) {
                 apply(false);
                 button.addEventListener("click", () => apply(button.getAttribute("aria-pressed") !== "true"));
                 tools.hidden = false;
@@ -424,44 +422,6 @@
         }
     }
 
-    /* The toolbar over the weeks: the count and the hide-past toggle. */
-    .schedule-tools {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-        gap: calc(var(--gutter) * 2) var(--content-space);
-
-        &[hidden] {
-            display: none;
-        }
-    }
-
-    .schedule-status {
-        margin: 0;
-        color: var(--color-text-muted);
-    }
-
-    .hide-past {
-        min-block-size: var(--target-min);
-        min-inline-size: var(--target-min);
-        padding-inline: 1.1em;
-        border: var(--thin-border-width) solid var(--color-border-strong);
-        border-radius: var(--radius-pill);
-        background: transparent;
-        color: var(--color-text);
-        font: inherit;
-        font-weight: var(--font-weight--semi-bold);
-        cursor: pointer;
-
-        &[aria-pressed="true"] {
-            border-color: var(--color-accent-secondary);
-            background-color: var(--color-accent-secondary);
-            color: var(--color-on-accent-secondary);
-            --color-focus-ring: var(--color-on-accent-secondary);
-        }
-    }
-
     /* "This week": the current week's classes side by side, then what to
        read and what is due. Filled and revealed by the script. */
     .this-week {
@@ -595,7 +555,6 @@
     /* Print: the weeks as a plain list, without the card, tools or heads. */
     @media print {
         .this-week,
-        .schedule-tools,
         .week-cols {
             display: none;
         }

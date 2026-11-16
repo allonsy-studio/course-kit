@@ -1,8 +1,11 @@
 <script webc:setup>
 	/**
-	 * The schedule page's header: the meeting line, the key dates, and a row
-	 * of jump links (Today, then one per month). Props are read in the
-	 * template, since a setup script cannot see them.
+	 * The schedule page's header: the meeting line, the key dates, and a sticky
+	 * row of one jump link per month, with the Hide past weeks toggle at its
+	 * end. The month on screen is marked as the page scrolls. The row is
+	 * sticky from 40em wide and static below it, where it would take too much
+	 * of a phone's height. Props are read in the template, since a setup script
+	 * cannot see them.
 	 * @prop {{ title: string, items: object[] }[]} [groups] `scheduleKeyDates`
 	 *   output; built from the page's lessons, project and exam slot when left out
 	 * @prop {object[]} [weeks] `scheduleWeeks` output, for the month links;
@@ -13,10 +16,6 @@
 </script>
 <header webc:root="override" class="schedule-overview">
 	<today-marker></today-marker>
-	<eyebrow class="separators">
-		<span @text="$data.term.label"></span>
-		<span @text="$data.course.code"></span>
-	</eyebrow>
 	<h1 @text="$data.copy.scheduleOverview.schedule"></h1>
 	<p class="meets" webc:if="$data.schedule?.meetings?.days?.length">
 		<span @text="$data.schedule.meetings.days.length > 1 ? `${$data.schedule.meetings.days.slice(0, -1).join(', ')} & ${$data.schedule.meetings.days.at(-1)}` : $data.schedule.meetings.days[0]"></span>
@@ -38,13 +37,18 @@
 		</div>
 	</section>
 
-	<nav class="schedule-jump" :aria-label="$data.copy.scheduleOverview.jumpTo" webc:if="scheduleMonths(weeks ?? defaultWeeks).length">
-		<h2 @text="$data.copy.scheduleOverview.jumpTo"></h2>
-		<ul role="list">
-			<li><today-link :@label="$data.copy.schedule.today"></today-link></li>
-			<li webc:for="entry of scheduleMonths(weeks ?? defaultWeeks)"><a :href="`#week-${entry.week}`" @text="entry.name"></a></li>
-		</ul>
-	</nav>
+	<div class="schedule-bar" data-schedule-bar webc:if="scheduleMonths(weeks ?? defaultWeeks).length">
+		<nav class="schedule-jump" :aria-label="$data.copy.scheduleOverview.jumpTo">
+			<h2 @text="$data.copy.scheduleOverview.jumpTo"></h2>
+			<ul role="list">
+				<li webc:for="entry of scheduleMonths(weeks ?? defaultWeeks)"><a :href="`#week-${entry.week}`" :data-first-week="entry.week" :data-last-week="entry.last" @text="entry.name"></a></li>
+			</ul>
+		</nav>
+		<div class="schedule-toggle" data-schedule-tools hidden>
+			<p class="schedule-status" data-schedule-status role="status"></p>
+			<button type="button" class="hide-past" data-hide-past aria-pressed="false" @text="$data.copy.schedule.hidePast"></button>
+		</div>
+	</div>
 </header>
 
 <style webc:scoped>
@@ -108,7 +112,56 @@
 		}
 	}
 
+	/* The row of month links and the toggle. From 40em it is sticky, pinned to the top of the page through the weeks: the header's own box is
+	   dropped (`display: contents`) so the row's containing block is the whole page column, and the page's scroll-padding follows the row's height
+	   (set by the script) so an anchor or a focused control is never under it. Below 40em it is a plain row, because on a phone it would take a
+	   quarter of the screen. */
+	.schedule-bar {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.25rem var(--content-space);
+		margin-block: var(--content-space);
+
+		@media screen and (width >= 40em) {
+			position: sticky;
+			inset-block-start: 0;
+			z-index: 10;
+			margin-block: 0;
+			padding-block: 0.4rem;
+			background-color: var(--color-page);
+			border-block-end: var(--thin-border-width) solid var(--color-border-strong);
+		}
+	}
+
+	@media screen and (width >= 40em) {
+		:host {
+			display: contents;
+		}
+
+		:host > .schedule-bar + * {
+			margin-block-start: var(--content-space);
+		}
+	}
+
 	.schedule-jump {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0 var(--content-space);
+		min-inline-size: 0;
+
+		h2 {
+			margin: 0;
+			font-family: var(--sans-font);
+			font-size: var(--font-size-6);
+			font-weight: var(--font-weight--semi-bold);
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			color: var(--color-text-muted);
+		}
+
 		ul {
 			display: flex;
 			flex-wrap: wrap;
@@ -134,12 +187,140 @@
 				background-color: var(--color-surface);
 				border-color: var(--color-accent);
 			}
+
+			/* The month on screen, set by the script as the page scrolls: a thick underline in the location accent. A shape, not a color alone, and
+			   it changes no size, so nothing moves when the mark does. */
+			&[aria-current] {
+				text-decoration: underline;
+				text-decoration-color: var(--color-accent-secondary);
+				text-decoration-thickness: 0.2em;
+				text-underline-offset: 0.3em;
+			}
+		}
+	}
+
+	.schedule-toggle {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.25rem var(--content-space);
+
+		&[hidden] {
+			display: none;
+		}
+	}
+
+	/* The count beside the button when there is room; below 48em it is hidden from sight and still announced (role="status"). */
+	.schedule-status {
+		margin: 0;
+		color: var(--color-text-muted);
+
+		@media screen and (width < 48em) {
+			position: absolute;
+			inline-size: 1px;
+			block-size: 1px;
+			overflow: hidden;
+			clip-path: inset(50%);
+			white-space: nowrap;
+		}
+	}
+
+	.hide-past {
+		min-block-size: var(--target-min);
+		min-inline-size: var(--target-min);
+		padding-inline: 1.1em;
+		border: var(--thin-border-width) solid var(--color-border-strong);
+		border-radius: var(--radius-pill);
+		background: transparent;
+		color: var(--color-text);
+		font: inherit;
+		font-weight: var(--font-weight--semi-bold);
+		cursor: pointer;
+
+		&[aria-pressed="true"] {
+			border-color: var(--color-accent-secondary);
+			background-color: var(--color-accent-secondary);
+			color: var(--color-on-accent-secondary);
+			--color-focus-ring: var(--color-on-accent-secondary);
+		}
+	}
+
+	@media (forced-colors: active) {
+		.schedule-bar {
+			border-block-end-color: CanvasText;
+		}
+
+		.schedule-jump a[aria-current] {
+			text-decoration-color: Highlight;
+		}
+
+		.hide-past[aria-pressed="true"] {
+			forced-color-adjust: none;
+			background: SelectedItem;
+			border-color: SelectedItem;
+			color: SelectedItemText;
 		}
 	}
 
 	@media print {
-		.schedule-jump {
+		.schedule-bar {
 			display: none;
 		}
 	}
 </style>
+
+<style>
+	/* The page scrolls under the sticky row: anchors and focused controls stop below it (WCAG 2.4.11, 2.4.12). The script sets the height. */
+	html:has(.schedule-bar) {
+		scroll-padding-block-start: calc(var(--schedule-bar-height, 0px) + 1rem);
+	}
+</style>
+
+<script>
+	/**
+	 * Marks the month on screen in the row with `aria-current="location"`: the month of the week block that crosses a line just below the
+	 * row (or, in the gap between two weeks, the next one); before the first week reaches it the first month, after the last week the last month. Sets `--schedule-bar-height`
+	 * for the page's scroll-padding while the row is sticky. It changes no size and runs no animation.
+	 */
+	(() => {
+		const bar = document.querySelector("[data-schedule-bar]");
+		if (!bar || !bar.getClientRects().length) return;
+		const links = [...bar.querySelectorAll("a[data-first-week]")];
+		const weeks = [...document.querySelectorAll(".schedule-weeks .week[id^='week-']")];
+		if (!links.length || !weeks.length) return;
+		const range = links.map((link) => ({ link, first: Number(link.dataset.firstWeek), last: Number(link.dataset.lastWeek) }));
+		/** The month of a week: the latest month whose range holds it, so a week spanning two months reads as the second, where its link points. */
+		const monthOf = (number) => range.findLast(({ first, last }) => number >= first && number <= last) ?? range.at(-1);
+		const mark = () => {
+			const line = Math.max(0, bar.getBoundingClientRect().bottom) + 8;
+			const shown = weeks.filter((week) => !week.hidden);
+			if (!shown.length) return;
+			// The first week that is not wholly above the line: the one crossing it, or the next one when the line is in the gap between two,
+			// and the first week while the header is still on screen. After the last week, the last month.
+			const week = shown.find((candidate) => candidate.getBoundingClientRect().bottom > line);
+			// A page scrolled to its foot can leave the last week below the line: then the last month is the one on screen.
+			const bottomed = window.scrollY > 0 && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+			const current = week && !bottomed ? monthOf(Number(week.id.slice(5))) : range.at(-1);
+			for (const { link } of range) {
+				if (link === current.link) link.setAttribute("aria-current", "location");
+				else link.removeAttribute("aria-current");
+			}
+		};
+		const measure = () => document.documentElement.style.setProperty("--schedule-bar-height", getComputedStyle(bar).position === "sticky" ? `${Math.ceil(bar.getBoundingClientRect().height)}px` : "0px");
+		let queued = false;
+		addEventListener("scroll", () => {
+			if (queued) return;
+			queued = true;
+			requestAnimationFrame(() => {
+				queued = false;
+				mark();
+			});
+		}, { passive: true });
+		new ResizeObserver(() => {
+			measure();
+			mark();
+		}).observe(bar);
+		measure();
+		mark();
+	})();
+</script>
