@@ -32,13 +32,10 @@
 	</div>
 
 	<script webc:keep>
-		/* Set the editor theme before ei.js builds the iframe. */
+		/* Set the editor theme before ei.js builds the iframe: it follows the system. */
 		(function () {
 			try {
-				var forced = document.documentElement.dataset.theme;
-				var dark =
-					forced === "dark" ||
-					(forced !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+				var dark = matchMedia("(prefers-color-scheme: dark)").matches;
 				document.querySelectorAll(".codepen[data-prefill]").forEach(function (embed) {
 					embed.dataset.themeId = dark ? "dark" : "light";
 				});

@@ -394,7 +394,6 @@ A page's `#copy-data` block carries only the namespaces its scripts read: `code`
 | `slides` | `Slides` |
 | `previousSlide` | `Previous slide` |
 | `nextSlide` | `Next slide` |
-| `cycleColorTheme` | `Cycle color theme` |
 | `toggleFullscreen` | `Toggle fullscreen` |
 
 ## `document`

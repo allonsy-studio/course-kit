@@ -1,11 +1,12 @@
 /*
- * Slide deck controller: which slide is showing, and the theme. Speaker
+ * Slide deck controller: which slide is showing. The deck's colors follow the
+ * system light/dark setting, like the rest of the site. Speaker
  * notes never reach a deck; they live on the instructor notes sheet.
  * Loaded only by _layouts/deck.webc, a standalone document with none of the
  * site chrome (masthead, base.css).
  *
  * Keys: → ↓ Space PageDown next, ← ↑ PageUp previous, Home/End ends,
- * Enter reveal, T theme, F fullscreen.
+ * Enter reveal, F fullscreen.
  */
 
 const deck = document.querySelector(".deck");
@@ -13,32 +14,6 @@ const slides = [...document.querySelectorAll(".slide")];
 const counter = document.querySelector("[data-count]");
 const fullscreenToggle = document.querySelector("[data-toggle-fullscreen]");
 const root = document.documentElement;
-
-/* The deck's own light/dark/system choice, kept for the next time it opens.
-   The site has no switcher and always follows the system. */
-const THEME_KEY = "theme";
-const THEMES = ["system", "light", "dark"];
-
-const readTheme = () => {
-	try {
-		const stored = localStorage.getItem(THEME_KEY);
-		return THEMES.includes(stored) ? stored : "system";
-	} catch {
-		return "system";
-	}
-};
-
-const applyTheme = (theme) => {
-	root.style.colorScheme = theme === "system" ? "light dark" : theme;
-	root.dataset.theme = theme;
-	try {
-		localStorage.setItem(THEME_KEY, theme);
-	} catch {
-		/* Private browsing: the deck still themes, it just won't be remembered. */
-	}
-};
-
-const cycleTheme = () => applyTheme(THEMES[(THEMES.indexOf(readTheme()) + 1) % THEMES.length]);
 
 /* lock() needs fullscreen and is Android-only; iOS has neither. Every step
    is feature-detected and fails quietly. */
@@ -131,9 +106,6 @@ document.addEventListener("keydown", (event) => {
 			return go(0);
 		case "End":
 			return go(slides.length - 1);
-		case "t":
-		case "T":
-			return cycleTheme();
 		case "f":
 		case "F":
 			event.preventDefault();
@@ -151,11 +123,8 @@ if (fullscreenToggle && document.fullscreenEnabled) {
 	fullscreenToggle.hidden = false;
 	fullscreenToggle.addEventListener("click", toggleFullscreen);
 }
-document.querySelector("[data-toggle-theme]").addEventListener("click", cycleTheme);
 document.querySelector("[data-prev]").addEventListener("click", () => setIndex(index - 1));
 document.querySelector("[data-next]").addEventListener("click", next);
-
-applyTheme(readTheme());
 
 const fromHash = Number.parseInt(location.hash.replace("#s", ""), 10);
 setIndex(Number.isFinite(fromHash) ? fromHash - 1 : 0, Number.isFinite(fromHash));
