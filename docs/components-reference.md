@@ -241,7 +241,7 @@ The page header: institution, term, course title and the navigation. Reads `site
 
 | Prop | Type | |
 |---|---|---|
-| `[navColumns]` | `1 \| 2` | how many columns the menu is set in: `1` (the default) is a single stack, `2` splits a long menu in two so the header stays short. The same as `"navColumns": 2` in `course.json`, and wins over it |
+| `[navColumns]` | `'auto' \| 1 \| 2` | how many columns the menu is set in: `auto` (the default) sets it in two columns when it has more than 3 links, so a long menu keeps the header short, and in one stack otherwise; `1` and `2` fix it either way. The same as `"navColumns"` in `course.json`, and wins over it |
 
 ### `<nav-links>`
 

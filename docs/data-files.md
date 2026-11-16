@@ -45,7 +45,7 @@ A page that uses a component whose file is missing simply shows nothing for it, 
 | `textbook` | `{ "required": "…", "access": ["steps to get it"] }`. Leave the key out if there is no text. |
 | `requirements` | Software, hardware or accounts students need. |
 | `syllabusContents` | Optional: `false` leaves out the syllabus's contents list. It is shown by default; see [the syllabus](components-reference.md#syllabus). |
-| `navColumns` | Optional: `1` (the default) sets the header menu as one stack, `2` as two columns, which keeps the header short when the menu is long; see [the masthead](components-reference.md#masthead). |
+| `navColumns` | Optional: `auto` (the default) sets the header menu in two columns when it has more than 3 links and in one stack otherwise; `1` or `2` fixes it either way. See [the masthead](components-reference.md#masthead). |
 | `documents` | Links shown under "Additional resources" on the home page. |
 
 ## `dates.json`

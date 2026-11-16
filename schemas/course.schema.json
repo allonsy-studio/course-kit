@@ -90,9 +90,9 @@
       "description": "Whether the `<syllabus>` shows its contents list (a row of links above the syllabus, and from 1100px a sticky column beside it). `false` leaves it out. The tag's `contents=\"false\"` attribute does the same for one place and wins over this."
     },
     "navColumns": {
-      "enum": [1, 2],
-      "default": 1,
-      "description": "How many columns the menu in the page header is set in: `1` is a single stack (the default), `2` splits it in two so a long menu keeps the header short. The `<masthead>` tag's `nav-columns` attribute does the same for one place and wins over this."
+      "enum": ["auto", 1, 2],
+      "default": "auto",
+      "description": "How many columns the menu in the page header is set in. `auto` (the default) uses two columns when the menu has more than 3 links, which keeps the header short, and one stack otherwise; `1` and `2` fix it either way. The `<masthead>` tag's `nav-columns` attribute does the same for one place and wins over this."
     },
     "textbook": {
       "type": "object",
