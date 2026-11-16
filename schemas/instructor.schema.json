@@ -43,6 +43,14 @@
       "format": "uri",
       "description": "Optional personal site or blog, shown as its own row in the instructor panel."
     },
+    "contactLinks": {
+      "enum": [
+        "rows",
+        "icons"
+      ],
+      "default": "rows",
+      "description": "How the email, the message link and the blog are shown in the instructor panel: `rows` (the default) lists them in the fact list; `icons` shows each as an icon link in the top right of the panel, with the address or host printed in its place. The `<instructor>` tag's `contact-links` attribute overrides it."
+    },
     "photo": {
       "type": "string",
       "pattern": "^/images/",

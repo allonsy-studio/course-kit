@@ -233,6 +233,7 @@ The instructor's details: photo, office, contact and hours. Reads `instructor`.
 | Prop | Type | |
 |---|---|---|
 | `[variant]` | `'card'` | a compact card instead of the full section |
+| `[contactLinks]` | `'icons'` | show the email, the message link and the blog as icon links in the corner of the panel instead of rows in the fact list; the same as `contactLinks: "icons"` in `instructor.json`, and wins over it |
 
 ### `<masthead>`
 

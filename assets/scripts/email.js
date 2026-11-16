@@ -4,11 +4,13 @@ for (const anchor of document.querySelectorAll("a[data-email]")) {
 	try {
 		const address = atob(anchor.dataset.email);
 		anchor.href = `mailto:${address}`;
-		if (!anchor.textContent.trim()) {
+		// An icon link keeps its svg and writes the address into its own text slot.
+		const target = anchor.querySelector("[data-email-text]") ?? anchor;
+		if (!target.textContent.trim()) {
 			// Break opportunities before "@" and after each ".": a narrow screen wraps the address there, not mid-word.
 			address.split(/(?=@)|(?<=\.)/).forEach((part, index) => {
-				if (index) anchor.append(document.createElement("wbr"));
-				anchor.append(part);
+				if (index) target.append(document.createElement("wbr"));
+				target.append(part);
 			});
 		}
 	} catch {
