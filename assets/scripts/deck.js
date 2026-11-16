@@ -28,9 +28,20 @@ const readTheme = () => {
 	}
 };
 
-const applyTheme = (theme) => {
+const themeStatus = document.querySelector("[data-theme-status]");
+
+/* The button's name says which theme is on (words from the layout, in data attributes), and a change is announced. */
+const announceTheme = (theme, announce) => {
+	const button = document.querySelector("[data-toggle-theme]");
+	const name = button?.dataset[`name${theme[0].toUpperCase()}${theme.slice(1)}`];
+	if (name) button.setAttribute("aria-label", name);
+	if (announce && themeStatus && button) themeStatus.textContent = button.dataset[`status${theme[0].toUpperCase()}${theme.slice(1)}`] ?? "";
+};
+
+const applyTheme = (theme, announce = true) => {
 	root.style.colorScheme = theme === "system" ? "light dark" : theme;
 	root.dataset.theme = theme;
+	announceTheme(theme, announce);
 	try {
 		localStorage.setItem(THEME_KEY, theme);
 	} catch {
@@ -159,7 +170,7 @@ themeToggle?.addEventListener("click", cycleTheme);
 document.querySelector("[data-prev]").addEventListener("click", () => setIndex(index - 1));
 document.querySelector("[data-next]").addEventListener("click", next);
 
-if (themeToggle) applyTheme(readTheme());
+if (themeToggle) applyTheme(readTheme(), false);
 
 const fromHash = Number.parseInt(location.hash.replace("#s", ""), 10);
 setIndex(Number.isFinite(fromHash) ? fromHash - 1 : 0, Number.isFinite(fromHash));

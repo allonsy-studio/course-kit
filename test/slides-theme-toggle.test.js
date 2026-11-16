@@ -23,3 +23,15 @@ test("slides.themeToggle is a known option", () => {
 	assert.doesNotThrow(() => checkOptions({ slides: { themeToggle: false } }));
 	assert.throws(() => checkOptions({ slides: { themeToggel: false } }), /themeToggle/);
 });
+
+test("the theme button names the theme that is on, in words from the copy layer, and a change is announced", async () => {
+	const html = (await buildStarter())[DECK];
+	const button = /<button[^>]*data-toggle-theme[^>]*>/.exec(html)[0];
+	assert.match(button, /aria-label="Cycle color theme"/, "a name before the script runs");
+	for (const theme of ["system", "light", "dark"]) {
+		assert.match(button, new RegExp(`data-name-${theme}="Cycle color theme, now ${theme}"`));
+		assert.match(button, new RegExp(`data-status-${theme}="Color theme: ${theme}"`));
+	}
+	assert.match(html, /<span[^>]*role="status"[^>]*data-theme-status[^>]*><\/span>/);
+	assert.doesNotMatch((await buildStarter({ slides: { themeToggle: false } }))[DECK], /data-theme-status/);
+});
