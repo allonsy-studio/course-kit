@@ -5,11 +5,11 @@
 	 * @prop {'icons'} [contactLinks] show the email, the message link and the blog as icon links in the corner of the panel instead of rows in the fact list; the same as `contactLinks: "icons"` in `instructor.json`, and wins over it
 	 */
 	/** The prop wins over the data; either one set to "icons" turns the icon links on. */
-	const iconsOn = (prop) => (prop ?? $data.instructor?.contactLinks) === "icons";
+	const iconsOn = (data, prop) => (prop ?? data.instructor?.contactLinks) === "icons";
 	const host = (url) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
 </script>
 <section id="instructor" aria-labelledby="instructor-heading" webc:root="override" webc:if="$data.instructor">
-    <template webc:nokeep webc:for="icons of [iconsOn(typeof contactLinks === 'undefined' ? undefined : contactLinks)]" webc:if="variant !== 'card'">
+    <template webc:nokeep webc:for="icons of [iconsOn($data, typeof contactLinks === 'undefined' ? undefined : contactLinks)]" webc:if="variant !== 'card'">
         <div class="who">
             <img class="photo screen-only" webc:if="$data.instructor.photo" :src="$data.instructor.photo" :alt="$data.instructor.name" width="160" height="160">
             <div class="facts-column">
