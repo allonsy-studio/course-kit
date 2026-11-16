@@ -15,7 +15,7 @@ You get:
 
 ## Start here
 
-You need [Node.js](https://nodejs.org) 22 or newer, and a terminal.
+You need [Node.js](https://nodejs.org) 24 or newer, and a terminal.
 
 1. Copy the [`examples/starter`](examples/starter) folder to a new folder for your course.
 2. In that folder, add a `package.json`:
@@ -31,7 +31,7 @@ You need [Node.js](https://nodejs.org) 22 or newer, and a terminal.
    	},
    	"dependencies": {
    		"@11ty/eleventy": "^3.1.0",
-   		"@allons-y/course-kit": "github:allonsy-studio/course-kit"
+   		"@allons-y/course-kit": "~0.1.0"
    	}
    }
    ```

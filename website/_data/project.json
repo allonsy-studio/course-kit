@@ -2,7 +2,7 @@
 	"$schema": "https://raw.githubusercontent.com/allonsy-studio/webc-resources/main/packages/webc-patterns/schema/project.schema.json",
 	"tagline": "A course website from a few data files.",
 	"lede": "Describe your course in a few JSON files and write your slides in Markdown. Course kit builds the home page, schedule, slide decks, practice worksheets and instructor lesson plans, with light and dark themes and a syllabus that prints clean.",
-	"install": "npm install github:allonsy-studio/course-kit",
+	"install": "npm install @allons-y/course-kit",
 	"usage": {
 		"language": "js",
 		"caption": "eleventy.config.js: the whole setup. Then fill in _data/ and write your pages.",

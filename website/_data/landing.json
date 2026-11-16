@@ -15,7 +15,7 @@
 			{
 				"title": "Install the kit",
 				"language": "sh",
-				"code": "$ npm install github:allonsy-studio/course-kit"
+				"code": "$ npm install @allons-y/course-kit"
 			},
 			{
 				"title": "Add it to Eleventy",
