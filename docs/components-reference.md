@@ -166,6 +166,10 @@ Icons, each an inline SVG that takes its color from the text: `<github>`, `<goog
 
 Parts of a course site. Most read the course's data files, so they work with no props.
 
+### `<book-appointment>`
+
+The one-on-one booking button: a link to `instructor.booking.url`, labelled by `instructor.booking.label` or the `instructor.bookAnAppointment` copy key. Renders nothing when the instructor has no `booking`. `<instructor>` places it as the last line of the panel; a page, such as the contact page, can place it anywhere.
+
 ### `<copyright>`
 
 The copyright line: the build year and the site's author. Reads `site`.
@@ -229,7 +233,7 @@ The grade-weighting table and the grading scale. Reads the `grading` and `scale`
 
 ### `<instructor>`
 
-The instructor's details: photo, office, contact and hours. Reads `instructor`.
+The instructor's details: photo, office, contact and hours, then the booking button (`instructor.booking`) as the panel's last line when there is one. Reads `instructor`.
 
 | Prop | Type | |
 |---|---|---|

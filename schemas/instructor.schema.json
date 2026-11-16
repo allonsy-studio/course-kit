@@ -56,6 +56,26 @@
       "pattern": "^/images/",
       "description": "Optional headshot, a site-relative path under /images/ (the file lives in content/assets/images/). Shown on screen beside the instructor details; omitted from print, where the instructor collapses to one line."
     },
+    "booking": {
+      "type": "object",
+      "description": "Optional one-on-one booking link, shown as a button on its own last line of the instructor panel (in both variants, with the contact links as rows or icons) and wherever a page places `<book-appointment>`. A plain link, so it works without JavaScript and stays clickable in the syllabus PDF. Absent, nothing is shown.",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Public booking page, such as a Google Calendar appointment schedule or a Calendly link."
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The button's words. Defaults to \"Book an appointment\" (the `instructor.bookAnAppointment` copy key)."
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false
+    },
     "note": {
       "type": "string",
       "description": "Response-time expectation, rendered muted after the contact details."

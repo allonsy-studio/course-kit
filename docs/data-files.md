@@ -96,7 +96,7 @@ The college's calendar, keyed by year and then season. You can keep several term
 
 ## `instructor.json`
 
-`name`, `office`, `hours` (a list, one entry per block) and `email` are required. Write the email normally; the kit encodes it so it never appears in the page for spam bots to read. Optional: `photo` (a path under `/images/`), `profile`, `blog`, `note` (a response-time expectation) and `contact` (a path to a contact page, shown instead of the address on screen).
+`name`, `office`, `hours` (a list, one entry per block) and `email` are required. Write the email normally; the kit encodes it so it never appears in the page for spam bots to read. Optional: `photo` (a path under `/images/`), `profile`, `blog`, `note` (a response-time expectation), `contact` (a path to a contact page, shown instead of the address on screen) and `booking` (a one-on-one booking button; see below).
 
 By default the email, the message link and the blog are rows in the instructor's fact list. Set `contactLinks` to `"icons"` to show each as a round icon link in the top right of the panel instead:
 
@@ -110,6 +110,20 @@ By default the email, the message link and the blog are rows in the instructor's
 ```
 
 Each icon is a 44px target with its name ("Email", "Send me a message", "Blog") from the [copy keys](copy.md#instructor), and the blog's tooltip is `instructor.blogUrl` ("Blog: sam.example.edu"). The address, the message label and the host are in the page as text behind the icon, so find-in-page reaches them and print shows them in place of the icons. The email stays encoded until the script decodes it. With both an `email` and a `contact`, the icons show both on screen; print shows the address only. The compact card (`<instructor variant="card">`) ignores `contactLinks`. A page that writes the tag itself can set it for that one place with `<instructor contact-links="icons">`, which wins over the data.
+
+### A booking button
+
+Set `booking` to add a button that links to your appointment page:
+
+```json
+{
+	"booking": { "url": "https://calendar.example.edu/appointments/sam", "label": "Book a time" }
+}
+```
+
+`url` is required; `label` is optional and defaults to "Book an appointment" (the `instructor.bookAnAppointment` [copy key](copy.md#instructor)). With no `booking` nothing is added, and no page changes.
+
+The button is a plain link, so it works without JavaScript and stays clickable in the syllabus PDF. It is the last line of the instructor panel, after the note and the icon links, in the default panel and the card alike, and it is a text button whichever way `contactLinks` is set: a booking link is the panel's one call to action and needs its words. In print it is an underlined link with the address after it, like the other links. A page that wants the button somewhere else, such as a contact page, writes `<book-appointment></book-appointment>`; it reads the same `booking` data. To restyle or reword it, put your own `book-appointment.webc` in `_includes`.
 
 ## `grading.json` and `scale.json`
 

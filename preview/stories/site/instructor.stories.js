@@ -42,3 +42,17 @@ export const IconLinksLongAddress = {
 	args: { contactLinks: "icons" },
 	data: { instructor: { ...person, photo, email: "samantha.the.very.long.example.address@mail.department.example-university.edu", blog: "https://a-very-long-blog-address.department.example-university.edu/posts/" } },
 };
+
+const booking = { url: "https://calendar.example.edu/appointments/sam" };
+
+/** `booking`: a button on its own last line, under the note. With rows of contact methods. */
+export const Booking = { name: "Booking button", data: { instructor: { ...person, note, contact, blog, booking } } };
+
+/** Icon links on: the button stays a text button, on a line of its own after the note. */
+export const BookingIconLinks = { name: "Booking button, icon links", args: { contactLinks: "icons" }, data: { instructor: { ...person, photo, note, contact, blog, booking } } };
+
+/** The card variant carries it after the note too. */
+export const BookingCard = { name: "Booking button, card", args: { variant: "card" }, data: { instructor: { ...person, note, booking } } };
+
+/** A `label` replaces the default words. Use the Phone width to see the button wrap its text and keep 44px. */
+export const BookingLabel = { name: "Booking button, long label", data: { instructor: { ...person, booking: { ...booking, label: "Book a one-on-one conversation about your project" } } } };

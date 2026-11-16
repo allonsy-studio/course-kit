@@ -13,8 +13,11 @@ import { PEOPLE, renderInstructor } from "./instructor-render.js";
 /** The scope class WebC derives from the component's style: it changes with any CSS edit, so it is not part of the markup being compared. */
 const unscoped = (html) => html.replace(/ class="w[a-z0-9]{8}"/, "");
 
-/** The `<section>` alone: the style and script a bare render appends are the component's CSS and JS, which a site gets in its bundles. */
-const markup = (html) => /<section[\s\S]*<\/section>/.exec(html)[0];
+/**
+ * The `<section>` alone: the style and script a bare render appends are the component's CSS and JS, which a site gets in its bundles. A nested
+ * component's `<style>` lands inside the section in a bare render for the same reason, so it is dropped, with the blank lines it leaves.
+ */
+const markup = (html) => /<section[\s\S]*<\/section>/.exec(html)[0].replace(/<style>[\s\S]*?<\/style>/g, "").replace(/\n\s*\n/g, "\n");
 
 test("with contact links off, the instructor renders the markup it always has", async () => {
 	// Captured from the 0.1.1 component. A change to the off output is a breaking change for every site: regenerate this file only on purpose.
@@ -96,4 +99,71 @@ test("instructor.json accepts contactLinks rows or icons and nothing else", () =
 	assert.ok(validate({ ...base, contactLinks: "rows" }));
 	assert.ok(!validate({ ...base, contactLinks: "buttons" }));
 	assert.ok(!validate({ ...base, contactLinks: true }));
+});
+
+const BOOKING = { url: "https://calendar.example.edu/appointments/sam" };
+
+test("with no booking the panel has no button, whatever the variant or contact links", async () => {
+	for (const attrs of ["", '@variant="card"', '@contact-links="icons"']) {
+		const html = markup(await renderInstructor(PEOPLE.all, attrs));
+		assert.doesNotMatch(html, /book-appointment|cta-button/, attrs);
+	}
+	assert.doesNotMatch(markup(await renderInstructor({ ...PEOPLE.all, booking: {} })), /cta-button/, "a booking with no url shows nothing");
+});
+
+test("a booking is a button with the default words, in the default panel, the icon panel and the card", async () => {
+	for (const attrs of ["", '@contact-links="icons"', '@variant="card"']) {
+		const html = markup(await renderInstructor({ ...PEOPLE.all, booking: BOOKING }, attrs));
+		assert.equal((html.match(/class="cta-button"/g) ?? []).length, 1, `${attrs}: one button`);
+		assert.match(html, new RegExp(`<a href="${BOOKING.url}" class="cta-button">${COPY_DEFAULTS.instructor.bookAnAppointment}</a>`), attrs);
+	}
+});
+
+test("the booking label overrides the default words", async () => {
+	const html = markup(await renderInstructor({ ...PEOPLE.all, booking: { ...BOOKING, label: "Meet with me" } }));
+	assert.match(html, /href="[^"]+" class="cta-button">Meet with me<\/a>/);
+	assert.doesNotMatch(html, /Book an appointment/);
+});
+
+test("the button is the last thing in the panel: after the note, and after the icon links", async () => {
+	const person = { ...PEOPLE.all, booking: BOOKING };
+	const rows = markup(await renderInstructor(person));
+	assert.ok(rows.indexOf('class="muted note"') < rows.indexOf("cta-button"), "after the note");
+	const icons = markup(await renderInstructor(person, '@contact-links="icons"'));
+	assert.ok(icons.indexOf('class="muted note"') < icons.indexOf("cta-button"), "after the note");
+	assert.ok(icons.lastIndexOf("icon-link") < icons.indexOf("cta-button"), "after the icon links");
+	const card = markup(await renderInstructor(person, '@variant="card"'));
+	assert.ok(card.indexOf('class="muted note"') < card.indexOf("cta-button"), "after the card's note");
+});
+
+test("the booking button stays a text link when the contact links are icons, and keeps its own line in the panel's flex row", async () => {
+	const html = markup(await renderInstructor({ ...PEOPLE.all, booking: BOOKING }, '@contact-links="icons"'));
+	assert.doesNotMatch(/<a [^>]*cta-button[^>]*>[\s\S]*?<\/a>/.exec(html)[0], /<svg/);
+	const css = fs.readFileSync(path.join(packageRoot, "components", "site", "book-appointment.webc"), "utf8").replace(/\s+/g, " ");
+	assert.match(css, /:host \{ display: flex; justify-content: flex-start; flex: 1 1 100%; order: 4;/, "the last line of the wrapping flex column, after the note at 3");
+	assert.match(css, /@media print \{ display: block;/);
+});
+
+test("the kit's .cta-button is the accent pill: 44px, forced-colors border, motion only when allowed, a plain link in print", () => {
+	const css = fs.readFileSync(path.join(packageRoot, "assets", "styles", "base.css"), "utf8").replace(/\s+/g, " ");
+	const rule = /a\.cta-button\[href\] \{(.*?)\n?\} \/\* ---- The switch/.exec(css)?.[1] ?? "";
+	assert.match(rule, /min-block-size: var\(--target-min\)/);
+	assert.match(rule, /background-color: var\(--color-accent\); color: var\(--color-on-accent\)/);
+	assert.match(rule, /:hover, :focus, :focus-visible[^}]*background-color: var\(--color-accent-fill-hover\)/);
+	assert.match(rule, /@media \(prefers-reduced-motion: no-preference\) \{ transition:/);
+	assert.match(rule, /@media \(forced-colors: active\) \{ border-color: LinkText;/);
+	assert.match(rule, /@media print \{ display: inline;[^}]*background: none;[^}]*text-decoration: underline;/);
+});
+
+test("instructor.json accepts a booking with a url and an optional label", () => {
+	const schema = JSON.parse(fs.readFileSync(path.join(packageRoot, "schemas", "instructor.schema.json"), "utf8"));
+	const validate = addFormats(new Ajv2020({ allErrors: true, strict: false })).compile(schema);
+	const base = { name: "A", office: "B", hours: ["C"], email: "a@example.edu" };
+	assert.ok(validate({ ...base, booking: BOOKING }));
+	assert.ok(validate({ ...base, booking: { ...BOOKING, label: "Book a time" } }));
+	assert.ok(!validate({ ...base, booking: {} }), "a url is required");
+	assert.ok(!validate({ ...base, booking: { url: "not a url" } }));
+	assert.ok(!validate({ ...base, booking: { ...BOOKING, label: "" } }));
+	assert.ok(!validate({ ...base, booking: { ...BOOKING, color: "red" } }));
+	assert.ok(!validate({ ...base, booking: "https://calendar.example.edu" }));
 });

@@ -365,6 +365,7 @@ A page's `#copy-data` block carries only the namespaces its scripts read: `code`
 | `instructor` | `Instructor` |
 | `contact` | `Contact` |
 | `blogUrl` | `Blog: {url}` |
+| `bookAnAppointment` | `Book an appointment` |
 
 ## `codepenEmbed`
 

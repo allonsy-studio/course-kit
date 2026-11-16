@@ -1,6 +1,6 @@
 <script webc:setup>
 	/**
-	 * The instructor's details: photo, office, contact and hours. Reads `instructor`.
+	 * The instructor's details: photo, office, contact and hours, then the booking button (`instructor.booking`) as the panel's last line when there is one. Reads `instructor`.
 	 * @prop {'card'} [variant] a compact card instead of the full section
 	 * @prop {'icons'} [contactLinks] show the email, the message link and the blog as icon links in the corner of the panel instead of rows in the fact list; the same as `contactLinks: "icons"` in `instructor.json`, and wins over it
 	 */
@@ -61,7 +61,7 @@
                             aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18"></path></svg><span
                             class="link-text" @text="host($data.instructor.blog)"></span></a>
                     </li>
-                </ul>
+                </ul><book-appointment></book-appointment>
             </div>
         </div>
     </template>
@@ -84,7 +84,7 @@
                     <a webc:if="$data.instructor.email" :data-email="encodeEmail($data.instructor.email)" :class="$data.instructor.contact ? 'print-only' : ''"></a>
                     <a webc:if="$data.instructor.blog" class="cta" :href="$data.instructor.blog" @text="$data.instructor.blog.replace(/^https?:\/\//, '').replace(/\/$/, '')"></a>
                 </p>
-                <p class="muted note" @text="$data.instructor.note" webc:if="$data.instructor.note"></p>
+                <p class="muted note" @text="$data.instructor.note" webc:if="$data.instructor.note"></p><book-appointment></book-appointment>
             </div>
         </div>
     </template>
