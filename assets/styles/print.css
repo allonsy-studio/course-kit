@@ -3,13 +3,20 @@
    Odd layouts are Chromium print-fragmentation workarounds. */
 
 @media print {
+	/* The margins the syllabus PDF is generated with (lib/pdf.js). An @page margin outranks the margin option of the PDF call, so a zero here
+	   printed the text to the paper's edge and put the page footer, which sits in the bottom margin, over the last line. */
 	@page {
 		size: letter;
-		margin: 0;
+		margin: 0.4in 0.5in 0.45in;
 	}
 
 	/* Grayscale — neutralize every token. */
 	:root {
+		/* Paper is the measure: the on-screen reading cap of base.css (68ch) would narrow every paragraph, list item and definition. */
+		--measure: none;
+		/* The display face is a system serif stack that is not hosted, so a PDF built on another machine prints in whatever serif it has (Caladea on a Linux runner).
+		   Print headings and run-in labels in the hosted text face, so the PDF is the same everywhere. */
+		--display-font: var(--sans-font);
 		/* A printed page has no pointer: links and summaries keep their text height. */
 		--target-min: 0px;
 		--color-text: #000;

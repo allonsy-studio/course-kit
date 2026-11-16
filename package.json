@@ -37,6 +37,7 @@
     "test": "node --test",
     "schema": "node scripts/theme-schema.js && node scripts/theme-docs.js",
     "docs": "node scripts/component-docs.js && node scripts/copy-docs.js",
+    "check:pdf": "node scripts/check-pdf.js",
     "preview": "node scripts/site.js start",
     "preview:build": "node scripts/site.js build",
     "docs:build": "node scripts/site.js build",

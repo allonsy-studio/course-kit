@@ -44,3 +44,7 @@ Notes from doing this:
   stripped in production; use a real rule or statement.
 - Edits to files inside `node_modules` do not trigger a watch rebuild. Work
   from a linked directory outside `node_modules` when developing the package.
+
+## The syllabus PDF
+
+`test/pdf.test.js` checks that `print.css`'s `@page` margins are the PDF's margins (`PDF_MARGIN` in `lib/pdf.js`), which is what keeps the page footer, printed in the bottom margin, off the text, and that print lifts the reading measure and uses the hosted text face. When `puppeteer` and `pdftotext` (poppler) are installed, it also builds the starter's PDF and runs `scripts/check-pdf.js` on it: no more than three pages, no text over the footer or outside the margins. To check any PDF by hand: `yarn check:pdf public/resources/syllabus.pdf --max-pages 3`.
