@@ -60,7 +60,7 @@ The top menu is Home, Syllabus, then every page with an `eleventyNavigation` tha
 
 ## The lesson page
 
-`glue/lesson-day.data.js` computes `lessonDecks` and `lessonMaterials` with `eleventyComputed`, so `lesson-detail` loops over ready sections and calls no filters. The shaping is in `lib/lesson-materials.js`, which has unit tests.
+`glue/lesson-day.data.js` computes `lessonDecks` and `lessonMaterials` with `eleventyComputed`, so `lesson-detail` loops over ready sections and calls no filters. The shaping is in `lib/lesson-materials.js`, which has unit tests. A course that runs demos supplies `lessonDemos` for each lesson page (a list of `{ title, slug, description }`, linked as `/demo/<slug>/`); without it the "Demos from this meeting" section is left out, and a value that is not a list counts as none.
 
 ## The glossary
 
