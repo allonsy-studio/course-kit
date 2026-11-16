@@ -1179,6 +1179,23 @@ body:has(.doc-layout[data-contents="true"], .lesson-layout) {
 	}
 }
 
+/* `.separators` sets `display: flex` after the utility classes above and outranks them, so a row that is for one medium only needs its own rules. */
+.separators.print-only {
+	display: none;
+}
+
+.separators.screen-only {
+	@media print {
+		display: none;
+	}
+}
+
+.separators.print-only {
+	@media print {
+		display: flex;
+	}
+}
+
 .lesson-list {
 	td {
 		font-size: max(var(--base-font-size), 0.95em);
@@ -1250,8 +1267,8 @@ body:has(.doc-layout[data-contents="true"], .lesson-layout) {
 		border-inline: none;
 	}
 
-	/* A link that is the whole cell is an operable target: 44px tall (WCAG 2.5.5); print sets --target-min to 0. */
-	:where(td, th) > a:only-child {
+	/* A link that is a direct child of a cell is an operable target: 44px tall (WCAG 2.5.5); print sets --target-min to 0. */
+	:where(td, th) > a {
 		display: inline-flex;
 		align-items: center;
 		min-block-size: var(--target-min);
