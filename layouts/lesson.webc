@@ -48,14 +48,14 @@ layout: "base"
 				<td webc:if="lesson.noClass" colspan="2" class="muted no-class" @text="fill(copy.noClass, { reason: lesson.noClass })"></td>
 				<template webc:else webc:nokeep>
 					<td>
-						<a :href="`/lessons/week-${lesson.week}/day-${lesson.day}/`" @text="copy.lessonPlan"></a>
-						<span webc:nokeep webc:for="deck of ($data.collections.deck ?? []).filter((d) => d.data.week === lesson.week && d.data.day === lesson.day)">
-							<br/><a :href="deck.url" @text="deck.data.addendum ? copy.addendum : copy.slides"></a>
-							<br/><a :href="deckNotesUrl(deck.data.week, deck.data.day, deck.data.addendum === true)" @text="deck.data.addendum ? copy.addendumNotes : copy.notes"></a>
-						</span>
-						<span webc:nokeep webc:for="assignment of assignmentsDue($data.collections.assignment, lesson, $data.lessons)">
-							<br/><span @text="copy.due"></span> <a :href="assignment.url" @text="assignment.title"></a> (<span @text="assignment.dueLabel"></span>)
-						</span>
+						<ul class="lesson-links" role="list">
+							<li><a :href="`/lessons/week-${lesson.week}/day-${lesson.day}/`" @text="copy.lessonPlan"></a></li>
+							<template webc:nokeep webc:for="deck of ($data.collections.deck ?? []).filter((d) => d.data.week === lesson.week && d.data.day === lesson.day)">
+								<li><a :href="deck.url" @text="deck.data.addendum ? copy.addendum : copy.slides"></a></li>
+								<li><a :href="deckNotesUrl(deck.data.week, deck.data.day, deck.data.addendum === true)" @text="deck.data.addendum ? copy.addendumNotes : copy.notes"></a></li>
+							</template>
+							<li webc:for="assignment of assignmentsDue($data.collections.assignment, lesson, $data.lessons)"><span @text="copy.due"></span> <a :href="assignment.url" @text="assignment.title"></a> (<span @text="assignment.dueLabel"></span>)</li>
+						</ul>
 					</td>
 					<td>
 						<span webc:for="(topic, index) of lesson.topics" webc:nokeep>

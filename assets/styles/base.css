@@ -1063,7 +1063,10 @@ body:has(.doc-layout[data-contents="true"], .lesson-layout) {
 	}
 
 	li a[href] {
-		display: block;
+		display: flex;
+		align-items: center;
+		/* An operable target: 44px tall (WCAG 2.5.5); print sets --target-min to 0. */
+		min-block-size: var(--target-min);
 		margin-inline-start: calc(var(--border-width) * -1);
 		padding: 0.35em 0.9em;
 		border-inline-start: var(--border-width) solid transparent;
@@ -1099,6 +1102,19 @@ body:has(.doc-layout[data-contents="true"], .lesson-layout) {
 }
 
 /* ---- Lesson plans (instructor) ---- */
+/* A list of links in a table cell: each whole-item link is a 44px target, a link inside a sentence keeps its line. */
+.lesson-links {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	li > a:only-child {
+		display: inline-flex;
+		align-items: center;
+		min-block-size: var(--target-min);
+	}
+}
+
 .lesson-nav {
 	display: flex;
 	gap: calc(var(--content-space) * 2);
@@ -1107,6 +1123,12 @@ body:has(.doc-layout[data-contents="true"], .lesson-layout) {
 
 	header & a {
 		margin: 0;
+	}
+
+	a {
+		display: inline-flex;
+		align-items: center;
+		min-block-size: var(--target-min);
 	}
 
 	@media print {

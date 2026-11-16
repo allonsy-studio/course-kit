@@ -488,6 +488,13 @@
         .week-of {
             font-weight: var(--font-weight);
         }
+
+        /* The week's own link is an operable target: 44px tall (WCAG 2.5.5). */
+        h3 a {
+            display: inline-flex;
+            align-items: center;
+            min-block-size: var(--target-min);
+        }
     }
 
     .this-days {
@@ -550,6 +557,13 @@
 
         li + li {
             margin-block-start: 0.4em;
+        }
+
+        /* A link that heads its item is a 44px target; the chip and the check line sit beside it. */
+        li > a {
+            display: inline-flex;
+            align-items: center;
+            min-block-size: var(--target-min);
         }
     }
 
