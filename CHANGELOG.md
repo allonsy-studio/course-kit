@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.1
+
+📅 _Released 17 November 2026_
+
+### Patch Changes
+
+- 🐛 Make every deck and speaker-notes link in `<slide-timetable>` a 44px target. Each link sits in a paragraph inside its cell, so the table-wide cell-link rule never reached it and the links stayed at text height. (📝 [#41](https://github.com/allonsy-studio/course-kit/pull/41))
+
 ## 0.4.0
 
 📅 _Released 16 November 2026_
