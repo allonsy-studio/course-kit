@@ -112,6 +112,15 @@
         margin-block-start: 0.25em;
     }
 
+    /* Each link is a 44px target (WCAG 2.5.5); it sits in a paragraph, so the
+       table-wide cell-link rule does not reach it. */
+    :host :is(.deck-title, .notes) a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25em;
+        min-block-size: var(--target-min);
+    }
+
     @media screen and (width <= 640px) {
         :host,
         :host tbody,
