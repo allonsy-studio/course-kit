@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.2
+
+📅 _Released 17 November 2026_
+
+### Patch Changes
+
+- fix(schedule-overview): mark the month a link lands on, not the one before it (📝 [#44](https://github.com/allonsy-studio/course-kit/pull/44))
+
 ## 0.4.1
 
 📅 _Released 17 November 2026_
