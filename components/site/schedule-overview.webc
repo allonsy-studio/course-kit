@@ -284,8 +284,8 @@
 
 <script>
 	/**
-	 * Marks the month on screen in the row with `aria-current="location"`: the month of the week block that crosses a line just below the
-	 * row (or, in the gap between two weeks, the next one); before the first week reaches it the first month, after the last week the last month. Sets `--schedule-bar-height`
+	 * Marks the month on screen in the row with `aria-current="location"`: the month of the last week block whose top has reached the line where an
+	 * anchor lands it, below the row; before the first week reaches it the first month, at the foot of the page the last month. Sets `--schedule-bar-height`
 	 * for the page's scroll-padding while the row is sticky. It changes no size and runs no animation.
 	 */
 	(() => {
@@ -298,12 +298,12 @@
 		/** The month of a week: the latest month whose range holds it, so a week spanning two months reads as the second, where its link points. */
 		const monthOf = (number) => range.findLast(({ first, last }) => number >= first && number <= last) ?? range.at(-1);
 		const mark = () => {
-			const line = Math.max(0, bar.getBoundingClientRect().bottom) + 8;
 			const shown = weeks.filter((week) => !week.hidden);
 			if (!shown.length) return;
-			// The first week that is not wholly above the line: the one crossing it, or the next one when the line is in the gap between two,
-			// and the first week while the header is still on screen. After the last week, the last month.
-			const week = shown.find((candidate) => candidate.getBoundingClientRect().bottom > line);
+			// Where an anchor lands a week's top: below the row, by the page's scroll-padding and the week's scroll-margin. The week is on screen once its top is at or above that line.
+			const line = (Number.parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0) + (Number.parseFloat(getComputedStyle(shown[0]).scrollMarginTop) || 0) + 1;
+			// The last week whose top has reached the line, or the first week before any has.
+			const week = shown.findLast((candidate) => candidate.getBoundingClientRect().top <= line) ?? shown[0];
 			// A page scrolled to its foot can leave the last week below the line: then the last month is the one on screen.
 			const bottomed = window.scrollY > 0 && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
 			const current = week && !bottomed ? monthOf(Number(week.id.slice(5))) : range.at(-1);
