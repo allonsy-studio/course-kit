@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.3
+
+📅 _Released 19 November 2026_
+
+### Patch Changes
+
+- 🐛 Set code block line height to 1 through `--code-line-height`, instead of inheriting the Prism theme's 1.5. A block can set the property for itself. At 1, directory-tree box-drawing characters connect. (📝 [#47](https://github.com/allonsy-studio/course-kit/pull/47))
+
 ## 0.4.2
 
 📅 _Released 17 November 2026_
