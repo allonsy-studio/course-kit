@@ -12,7 +12,7 @@ Every component in the kit meets **WCAG 2.2 AAA**, or a stricter standard where 
 | Motion | `prefers-reduced-motion: reduce` stops every transition and animation (2.3.3) | One rule in `base.css`; the motion check reads the computed durations |
 | Forced colors | Every state stays visible with system colors | A `forced-colors` rule per component; axe runs in that mode |
 | Color alone | Nothing is told by color only: a status has a word or a shape too | Review; chips and status labels carry text |
-| Code line height | Code blocks default to 1 (`--code-line-height`), below the 1.5 body floor. Set it per block, e.g. `var(--font-height--dense)` for a directory tree so box-drawing lines meet. Readers can still override spacing (1.4.12) | `base.css` |
+| Code line height | Code blocks default to 1 (`--code-line-height`), below the 1.5 body floor. Set it per block with `--code-line-height` where a sample needs more room. Readers can still override spacing (1.4.12) | `base.css` |
 | Zoom and reflow | Usable at 400% zoom and a 320px width, no sideways scroll (1.4.10) | The reflow check at 320px |
 | Language | Plain words, the same label for the same thing everywhere | The [copy layer](copy.md): every string is a key, so a label is written once |
 | Navigation | The same order and names on every page; skip link first | The layouts; `base.webc` |
