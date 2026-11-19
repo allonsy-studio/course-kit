@@ -1625,6 +1625,7 @@ blockquote {
    selecting or copying never takes them. */
 .code-block {
 	--code-edge: var(--color-code-edge-neutral);
+	--code-line-height: 1.3;
 
 	position: relative;
 	margin-block: 0 1rem;
@@ -1691,6 +1692,11 @@ blockquote {
 		svg { inline-size: 1.2em; block-size: 1.2em; }
 
 		@media print { display: none; }
+	}
+
+	pre,
+	code {
+		line-height: var(--code-line-height);
 	}
 
 	pre {
@@ -2209,6 +2215,7 @@ legend.switch-label {
 pre[class*="language-"],
 code[class*="language-"] {
 	color: var(--color-code-text);
+	line-height: var(--code-line-height, 1.3);
 	text-shadow: none;
 }
 
