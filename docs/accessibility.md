@@ -9,7 +9,7 @@ Every component in the kit meets **WCAG 2.2 AAA**, or a stricter standard where 
 | Contrast | Text 7:1, large text 4.5:1, lines, icons and focus 3:1 | `test/theme.test.js` checks every token pair; axe's `color-contrast-enhanced` checks each rendered page |
 | Focus | A solid 2px ring, never removed (2.4.13) | The `focus-ring` token, `:focus-visible` in `base.css`; the keyboard check measures it |
 | Targets | 44 x 44 CSS px for anything operable (2.5.5) | `--target-min`; the target-size check measures every control in component UI |
-| Motion | `prefers-reduced-motion: reduce` stops every transition and animation (2.3.3) | One rule in `base.css`; the motion check reads the computed durations |
+| Motion | `prefers-reduced-motion: reduce` stops every transition and animation (2.3.3) | One rule in `base.css`; the motion check reads the computed durations. A deck loads `deck.css` alone, which guards each of its own rules; `test/deck-reveal.test.js` checks them (see [SVG reveals](slides.md)) |
 | Forced colors | Every state stays visible with system colors | A `forced-colors` rule per component; axe runs in that mode |
 | Color alone | Nothing is told by color only: a status has a word or a shape too | Review; chips and status labels carry text |
 | Code line height | Code blocks default to 1 (`--code-line-height`), below the 1.5 body floor. Set it per block with `--code-line-height` where a sample needs more room. Readers can still override spacing (1.4.12) | `base.css` |

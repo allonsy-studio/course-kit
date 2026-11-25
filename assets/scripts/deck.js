@@ -52,12 +52,14 @@ const setIndex = (i, scroll = true) => {
 	if (location.hash !== `#s${index + 1}`) history.replaceState(null, "", `#s${index + 1}`);
 };
 
-/* Uncovers this slide's `::: answer` blocks one at a time before advancing;
-   Enter reveals without advancing. Going back leaves them revealed. */
+/* Uncovers this slide's `::: answer` blocks and its figures' `<g class="step">`
+   groups one at a time, in source order, before advancing; Enter reveals
+   without advancing. Going back leaves them revealed. `step` is SVG-only, so
+   a `::: step` block stays an ordinary block. */
 const reveal = () => {
-	const answer = slides[index].querySelector(".answer:not(.is-revealed)");
-	if (!answer) return false;
-	answer.classList.add("is-revealed");
+	const hidden = slides[index].querySelector(".answer:not(.is-revealed), svg .step:not(.is-revealed)");
+	if (!hidden) return false;
+	hidden.classList.add("is-revealed");
 	return true;
 };
 

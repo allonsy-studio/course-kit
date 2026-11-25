@@ -17,7 +17,7 @@ describe("the document layout", () => {
 		});
 	});
 
-	it("shows the contents beside the page on a wide screen and above it on a narrow one", () => {
+	it("shows the contents beside the page on a wide screen and after it on a narrow one", () => {
 		cy.viewport(...VIEWPORTS.desktop);
 		cy.visit(DOCUMENT);
 		cy.get(".doc-contents").then(($rail) => {
@@ -28,7 +28,7 @@ describe("the document layout", () => {
 		cy.viewport(...VIEWPORTS.mobile);
 		cy.get(".doc-contents").then(($rail) => {
 			const page = Cypress.$(".doc-layout > .content-column")[0].getBoundingClientRect();
-			expect($rail[0].getBoundingClientRect().bottom, "rail above the page").to.be.at.most(page.top + 1);
+			expect($rail[0].getBoundingClientRect().top, "contents after the page").to.be.at.least(page.bottom - 1);
 		});
 	});
 });
