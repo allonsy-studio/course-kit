@@ -158,7 +158,7 @@ Each slide opens with `>>> slide` and closes with a line holding only `>>>`:
 - `::: name` … `:::` is a block. `eyebrow` is the small line above a heading. `notes` is for you: the text after it is the label, with the minutes in parentheses. Notes appear in the deck's speaker view and on its notes sheet, and never on the slide. Any other lowercase name, such as `example` or `cols-2`, becomes a styled block of that name.
 - A slide that holds too much fails a rough size check. Set `CHECK_FIT=1` when you build to measure it properly (see [Configuration](configuration.md#building)); the fix is to split the slide, not to shrink the text.
 
-[Slide kinds and copy rules](slides.md) describes the `vocab` and `api` slides and the writing conventions the courses follow. Every `vocab` and `api` slide also becomes an entry in the course glossary.
+[Slide kinds and copy rules](slides.md) describes the `vocab` and `api` slides, how a figure builds in steps, and the writing conventions the courses follow. Every `vocab` and `api` slide also becomes an entry in the course glossary.
 
 ## Practice worksheets
 

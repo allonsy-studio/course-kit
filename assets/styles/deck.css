@@ -537,46 +537,66 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   }
   }
 
-  /* `::: answer` — hidden but space-reserved, so revealing never reflows
-     the slide. Revealed by deck.js; print shows every answer. */
+  /* `::: answer`: the box an answer sits in. */
   .answer {
   background: var(--color-surface-accent);
   border-inline-start: 5px solid var(--color-accent-strong);
   border-radius: 0 12px 12px 0;
   padding: min(1.4cqi, 1.1rem) min(2cqi, 1.5rem);
+  }
+
+  /* Hidden but space-reserved, so revealing never reflows the slide: a
+     `::: answer` block, and each `<g class="step">` of an inline SVG figure
+     (`<g class="answer">` is the older name for a step). deck.js reveals
+     them one at a time, in source order; print shows them all. */
+  .answer, svg .step {
   visibility: hidden;
   opacity: 0;
-  transition: opacity 180ms ease-out;
 
   &.is-revealed {
     visibility: visible;
     opacity: 1;
   }
-
-  @media (prefers-reduced-motion: reduce) { transition: none; }
   }
 
-  /* An SVG figure reveals in place: a `<g class="answer">` fades in with the
-     same keys, and anything inside it marked `.pop` lands with a short scale
-     so the eye goes to it. */
-  svg .answer .pop {
+  /* Inside a revealed step, `.pop` lands with a short scale so the eye goes
+     to it, and a `.draw` stroke draws on from its start. */
+  svg :is(.answer, .step) .pop {
     transform-box: fill-box;
     transform-origin: center;
   }
 
-  svg .answer.is-revealed .pop {
-    animation: pop-in 380ms ease-out;
+  @media (prefers-reduced-motion: no-preference) {
+    .answer, svg .step { transition: opacity 180ms ease-out; }
 
-    @media (prefers-reduced-motion: reduce) { animation: none; }
+    svg :is(.answer, .step).is-revealed .pop { animation: pop-in 380ms ease-out; }
+
+    svg :is(.answer, .step).is-revealed .draw[pathLength="1"] { animation: draw-on 600ms ease-in-out; }
   }
 
   @keyframes pop-in {
     from {
-      transform: scale(1.14);
+      scale: 1.14;
+    }
+  }
+
+  /* With `pathLength="1"` on the stroke, one dash is the whole line. The
+     dashes live only in the keyframes: with no motion the stroke is
+     untouched. An arrowhead waits for the line to arrive. */
+  @keyframes draw-on {
+    from {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      marker: none;
+    }
+
+    99% {
+      marker: none;
     }
 
     to {
-      transform: scale(1);
+      stroke-dasharray: 1;
+      stroke-dashoffset: 0;
     }
   }
 
@@ -960,7 +980,7 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
 
     .card, pre { break-inside: avoid; }
 
-    .answer {
+    .answer, svg .step {
       visibility: visible;
       opacity: 1;
     }

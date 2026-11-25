@@ -99,9 +99,65 @@ Every child node of a node: elements, text, and the whitespace between tags.
 6. **Template literals:** on slides write `"$" + n` rather than `` `$${n}` ``;
    the doubled dollar reads as a typo.
 
-**SVG reveals.** A `<g class="answer">` inside a figure reveals on the
-next-slide key like a `::: answer` block, and anything inside it marked `.pop`
-lands with a short scale (`svg .answer .pop` in `deck.css`).
+**SVG reveals.** A figure that explains a process builds one step at a time.
+Three classes do it, all inside an inline `<svg>`:
+
+| Class | Goes on | What it does |
+| --- | --- | --- |
+| `step` | a `<g>` | Hidden until the next-slide key (or Enter). Steps reveal one at a time, in source order, in the same sequence as the slide's `::: answer` blocks. Print shows every step. |
+| `pop` | anything inside a step | Lands with a short scale when its step is revealed, so the eye goes to it. |
+| `draw` | a `<path>` or `<line>` inside a step, with `pathLength="1"` | The stroke draws on from its start when its step is revealed. A `marker-end` arrowhead appears when the line arrives. |
+
+```html
+<svg viewBox="0 0 480 120" role="img" aria-label="A request goes from the browser to the server.">
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="accent" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <rect class="tint" x="20" y="20" width="160" height="80" rx="12"/>
+  <text x="100" y="68" text-anchor="middle" font-size="22">Browser</text>
+  <g class="step">
+    <path class="stroke-accent draw" pathLength="1" d="M188 60 H292" stroke-width="3" marker-end="url(#arrow)"/>
+    <g class="pop">
+      <rect class="tint" x="300" y="20" width="160" height="80" rx="12"/>
+      <text x="380" y="68" text-anchor="middle" font-size="22">Server</text>
+    </g>
+  </g>
+</svg>
+```
+
+- `step` is SVG-only. A `::: step` block in a slide's Markdown is an ordinary
+  block and is never hidden; a slide's text reveals with `::: answer`.
+- `<g class="answer">` still works and behaves like `step`. Use `step` for a
+  part of a build, and keep `answer` for the answer to a question.
+- Draw the line in the direction it travels: the stroke starts at the path's
+  first point.
+- `pathLength="1"` is what lets one dash cover a line of any length, so the
+  draw needs no script. Without it the line appears with its step and is not
+  drawn on. A `draw` stroke is a solid line: it cannot also carry a dash
+  pattern of its own.
+- A marker `id` is shared by the whole deck: every slide is in one page.
+
+The motion is held to WCAG 2.2 AAA, like the rest of the kit:
+
+| Criterion | How a figure meets it |
+| --- | --- |
+| 2.3.3 Animation from Interactions (AAA) | The fade, the pop and the draw run only under `prefers-reduced-motion: no-preference`. Otherwise a step appears at once, fully drawn. |
+| 2.2.2 Pause, Stop, Hide (A) | Nothing starts by itself or loops. Each animation starts on a key press, runs once, and ends in under a second. |
+| 2.3.1 and 2.3.2 Three Flashes (A, AAA) | Nothing blinks: each animation moves one way, once, and changes no color. |
+| 2.2.3 No Timing (AAA) | A step waits for the key, and stays once it is shown. |
+
+Two rules for the figure keep it that way:
+
+- **The finished figure says everything.** Print, a reader who asked for less
+  motion, and a screen reader all get the figure with every step shown, so
+  the order has to read from the drawing (arrowheads, numbers, left to right)
+  and the `aria-label` describes the whole process.
+- **Put `pop` on a shape or a short label, not on a line of text.** Scaling a
+  sentence makes its letters shimmer as they move.
+
+The starter's deck (`examples/starter/content/slides/week-1-day-1.md`) ends
+with a figure built this way. The rules are `svg .step`, `.pop` and `.draw` in
+`deck.css`. The only script is the key handling, `reveal()` in `deck.js`: the
+fade, the pop and the draw are CSS. `test/deck-reveal.test.js`
+holds every transition and animation in `deck.css` to the table above.
 
 **Reading size.** A slide is a 16:9 box whose type scales with it, with two
 guards for readability. No text renders under 12px: every size that shrinks is

@@ -88,6 +88,17 @@ test("the speaker notes and the lesson plans are built for the instructor", () =
 	assert.ok(pages["/lessons/week-1/day-1/"].includes('href="/lessons/week-1/day-1/notes/"'));
 });
 
+test("the starter's deck ends with a figure that builds in steps, with a pop and a drawn arrow", () => {
+	const figure = /<svg[\s\S]*?<\/svg>/.exec(pages["/slides/week-1-day-1/"].split('id="s3"')[1] ?? "")?.[0] ?? "";
+	assert.match(figure, /role="img" aria-label="[^"]+"/, "the figure has a name");
+	assert.equal(figure.match(/<g class="step">/g)?.length, 3, "three steps");
+	assert.match(figure, /<g class="pop">/);
+	assert.doesNotMatch(figure, /<text[^>]*\bpop\b/, "a pop goes on a shape or a short label in a group, not on a line of text");
+	assert.match(figure, /<path class="stroke-accent draw" pathLength="1"[^>]*marker-end="url\(#arrow\)"/, "a drawn stroke carries its own path length: no script sets it");
+	assert.ok(figure.includes('<marker id="arrow"'), "the arrowhead the lines point at is defined");
+	assert.doesNotMatch(figure, /#[0-9a-f]{3,8}\b(?!")|fill="|stroke="/i, "color comes from the kit's classes");
+});
+
 test("no page links to the kit author's organization", () => {
 	for (const [url, html] of Object.entries(pages)) assert.ok(!html.includes("npmjs.com/org/allons-y"), `${url} links to the allons-y npm organization`);
 });
