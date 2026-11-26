@@ -48,9 +48,14 @@ norn-card > article > p {
 	}
 }
 
-/* Feature cards: the icon leads the card. */
-norn-card > norn-icon {
+/* Feature cards: the icon leads the card. On a phone the card fills the
+   width, so the icon grows with it. Norn wraps a card's content in an article. */
+norn-card > article > norn-icon {
 	color: var(--norn-ui-accent);
+
+	@media (width <= 640px) {
+		--norn-ui-icon-m: 2rem;
+	}
 }
 
 /* The gallery: each starter page live in a scaled, inert frame. */
