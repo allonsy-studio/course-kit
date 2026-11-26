@@ -1,0 +1,30 @@
+name: Cleanup
+
+# Deletes a pull request's failure screenshots from the Test workflow when it closes, merged or not.
+# pull_request_target, so a fork's pull request gets a token that can delete; it checks out and runs no project code.
+
+on:
+    pull_request_target:
+        types: [closed]
+
+permissions:
+    actions: write # delete artifacts
+
+jobs:
+    delete:
+        name: Delete failure screenshots
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        steps:
+            - name: Delete this pull request's screenshots
+              env:
+                  GH_TOKEN: ${{ github.token }}
+                  SCREENSHOTS: browser-screenshots-pr-${{ github.event.pull_request.number }}
+              run: |
+                  for shard in 1 2 3 4; do
+                      gh api --paginate "repos/$GITHUB_REPOSITORY/actions/artifacts?name=$SCREENSHOTS-$shard&per_page=100" --jq '.artifacts[].id' |
+                          while read -r id; do
+                              echo "Deleting artifact $id ($SCREENSHOTS-$shard)"
+                              gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/$id"
+                          done
+                  done
