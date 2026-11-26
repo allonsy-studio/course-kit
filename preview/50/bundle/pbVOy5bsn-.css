@@ -1057,7 +1057,7 @@
    selecting or copying never takes them. */
 .code-block {
 	--code-edge: var(--color-code-edge-neutral);
-	--code-line-height: 1;
+	--code-line-height: 1.2;
 
 	position: relative;
 	margin-block: 0 1rem;

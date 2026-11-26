@@ -76,16 +76,16 @@
           outline-offset: calc(var(--border-width) * -1);
         }
       }
-      .wjobwkjac > :where(.meets) {
+      .wwrqfts7f > :where(.meets) {
         max-inline-size: 70ch;
       }
-      .wjobwkjac .meets {
+      .wwrqfts7f .meets {
         display: flex;
         flex-wrap: wrap;
         gap: 0 1em;
         color: var(--color-text-muted);
       }
-      .wjobwkjac .key-dates {
+      .wwrqfts7f .key-dates {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(min(100%, 18em), 1fr));
         gap: var(--content-space) calc(var(--content-space) * 1.5);
@@ -129,7 +129,7 @@
           font-style: italic;
         }
       }
-      .wjobwkjac .schedule-bar {
+      .wwrqfts7f .schedule-bar {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
@@ -147,18 +147,18 @@
         }
       }
       @media screen and (width >= 40em) {
-        .wjobwkjac {
+        .wwrqfts7f {
           display: contents;
         }
-        .wjobwkjac > .schedule-bar + * {
+        .wwrqfts7f > .schedule-bar + * {
           margin-block-start: var(--content-space);
         }
       }
-      .wjobwkjac .schedule-jump {
+      .wwrqfts7f .schedule-jump {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        gap: 0 var(--content-space);
+        gap: 0.5rem calc(var(--content-space) * 1.5);
         min-inline-size: 0;
         h2 {
           margin: 0;
@@ -206,16 +206,16 @@
           }
         }
       }
-      .wjobwkjac .schedule-toggle {
+      .wwrqfts7f .schedule-toggle {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         gap: 0.25rem var(--content-space);
-        .wjobwkjac &[hidden] {
+        .wwrqfts7f &[hidden] {
           display: none;
         }
       }
-      .wjobwkjac .schedule-status {
+      .wwrqfts7f .schedule-status {
         margin: 0;
         color: var(--color-text-muted);
         @media screen and (width < 48em) {
@@ -227,40 +227,74 @@
           white-space: nowrap;
         }
       }
-      .wjobwkjac .hide-past {
+      .wwrqfts7f .hide-past {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6em;
         min-block-size: var(--target-min);
-        min-inline-size: var(--target-min);
-        padding-inline: 1.1em;
-        border: var(--thin-border-width) solid var(--color-border-strong);
-        border-radius: var(--radius-pill);
+        padding-inline: 0.25em;
+        border: 0;
+        border-radius: var(--standard-border-radius);
         background: transparent;
-        color: var(--color-text);
+        color: var(--color-text-muted);
         font: inherit;
-        font-weight: var(--font-weight--semi-bold);
+        font-size: max(var(--base-font-size), 0.95em);
         cursor: pointer;
-        .wjobwkjac &[aria-pressed="true"] {
-          border-color: var(--color-accent-secondary);
-          background-color: var(--color-accent-secondary);
-          color: var(--color-on-accent-secondary);
-          --color-focus-ring: var(--color-on-accent-secondary);
+        .wwrqfts7f &::before {
+          content: "";
+          flex: none;
+          inline-size: 2.25em;
+          block-size: 1.25em;
+          box-sizing: border-box;
+          border: var(--thin-border-width) solid var(--color-border-strong);
+          border-radius: var(--radius-pill);
+          background:
+            radial-gradient(circle closest-side, var(--color-text-muted) 70%, transparent 76%) left 0.15em center/0.95em 0.95em no-repeat,
+            var(--color-page);
+        }
+        .wwrqfts7f &:is(:hover, :focus-visible) {
+          color: var(--color-text);
+        }
+        .wwrqfts7f &[aria-pressed="true"] {
+          color: var(--color-text);
+          .wwrqfts7f &::before {
+            border-color: var(--color-accent-secondary);
+            background:
+              radial-gradient(circle closest-side, var(--color-on-accent-secondary) 70%, transparent 76%) right 0.15em center/0.95em 0.95em no-repeat,
+              var(--color-accent-secondary);
+          }
+        }
+        @media (prefers-reduced-motion: no-preference) {
+          .wwrqfts7f &::before {
+            transition:
+              background-position 150ms ease-out,
+              background-color 150ms ease-out;
+          }
         }
       }
       @media (forced-colors: active) {
-        .wjobwkjac .schedule-bar {
+        .wwrqfts7f .schedule-bar {
           border-block-end-color: CanvasText;
         }
-        .wjobwkjac .schedule-jump a[aria-current] {
+        .wwrqfts7f .schedule-jump a[aria-current] {
           text-decoration-color: Highlight;
         }
-        .wjobwkjac .hide-past[aria-pressed="true"] {
+        .wwrqfts7f .hide-past::before {
           forced-color-adjust: none;
-          background: SelectedItem;
-          border-color: SelectedItem;
-          color: SelectedItemText;
+          border-color: ButtonText;
+          background:
+            radial-gradient(circle closest-side, ButtonText 70%, transparent 76%) left 0.15em center/0.95em 0.95em no-repeat,
+            Canvas;
+        }
+        .wwrqfts7f .hide-past[aria-pressed="true"]::before {
+          border-color: Highlight;
+          background:
+            radial-gradient(circle closest-side, HighlightText 70%, transparent 76%) right 0.15em center/0.95em 0.95em no-repeat,
+            Highlight;
         }
       }
       @media print {
-        .wjobwkjac .schedule-bar {
+        .wwrqfts7f .schedule-bar {
           display: none;
         }
       }
@@ -275,7 +309,7 @@
     <main id="main-content" tabindex="-1" style="margin: 0; padding: 1rem; min-block-size: 0">
       <h1 class="sr-only">schedule-overview: Default</h1>
 
-      <header class="schedule-overview wjobwkjac">
+      <header class="schedule-overview wwrqfts7f">
         <h1>Schedule</h1>
         <p class="meets">
           <span>Tuesday &amp; Thursday</span>
@@ -459,7 +493,7 @@
           "materials": "Materials",
           "slides": "Slides",
           "addendum": "Addendum",
-          "weekResources": "This week’s resources",
+          "resources": "Resources",
           "noClass": "No class — {reason}",
           "substitution": "Runs a {weekday} schedule",
           "dueKeyLabel": "Key to due items",
