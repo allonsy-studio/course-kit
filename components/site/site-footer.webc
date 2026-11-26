@@ -15,7 +15,7 @@
     </div>
     <div class="group">
         <p class="label" id="footer-pages" @text="$data.copy.siteFooter.pages"></p>
-        <nav-links column aria-labelledby="footer-pages" @context="footer" :@navigation="eleventyNavigation($data.collections.all)"></nav-links>
+        <nav-links column aria-labelledby="footer-pages" @context="footer" :@navigation="eleventyNavigation($data.collections.all).flatMap((item) => [{ ...item, children: [] }, ...(item.children ?? [])])"></nav-links>
     </div>
     <nav class="group" aria-labelledby="footer-policies" webc:if="$data.policies">
         <p class="label" id="footer-policies" @text="$data.copy.siteFooter.policies"></p>

@@ -50,6 +50,11 @@ A page's `#copy-data` block carries only the namespaces its scripts read: `code`
 | `firstLabel` | `First class` |
 | `when` | `Week {week} · {weekday}, {date}` |
 | `openSlides` | `Open the slides` |
+| `weekThis` | `This week` |
+| `weekNext` | `Next week` |
+| `weekFirst` | `First week` |
+| `weekWhen` | `Week {week} · {from} to {to}` |
+| `weekWhenDay` | `Week {week} · {date}` |
 | `seeWeek` | `See the week` |
 | `comingUp` | `Coming up` |
 | `fullSchedule` | `Full schedule` |
@@ -90,7 +95,7 @@ A page's `#copy-data` block carries only the namespaces its scripts read: `code`
 | `materials` | `Materials` |
 | `slides` | `Slides` |
 | `addendum` | `Addendum` |
-| `weekResources` | `This week’s resources` |
+| `resources` | `Resources` |
 | `noClass` | `No class — {reason}` |
 | `substitution` | `Runs a {weekday} schedule` |
 | `dueKeyLabel` | `Key to due items` |

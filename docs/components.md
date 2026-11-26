@@ -48,7 +48,7 @@ A component that lists meetings renders `<today-marker>` once, puts `data-today-
 
 `<course-now>` is the home page's opening band: the next class (labelled "Today's class", "Next class" or, before the term, "First class"), what is due soon with a chip for each item's kind, and one bar per week. It builds its weeks from the page (`:@weeks` and `scheduleUrl` are optional), carries its data as JSON in the page, and stays hidden until its script has judged "today" in the campus zone. The deadlines come from the `courseDeadlines` filter: every dated item of a meeting, every dated reading, every `Test n` meeting and the final exam.
 
-`<schedule-weeks>` renders every week as `section.week`, one `li.meeting` per class, a "This week" card, a key to the chips above the first week and one "Hide past weeks" button (`aria-pressed` carries the state; it is not saved). Chips are `.due-chip[data-kind]` (`test`, `graded`, `reading`, `practice`), styled once in the base stylesheet.
+`<schedule-weeks>` renders every week as `section.week`, one `li.meeting` per class, a "This week" card, a key to the chips above the first week and one "Hide past weeks" button, drawn as a switch (`aria-pressed` carries the state; it is not saved). Chips are `.due-chip[data-kind]` (`test`, `graded`, `reading`, `practice`), styled once in the base stylesheet.
 
 ### The switch
 
@@ -56,7 +56,7 @@ A component that lists meetings renders `<today-marker>` once, puts `data-today-
 
 ### Navigation
 
-The top menu is Home, Syllabus, then every page with an `eleventyNavigation` that has not set `menu: false`, in `order`: Schedule 3, Slides 4, Practice 5, Glossary 6, Projects 7, Demos 8. The footer lists every page, `menu: false` ones and the instructor's Lesson Plans (9) included. `<practice-index>` lists `collections.practice` for the Practice page.
+The top menu is Home, Syllabus, then every page with an `eleventyNavigation` that has not set `menu: false`, in `order`: Schedule 3, Slides 4, Practice 5, Glossary 6, Projects 7, Demos 8. A page that other pages name as their `eleventyNavigation.parent` is a group: the menu shows its link as a small label with its children under it, in the second column of the header, and the page itself is where the label goes. The footer lists every page, `menu: false` ones and the instructor's Lesson Plans (9) included, with a group's children after it in one flat list. `<practice-index>` lists `collections.practice` for the Practice page.
 
 ## The lesson page
 

@@ -8,9 +8,14 @@ const page = (inputPath = "./content/guide.md", extra = {}) => ({ page: { inputP
 
 test("a language fence renders as a code-block figure with its label, file name and line numbers", () => {
 	const html = markdown.render('```js title="tag-filter.js"\nconst a = 1;\nconst b = 2;\n```\n', page());
-	assert.match(html, /^<figure class="code-block" data-edge="js" data-line-numbers>/);
+	assert.match(html, /^<figure class="code-block" data-edge="js" data-line-numbers style="--line-digits: 1">/);
 	assert.match(html, /<span class="code-block-lang">JavaScript<\/span><span class="code-block-file">tag-filter\.js<\/span>/);
 	assert.match(html, /<pre class="language-js"/);
+});
+
+test("the number column is as wide as the last line's number", () => {
+	const digits = (count) => /--line-digits: (\d+)/.exec(markdown.render(`\`\`\`js\n${"x;\n".repeat(count)}\`\`\`\n`, page()))?.[1];
+	assert.deepEqual([2, 9, 10, 120].map(digits), ["1", "1", "2", "3"]);
 });
 
 test("a one-line or terminal fence gets no line numbers; an unknown language shows its name in capitals", () => {

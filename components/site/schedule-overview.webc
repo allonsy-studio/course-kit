@@ -151,11 +151,12 @@
 		}
 	}
 
+	/* Space between the label and the month links, beside them or, when the row wraps, above them. */
 	.schedule-jump {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
-		gap: 0 var(--content-space);
+		gap: 0.5rem calc(var(--content-space) * 1.5);
 		min-inline-size: 0;
 
 		h2 {
@@ -231,23 +232,54 @@
 		}
 	}
 
+	/* A switch, not a button: a quiet label after a small track whose knob and fill say on or off, so it reads as a setting beside the month
+	   links rather than outranking them. The state is aria-pressed; the whole row is the 44px target. The track's edge holds 3:1. */
 	.hide-past {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.6em;
 		min-block-size: var(--target-min);
-		min-inline-size: var(--target-min);
-		padding-inline: 1.1em;
-		border: var(--thin-border-width) solid var(--color-border-strong);
-		border-radius: var(--radius-pill);
+		padding-inline: 0.25em;
+		border: 0;
+		border-radius: var(--standard-border-radius);
 		background: transparent;
-		color: var(--color-text);
+		color: var(--color-text-muted);
 		font: inherit;
-		font-weight: var(--font-weight--semi-bold);
+		font-size: max(var(--base-font-size), 0.95em);
 		cursor: pointer;
 
+		&::before {
+			content: "";
+			flex: none;
+			inline-size: 2.25em;
+			block-size: 1.25em;
+			box-sizing: border-box;
+			border: var(--thin-border-width) solid var(--color-border-strong);
+			border-radius: var(--radius-pill);
+			background:
+				radial-gradient(circle closest-side, var(--color-text-muted) 70%, transparent 76%) left 0.15em center / 0.95em 0.95em no-repeat,
+				var(--color-page);
+		}
+
+		&:is(:hover, :focus-visible) {
+			color: var(--color-text);
+		}
+
 		&[aria-pressed="true"] {
-			border-color: var(--color-accent-secondary);
-			background-color: var(--color-accent-secondary);
-			color: var(--color-on-accent-secondary);
-			--color-focus-ring: var(--color-on-accent-secondary);
+			color: var(--color-text);
+
+			&::before {
+				border-color: var(--color-accent-secondary);
+				background:
+					radial-gradient(circle closest-side, var(--color-on-accent-secondary) 70%, transparent 76%) right 0.15em center / 0.95em 0.95em no-repeat,
+					var(--color-accent-secondary);
+			}
+		}
+
+		@media (prefers-reduced-motion: no-preference) {
+			&::before {
+				transition: background-position 150ms ease-out, background-color 150ms ease-out;
+			}
 		}
 	}
 
@@ -260,11 +292,15 @@
 			text-decoration-color: Highlight;
 		}
 
-		.hide-past[aria-pressed="true"] {
+		.hide-past::before {
 			forced-color-adjust: none;
-			background: SelectedItem;
-			border-color: SelectedItem;
-			color: SelectedItemText;
+			border-color: ButtonText;
+			background: radial-gradient(circle closest-side, ButtonText 70%, transparent 76%) left 0.15em center / 0.95em 0.95em no-repeat, Canvas;
+		}
+
+		.hide-past[aria-pressed="true"]::before {
+			border-color: Highlight;
+			background: radial-gradient(circle closest-side, HighlightText 70%, transparent 76%) right 0.15em center / 0.95em 0.95em no-repeat, Highlight;
 		}
 	}
 

@@ -20,7 +20,7 @@ The scale is one step of 1.25 per size from 16px, and the scale itself never goe
 
 ## A section
 
-An `h2` opens a section with a hairline and a short accent bar. An `h3` is a plain serif heading. Small labels (`READ BEFORE CLASS`, table headers) are small uppercase sans with a little letter spacing.
+An `h2` opens a section with space above it and nothing else: no rule, no accent bar. An `h3` is a plain serif heading. Small labels (`READ BEFORE CLASS`, table headers) are small uppercase sans with a little letter spacing.
 
 ## Tables
 

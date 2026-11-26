@@ -22,7 +22,10 @@
     <section class="this-week screen-only" data-this-week aria-labelledby="this-week-heading" hidden>
         <header class="this-head">
             <p class="label" data-this-label @text="copy.thisWeek"></p>
-            <h3 id="this-week-heading"><a href="#" data-this-link></a> <span class="week-of" data-this-dates></span></h3>
+            <div class="this-title">
+                <h3 id="this-week-heading"><a href="#" data-this-link></a></h3>
+                <p class="week-of" data-this-dates></p>
+            </div>
         </header>
         <ol class="this-days" role="list" data-this-days></ol>
         <div class="this-groups" data-this-groups hidden>
@@ -67,8 +70,8 @@
                         <p class="label" @text="copy.readBefore"></p>
                         <ul role="list">
                             <li webc:for="reading of meeting.readings" @attributes="reading.kind ? { class: 'due-item', 'data-kind': reading.kind } : {}">
-                                <span class="due-chip" webc:if="reading.kind" :data-kind="reading.kind" @text="dueKindLabel(reading.kind, $data.copy)"></span>
                                 <a :href="reading.href" @text="reading.title"></a>
+                                <span class="due-chip" webc:if="reading.kind" :data-kind="reading.kind" @text="dueKindLabel(reading.kind, $data.copy)"></span>
                                 <span class="check" webc:if="detail(reading)" @text="detail(reading)"></span>
                             </li>
                         </ul>
@@ -77,9 +80,9 @@
                         <p class="label" @text="copy.due"></p>
                         <ul role="list">
                             <li webc:for="item of meeting.due" class="due-item" :data-kind="item.kind">
-                                <span class="due-chip" :data-kind="item.kind" @text="dueKindLabel(item.kind, $data.copy)"></span>
                                 <a webc:if="item.href" :href="item.href" @text="item.title"></a>
                                 <span webc:if="!item.href" @text="item.title"></span>
+                                <span class="due-chip" :data-kind="item.kind" @text="dueKindLabel(item.kind, $data.copy)"></span>
                                 <span class="check" @text="item.dueLabel"></span>
                             </li>
                         </ul>
@@ -96,11 +99,11 @@
             </li>
         </ol>
         <footer class="week-resources" webc:if="week.readings?.length || week.resources?.length">
-            <p class="label" @text="copy.weekResources"></p>
+            <p class="label" @text="copy.resources"></p>
             <ul role="list">
                 <li data-reading webc:for="reading of (week.readings ?? [])" @attributes="reading.kind ? { class: 'due-item', 'data-kind': reading.kind } : {}">
-                    <span class="due-chip" webc:if="reading.kind" :data-kind="reading.kind" @text="dueKindLabel(reading.kind, $data.copy)"></span>
                     <a :href="reading.href" @text="reading.title"></a>
+                    <span class="due-chip" webc:if="reading.kind" :data-kind="reading.kind" @text="dueKindLabel(reading.kind, $data.copy)"></span>
                     <span class="check" webc:if="detail(reading)" @text="detail(reading)"></span>
                 </li>
                 <li webc:for="resource of (week.resources ?? [])">
@@ -141,9 +144,10 @@
             const flag = (el, text, kind) => el.querySelector(".week-head h3")?.after(make("span", `week-flag ${kind}`, text));
             const current = weeks.find(({ dates }) => dates.at(-1) >= today);
             for (const week of weeks) {
+                // A past week is muted (`.week[data-past]`); "Done" is there for a screen reader only.
                 if (week.dates.at(-1) < today) {
                     week.el.dataset.past = "";
-                    flag(week.el, t("schedule", "stateDone"), "done");
+                    flag(week.el, t("schedule", "stateDone"), "done sr-only");
                 }
             }
             const started = Boolean(current && current.dates[0] <= today);
@@ -233,6 +237,8 @@
        sideways. */
     :host {
         --week-grid: 8.5em minmax(0, 7fr) minmax(0, 5fr);
+        /* The "for this class" column's inset after its rule, shared by the column and its head (rem: the two are set in different sizes). */
+        --for-class-inset: 1.5rem;
         display: grid;
         gap: var(--content-space);
     }
@@ -283,7 +289,13 @@
         font-size: max(var(--base-font-size), 0.9em);
     }
 
-    /* The column heads, once per week: a booktabs header over the rows. */
+    /* In a week's header the dates sit at the end of the row, after the heading and its Now flag. */
+    .week-head .week-of {
+        margin-inline-start: auto;
+    }
+
+    /* The column heads, once per week: a booktabs header over the rows. The grid, the gap and the padding are the rows' own, at the rows'
+       font size, so each head starts where its column's content does; only the words are set small. */
     .week-cols {
         display: grid;
         grid-template-columns: var(--week-grid);
@@ -291,10 +303,18 @@
         padding: 0.5em 1em 0.4em;
         border-block-end: var(--thin-border-width) solid var(--color-text);
         color: var(--color-text-muted);
-        font-size: var(--font-size-6);
-        font-weight: var(--font-weight--medium);
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
+
+        > span {
+            font-size: var(--font-size-6);
+            font-weight: var(--font-weight--medium);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        /* The "for this class" column is inset by its rule and padding (below). */
+        > span:nth-child(3) {
+            padding-inline-start: calc(var(--for-class-inset) + var(--thin-border-width));
+        }
 
         @media (width <= 860px) {
             display: none;
@@ -375,7 +395,7 @@
         font-size: max(var(--base-font-size), 0.94em);
 
         @media (860px < width) {
-            padding-inline-start: 1.5em;
+            padding-inline-start: var(--for-class-inset);
             border-inline-start: var(--thin-border-width) solid var(--color-border);
         }
 
@@ -389,6 +409,31 @@
 
     .check {
         display: block;
+    }
+
+    /* An item with a kind: the title first, its badge at the end of the row, and the due line under both. The badge follows the title in the
+       source too, so a screen reader hears the title first. In the week's resources the item takes the whole row, so the badge lines up. */
+    .due-item {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        column-gap: 0.75em;
+        flex-basis: 100%;
+
+        > .due-chip {
+            grid-column: 2;
+            grid-row: 1;
+            justify-self: end;
+        }
+
+        > :not(.due-chip, .check) {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        > .check {
+            grid-column: 1 / -1;
+        }
     }
 
     .arrow {
@@ -436,17 +481,18 @@
             display: none;
         }
 
-        h3 {
+        /* The week's heading, then its dates at the end of the row, as in each week's own header. */
+        .this-title {
             display: flex;
             flex-wrap: wrap;
             align-items: baseline;
-            gap: 0.2em 0.6em;
-            margin: 0;
-            font-size: var(--font-size-3);
+            justify-content: space-between;
+            gap: 0.2em 1em;
         }
 
-        .week-of {
-            font-weight: var(--font-weight);
+        h3 {
+            margin: 0;
+            font-size: var(--font-size-3);
         }
 
         /* The week's own link is an operable target: 44px tall (WCAG 2.5.5). */
@@ -495,6 +541,7 @@
     }
 
     .day-flag {
+        margin-inline-start: auto;
         padding: 0.05em 0.65em;
         border-radius: var(--radius-pill);
         background-color: var(--color-accent-secondary);
@@ -532,6 +579,21 @@
         box-shadow: inset var(--border-width) 0 0 var(--color-accent-secondary);
     }
 
+    /* A past week steps back: muted text (still 7:1), no surface behind the heading and no accent rule under it. Color is not the only cue:
+       past weeks come before the one marked Now, and the hide-past toggle names them. */
+    .week[data-past] {
+        color: var(--color-text-muted);
+
+        .week-head {
+            background-color: transparent;
+            border-block-end-color: var(--color-border);
+
+            h3 {
+                color: var(--color-text-muted);
+            }
+        }
+    }
+
     .week-flag {
         padding: 0.1em 0.65em;
         border-radius: var(--radius-pill);
@@ -541,14 +603,6 @@
         &.now {
             background-color: var(--color-accent-secondary);
             color: var(--color-on-accent-secondary);
-        }
-
-        &.done {
-            color: var(--color-text-muted);
-        }
-
-        &.done::before {
-            content: "✓ " / "";
         }
     }
 

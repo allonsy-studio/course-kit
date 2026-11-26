@@ -48,9 +48,17 @@ norn-card > article > p {
 	}
 }
 
-/* Feature cards: the icon leads the card. */
-norn-card > norn-icon {
-	color: var(--norn-ui-accent);
+/* Feature cards: the icon leads the card, in the title's accent: Norn's own
+   formula for its text accent, which lightens in dark mode (the raw accent is
+   too dark to see on a dark card).
+   On a phone the card fills the width, so the icon grows with it. Norn wraps a
+   card's content in an article. */
+norn-card > article > norn-icon {
+	color: var(--norn-text-accent, light-dark(oklch(from color-mix(in oklch, var(--norn-ui-accent) 82%, black) min(l, 0.5) c h), oklch(from color-mix(in oklch, var(--norn-ui-accent) 55%, white) max(l, 0.72) c h)));
+
+	@media (width <= 640px) {
+		--norn-ui-icon-m: 2.5rem;
+	}
 }
 
 /* The gallery: each starter page live in a scaled, inert frame. */

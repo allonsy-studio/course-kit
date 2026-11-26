@@ -115,7 +115,7 @@ test("the instructor's email is encoded in the page, never written out", () => {
 
 test("the home page carries the schedule for the where-we-are panel", () => {
 	const html = pages["/"];
-	for (const text of ["data-course-now", "data-course-now-data", "data-now-card", "Coming up", "/schedule/#week-1"]) {
+	for (const text of ["data-course-now", "data-course-now-data", "data-this-week", "data-now-card", "Coming up", "/schedule/#week-1", 'class="state sr-only"']) {
 		assert.ok(html.includes(text), `home page is missing "${text}"`);
 	}
 });

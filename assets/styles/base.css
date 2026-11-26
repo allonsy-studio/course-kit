@@ -285,9 +285,9 @@ main {
     scroll-margin-block-start: 1.5rlh;
 }
 
+/* A wash of the accent, strong enough to see on the page, a surface and a filled card. */
 ::selection {
-    background: color-mix(in hsl, var(--color-surface) 80%, transparent);
-    border-radius: 0.25em;
+    background: color-mix(in sRGB, var(--color-accent) 30%, var(--color-page));
     color: var(--color-text);
 }
 
@@ -675,14 +675,9 @@ a {
 }
 
 main {
-	/* A section opens with a rule and a short accent bar, not an underline:
-	   an underlined heading reads as a link. */
+	/* A section opens with space alone: no rule and no accent bar. */
 	:where(h2:not([class])) {
 		margin-block-start: calc(var(--content-space) * 2.5);
-		padding-block-start: calc(var(--content-space) * 0.75);
-		border-block-start: var(--thin-border-width) solid var(--color-border);
-		background: linear-gradient(var(--color-accent-secondary), var(--color-accent-secondary)) top left / 2.75rem var(--border-width) no-repeat;
-		background-origin: border-box;
 	}
 
 	:where(h3:not([class])) {
@@ -1625,7 +1620,7 @@ blockquote {
    selecting or copying never takes them. */
 .code-block {
 	--code-edge: var(--color-code-edge-neutral);
-	--code-line-height: 1;
+	--code-line-height: 1.2;
 
 	position: relative;
 	margin-block: 0 1rem;
@@ -1699,12 +1694,16 @@ blockquote {
 		line-height: var(--code-line-height);
 	}
 
+	/* The block sets its own padding and scrolling: a page whose reset clears
+	   the base `pre` rule (the kit's own landing page) still gets them. */
 	pre {
 		margin: 0;
 		border: 0;
 		border-radius: 0;
 		background: none;
+		padding-block: 0.75rem;
 		padding-inline: 0;
+		overflow-x: auto;
 	}
 
 	code {
@@ -1715,18 +1714,21 @@ blockquote {
 
 	br { display: none; }
 
+	/* The text starts where the title bar's label does (1rem in from the border, the 3px edge counted), numbered or not. */
 	.highlight-line {
 		display: block;
-		padding-inline: 1.25rem;
+		padding-inline: calc(1rem - 3px) 1rem;
 		border-inline-start: 3px solid transparent;
 	}
 
+	/* The number column is as wide as the last line's number (`--line-digits`, set by lib/markdown.js), so the
+	   numbers start at the same edge as an unnumbered block's text and the gap after them is the same on every line. */
 	&[data-line-numbers] .highlight-line::before {
 		counter-increment: line;
 		content: counter(line);
 		display: inline-block;
-		inline-size: 2.5em;
-		margin-inline: -0.5rem 1.25em;
+		inline-size: calc(var(--line-digits, 2) * 1ch);
+		margin-inline: 0 1rem;
 		text-align: end;
 		color: var(--color-code-comment);
 		user-select: none;
