@@ -1172,10 +1172,16 @@ body:has(.doc-layout[data-contents="true"], .lesson-layout) {
 	flex-wrap: wrap;
 	gap: calc(var(--gutter) * 2);
 
+	/* A CSS dot, not a character: never an emoji, never read aloud. A border, so forced colors keeps it. */
 	> *:not(:last-child)::after {
-		content: "⏺";
-		padding-inline-start: calc(var(--gutter) * 2);
-		font-size: 50%;
+		content: "";
+		display: inline-block;
+		box-sizing: border-box;
+		inline-size: 0.3em;
+		block-size: 0.3em;
+		margin-inline-start: calc(var(--gutter) * 2);
+		border: 0.15em solid currentColor;
+		border-radius: 50%;
 		vertical-align: middle;
 	}
 }

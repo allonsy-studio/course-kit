@@ -11,6 +11,8 @@
 - Selected text is visible: `::selection` is a wash of the accent, not the page color.
 - `<schedule-overview>` puts more space between "Jump to" and the month links: 1.5 times the content space beside them, and 0.5rem above them when the row wraps. Hide past weeks is a switch: a small track and a muted label, so it no longer outweighs the month links.
 - `<schedule-weeks>` mutes a past week instead of marking it "Done" (the word stays for a screen reader), puts each week's dates and each item's badge at the end of the row, lines the column heads up with their columns, and labels the footer "Resources". The copy key `schedule.weekResources` is renamed `schedule.resources`.
+- `<assigned-list>` puts each chip after its title, at the end of the row, as the schedule weeks do, and every title row is 44px tall, linked or not, so the items are spaced alike.
+- The `.separators` dot is drawn in CSS, not the `⏺` character, which Safari showed as a blue emoji button and screen readers read aloud. The deck's copy of the rule matches.
 - The "Send me a message" icon is a centered speech bubble.
 
 migration: See [Migrating to 0.5.0](docs/migrating/0.5.0.md). Nothing is required; a course that overrides `course-now.webc`, `masthead.webc` or `nav-links.webc` re-merges its copy.

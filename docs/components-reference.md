@@ -21,14 +21,14 @@ A link with a trailing arrow. The label is the slot; `href` and any other attrib
 
 ### `<assigned-list>`
 
-A labelled list of readings or deadlines. Renders nothing when empty. Give it the `items` array, or write the list as a `<dl>` in the default slot: each `<dt>` holds the title or its link (give it `data-kind` and, before the title, `<span class="due-chip" data-kind="test">Test</span>` for a chip), each `<dd>` only the check or due detail. The array wins when it has items; when it is missing or empty the slot is rendered instead, so the list still shows if the data does not load.
+A labelled list of readings or deadlines. Renders nothing when empty. Give it the `items` array, or write the list as a `<dl>` in the default slot: each `<dt>` holds the title or its link (give it `data-kind` and, after the title, `<span class="due-chip" data-kind="test">Test</span>` for a chip, shown at the end of the row), each `<dd>` only the check or due detail. The array wins when it has items; when it is missing or empty the slot is rendered instead, so the list still shows if the data does not load.
 
 | Prop | Type | |
 |---|---|---|
 | `label` | `string` | the heading above the list |
 | `items` | `{ title: string, href?: string, check?: string, dueLabel?: string, kind?: string }[]` | the readings or deadlines to list |
 | `[dueOn]` | `string` | how a due date reads after the check, with `{when}`: `copy.schedule.dueOn` ("due {when}"); without it the date stands alone |
-| `[chips]` | `boolean` | put a `.due-chip` for the item's `kind` before its title; a bare `@chips` turns them on |
+| `[chips]` | `boolean` | put a `.due-chip` for the item's `kind` after its title, at the end of the row; a bare `@chips` turns them on |
 | `[kinds]` | `Record<string, string>` | the chip words by kind, from `copy.schedule.dueKind*`; needed with `chips` |
 
 ### `<callout>`

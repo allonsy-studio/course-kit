@@ -40,16 +40,16 @@ export const DefinitionList = {
 		label: schedule.due,
 		items: undefined,
 		default: `<dl>
-	<dt data-kind="test"><span class="due-chip" data-kind="test">${schedule.dueKindTest}</span> Test 1</dt>
+	<dt data-kind="test">Test 1 <span class="due-chip" data-kind="test">${schedule.dueKindTest}</span></dt>
 	<dd>Tue, Sep 29, 10:00AM</dd>
-	<dt data-kind="graded"><span class="due-chip" data-kind="graded">${schedule.dueKindGraded}</span> <a href="#">Lab 2</a></dt>
+	<dt data-kind="graded"><a href="#">Lab 2</a> <span class="due-chip" data-kind="graded">${schedule.dueKindGraded}</span></dt>
 	<dd>Thu, Oct 1, 11:59PM</dd>
 	<dt>Worksheet</dt>
 </dl>`,
 	},
 };
 
-/** A long title wraps under its chip, and an item with no link or detail is plain text. */
+/** A long title wraps beside its chip, and an item with no link or detail is plain text. */
 export const LongTitle = {
 	name: "Long title",
 	args: {
