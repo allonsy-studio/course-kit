@@ -22,7 +22,11 @@ Every component in the kit meets **WCAG 2.2 AAA**, or a stricter standard where 
 
 ## What is automated
 
-`yarn docs:test` runs the browser tests: Cypress with `cypress-axe`, in Cypress's bundled Electron. Electron is Chromium, so the media emulation below works, and its version changes only when Cypress does, not when a CI runner's Chrome updates.
+`yarn docs:test` (`scripts/browser-run.js`) runs the browser tests: Cypress with `cypress-axe`, in Cypress's bundled Electron. Electron is Chromium, so the media emulation below works, and its version changes only when Cypress does, not when a CI runner's Chrome updates. It runs in three steps, so a build error is Eleventy's own message, printed before Cypress starts:
+
+1. **Build** the audit site with `node scripts/site.js audit`: the landing and the component preview under `/components/`, served from `/`, with no path prefix. It builds into a fresh folder and then replaces `website/_a11y`, so no stale page is tested and a run already serving it never sees a half-written build. The preview is built minified, as a course that opts in would ship it (`MINIFY=0` turns that off). The build fails if the project styles were not copied, since axe then fails without naming the missing stylesheet.
+2. **Serve** `website/_a11y` on port 8080 with Eleventy's server (`@11ty/eleventy-dev-server`), with live reload off so the audited pages are exactly what was built. Set `BROWSER_PORT` to use another port. A port in use fails rather than moving to the next one; Eleventy's message reads "Tried 0 different ports but they were all in use".
+3. **Run Cypress** (`cypress run --project website`). `website/cypress.config.js` reads the built page list, applies `BROWSER_SHARD` (see below), sets `baseUrl`, and checks that a server answers there. Extra arguments go to `cypress run`, such as `yarn docs:test --spec website/cypress/e2e/print.cy.js`. Cypress started on its own (`cypress open --project website`) needs a server running, such as `yarn docs:test --no-build` in another terminal; without one it stops with "Nothing is serving the audit build at …".
 
 In CI they are the Browser jobs of the Test workflow (`.github/workflows/test.yml`), on every pull request, push to `main` and merge-queue run:
 
@@ -34,7 +38,18 @@ In CI they are the Browser jobs of the Test workflow (`.github/workflows/test.ym
 
 To run one shard locally, set `BROWSER_SHARD`: `BROWSER_SHARD=2/4 yarn docs:test` tests every fourth page from the second. The specs that read the page list (any spec with `Cypress.env("pages")`: today `a11y`, `icons`, `lists`, `targets` and `visible`) run in every shard; the others run only in the first.
 
-The run builds the landing page and the component preview and then:
+To run two shards at once, build once, then start each in its own terminal on its own port; `--no-build` serves the existing build:
+
+```sh
+# once
+node scripts/site.js audit
+# terminal 1
+BROWSER_SHARD=1/4 yarn docs:test --no-build
+# terminal 2
+BROWSER_SHARD=2/4 BROWSER_PORT=8081 yarn docs:test --no-build
+```
+
+With the site built and served, the run:
 
 - runs **axe** with the `wcag2a`, `wcag2aa`, `wcag2aaa`, `wcag21a`, `wcag21aa`, `wcag22aa` and `best-practice` tags on **every built page**, in **light and dark** at the **desktop (1280 x 800) and mobile (390 x 844)** widths, and in **forced colors** at the desktop width. Contrast is skipped in forced colors, where axe measures the emulation and not what a reader sees, so the mobile layout's structure is left to the light and dark runs.
 - checks **reflow**: no page scrolls sideways at 320px.

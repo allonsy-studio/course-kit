@@ -42,7 +42,7 @@
     "preview:build": "node scripts/site.js build",
     "docs:build": "node scripts/site.js build",
     "docs:start": "node scripts/site.js start",
-    "docs:test": "cypress run --project website",
+    "docs:test": "node scripts/browser-run.js",
     "pages:build": "node scripts/site.js build",
     "format": "opx lint --fix",
     "lint": "opx lint",

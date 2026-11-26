@@ -15,6 +15,7 @@ preview/_site/
 # The project site
 website/_site/
 website/_a11y/
+website/_a11y-build-*/
 website/cypress/screenshots/
 
 # opx
