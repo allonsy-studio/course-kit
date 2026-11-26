@@ -97,57 +97,16 @@
           outline-offset: calc(var(--border-width) * -1);
         }
       }
-      .eyebrow {
-        font-size: var(--font-size-6);
-        text-transform: uppercase;
-        text-decoration: none;
-        letter-spacing: 0.08em;
-        font-weight: var(--font-weight--semi-bold);
-        color: var(--color-text-muted);
-        margin-block: 0;
-      }
-      /* The primary action, shown only once a #today exists. The :not(:has())
-	   form outranks a host's own `a` rules; without :has() the plain rule
-	   hides it. */
-      .today-link,
-      :root:not(:has(#today)) .today-link {
-        display: none;
-      }
-
-      :root:has(#today) .today-link {
-        display: grid;
-        place-items: center;
-        min-inline-size: var(--target-min);
-        min-block-size: var(--target-min);
-        padding-inline: 1em;
-        border: var(--thin-border-width) solid var(--color-accent);
-        border-radius: var(--standard-border-radius);
-        background-color: var(--color-accent);
-        color: var(--color-on-accent);
-        font-weight: var(--font-weight--semi-bold);
-        text-decoration: none;
-
-        &:is(:hover, :focus-visible) {
-          border-color: var(--color-text);
-          text-decoration: underline;
-        }
-      }
-
-      @media print {
-        :root:has(#today) .today-link {
-          display: none;
-        }
-      }
-      .wcqrkbqid > :where(.meets) {
+      .wjobwkjac > :where(.meets) {
         max-inline-size: 70ch;
       }
-      .wcqrkbqid .meets {
+      .wjobwkjac .meets {
         display: flex;
         flex-wrap: wrap;
         gap: 0 1em;
         color: var(--color-text-muted);
       }
-      .wcqrkbqid .key-dates {
+      .wjobwkjac .key-dates {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(min(100%, 18em), 1fr));
         gap: var(--content-space) calc(var(--content-space) * 1.5);
@@ -191,7 +150,47 @@
           font-style: italic;
         }
       }
-      .wcqrkbqid .schedule-jump {
+      .wjobwkjac .schedule-bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.25rem var(--content-space);
+        margin-block: var(--content-space);
+        @media screen and (width >= 40em) {
+          position: sticky;
+          inset-block-start: 0;
+          z-index: 10;
+          margin-block: 0;
+          padding-block: 0.4rem;
+          background-color: var(--color-page);
+          border-block-end: var(--thin-border-width) solid var(--color-border-strong);
+        }
+      }
+      @media screen and (width >= 40em) {
+        .wjobwkjac {
+          display: contents;
+        }
+        .wjobwkjac > .schedule-bar + * {
+          margin-block-start: var(--content-space);
+        }
+      }
+      .wjobwkjac .schedule-jump {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0 var(--content-space);
+        min-inline-size: 0;
+        h2 {
+          margin: 0;
+          font-family: var(--sans-font);
+          font-size: var(--font-size-6);
+          font-weight: var(--font-weight--semi-bold);
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: var(--color-text-muted);
+        }
+
         ul {
           display: flex;
           flex-wrap: wrap;
@@ -217,25 +216,91 @@
             background-color: var(--color-surface);
             border-color: var(--color-accent);
           }
+
+          /* The month on screen, set by the script as the page scrolls: a thick underline in the location accent. A shape, not a color alone, and
+			   it changes no size, so nothing moves when the mark does. */
+          &[aria-current] {
+            text-decoration: underline;
+            text-decoration-color: var(--color-accent-secondary);
+            text-decoration-thickness: 0.2em;
+            text-underline-offset: 0.3em;
+          }
         }
       }
-      @media print {
-        .wcqrkbqid .schedule-jump {
+      .wjobwkjac .schedule-toggle {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.25rem var(--content-space);
+        .wjobwkjac &[hidden] {
           display: none;
         }
       }
-      .wjizog40i {
+      .wjobwkjac .schedule-status {
+        margin: 0;
+        color: var(--color-text-muted);
+        @media screen and (width < 48em) {
+          position: absolute;
+          inline-size: 1px;
+          block-size: 1px;
+          overflow: hidden;
+          clip-path: inset(50%);
+          white-space: nowrap;
+        }
+      }
+      .wjobwkjac .hide-past {
+        min-block-size: var(--target-min);
+        min-inline-size: var(--target-min);
+        padding-inline: 1.1em;
+        border: var(--thin-border-width) solid var(--color-border-strong);
+        border-radius: var(--radius-pill);
+        background: transparent;
+        color: var(--color-text);
+        font: inherit;
+        font-weight: var(--font-weight--semi-bold);
+        cursor: pointer;
+        .wjobwkjac &[aria-pressed="true"] {
+          border-color: var(--color-accent-secondary);
+          background-color: var(--color-accent-secondary);
+          color: var(--color-on-accent-secondary);
+          --color-focus-ring: var(--color-on-accent-secondary);
+        }
+      }
+      @media (forced-colors: active) {
+        .wjobwkjac .schedule-bar {
+          border-block-end-color: CanvasText;
+        }
+        .wjobwkjac .schedule-jump a[aria-current] {
+          text-decoration-color: Highlight;
+        }
+        .wjobwkjac .hide-past[aria-pressed="true"] {
+          forced-color-adjust: none;
+          background: SelectedItem;
+          border-color: SelectedItem;
+          color: SelectedItemText;
+        }
+      }
+      @media print {
+        .wjobwkjac .schedule-bar {
+          display: none;
+        }
+      }
+      /* The page scrolls under the sticky row: anchors and focused controls stop below it (WCAG 2.4.11, 2.4.12). The script sets the height. */
+      html:has(.schedule-bar) {
+        scroll-padding-block-start: calc(var(--schedule-bar-height, 0px) + 1rem);
+      }
+      .wckdzjcz_ {
         --week-grid: 8.5em minmax(0, 7fr) minmax(0, 5fr);
         display: grid;
         gap: var(--content-space);
       }
-      .wjizog40i ul,
-      .wjizog40i ol {
+      .wckdzjcz_ ul,
+      .wckdzjcz_ ol {
         list-style: none;
         margin: 0;
         padding: 0;
       }
-      .wjizog40i .label {
+      .wckdzjcz_ .label {
         margin: 0 0 0.3em;
         color: var(--color-text-muted);
         font-size: var(--font-size-6);
@@ -243,14 +308,14 @@
         letter-spacing: 0.08em;
         text-transform: uppercase;
       }
-      .wjizog40i .week {
+      .wckdzjcz_ .week {
         margin: 0;
         padding: 0;
         border: var(--thin-border-width) solid var(--color-border);
         border-radius: var(--standard-border-radius);
         overflow: hidden;
       }
-      .wjizog40i .week-head {
+      .wckdzjcz_ .week-head {
         display: flex;
         flex-wrap: wrap;
         align-items: baseline;
@@ -264,12 +329,12 @@
           font-weight: var(--font-weight--medium);
         }
       }
-      .wjizog40i .week-of {
+      .wckdzjcz_ .week-of {
         margin: 0;
         color: var(--color-text-muted);
         font-size: max(var(--base-font-size), 0.9em);
       }
-      .wjizog40i .week-cols {
+      .wckdzjcz_ .week-cols {
         display: grid;
         grid-template-columns: var(--week-grid);
         gap: 0 1.5em;
@@ -284,13 +349,13 @@
           display: none;
         }
       }
-      .wjizog40i .meeting {
+      .wckdzjcz_ .meeting {
         display: grid;
         grid-template-columns: var(--week-grid);
         gap: 0.6em 1.5em;
         align-items: start;
         padding: 0.9em 1em;
-        .wjizog40i & + .meeting {
+        .wckdzjcz_ & + .meeting {
           border-block-start: var(--thin-border-width) solid var(--color-border);
         }
         @media (width <= 860px) {
@@ -306,7 +371,7 @@
           }
         }
       }
-      .wjizog40i .when {
+      .wckdzjcz_ .when {
         display: flex;
         flex-direction: column;
         margin: 0;
@@ -317,26 +382,26 @@
           align-items: baseline;
         }
       }
-      .wjizog40i .weekday {
+      .wckdzjcz_ .weekday {
         font-weight: var(--font-weight--semi-bold);
       }
-      .wjizog40i .date,
-      .wjizog40i .note,
-      .wjizog40i .no-class,
-      .wjizog40i .check {
+      .wckdzjcz_ .date,
+      .wckdzjcz_ .note,
+      .wckdzjcz_ .no-class,
+      .wckdzjcz_ .check {
         color: var(--color-text-muted);
         font-size: max(var(--base-font-size), 0.9em);
       }
-      .wjizog40i .note {
+      .wckdzjcz_ .note {
         font-style: italic;
       }
-      .wjizog40i .no-class {
+      .wckdzjcz_ .no-class {
         margin: 0;
       }
-      .wjizog40i .topics li + li {
+      .wckdzjcz_ .topics li + li {
         margin-block-start: 0.3em;
       }
-      .wjizog40i .for-class {
+      .wckdzjcz_ .for-class {
         display: grid;
         gap: 0.8em;
         font-size: max(var(--base-font-size), 0.94em);
@@ -350,18 +415,18 @@
           min-block-size: var(--target-min);
         }
       }
-      .wjizog40i .check {
+      .wckdzjcz_ .check {
         display: block;
       }
-      .wjizog40i .arrow {
+      .wckdzjcz_ .arrow {
         color: var(--color-accent-text);
         text-decoration: none;
         font-weight: var(--font-weight--medium);
-        .wjizog40i &:is(:hover, :focus-visible) {
+        .wckdzjcz_ &:is(:hover, :focus-visible) {
           text-decoration: underline;
         }
       }
-      .wjizog40i .week-resources {
+      .wckdzjcz_ .week-resources {
         padding: 0.8em 1em;
         border-block-start: var(--thin-border-width) solid var(--color-border);
         background-color: var(--color-surface);
@@ -379,46 +444,14 @@
           min-block-size: var(--target-min);
         }
       }
-      .wjizog40i .schedule-tools {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-        gap: calc(var(--gutter) * 2) var(--content-space);
-        .wjizog40i &[hidden] {
-          display: none;
-        }
-      }
-      .wjizog40i .schedule-status {
-        margin: 0;
-        color: var(--color-text-muted);
-      }
-      .wjizog40i .hide-past {
-        min-block-size: var(--target-min);
-        min-inline-size: var(--target-min);
-        padding-inline: 1.1em;
-        border: var(--thin-border-width) solid var(--color-border-strong);
-        border-radius: var(--radius-pill);
-        background: transparent;
-        color: var(--color-text);
-        font: inherit;
-        font-weight: var(--font-weight--semi-bold);
-        cursor: pointer;
-        .wjizog40i &[aria-pressed="true"] {
-          border-color: var(--color-accent-secondary);
-          background-color: var(--color-accent-secondary);
-          color: var(--color-on-accent-secondary);
-          --color-focus-ring: var(--color-on-accent-secondary);
-        }
-      }
-      .wjizog40i .this-week {
+      .wckdzjcz_ .this-week {
         display: grid;
         gap: var(--content-space);
         padding: calc(var(--content-space) * 1.4);
         border: var(--border-width) solid var(--color-accent-secondary);
         border-radius: calc(var(--standard-border-radius) * 4);
         background-color: var(--color-surface-accent-secondary);
-        .wjizog40i &[hidden] {
+        .wckdzjcz_ &[hidden] {
           display: none;
         }
         h3 {
@@ -433,13 +466,20 @@
         .week-of {
           font-weight: var(--font-weight);
         }
+
+        /* The week's own link is an operable target: 44px tall (WCAG 2.5.5). */
+        h3 a {
+          display: inline-flex;
+          align-items: center;
+          min-block-size: var(--target-min);
+        }
       }
-      .wjizog40i .this-days {
+      .wckdzjcz_ .this-days {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(min(100%, 16em), 1fr));
         gap: var(--content-space);
       }
-      .wjizog40i .this-day {
+      .wckdzjcz_ .this-day {
         display: flex;
         flex-direction: column;
         gap: 0.5em;
@@ -468,7 +508,7 @@
           font-weight: var(--font-weight--semi-bold);
         }
       }
-      .wjizog40i .day-flag {
+      .wckdzjcz_ .day-flag {
         padding: 0.05em 0.65em;
         border-radius: var(--radius-pill);
         background-color: var(--color-accent-secondary);
@@ -476,51 +516,66 @@
         font-size: max(var(--base-font-size), 0.85em);
         font-weight: var(--font-weight--semi-bold);
       }
-      .wjizog40i .this-groups {
+      .wckdzjcz_ .this-groups {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(min(100%, 16em), 1fr));
         gap: var(--content-space);
         padding-block-start: var(--content-space);
         border-block-start: var(--thin-border-width) solid var(--color-border-strong);
-        .wjizog40i &[hidden],
-        .wjizog40i [hidden] {
+        .wckdzjcz_ &[hidden],
+        .wckdzjcz_ [hidden] {
           display: none;
         }
         li + li {
           margin-block-start: 0.4em;
         }
+
+        /* A link that heads its item is a 44px target; the chip and the check line sit beside it. */
+        li > a {
+          display: inline-flex;
+          align-items: center;
+          min-block-size: var(--target-min);
+        }
       }
-      .wjizog40i .week[data-current] {
+      .wckdzjcz_ .week[data-current] {
         border-color: var(--color-accent-secondary);
         box-shadow: inset var(--border-width) 0 0 var(--color-accent-secondary);
       }
-      .wjizog40i .week-flag {
+      .wckdzjcz_ .week-flag {
         padding: 0.1em 0.65em;
         border-radius: var(--radius-pill);
         font-size: max(var(--base-font-size), 0.85em);
         font-weight: var(--font-weight--semi-bold);
-        .wjizog40i &.now {
+        .wckdzjcz_ &.now {
           background-color: var(--color-accent-secondary);
           color: var(--color-on-accent-secondary);
         }
-        .wjizog40i &.done {
+        .wckdzjcz_ &.done {
           color: var(--color-text-muted);
         }
-        .wjizog40i &.done::before {
+        .wckdzjcz_ &.done::before {
           content: "✓ "/"";
         }
       }
       @media print {
-        .wjizog40i .this-week,
-        .wjizog40i .schedule-tools,
-        .wjizog40i .week-cols {
+        .wckdzjcz_ .this-week,
+        .wckdzjcz_ .week-cols {
           display: none;
         }
       }
-      .wyz4foyhb:not(:has(li)) {
+      .eyebrow {
+        font-size: var(--font-size-6);
+        text-transform: uppercase;
+        text-decoration: none;
+        letter-spacing: 0.08em;
+        font-weight: var(--font-weight--semi-bold);
+        color: var(--color-text-muted);
+        margin-block: 0;
+      }
+      .wrqxv4ajc:not(:has(li)) {
         display: none;
       }
-      .wyz4foyhb {
+      .wrqxv4ajc {
         display: flex;
         gap: calc(var(--container-space) * 3.5);
         ul {
@@ -580,7 +635,7 @@
           }
         }
       }
-      .wyz4foyhb[stacked] ul {
+      .wrqxv4ajc[stacked] ul {
         display: flex;
         flex-wrap: wrap;
         justify-content: start;
@@ -588,11 +643,11 @@
         column-gap: calc(var(--content-space) * 2);
         row-gap: calc(var(--content-space) * 0.35);
       }
-      .wyz4foyhb[column] {
+      .wrqxv4ajc[column] {
         padding: 0;
         line-height: inherit;
       }
-      .wyz4foyhb[column] ul {
+      .wrqxv4ajc[column] ul {
         display: flex;
         flex-direction: column;
         align-items: start;
@@ -607,11 +662,22 @@
           row-gap: calc(var(--content-space) * 0.25);
         }
       }
-      .wyz4foyhb[column] li {
+      .wrqxv4ajc[column] li {
         display: block;
       }
-      .wyz4foyhb[column] a,
-      .wyz4foyhb[column] a:visited {
+      @media screen and (width > 768px) {
+        .wrqxv4ajc[column][two-column] ul {
+          display: block;
+          columns: 2;
+          column-gap: calc(var(--content-space) * 2);
+        }
+        .wrqxv4ajc[column][two-column] li {
+          break-inside: avoid;
+          margin-block-end: calc(var(--content-space) * 0.35);
+        }
+      }
+      .wrqxv4ajc[column] a,
+      .wrqxv4ajc[column] a:visited {
         margin: 0;
         padding-inline: var(--link-pad, 0);
         border: none;
@@ -619,30 +685,30 @@
         line-height: inherit;
         font-size: max(var(--base-font-size), 1em);
         color: inherit;
-        .wyz4foyhb &[aria-current="page"] {
+        .wrqxv4ajc &[aria-current="page"] {
           padding-inline: var(--link-pad, 0);
           background: none;
           color: var(--color-accent-text);
         }
       }
-      .wyz4foyhb[data-context="hero"][column] {
+      .wrqxv4ajc[data-context="hero"][column] {
         --link-pad: 0.85em;
       }
-      .wyz4foyhb[data-context="hero"][column] a[href] {
+      .wrqxv4ajc[data-context="hero"][column] a[href] {
         border-radius: var(--radius-pill);
       }
-      .wyz4foyhb[data-context="hero"][column] a[href][aria-current="page"] {
+      .wrqxv4ajc[data-context="hero"][column] a[href][aria-current="page"] {
         background-color: var(--color-accent-secondary);
         color: var(--color-on-accent-secondary);
         text-decoration: none;
         font-weight: var(--font-weight--semi-bold);
         --color-focus-ring: var(--color-on-accent-secondary);
       }
-      .wyz4foyhb[data-context="hero"][column] a[href]:not([aria-current="page"]):hover {
+      .wrqxv4ajc[data-context="hero"][column] a[href]:not([aria-current="page"]):hover {
         background-color: color-mix(in oklab, var(--color-accent-secondary) 10%, transparent);
       }
       @media (forced-colors: active) {
-        .wyz4foyhb[data-context="hero"][column] a[href][aria-current="page"] {
+        .wrqxv4ajc[data-context="hero"][column] a[href][aria-current="page"] {
           forced-color-adjust: none;
           background: SelectedItem;
           color: SelectedItemText;
@@ -746,7 +812,7 @@
         font-size: max(var(--base-font-size), 0.85em);
         color: var(--color-text-muted);
       }
-      .wp7xogbrw {
+      .wbe7cwilk {
         --context: footer;
         text-align: start;
         display: grid;
@@ -815,8 +881,21 @@
           font-size: 1em;
         }
 
-        nav.group a,
+        .source {
+          margin: 0;
+          max-inline-size: none;
+        }
+
+        /* The course name is one run of text, "CS101: Introduction…": inline-flex would make each span a flex item and drop the spaces between them. */
         .course a {
+          display: inline-block;
+          /* 44px tall (WCAG 2.5.5) with the text centered, however many lines it wraps to. */
+          padding-block: max(0px, calc((var(--target-min) - 1lh) / 2));
+          font-size: max(var(--base-font-size), 1em);
+        }
+
+        nav.group a,
+        .source a {
           display: inline-flex;
           align-items: center;
           min-block-size: var(--target-min);
@@ -853,7 +932,7 @@
           </p>
         </div>
         <div class="links">
-          <nav data-context="hero" column="" aria-label="Site" class="wyz4foyhb">
+          <nav data-context="hero" column="" aria-label="Site" class="wrqxv4ajc">
             <ul role="list">
               <li>
                 <a href="/course-kit/components/#syllabus">Syllabus</a>
@@ -866,12 +945,7 @@
 
     <main id="main-content" tabindex="-1">
       <article class="content-column wide">
-        <header class="schedule-overview wcqrkbqid">
-          <p class="eyebrow separators">
-            <span>Fall 2026</span>
-            <span>CS101</span>
-          </p>
-
+        <header class="schedule-overview wjobwkjac">
           <h1>Schedule</h1>
           <p class="meets">
             <span>Tuesday &amp; Thursday</span>
@@ -892,23 +966,22 @@
             </div>
           </section>
 
-          <nav aria-label="Jump to" class="schedule-jump">
-            <h2>Jump to</h2>
-            <ul role="list">
-              <li>
-                <a href="#today" class="today-link">Today</a>
-              </li>
-              <li><a href="#week-1">August</a></li>
-              <li><a href="#week-2">September</a></li>
-            </ul>
-          </nav>
+          <div data-schedule-bar="" class="schedule-bar">
+            <nav aria-label="Jump to" class="schedule-jump">
+              <h2>Jump to</h2>
+              <ul role="list">
+                <li><a href="#week-1" data-first-week="1" data-last-week="1">August</a></li>
+                <li><a href="#week-2" data-first-week="2" data-last-week="3">September</a></li>
+              </ul>
+            </nav>
+            <div data-schedule-tools="" hidden="" class="schedule-toggle">
+              <p data-schedule-status="" role="status" class="schedule-status"></p>
+              <button type="button" data-hide-past="" aria-pressed="false" class="hide-past">Hide past weeks</button>
+            </div>
+          </div>
         </header>
 
-        <div data-today-host="meetings" class="schedule-weeks wjizog40i">
-          <div data-schedule-tools="" hidden="" class="schedule-tools screen-only">
-            <p data-schedule-status="" role="status" class="schedule-status"></p>
-            <button type="button" data-hide-past="" aria-pressed="false" class="hide-past">Hide past weeks</button>
-          </div>
+        <div data-today-host="meetings" class="schedule-weeks wckdzjcz_">
           <section data-this-week="" aria-labelledby="this-week-heading" hidden="" class="this-week screen-only">
             <header class="this-head">
               <p data-this-label="" class="label">This week</p>
@@ -927,7 +1000,8 @@
             </div>
           </section>
           <ul aria-label="Key to due items" role="list" class="due-key">
-            <li><span data-kind="test" class="due-chip">Test</span> <span>graded</span></li>
+            <li><span data-kind="test" class="due-chip">Test</span></li>
+            <li><span data-kind="reading" class="due-chip">Reading check</span></li>
           </ul>
           <section id="week-1" aria-labelledby="week-1-heading" data-week-dates="2026-08-25 2026-08-27" class="week">
             <header class="week-head">
@@ -1013,9 +1087,10 @@
             <footer class="week-resources">
               <p class="label">This week’s resources</p>
               <ul role="list">
-                <li data-reading="">
+                <li data-reading="" class="due-item" data-kind="reading">
+                  <span data-kind="reading" class="due-chip">Reading check</span>
                   <a href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics">MDN: HTML basics</a>
-                  <span class="check">3 questions, due by the next class</span>
+                  <span class="check">3 questions, due by the next class, due Thu, Sep 3</span>
                 </li>
               </ul>
             </footer>
@@ -1073,7 +1148,7 @@
     </main>
 
     <footer>
-      <div class="wp7xogbrw">
+      <div class="wbe7cwilk">
         <div class="brand">
           <p class="course">
             <a href="/course-kit/components/"><span>CS101</span>: <span>Introduction to Web Publishing</span></a>
@@ -1088,7 +1163,7 @@
         <div class="group">
           <p id="footer-pages" class="label">Pages</p>
 
-          <nav data-context="footer" column="" aria-labelledby="footer-pages" class="wyz4foyhb">
+          <nav data-context="footer" column="" aria-labelledby="footer-pages" class="wrqxv4ajc">
             <ul role="list">
               <li>
                 <a href="/course-kit/components/lessons/">Lesson Plans</a>
@@ -1208,7 +1283,6 @@
             "hint": "Space reveals · arrows move",
             "defShown": "Definition shown for {term}",
             "symbols": "Symbols",
-            "glossary": "Glossary",
             "courseGlossary": "Course glossary",
             "slidesOnly": "Slides only",
             "finalExam": "Final exam",
@@ -1269,7 +1343,6 @@
             "noClass": "No class — {reason}",
             "substitution": "Runs a {weekday} schedule",
             "dueKeyLabel": "Key to due items",
-            "graded": "graded",
             "notGraded": "not graded",
             "dueKindTest": "Test",
             "dueKindGraded": "Graded",
@@ -1447,6 +1520,56 @@
           }
         })();
         /**
+         * Marks the month on screen in the row with `aria-current="location"`: the month of the last week block whose top has reached the line where an
+         * anchor lands it, below the row; before the first week reaches it the first month, at the foot of the page the last month. Sets `--schedule-bar-height`
+         * for the page's scroll-padding while the row is sticky. It changes no size and runs no animation.
+         */
+        (() => {
+          const bar = document.querySelector("[data-schedule-bar]");
+          if (!bar || !bar.getClientRects().length) return;
+          const links = [...bar.querySelectorAll("a[data-first-week]")];
+          const weeks = [...document.querySelectorAll(".schedule-weeks .week[id^='week-']")];
+          if (!links.length || !weeks.length) return;
+          const range = links.map((link) => ({ link, first: Number(link.dataset.firstWeek), last: Number(link.dataset.lastWeek) }));
+          /** The month of a week: the latest month whose range holds it, so a week spanning two months reads as the second, where its link points. */
+          const monthOf = (number) => range.findLast(({ first, last }) => number >= first && number <= last) ?? range.at(-1);
+          const mark = () => {
+            const shown = weeks.filter((week) => !week.hidden);
+            if (!shown.length) return;
+            // Where an anchor lands a week's top: below the row, by the page's scroll-padding and the week's scroll-margin. The week is on screen once its top is at or above that line.
+            const line = (Number.parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0) + (Number.parseFloat(getComputedStyle(shown[0]).scrollMarginTop) || 0) + 1;
+            // The last week whose top has reached the line, or the first week before any has.
+            const week = shown.findLast((candidate) => candidate.getBoundingClientRect().top <= line) ?? shown[0];
+            // A page scrolled to its foot can leave the last week below the line: then the last month is the one on screen.
+            const bottomed = window.scrollY > 0 && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+            const current = week && !bottomed ? monthOf(Number(week.id.slice(5))) : range.at(-1);
+            for (const { link } of range) {
+              if (link === current.link) link.setAttribute("aria-current", "location");
+              else link.removeAttribute("aria-current");
+            }
+          };
+          const measure = () => document.documentElement.style.setProperty("--schedule-bar-height", getComputedStyle(bar).position === "sticky" ? `${Math.ceil(bar.getBoundingClientRect().height)}px` : "0px");
+          let queued = false;
+          addEventListener(
+            "scroll",
+            () => {
+              if (queued) return;
+              queued = true;
+              requestAnimationFrame(() => {
+                queued = false;
+                mark();
+              });
+            },
+            { passive: true },
+          );
+          new ResizeObserver(() => {
+            measure();
+            mark();
+          }).observe(bar);
+          measure();
+          mark();
+        })();
+        /**
          * <schedule-weeks>: mark finished weeks "Done" and the current one "Now",
          * fill the "This week" card from that week's meetings, and let readers
          * hide past weeks (every visit starts with all weeks shown). Dates compare
@@ -1459,8 +1582,9 @@
             const campusToday = () => new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone });
             const { t } = window.ckCopy;
             const root = document.querySelector(".schedule-weeks");
-            const tools = root?.querySelector("[data-schedule-tools]");
-            if (!root || !tools) return;
+            if (!root) return;
+            // The hide-past toggle is in <schedule-overview>'s row, above the weeks; with no overview there is no toggle.
+            const tools = document.querySelector("[data-schedule-tools]");
             const today = campusToday();
             const weeks = [...root.querySelectorAll(".week[data-week-dates]")].map((el) => ({ el, dates: el.dataset.weekDates.split(/\s+/).filter(Boolean).sort() })).filter(({ dates }) => dates.length);
             const make = (tag, className, text) => {
@@ -1537,15 +1661,15 @@
             }
 
             // One label, "Hide past weeks"; the state is aria-pressed. Not saved: every visit starts with all weeks shown.
-            const button = tools.querySelector("[data-hide-past]");
-            const status = tools.querySelector("[data-schedule-status]");
+            const button = tools?.querySelector("[data-hide-past]");
+            const status = tools?.querySelector("[data-schedule-status]");
             const past = weeks.filter(({ el }) => el.hasAttribute("data-past"));
             const apply = (hide) => {
               button.setAttribute("aria-pressed", String(hide));
               for (const { el } of past) el.hidden = hide;
               status.textContent = hide ? t("schedule", "pastHidden", { count: past.length }) : t("schedule", "weeksDone", { done: past.length, total: weeks.length });
             };
-            if (past.length) {
+            if (button && status && past.length) {
               apply(false);
               button.addEventListener("click", () => apply(button.getAttribute("aria-pressed") !== "true"));
               tools.hidden = false;

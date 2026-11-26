@@ -1417,8 +1417,8 @@
         <a rel="home" href="../../../../">course-kit</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-xfThD">
-            <span data-label="" id="norn-header-webc-xfThD">Primary</span>
+          <nav aria-labelledby="norn-header-webc-GvX7-">
+            <span data-label="" id="norn-header-webc-GvX7-">Primary</span>
 
             <a href="../../../../#quick-start">Quick start</a>
             <a href="../../../../#features">Features</a>
@@ -1440,8 +1440,8 @@
         <details>
           <summary>Building blocks</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-I1ENA">
-              <span data-label="" id="norn-side-nav-webc-I1ENA"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-CFeRY">
+              <span data-label="" id="norn-side-nav-webc-CFeRY"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -1496,10 +1496,13 @@
         <details open="true" data-current="">
           <summary>Site sections</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-llVHT">
-              <span data-label="" id="norn-side-nav-webc-llVHT"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-nX88B">
+              <span data-label="" id="norn-side-nav-webc-nX88B"><span>Site sections</span></span>
 
               <ul>
+                <li>
+                  <a href="/course-kit/components/components/site/book-appointment/"><span>book-appointment</span></a>
+                </li>
                 <li>
                   <a href="/course-kit/components/components/site/copyright/"><span>copyright</span></a>
                 </li>
@@ -1564,8 +1567,8 @@
         <details>
           <summary>Practice worksheets</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-9ATnY">
-              <span data-label="" id="norn-side-nav-webc-9ATnY"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-V4Tug">
+              <span data-label="" id="norn-side-nav-webc-V4Tug"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -1616,7 +1619,7 @@
       <main id="main" tabindex="-1">
         <div class="component">
           <h1><code>&lt;schedule-overview&gt;</code></h1>
-          <p class="lead">The schedule page's header: the meeting line, the key dates, and a row of jump links (Today, then one per month). Props are read in the template, since a setup script cannot see them.</p>
+          <p class="lead">The schedule page's header: the meeting line, the key dates, and a sticky row of one jump link per month, with the Hide past weeks toggle at its end. The month on screen is marked as the page scrolls. The row is sticky from 40em wide and static below it, where it would take too much of a phone's height. Props are read in the template, since a setup script cannot see them.</p>
           <p class="meta">Site sections</p>
 
           <h2>Examples</h2>
@@ -1722,7 +1725,7 @@
               <norn-code-block>
                 <figure>
                   <norn-copy-button>
-                    <button type="button" hidden="" data-value="<schedule-overview></schedule-overview>" data-strings="norn-code-block-webc-DId38" data-compact="" data-surface="code">
+                    <button type="button" hidden="" data-value="<schedule-overview></schedule-overview>" data-strings="norn-code-block-webc-n6Ow6" data-compact="" data-surface="code">
                       <span data-icons=""
                         ><norn-icon>
                           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1737,8 +1740,272 @@
                     <span role="status"></span>
                   </norn-copy-button>
                   <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;],[0,0,1,1,0,17,0,0,3,1,0,17,0,0,1]]">&lt;schedule-overview&gt;&lt;/schedule-overview&gt;</code></pre>
-                  <span hidden="" id="norn-code-block-webc-DId38">
-                    <span data-string="label" id="norn-code-block-webc-DId38-copy">Copy {name} to clipboard</span>
+                  <span hidden="" id="norn-code-block-webc-n6Ow6">
+                    <span data-string="label" id="norn-code-block-webc-n6Ow6-copy">Copy {name} to clipboard</span>
+                    <span data-string="copy">Copy</span>
+                    <span data-string="copied">Copied</span>
+                    <span data-string="failed">Copy failed</span>
+                  </span>
+                  <span data-name="" hidden=""><span data-default="">html code</span></span>
+                </figure>
+              </norn-code-block>
+            </details>
+          </div>
+          <div class="story">
+            <h3>Key dates, short form</h3>
+
+            <figure data-canvas="" class="canvas">
+              <!-- A form of its own makes the radio names local to this canvas. -->
+              <form onsubmit="return false;" class="canvas-bar">
+                <norn-segmented-control>
+                  <fieldset data-icon-only="">
+                    <legend><span>Color scheme</span></legend>
+
+                    <label title="Light"
+                      ><input type="radio" name="scheme" value="light" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M16 12a4 4 0 1 1-8 0a4 4 0 1 1 8 0M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"></path>
+                        </svg> </norn-icon
+                      ><span>Light</span></label
+                    >
+                    <label title="System"
+                      ><input type="radio" name="scheme" value="system" checked="" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0"></path>
+                          <path d="M12 3a9 9 0 0 1 0 18z" data-fill=""></path>
+                        </svg> </norn-icon
+                      ><span>System</span></label
+                    >
+                    <label title="Dark"
+                      ><input type="radio" name="scheme" value="dark" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+                        </svg> </norn-icon
+                      ><span>Dark</span></label
+                    >
+                  </fieldset>
+                </norn-segmented-control>
+                <norn-segmented-control class="widths">
+                  <fieldset data-icon-only="">
+                    <legend><span>Width</span></legend>
+
+                    <label title="Fill"
+                      ><input type="radio" name="width" value="" checked="" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M3 12h18M7 8l-4 4l4 4M17 8l4 4l-4 4"></path>
+                        </svg> </norn-icon
+                      ><span>Fill</span></label
+                    >
+                    <label title="Phone, 320px"
+                      ><input type="radio" name="width" value="320" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M7 2h10v20H7zM11 18h2"></path>
+                        </svg> </norn-icon
+                      ><span>Phone, 320px</span></label
+                    >
+                    <label title="Tablet, 768px"
+                      ><input type="radio" name="width" value="768" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M4 3h16v18H4zM11 18h2"></path>
+                        </svg> </norn-icon
+                      ><span>Tablet, 768px</span></label
+                    >
+                    <label title="Desktop, 1024px"
+                      ><input type="radio" name="width" value="1024" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M3 4h18v12H3zM8 20h8M12 16v4"></path>
+                        </svg> </norn-icon
+                      ><span>Desktop, 1024px</span></label
+                    >
+                  </fieldset>
+                </norn-segmented-control>
+                <button type="button" data-axe="" data-state="idle" title="Check accessibility">
+                  <norn-icon data-for="idle">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M12 7v.5M7.5 10l4.5 1l4.5-1M12 11v3M9.5 18l2.5-4l2.5 4"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="running">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                      <path d="M21 12a9 9 0 1 1-9-9"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="pass">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M8 12l3 3l5-6"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="fail">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M15 9l-6 6M9 9l6 6"></path>
+                    </svg>
+                  </norn-icon>
+                  <span class="sr-only">Check accessibility</span>
+                </button>
+              </form>
+              <div class="stage"><iframe src="/course-kit/components/frames/site/schedule-overview/short-dates/" title="Key dates, short form" loading="lazy"></iframe></div>
+              <p class="open"><a href="/course-kit/components/frames/site/schedule-overview/short-dates/">Open on its own</a></p>
+              <output aria-live="polite" class="axe-result"></output>
+            </figure>
+
+            <details>
+              <summary>Source</summary>
+              <norn-code-block>
+                <figure>
+                  <norn-copy-button>
+                    <button type="button" hidden="" data-value='<schedule-overview @date-style="short"></schedule-overview>' data-strings="norn-code-block-webc-Cglqj" data-compact="" data-surface="code">
+                      <span data-icons=""
+                        ><norn-icon>
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M9 9h11v11H9zM15 9V4H4v11h5"></path>
+                          </svg> </norn-icon
+                        ><norn-icon>
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M5 12l5 5L20 7"></path>
+                          </svg> </norn-icon></span
+                      ><span data-label=""></span>
+                    </button>
+                    <span role="status"></span>
+                  </norn-copy-button>
+                  <pre dir="ltr" data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,17,2,1,11,0,0,1,3,0,7,0,0,3,1,0,17,0,0,1]]">&lt;schedule-overview @date-style="short"&gt;&lt;/schedule-overview&gt;</code></pre>
+                  <span hidden="" id="norn-code-block-webc-Cglqj">
+                    <span data-string="label" id="norn-code-block-webc-Cglqj-copy">Copy {name} to clipboard</span>
+                    <span data-string="copy">Copy</span>
+                    <span data-string="copied">Copied</span>
+                    <span data-string="failed">Copy failed</span>
+                  </span>
+                  <span data-name="" hidden=""><span data-default="">html code</span></span>
+                </figure>
+              </norn-code-block>
+            </details>
+          </div>
+          <div class="story">
+            <h3>Sticky row, five months</h3>
+
+            <figure data-canvas="" class="canvas">
+              <!-- A form of its own makes the radio names local to this canvas. -->
+              <form onsubmit="return false;" class="canvas-bar">
+                <norn-segmented-control>
+                  <fieldset data-icon-only="">
+                    <legend><span>Color scheme</span></legend>
+
+                    <label title="Light"
+                      ><input type="radio" name="scheme" value="light" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M16 12a4 4 0 1 1-8 0a4 4 0 1 1 8 0M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"></path>
+                        </svg> </norn-icon
+                      ><span>Light</span></label
+                    >
+                    <label title="System"
+                      ><input type="radio" name="scheme" value="system" checked="" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0"></path>
+                          <path d="M12 3a9 9 0 0 1 0 18z" data-fill=""></path>
+                        </svg> </norn-icon
+                      ><span>System</span></label
+                    >
+                    <label title="Dark"
+                      ><input type="radio" name="scheme" value="dark" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+                        </svg> </norn-icon
+                      ><span>Dark</span></label
+                    >
+                  </fieldset>
+                </norn-segmented-control>
+                <norn-segmented-control class="widths">
+                  <fieldset data-icon-only="">
+                    <legend><span>Width</span></legend>
+
+                    <label title="Fill"
+                      ><input type="radio" name="width" value="" checked="" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M3 12h18M7 8l-4 4l4 4M17 8l4 4l-4 4"></path>
+                        </svg> </norn-icon
+                      ><span>Fill</span></label
+                    >
+                    <label title="Phone, 320px"
+                      ><input type="radio" name="width" value="320" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M7 2h10v20H7zM11 18h2"></path>
+                        </svg> </norn-icon
+                      ><span>Phone, 320px</span></label
+                    >
+                    <label title="Tablet, 768px"
+                      ><input type="radio" name="width" value="768" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M4 3h16v18H4zM11 18h2"></path>
+                        </svg> </norn-icon
+                      ><span>Tablet, 768px</span></label
+                    >
+                    <label title="Desktop, 1024px"
+                      ><input type="radio" name="width" value="1024" /><norn-icon>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                          <path d="M3 4h18v12H3zM8 20h8M12 16v4"></path>
+                        </svg> </norn-icon
+                      ><span>Desktop, 1024px</span></label
+                    >
+                  </fieldset>
+                </norn-segmented-control>
+                <button type="button" data-axe="" data-state="idle" title="Check accessibility">
+                  <norn-icon data-for="idle">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M12 7v.5M7.5 10l4.5 1l4.5-1M12 11v3M9.5 18l2.5-4l2.5 4"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="running">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                      <path d="M21 12a9 9 0 1 1-9-9"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="pass">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M8 12l3 3l5-6"></path>
+                    </svg>
+                  </norn-icon>
+                  <norn-icon data-for="fail">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" data-size="m">
+                      <path d="M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0M15 9l-6 6M9 9l6 6"></path>
+                    </svg>
+                  </norn-icon>
+                  <span class="sr-only">Check accessibility</span>
+                </button>
+              </form>
+              <div class="stage"><iframe src="/course-kit/components/frames/site/schedule-overview/sticky-row/" title="Sticky row, five months" loading="lazy"></iframe></div>
+              <p class="open"><a href="/course-kit/components/frames/site/schedule-overview/sticky-row/">Open on its own</a></p>
+              <output aria-live="polite" class="axe-result"></output>
+            </figure>
+
+            <details>
+              <summary>Source</summary>
+              <norn-code-block>
+                <figure>
+                  <norn-copy-button>
+                    <button
+                      type="button"
+                      hidden=""
+                      data-value='<schedule-overview :@weeks="([{&amp;quot;week&amp;quot;:1,&amp;quot;dates&amp;quot;:&amp;quot;Aug 25–27&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-08-25&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Aug 25&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-08-25&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 1.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-08-27&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Aug 27&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-08-27&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 1.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:2,&amp;quot;dates&amp;quot;:&amp;quot;Sep 1–3&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-09-01&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Sep 1&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-09-01&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 2.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-09-03&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Sep 3&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-09-03&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 2.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:3,&amp;quot;dates&amp;quot;:&amp;quot;Sep 8–10&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-09-08&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Sep 8&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-09-08&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 3.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-09-10&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Sep 10&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-09-10&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 3.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:4,&amp;quot;dates&amp;quot;:&amp;quot;Sep 15–17&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-09-15&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Sep 15&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-09-15&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 4.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-09-17&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Sep 17&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-09-17&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 4.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:5,&amp;quot;dates&amp;quot;:&amp;quot;Sep 22–24&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-09-22&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Sep 22&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-09-22&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 5.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-09-24&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Sep 24&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-09-24&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 5.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:6,&amp;quot;dates&amp;quot;:&amp;quot;Sep 29 – Oct 1&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-09-29&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Sep 29&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-09-29&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 6.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-10-01&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Oct 1&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-10-01&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 6.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:7,&amp;quot;dates&amp;quot;:&amp;quot;Oct 6–8&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-10-06&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Oct 6&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-10-06&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 7.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-10-08&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Oct 8&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-10-08&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 7.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:8,&amp;quot;dates&amp;quot;:&amp;quot;Oct 13–15&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-10-13&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Oct 13&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-10-13&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 8.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-10-15&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Oct 15&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-10-15&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 8.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:9,&amp;quot;dates&amp;quot;:&amp;quot;Oct 20–22&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-10-20&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Oct 20&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-10-20&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 9.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-10-22&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Oct 22&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-10-22&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 9.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:10,&amp;quot;dates&amp;quot;:&amp;quot;Oct 27–29&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-10-27&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Oct 27&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-10-27&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 10.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-10-29&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Oct 29&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-10-29&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 10.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:11,&amp;quot;dates&amp;quot;:&amp;quot;Nov 3–5&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-11-03&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Nov 3&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-11-03&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 11.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-11-05&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Nov 5&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-11-05&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 11.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:12,&amp;quot;dates&amp;quot;:&amp;quot;Nov 10–12&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-11-10&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Nov 10&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-11-10&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 12.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-11-12&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Nov 12&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-11-12&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 12.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:13,&amp;quot;dates&amp;quot;:&amp;quot;Nov 17–19&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-11-17&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Nov 17&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-11-17&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 13.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-11-19&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Nov 19&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-11-19&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 13.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:14,&amp;quot;dates&amp;quot;:&amp;quot;Nov 24–26&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-11-24&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Nov 24&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-11-24&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 14.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-11-26&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Nov 26&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-11-26&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 14.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:15,&amp;quot;dates&amp;quot;:&amp;quot;Dec 1–3&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-12-01&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Dec 1&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-12-01&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 15.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-12-03&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Dec 3&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-12-03&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 15.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]}])"></schedule-overview>'
+                      data-strings="norn-code-block-webc-c0v2-"
+                      data-compact=""
+                      data-surface="code">
+                      <span data-icons=""
+                        ><norn-icon>
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M9 9h11v11H9zM15 9V4H4v11h5"></path>
+                          </svg> </norn-icon
+                        ><norn-icon>
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M5 12l5 5L20 7"></path>
+                          </svg> </norn-icon></span
+                      ><span data-label=""></span>
+                    </button>
+                    <span role="status"></span>
+                  </norn-copy-button>
+                  <pre
+                    dir="ltr"
+                    data-language="html"><code data-tokens="[[&quot;punctuation&quot;,&quot;keyword&quot;,&quot;function&quot;,&quot;string&quot;],[0,0,1,1,0,17,2,1,7,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,14,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,9,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,7,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,10,0,0,1,3,0,4,0,0,1,3,0,2,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,15,0,0,1,3,0,4,0,0,1,3,0,1,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,3,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,4,0,0,1,3,0,5,0,0,1,3,0,4,0,0,1,3,0,6,0,0,1,3,0,4,0,0,1,3,0,8,0,0,1,3,0,4,0,0,1,3,0,7,0,0,3,1,0,17,0,0,1]]">&lt;schedule-overview :@weeks="([{&amp;quot;week&amp;quot;:1,&amp;quot;dates&amp;quot;:&amp;quot;Aug 25–27&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-08-25&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Aug 25&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-08-25&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 1.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-08-27&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Aug 27&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-08-27&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 1.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:2,&amp;quot;dates&amp;quot;:&amp;quot;Sep 1–3&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-09-01&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Sep 1&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-09-01&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 2.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-09-03&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Sep 3&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-09-03&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 2.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:3,&amp;quot;dates&amp;quot;:&amp;quot;Sep 8–10&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-09-08&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Sep 8&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-09-08&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 3.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-09-10&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Sep 10&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-09-10&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 3.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:4,&amp;quot;dates&amp;quot;:&amp;quot;Sep 15–17&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-09-15&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Sep 15&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-09-15&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 4.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-09-17&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Sep 17&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-09-17&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 4.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:5,&amp;quot;dates&amp;quot;:&amp;quot;Sep 22–24&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-09-22&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Sep 22&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-09-22&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 5.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-09-24&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Sep 24&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-09-24&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 5.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:6,&amp;quot;dates&amp;quot;:&amp;quot;Sep 29 – Oct 1&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-09-29&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Sep 29&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-09-29&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 6.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-10-01&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Oct 1&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-10-01&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 6.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:7,&amp;quot;dates&amp;quot;:&amp;quot;Oct 6–8&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-10-06&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Oct 6&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-10-06&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 7.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-10-08&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Oct 8&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-10-08&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 7.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:8,&amp;quot;dates&amp;quot;:&amp;quot;Oct 13–15&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-10-13&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Oct 13&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-10-13&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 8.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-10-15&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Oct 15&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-10-15&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 8.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:9,&amp;quot;dates&amp;quot;:&amp;quot;Oct 20–22&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-10-20&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Oct 20&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-10-20&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 9.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-10-22&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Oct 22&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-10-22&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 9.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:10,&amp;quot;dates&amp;quot;:&amp;quot;Oct 27–29&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-10-27&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Oct 27&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-10-27&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 10.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-10-29&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Oct 29&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-10-29&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 10.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:11,&amp;quot;dates&amp;quot;:&amp;quot;Nov 3–5&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-11-03&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Nov 3&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-11-03&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 11.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-11-05&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Nov 5&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-11-05&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 11.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:12,&amp;quot;dates&amp;quot;:&amp;quot;Nov 10–12&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-11-10&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Nov 10&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-11-10&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 12.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-11-12&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Nov 12&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-11-12&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 12.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:13,&amp;quot;dates&amp;quot;:&amp;quot;Nov 17–19&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-11-17&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Nov 17&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-11-17&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 13.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-11-19&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Nov 19&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-11-19&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 13.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:14,&amp;quot;dates&amp;quot;:&amp;quot;Nov 24–26&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-11-24&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Nov 24&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-11-24&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 14.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-11-26&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Nov 26&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-11-26&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 14.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]},{&amp;quot;week&amp;quot;:15,&amp;quot;dates&amp;quot;:&amp;quot;Dec 1–3&amp;quot;,&amp;quot;meetings&amp;quot;:[{&amp;quot;weekday&amp;quot;:&amp;quot;Tuesday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-12-01&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Dec 1&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-12-01&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 15.1&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]},{&amp;quot;weekday&amp;quot;:&amp;quot;Thursday&amp;quot;,&amp;quot;iso&amp;quot;:&amp;quot;2020-12-03&amp;quot;,&amp;quot;date&amp;quot;:&amp;quot;Dec 3&amp;quot;,&amp;quot;display&amp;quot;:&amp;quot;2020-12-03&amp;quot;,&amp;quot;topics&amp;quot;:[&amp;quot;Topic 15.2&amp;quot;],&amp;quot;time&amp;quot;:&amp;quot;10:00AM–11:15AM&amp;quot;,&amp;quot;readings&amp;quot;:[],&amp;quot;due&amp;quot;:[],&amp;quot;demos&amp;quot;:[]}],&amp;quot;readings&amp;quot;:[]}])"&gt;&lt;/schedule-overview&gt;</code></pre>
+                  <span hidden="" id="norn-code-block-webc-c0v2-">
+                    <span data-string="label" id="norn-code-block-webc-c0v2--copy">Copy {name} to clipboard</span>
                     <span data-string="copy">Copy</span>
                     <span data-string="copied">Copied</span>
                     <span data-string="failed">Copy failed</span>
@@ -1752,7 +2019,7 @@
           <h2>Props</h2>
           <p>Write them with the <code>@</code> prefix, and <code>:@</code> for an expression. A prop in square brackets is optional.</p>
           <norn-simple-table class="spec"
-            ><span hidden="" id="norn-simple-table-webc-dlRE_"></span>
+            ><span hidden="" id="norn-simple-table-webc--xr1X"></span>
             <div>
               <table>
                 <thead>
@@ -1772,6 +2039,11 @@
                     <th scope="row"><code>[weeks]</code></th>
                     <td data-label="Type"><code>object[]</code></td>
                     <td><code>scheduleWeeks</code> output, for the month links; built from the page when left out</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code>[dateStyle]</code></th>
+                    <td data-label="Type"><code>'short' | 'full'</code></td>
+                    <td>how the key dates write a project milestone's and the final exam's date: <code>full</code> (the default, "Friday, October 23, 2026, 12:00PM") or <code>short</code> ("Fri, Oct 23, 12:00PM"). Written <code>@date-style</code></td>
                   </tr>
                 </tbody>
               </table>
@@ -1803,6 +2075,17 @@
                 </td>
               </tr>
               <tr>
+                <th scope="row"><code>--color-accent-secondary</code></th>
+                <td>Wayfinding color: progress, section bars, the current location, highlighted code</td>
+                <td>
+                  <div class="pickers">
+                    <label>Light <input type="color" data-token="--color-accent-secondary" data-scheme="light" aria-label="Light color for --color-accent-secondary" /></label>
+                    <label>Dark <input type="color" data-token="--color-accent-secondary" data-scheme="dark" aria-label="Dark color for --color-accent-secondary" /></label>
+                    <button type="button" data-token-reset="--color-accent-secondary" aria-label="Reset --color-accent-secondary">Reset</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
                 <th scope="row"><code>--color-border</code></th>
                 <td>Lines, rules and borders</td>
                 <td>
@@ -1814,6 +2097,39 @@
                 </td>
               </tr>
               <tr>
+                <th scope="row"><code>--color-border-strong</code></th>
+                <td>Edges of anything operable (at least 3:1)</td>
+                <td>
+                  <div class="pickers">
+                    <label>Light <input type="color" data-token="--color-border-strong" data-scheme="light" aria-label="Light color for --color-border-strong" /></label>
+                    <label>Dark <input type="color" data-token="--color-border-strong" data-scheme="dark" aria-label="Dark color for --color-border-strong" /></label>
+                    <button type="button" data-token-reset="--color-border-strong" aria-label="Reset --color-border-strong">Reset</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row"><code>--color-on-accent-secondary</code></th>
+                <td>Text on a wayfinding-color fill</td>
+                <td>
+                  <div class="pickers">
+                    <label>Light <input type="color" data-token="--color-on-accent-secondary" data-scheme="light" aria-label="Light color for --color-on-accent-secondary" /></label>
+                    <label>Dark <input type="color" data-token="--color-on-accent-secondary" data-scheme="dark" aria-label="Dark color for --color-on-accent-secondary" /></label>
+                    <button type="button" data-token-reset="--color-on-accent-secondary" aria-label="Reset --color-on-accent-secondary">Reset</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row"><code>--color-page</code></th>
+                <td>Page background</td>
+                <td>
+                  <div class="pickers">
+                    <label>Light <input type="color" data-token="--color-page" data-scheme="light" aria-label="Light color for --color-page" /></label>
+                    <label>Dark <input type="color" data-token="--color-page" data-scheme="dark" aria-label="Dark color for --color-page" /></label>
+                    <button type="button" data-token-reset="--color-page" aria-label="Reset --color-page">Reset</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
                 <th scope="row"><code>--color-surface</code></th>
                 <td>Raised or alternate surface: cards, table headers, code</td>
                 <td>
@@ -1821,6 +2137,17 @@
                     <label>Light <input type="color" data-token="--color-surface" data-scheme="light" aria-label="Light color for --color-surface" /></label>
                     <label>Dark <input type="color" data-token="--color-surface" data-scheme="dark" aria-label="Dark color for --color-surface" /></label>
                     <button type="button" data-token-reset="--color-surface" aria-label="Reset --color-surface">Reset</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row"><code>--color-text</code></th>
+                <td>Body text</td>
+                <td>
+                  <div class="pickers">
+                    <label>Light <input type="color" data-token="--color-text" data-scheme="light" aria-label="Light color for --color-text" /></label>
+                    <label>Dark <input type="color" data-token="--color-text" data-scheme="dark" aria-label="Dark color for --color-text" /></label>
+                    <button type="button" data-token-reset="--color-text" aria-label="Reset --color-text">Reset</button>
                   </div>
                 </td>
               </tr>

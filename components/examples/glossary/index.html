@@ -32,15 +32,6 @@
     <link rel="stylesheet" href="/course-kit/components/styles/base.css" />
 
     <style>
-      .eyebrow {
-        font-size: var(--font-size-6);
-        text-transform: uppercase;
-        text-decoration: none;
-        letter-spacing: 0.08em;
-        font-weight: var(--font-weight--semi-bold);
-        color: var(--color-text-muted);
-        margin-block: 0;
-      }
       .w7daga14f {
         display: block;
         --chip-size: var(--target-min);
@@ -717,10 +708,19 @@
         color: var(--color-text-muted);
         margin-block: 0;
       }
-      .wyz4foyhb:not(:has(li)) {
+      .eyebrow {
+        font-size: var(--font-size-6);
+        text-transform: uppercase;
+        text-decoration: none;
+        letter-spacing: 0.08em;
+        font-weight: var(--font-weight--semi-bold);
+        color: var(--color-text-muted);
+        margin-block: 0;
+      }
+      .wrqxv4ajc:not(:has(li)) {
         display: none;
       }
-      .wyz4foyhb {
+      .wrqxv4ajc {
         display: flex;
         gap: calc(var(--container-space) * 3.5);
         ul {
@@ -780,7 +780,7 @@
           }
         }
       }
-      .wyz4foyhb[stacked] ul {
+      .wrqxv4ajc[stacked] ul {
         display: flex;
         flex-wrap: wrap;
         justify-content: start;
@@ -788,11 +788,11 @@
         column-gap: calc(var(--content-space) * 2);
         row-gap: calc(var(--content-space) * 0.35);
       }
-      .wyz4foyhb[column] {
+      .wrqxv4ajc[column] {
         padding: 0;
         line-height: inherit;
       }
-      .wyz4foyhb[column] ul {
+      .wrqxv4ajc[column] ul {
         display: flex;
         flex-direction: column;
         align-items: start;
@@ -807,11 +807,22 @@
           row-gap: calc(var(--content-space) * 0.25);
         }
       }
-      .wyz4foyhb[column] li {
+      .wrqxv4ajc[column] li {
         display: block;
       }
-      .wyz4foyhb[column] a,
-      .wyz4foyhb[column] a:visited {
+      @media screen and (width > 768px) {
+        .wrqxv4ajc[column][two-column] ul {
+          display: block;
+          columns: 2;
+          column-gap: calc(var(--content-space) * 2);
+        }
+        .wrqxv4ajc[column][two-column] li {
+          break-inside: avoid;
+          margin-block-end: calc(var(--content-space) * 0.35);
+        }
+      }
+      .wrqxv4ajc[column] a,
+      .wrqxv4ajc[column] a:visited {
         margin: 0;
         padding-inline: var(--link-pad, 0);
         border: none;
@@ -819,30 +830,30 @@
         line-height: inherit;
         font-size: max(var(--base-font-size), 1em);
         color: inherit;
-        .wyz4foyhb &[aria-current="page"] {
+        .wrqxv4ajc &[aria-current="page"] {
           padding-inline: var(--link-pad, 0);
           background: none;
           color: var(--color-accent-text);
         }
       }
-      .wyz4foyhb[data-context="hero"][column] {
+      .wrqxv4ajc[data-context="hero"][column] {
         --link-pad: 0.85em;
       }
-      .wyz4foyhb[data-context="hero"][column] a[href] {
+      .wrqxv4ajc[data-context="hero"][column] a[href] {
         border-radius: var(--radius-pill);
       }
-      .wyz4foyhb[data-context="hero"][column] a[href][aria-current="page"] {
+      .wrqxv4ajc[data-context="hero"][column] a[href][aria-current="page"] {
         background-color: var(--color-accent-secondary);
         color: var(--color-on-accent-secondary);
         text-decoration: none;
         font-weight: var(--font-weight--semi-bold);
         --color-focus-ring: var(--color-on-accent-secondary);
       }
-      .wyz4foyhb[data-context="hero"][column] a[href]:not([aria-current="page"]):hover {
+      .wrqxv4ajc[data-context="hero"][column] a[href]:not([aria-current="page"]):hover {
         background-color: color-mix(in oklab, var(--color-accent-secondary) 10%, transparent);
       }
       @media (forced-colors: active) {
-        .wyz4foyhb[data-context="hero"][column] a[href][aria-current="page"] {
+        .wrqxv4ajc[data-context="hero"][column] a[href][aria-current="page"] {
           forced-color-adjust: none;
           background: SelectedItem;
           color: SelectedItemText;
@@ -946,7 +957,7 @@
         font-size: max(var(--base-font-size), 0.85em);
         color: var(--color-text-muted);
       }
-      .wp7xogbrw {
+      .wbe7cwilk {
         --context: footer;
         text-align: start;
         display: grid;
@@ -1015,8 +1026,21 @@
           font-size: 1em;
         }
 
-        nav.group a,
+        .source {
+          margin: 0;
+          max-inline-size: none;
+        }
+
+        /* The course name is one run of text, "CS101: Introduction…": inline-flex would make each span a flex item and drop the spaces between them. */
         .course a {
+          display: inline-block;
+          /* 44px tall (WCAG 2.5.5) with the text centered, however many lines it wraps to. */
+          padding-block: max(0px, calc((var(--target-min) - 1lh) / 2));
+          font-size: max(var(--base-font-size), 1em);
+        }
+
+        nav.group a,
+        .source a {
           display: inline-flex;
           align-items: center;
           min-block-size: var(--target-min);
@@ -1053,7 +1077,7 @@
           </p>
         </div>
         <div class="links">
-          <nav data-context="hero" column="" aria-label="Site" class="wyz4foyhb">
+          <nav data-context="hero" column="" aria-label="Site" class="wrqxv4ajc">
             <ul role="list">
               <li>
                 <a href="/course-kit/components/#syllabus">Syllabus</a>
@@ -1069,12 +1093,6 @@
         <glossary class="witpvthea">
           <article id="glossary" class="content-column glossary">
             <header>
-              <p class="eyebrow separators">
-                <span>Fall 2026</span>
-                <span>CS101</span>
-                <span>Glossary</span>
-              </p>
-
               <h1>Course glossary</h1>
               <p class="intro">
                 <strong>2</strong>
@@ -1198,7 +1216,7 @@
     </main>
 
     <footer>
-      <div class="wp7xogbrw">
+      <div class="wbe7cwilk">
         <div class="brand">
           <p class="course">
             <a href="/course-kit/components/"><span>CS101</span>: <span>Introduction to Web Publishing</span></a>
@@ -1213,7 +1231,7 @@
         <div class="group">
           <p id="footer-pages" class="label">Pages</p>
 
-          <nav data-context="footer" column="" aria-labelledby="footer-pages" class="wyz4foyhb">
+          <nav data-context="footer" column="" aria-labelledby="footer-pages" class="wrqxv4ajc">
             <ul role="list">
               <li>
                 <a href="/course-kit/components/lessons/">Lesson Plans</a>
@@ -1333,7 +1351,6 @@
             "hint": "Space reveals · arrows move",
             "defShown": "Definition shown for {term}",
             "symbols": "Symbols",
-            "glossary": "Glossary",
             "courseGlossary": "Course glossary",
             "slidesOnly": "Slides only",
             "finalExam": "Final exam",
@@ -1394,7 +1411,6 @@
             "noClass": "No class — {reason}",
             "substitution": "Runs a {weekday} schedule",
             "dueKeyLabel": "Key to due items",
-            "graded": "graded",
             "notGraded": "not graded",
             "dueKindTest": "Test",
             "dueKindGraded": "Graded",

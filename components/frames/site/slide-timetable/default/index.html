@@ -76,7 +76,7 @@
           outline-offset: calc(var(--border-width) * -1);
         }
       }
-      .wllvxxxpt {
+      .wcj1ugndp {
         inline-size: 100%;
         border-collapse: separate;
         border-spacing: 0;
@@ -85,62 +85,68 @@
         overflow: hidden;
         margin-block: 0;
       }
-      .wllvxxxpt :is(th, td) {
+      .wcj1ugndp :is(th, td) {
         border: 0;
         border-block-start: var(--thin-border-width) solid var(--color-border);
         padding: 0.7em 1em;
         text-align: start;
         vertical-align: top;
       }
-      .wllvxxxpt thead th {
+      .wcj1ugndp thead th {
         border-block-start: 0;
         border-block-end: var(--border-width) solid var(--color-accent);
         background-color: var(--color-surface);
         font-weight: var(--font-weight--semi-bold);
       }
-      .wllvxxxpt tbody th {
+      .wcj1ugndp tbody th {
         inline-size: 11em;
         background-color: var(--color-surface);
         font-weight: var(--font-weight);
       }
-      .wllvxxxpt tbody td + td {
+      .wcj1ugndp tbody td + td {
         border-inline-start: var(--thin-border-width) solid var(--color-border);
       }
-      .wllvxxxpt .week-title {
+      .wcj1ugndp .week-title {
         display: block;
         font-weight: var(--font-weight--semi-bold);
       }
-      .wllvxxxpt .week-of,
-      .wllvxxxpt .date,
-      .wllvxxxpt .empty,
-      .wllvxxxpt .draft,
-      .wllvxxxpt .notes {
+      .wcj1ugndp .week-of,
+      .wcj1ugndp .date,
+      .wcj1ugndp .empty,
+      .wcj1ugndp .draft,
+      .wcj1ugndp .notes {
         color: var(--color-text-muted);
         font-size: max(var(--base-font-size), 0.9em);
       }
-      .wllvxxxpt .week-of {
+      .wcj1ugndp .week-of {
         display: block;
       }
-      .wllvxxxpt td p {
+      .wcj1ugndp td p {
         margin: 0;
       }
-      .wllvxxxpt .deck-title {
+      .wcj1ugndp .deck-title {
         margin-block-start: 0.15em;
         font-size: max(var(--base-font-size), 1.05em);
       }
-      .wllvxxxpt .draft,
-      .wllvxxxpt .notes {
+      .wcj1ugndp .draft,
+      .wcj1ugndp .notes {
         margin-block-start: 0.25em;
       }
+      .wcj1ugndp :is(.deck-title, .notes) a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25em;
+        min-block-size: var(--target-min);
+      }
       @media screen and (width <= 640px) {
-        .wllvxxxpt,
-        .wllvxxxpt tbody,
-        .wllvxxxpt tr,
-        .wllvxxxpt th,
-        .wllvxxxpt td {
+        .wcj1ugndp,
+        .wcj1ugndp tbody,
+        .wcj1ugndp tr,
+        .wcj1ugndp th,
+        .wcj1ugndp td {
           display: block;
         }
-        .wllvxxxpt thead {
+        .wcj1ugndp thead {
           position: absolute;
           inline-size: 1px;
           block-size: 1px;
@@ -148,17 +154,17 @@
           clip-path: inset(50%);
           white-space: nowrap;
         }
-        .wllvxxxpt tbody th {
+        .wcj1ugndp tbody th {
           inline-size: auto;
           border-block-end: var(--border-width) solid var(--color-accent);
         }
-        .wllvxxxpt tbody tr + tr th {
+        .wcj1ugndp tbody tr + tr th {
           border-block-start: var(--thin-border-width) solid var(--color-border);
         }
-        .wllvxxxpt tbody td + td {
+        .wcj1ugndp tbody td + td {
           border-inline-start: 0;
         }
-        .wllvxxxpt td::before {
+        .wcj1ugndp td::before {
           content: attr(data-day);
           display: block;
           font-weight: var(--font-weight--semi-bold);
@@ -171,7 +177,7 @@
     <main id="main-content" tabindex="-1" style="margin: 0; padding: 1rem; min-block-size: 0">
       <h1 class="sr-only">slide-timetable: Default</h1>
 
-      <table data-today-host="timetable" class="slide-timetable wllvxxxpt">
+      <table data-today-host="timetable" class="slide-timetable wcj1ugndp">
         <caption class="sr-only">
           Every slide deck for this section, one row per week and one column per meeting day
         </caption>
@@ -321,7 +327,6 @@
           "hint": "Space reveals · arrows move",
           "defShown": "Definition shown for {term}",
           "symbols": "Symbols",
-          "glossary": "Glossary",
           "courseGlossary": "Course glossary",
           "slidesOnly": "Slides only",
           "finalExam": "Final exam",
@@ -382,7 +387,6 @@
           "noClass": "No class — {reason}",
           "substitution": "Runs a {weekday} schedule",
           "dueKeyLabel": "Key to due items",
-          "graded": "graded",
           "notGraded": "not graded",
           "dueKindTest": "Test",
           "dueKindGraded": "Graded",

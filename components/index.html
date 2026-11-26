@@ -695,8 +695,8 @@
         <a rel="home" href="../">course-kit</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-UjHzj">
-            <span data-label="" id="norn-header-webc-UjHzj">Primary</span>
+          <nav aria-labelledby="norn-header-webc-9dK7P">
+            <span data-label="" id="norn-header-webc-9dK7P">Primary</span>
 
             <a href="../#quick-start">Quick start</a>
             <a href="../#features">Features</a>
@@ -718,8 +718,8 @@
         <details open="true">
           <summary>Building blocks</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-kfna2">
-              <span data-label="" id="norn-side-nav-webc-kfna2"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-UmzlN">
+              <span data-label="" id="norn-side-nav-webc-UmzlN"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -774,10 +774,13 @@
         <details open="true">
           <summary>Site sections</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-3LaNY">
-              <span data-label="" id="norn-side-nav-webc-3LaNY"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-jhbeE">
+              <span data-label="" id="norn-side-nav-webc-jhbeE"><span>Site sections</span></span>
 
               <ul>
+                <li>
+                  <a href="/course-kit/components/components/site/book-appointment/"><span>book-appointment</span></a>
+                </li>
                 <li>
                   <a href="/course-kit/components/components/site/copyright/"><span>copyright</span></a>
                 </li>
@@ -842,8 +845,8 @@
         <details open="true">
           <summary>Practice worksheets</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-mMm0w">
-              <span data-label="" id="norn-side-nav-webc-mMm0w"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-D9DSv">
+              <span data-label="" id="norn-side-nav-webc-D9DSv"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -991,7 +994,7 @@
             </li>
             <li>
               <a href="/course-kit/components/components/ui/download-button/"><code>download-button</code></a>
-              <span>A download link with an icon. The label is the slot.</span>
+              <span>A download link with an icon. The label is the slot. With no file there is no link: a download button that points nowhere is not shown.</span>
             </li>
             <li>
               <a href="/course-kit/components/components/ui/eyebrow/"><code>eyebrow</code></a>
@@ -1039,6 +1042,10 @@
           <p>Parts of a course site. Most read the course's data files, so they work with no props.</p>
           <ul role="list" class="index">
             <li>
+              <a href="/course-kit/components/components/site/book-appointment/"><code>book-appointment</code></a>
+              <span>The one-on-one booking button: a link to <code>instructor.booking.url</code>, labelled by <code>instructor.booking.label</code> or the <code>instructor.bookAnAppointment</code> copy key. Renders nothing when the instructor has no <code>booking</code>. <code>&lt;instructor&gt;</code> places it as the last line of the panel; a page, such as the contact page, can place it anywhere.</span>
+            </li>
+            <li>
               <a href="/course-kit/components/components/site/copyright/"><code>copyright</code></a>
               <span>The copyright line: the build year and the site's author. Reads <code>site</code>.</span>
             </li>
@@ -1076,7 +1083,7 @@
             </li>
             <li>
               <a href="/course-kit/components/components/site/instructor/"><code>instructor</code></a>
-              <span>The instructor's details: photo, office, contact and hours. Reads <code>instructor</code>.</span>
+              <span>The instructor's details: photo, office, contact and hours, then the booking button (<code>instructor.booking</code>) as the panel's last line when there is one. Reads <code>instructor</code>.</span>
             </li>
             <li>
               <a href="/course-kit/components/components/site/masthead/"><code>masthead</code></a>
@@ -1096,15 +1103,18 @@
             </li>
             <li>
               <a href="/course-kit/components/components/site/schedule-overview/"><code>schedule-overview</code></a>
-              <span>The schedule page's header: the meeting line, the key dates, and a row of jump links (Today, then one per month). Props are read in the template, since a setup script cannot see them.</span>
+              <span>The schedule page's header: the meeting line, the key dates, and a sticky row of one jump link per month, with the Hide past weeks toggle at its end. The month on screen is marked as the page scrolls. The row is sticky from 40em wide and static below it, where it would take too much of a phone's height. Props are read in the template, since a setup script cannot see them.</span>
             </li>
             <li>
               <a href="/course-kit/components/components/site/schedule-weeks/"><code>schedule-weeks</code></a>
-              <span>Every week of the term as a bordered block: one row per class meeting (when, topics, and what that class needs: reading, due items, materials) and a footer for the week's own resources. A "This week" card, the hide-past toggle and the Now and Done flags are added by the script. Deadlines carry a chip for their <code>kind</code>; the key above the weeks lists the kinds in use. Wording comes from <code>copy.schedule</code>.</span>
+              <span
+                >Every week of the term as a bordered block: one row per class meeting (when, topics, and what that class needs: reading, due items, materials) and a footer for the week's own resources. A "This week" card and the Now and Done flags are added by the script, which also works the hide-past toggle that &lt;schedule-overview&gt; puts in its sticky row. Deadlines carry a chip for their <code>kind</code>; the key above the weeks lists the kinds in use. Wording comes from
+                <code>copy.schedule</code>.</span
+              >
             </li>
             <li>
               <a href="/course-kit/components/components/site/site-footer/"><code>site-footer</code></a>
-              <span>The page footer: course, institution, term, copyright and the links. Reads <code>course</code>, <code>site</code> and <code>term</code>.</span>
+              <span>The page footer: course, institution, term, copyright and the links. Reads <code>course</code>, <code>site</code> and <code>term</code>. With <code>institution.sourceUrl</code> set it also links to the course's source.</span>
             </li>
             <li>
               <a href="/course-kit/components/components/site/slide-timetable/"><code>slide-timetable</code></a>

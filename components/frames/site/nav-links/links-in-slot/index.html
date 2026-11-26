@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="/course-kit/components/styles/prism-dark.css" media="(prefers-color-scheme: dark)" data-prism-theme="dark" />
     <link rel="stylesheet" href="/course-kit/components/styles/base.css" />
     <style>
-      .wyz4foyhb:not(:has(li)) {
+      .wrqxv4ajc:not(:has(li)) {
         display: none;
       }
-      .wyz4foyhb {
+      .wrqxv4ajc {
         display: flex;
         gap: calc(var(--container-space) * 3.5);
         ul {
@@ -74,7 +74,7 @@
           }
         }
       }
-      .wyz4foyhb[stacked] ul {
+      .wrqxv4ajc[stacked] ul {
         display: flex;
         flex-wrap: wrap;
         justify-content: start;
@@ -82,11 +82,11 @@
         column-gap: calc(var(--content-space) * 2);
         row-gap: calc(var(--content-space) * 0.35);
       }
-      .wyz4foyhb[column] {
+      .wrqxv4ajc[column] {
         padding: 0;
         line-height: inherit;
       }
-      .wyz4foyhb[column] ul {
+      .wrqxv4ajc[column] ul {
         display: flex;
         flex-direction: column;
         align-items: start;
@@ -101,11 +101,22 @@
           row-gap: calc(var(--content-space) * 0.25);
         }
       }
-      .wyz4foyhb[column] li {
+      .wrqxv4ajc[column] li {
         display: block;
       }
-      .wyz4foyhb[column] a,
-      .wyz4foyhb[column] a:visited {
+      @media screen and (width > 768px) {
+        .wrqxv4ajc[column][two-column] ul {
+          display: block;
+          columns: 2;
+          column-gap: calc(var(--content-space) * 2);
+        }
+        .wrqxv4ajc[column][two-column] li {
+          break-inside: avoid;
+          margin-block-end: calc(var(--content-space) * 0.35);
+        }
+      }
+      .wrqxv4ajc[column] a,
+      .wrqxv4ajc[column] a:visited {
         margin: 0;
         padding-inline: var(--link-pad, 0);
         border: none;
@@ -113,30 +124,30 @@
         line-height: inherit;
         font-size: max(var(--base-font-size), 1em);
         color: inherit;
-        .wyz4foyhb &[aria-current="page"] {
+        .wrqxv4ajc &[aria-current="page"] {
           padding-inline: var(--link-pad, 0);
           background: none;
           color: var(--color-accent-text);
         }
       }
-      .wyz4foyhb[data-context="hero"][column] {
+      .wrqxv4ajc[data-context="hero"][column] {
         --link-pad: 0.85em;
       }
-      .wyz4foyhb[data-context="hero"][column] a[href] {
+      .wrqxv4ajc[data-context="hero"][column] a[href] {
         border-radius: var(--radius-pill);
       }
-      .wyz4foyhb[data-context="hero"][column] a[href][aria-current="page"] {
+      .wrqxv4ajc[data-context="hero"][column] a[href][aria-current="page"] {
         background-color: var(--color-accent-secondary);
         color: var(--color-on-accent-secondary);
         text-decoration: none;
         font-weight: var(--font-weight--semi-bold);
         --color-focus-ring: var(--color-on-accent-secondary);
       }
-      .wyz4foyhb[data-context="hero"][column] a[href]:not([aria-current="page"]):hover {
+      .wrqxv4ajc[data-context="hero"][column] a[href]:not([aria-current="page"]):hover {
         background-color: color-mix(in oklab, var(--color-accent-secondary) 10%, transparent);
       }
       @media (forced-colors: active) {
-        .wyz4foyhb[data-context="hero"][column] a[href][aria-current="page"] {
+        .wrqxv4ajc[data-context="hero"][column] a[href][aria-current="page"] {
           forced-color-adjust: none;
           background: SelectedItem;
           color: SelectedItemText;
@@ -149,7 +160,7 @@
     <main id="main-content" tabindex="-1" style="margin: 0; padding: 1rem; min-block-size: 0">
       <h1 class="sr-only">nav-links: Links in the slot</h1>
 
-      <nav class="wyz4foyhb">
+      <nav class="wrqxv4ajc">
         <ul>
           <li><a href="#">Home</a></li>
           <li><a href="#">Schedule</a></li>
@@ -243,7 +254,6 @@
           "hint": "Space reveals · arrows move",
           "defShown": "Definition shown for {term}",
           "symbols": "Symbols",
-          "glossary": "Glossary",
           "courseGlossary": "Course glossary",
           "slidesOnly": "Slides only",
           "finalExam": "Final exam",
@@ -304,7 +314,6 @@
           "noClass": "No class — {reason}",
           "substitution": "Runs a {weekday} schedule",
           "dueKeyLabel": "Key to due items",
-          "graded": "graded",
           "notGraded": "not graded",
           "dueKindTest": "Test",
           "dueKindGraded": "Graded",

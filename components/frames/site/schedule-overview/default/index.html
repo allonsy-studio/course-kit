@@ -76,57 +76,16 @@
           outline-offset: calc(var(--border-width) * -1);
         }
       }
-      .eyebrow {
-        font-size: var(--font-size-6);
-        text-transform: uppercase;
-        text-decoration: none;
-        letter-spacing: 0.08em;
-        font-weight: var(--font-weight--semi-bold);
-        color: var(--color-text-muted);
-        margin-block: 0;
-      }
-      /* The primary action, shown only once a #today exists. The :not(:has())
-	   form outranks a host's own `a` rules; without :has() the plain rule
-	   hides it. */
-      .today-link,
-      :root:not(:has(#today)) .today-link {
-        display: none;
-      }
-
-      :root:has(#today) .today-link {
-        display: grid;
-        place-items: center;
-        min-inline-size: var(--target-min);
-        min-block-size: var(--target-min);
-        padding-inline: 1em;
-        border: var(--thin-border-width) solid var(--color-accent);
-        border-radius: var(--standard-border-radius);
-        background-color: var(--color-accent);
-        color: var(--color-on-accent);
-        font-weight: var(--font-weight--semi-bold);
-        text-decoration: none;
-
-        &:is(:hover, :focus-visible) {
-          border-color: var(--color-text);
-          text-decoration: underline;
-        }
-      }
-
-      @media print {
-        :root:has(#today) .today-link {
-          display: none;
-        }
-      }
-      .wcqrkbqid > :where(.meets) {
+      .wjobwkjac > :where(.meets) {
         max-inline-size: 70ch;
       }
-      .wcqrkbqid .meets {
+      .wjobwkjac .meets {
         display: flex;
         flex-wrap: wrap;
         gap: 0 1em;
         color: var(--color-text-muted);
       }
-      .wcqrkbqid .key-dates {
+      .wjobwkjac .key-dates {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(min(100%, 18em), 1fr));
         gap: var(--content-space) calc(var(--content-space) * 1.5);
@@ -170,7 +129,47 @@
           font-style: italic;
         }
       }
-      .wcqrkbqid .schedule-jump {
+      .wjobwkjac .schedule-bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.25rem var(--content-space);
+        margin-block: var(--content-space);
+        @media screen and (width >= 40em) {
+          position: sticky;
+          inset-block-start: 0;
+          z-index: 10;
+          margin-block: 0;
+          padding-block: 0.4rem;
+          background-color: var(--color-page);
+          border-block-end: var(--thin-border-width) solid var(--color-border-strong);
+        }
+      }
+      @media screen and (width >= 40em) {
+        .wjobwkjac {
+          display: contents;
+        }
+        .wjobwkjac > .schedule-bar + * {
+          margin-block-start: var(--content-space);
+        }
+      }
+      .wjobwkjac .schedule-jump {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0 var(--content-space);
+        min-inline-size: 0;
+        h2 {
+          margin: 0;
+          font-family: var(--sans-font);
+          font-size: var(--font-size-6);
+          font-weight: var(--font-weight--semi-bold);
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: var(--color-text-muted);
+        }
+
         ul {
           display: flex;
           flex-wrap: wrap;
@@ -196,12 +195,78 @@
             background-color: var(--color-surface);
             border-color: var(--color-accent);
           }
+
+          /* The month on screen, set by the script as the page scrolls: a thick underline in the location accent. A shape, not a color alone, and
+			   it changes no size, so nothing moves when the mark does. */
+          &[aria-current] {
+            text-decoration: underline;
+            text-decoration-color: var(--color-accent-secondary);
+            text-decoration-thickness: 0.2em;
+            text-underline-offset: 0.3em;
+          }
+        }
+      }
+      .wjobwkjac .schedule-toggle {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.25rem var(--content-space);
+        .wjobwkjac &[hidden] {
+          display: none;
+        }
+      }
+      .wjobwkjac .schedule-status {
+        margin: 0;
+        color: var(--color-text-muted);
+        @media screen and (width < 48em) {
+          position: absolute;
+          inline-size: 1px;
+          block-size: 1px;
+          overflow: hidden;
+          clip-path: inset(50%);
+          white-space: nowrap;
+        }
+      }
+      .wjobwkjac .hide-past {
+        min-block-size: var(--target-min);
+        min-inline-size: var(--target-min);
+        padding-inline: 1.1em;
+        border: var(--thin-border-width) solid var(--color-border-strong);
+        border-radius: var(--radius-pill);
+        background: transparent;
+        color: var(--color-text);
+        font: inherit;
+        font-weight: var(--font-weight--semi-bold);
+        cursor: pointer;
+        .wjobwkjac &[aria-pressed="true"] {
+          border-color: var(--color-accent-secondary);
+          background-color: var(--color-accent-secondary);
+          color: var(--color-on-accent-secondary);
+          --color-focus-ring: var(--color-on-accent-secondary);
+        }
+      }
+      @media (forced-colors: active) {
+        .wjobwkjac .schedule-bar {
+          border-block-end-color: CanvasText;
+        }
+        .wjobwkjac .schedule-jump a[aria-current] {
+          text-decoration-color: Highlight;
+        }
+        .wjobwkjac .hide-past[aria-pressed="true"] {
+          forced-color-adjust: none;
+          background: SelectedItem;
+          border-color: SelectedItem;
+          color: SelectedItemText;
         }
       }
       @media print {
-        .wcqrkbqid .schedule-jump {
+        .wjobwkjac .schedule-bar {
           display: none;
         }
+      }
+      /* The page scrolls under the sticky row: anchors and focused controls stop below it (WCAG 2.4.11, 2.4.12). The script sets the height. */
+      html:has(.schedule-bar) {
+        scroll-padding-block-start: calc(var(--schedule-bar-height, 0px) + 1rem);
       }
     </style>
     <script src="/course-kit/components/preview-assets/tokens.js"></script>
@@ -210,12 +275,7 @@
     <main id="main-content" tabindex="-1" style="margin: 0; padding: 1rem; min-block-size: 0">
       <h1 class="sr-only">schedule-overview: Default</h1>
 
-      <header class="schedule-overview wcqrkbqid">
-        <p class="eyebrow separators">
-          <span>Fall 2026</span>
-          <span>CS101</span>
-        </p>
-
+      <header class="schedule-overview wjobwkjac">
         <h1>Schedule</h1>
         <p class="meets">
           <span>Tuesday &amp; Thursday</span>
@@ -236,16 +296,19 @@
           </div>
         </section>
 
-        <nav aria-label="Jump to" class="schedule-jump">
-          <h2>Jump to</h2>
-          <ul role="list">
-            <li>
-              <a href="#today" class="today-link">Today</a>
-            </li>
-            <li><a href="#week-1">August</a></li>
-            <li><a href="#week-2">September</a></li>
-          </ul>
-        </nav>
+        <div data-schedule-bar="" class="schedule-bar">
+          <nav aria-label="Jump to" class="schedule-jump">
+            <h2>Jump to</h2>
+            <ul role="list">
+              <li><a href="#week-1" data-first-week="1" data-last-week="1">August</a></li>
+              <li><a href="#week-2" data-first-week="2" data-last-week="3">September</a></li>
+            </ul>
+          </nav>
+          <div data-schedule-tools="" hidden="" class="schedule-toggle">
+            <p data-schedule-status="" role="status" class="schedule-status"></p>
+            <button type="button" data-hide-past="" aria-pressed="false" class="hide-past">Hide past weeks</button>
+          </div>
+        </div>
       </header>
     </main>
     <script type="application/json" id="copy-data">
@@ -335,7 +398,6 @@
           "hint": "Space reveals · arrows move",
           "defShown": "Definition shown for {term}",
           "symbols": "Symbols",
-          "glossary": "Glossary",
           "courseGlossary": "Course glossary",
           "slidesOnly": "Slides only",
           "finalExam": "Final exam",
@@ -396,7 +458,6 @@
           "noClass": "No class — {reason}",
           "substitution": "Runs a {weekday} schedule",
           "dueKeyLabel": "Key to due items",
-          "graded": "graded",
           "notGraded": "not graded",
           "dueKindTest": "Test",
           "dueKindGraded": "Graded",
@@ -573,6 +634,56 @@
         } catch {
           // Never let the marker break the scripts bundled after it.
         }
+      })();
+      /**
+       * Marks the month on screen in the row with `aria-current="location"`: the month of the last week block whose top has reached the line where an
+       * anchor lands it, below the row; before the first week reaches it the first month, at the foot of the page the last month. Sets `--schedule-bar-height`
+       * for the page's scroll-padding while the row is sticky. It changes no size and runs no animation.
+       */
+      (() => {
+        const bar = document.querySelector("[data-schedule-bar]");
+        if (!bar || !bar.getClientRects().length) return;
+        const links = [...bar.querySelectorAll("a[data-first-week]")];
+        const weeks = [...document.querySelectorAll(".schedule-weeks .week[id^='week-']")];
+        if (!links.length || !weeks.length) return;
+        const range = links.map((link) => ({ link, first: Number(link.dataset.firstWeek), last: Number(link.dataset.lastWeek) }));
+        /** The month of a week: the latest month whose range holds it, so a week spanning two months reads as the second, where its link points. */
+        const monthOf = (number) => range.findLast(({ first, last }) => number >= first && number <= last) ?? range.at(-1);
+        const mark = () => {
+          const shown = weeks.filter((week) => !week.hidden);
+          if (!shown.length) return;
+          // Where an anchor lands a week's top: below the row, by the page's scroll-padding and the week's scroll-margin. The week is on screen once its top is at or above that line.
+          const line = (Number.parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0) + (Number.parseFloat(getComputedStyle(shown[0]).scrollMarginTop) || 0) + 1;
+          // The last week whose top has reached the line, or the first week before any has.
+          const week = shown.findLast((candidate) => candidate.getBoundingClientRect().top <= line) ?? shown[0];
+          // A page scrolled to its foot can leave the last week below the line: then the last month is the one on screen.
+          const bottomed = window.scrollY > 0 && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+          const current = week && !bottomed ? monthOf(Number(week.id.slice(5))) : range.at(-1);
+          for (const { link } of range) {
+            if (link === current.link) link.setAttribute("aria-current", "location");
+            else link.removeAttribute("aria-current");
+          }
+        };
+        const measure = () => document.documentElement.style.setProperty("--schedule-bar-height", getComputedStyle(bar).position === "sticky" ? `${Math.ceil(bar.getBoundingClientRect().height)}px` : "0px");
+        let queued = false;
+        addEventListener(
+          "scroll",
+          () => {
+            if (queued) return;
+            queued = true;
+            requestAnimationFrame(() => {
+              queued = false;
+              mark();
+            });
+          },
+          { passive: true },
+        );
+        new ResizeObserver(() => {
+          measure();
+          mark();
+        }).observe(bar);
+        measure();
+        mark();
       })();
       // assets/scripts/practice.js
       var { t } = window.ckCopy;

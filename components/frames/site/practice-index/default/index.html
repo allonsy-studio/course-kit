@@ -18,7 +18,35 @@
       <h1 class="sr-only">practice-index: Default</h1>
 
       <div class="practice-index">
-        <p class="muted">No practice sheets posted yet.</p>
+        <table data-practice="" class="table-light">
+          <caption class="sr-only">
+            Every practice sheet, with what it is for
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Practice sheet</th>
+              <th scope="col">For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">
+                <a href="/course-kit/components/practice/html-basics/">HTML basics</a>
+              </th>
+              <td>
+                <span>Headings, lists and links.</span>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">
+                <a href="/course-kit/components/practice/css-basics/">CSS basics</a>
+              </th>
+              <td>
+                <span>Selectors, the cascade and the box model.</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </main>
     <script type="application/json" id="copy-data">
@@ -108,7 +136,6 @@
           "hint": "Space reveals · arrows move",
           "defShown": "Definition shown for {term}",
           "symbols": "Symbols",
-          "glossary": "Glossary",
           "courseGlossary": "Course glossary",
           "slidesOnly": "Slides only",
           "finalExam": "Final exam",
@@ -169,7 +196,6 @@
           "noClass": "No class — {reason}",
           "substitution": "Runs a {weekday} schedule",
           "dueKeyLabel": "Key to due items",
-          "graded": "graded",
           "notGraded": "not graded",
           "dueKindTest": "Test",
           "dueKindGraded": "Graded",

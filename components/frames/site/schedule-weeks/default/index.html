@@ -76,18 +76,18 @@
           outline-offset: calc(var(--border-width) * -1);
         }
       }
-      .wjizog40i {
+      .wckdzjcz_ {
         --week-grid: 8.5em minmax(0, 7fr) minmax(0, 5fr);
         display: grid;
         gap: var(--content-space);
       }
-      .wjizog40i ul,
-      .wjizog40i ol {
+      .wckdzjcz_ ul,
+      .wckdzjcz_ ol {
         list-style: none;
         margin: 0;
         padding: 0;
       }
-      .wjizog40i .label {
+      .wckdzjcz_ .label {
         margin: 0 0 0.3em;
         color: var(--color-text-muted);
         font-size: var(--font-size-6);
@@ -95,14 +95,14 @@
         letter-spacing: 0.08em;
         text-transform: uppercase;
       }
-      .wjizog40i .week {
+      .wckdzjcz_ .week {
         margin: 0;
         padding: 0;
         border: var(--thin-border-width) solid var(--color-border);
         border-radius: var(--standard-border-radius);
         overflow: hidden;
       }
-      .wjizog40i .week-head {
+      .wckdzjcz_ .week-head {
         display: flex;
         flex-wrap: wrap;
         align-items: baseline;
@@ -116,12 +116,12 @@
           font-weight: var(--font-weight--medium);
         }
       }
-      .wjizog40i .week-of {
+      .wckdzjcz_ .week-of {
         margin: 0;
         color: var(--color-text-muted);
         font-size: max(var(--base-font-size), 0.9em);
       }
-      .wjizog40i .week-cols {
+      .wckdzjcz_ .week-cols {
         display: grid;
         grid-template-columns: var(--week-grid);
         gap: 0 1.5em;
@@ -136,13 +136,13 @@
           display: none;
         }
       }
-      .wjizog40i .meeting {
+      .wckdzjcz_ .meeting {
         display: grid;
         grid-template-columns: var(--week-grid);
         gap: 0.6em 1.5em;
         align-items: start;
         padding: 0.9em 1em;
-        .wjizog40i & + .meeting {
+        .wckdzjcz_ & + .meeting {
           border-block-start: var(--thin-border-width) solid var(--color-border);
         }
         @media (width <= 860px) {
@@ -158,7 +158,7 @@
           }
         }
       }
-      .wjizog40i .when {
+      .wckdzjcz_ .when {
         display: flex;
         flex-direction: column;
         margin: 0;
@@ -169,26 +169,26 @@
           align-items: baseline;
         }
       }
-      .wjizog40i .weekday {
+      .wckdzjcz_ .weekday {
         font-weight: var(--font-weight--semi-bold);
       }
-      .wjizog40i .date,
-      .wjizog40i .note,
-      .wjizog40i .no-class,
-      .wjizog40i .check {
+      .wckdzjcz_ .date,
+      .wckdzjcz_ .note,
+      .wckdzjcz_ .no-class,
+      .wckdzjcz_ .check {
         color: var(--color-text-muted);
         font-size: max(var(--base-font-size), 0.9em);
       }
-      .wjizog40i .note {
+      .wckdzjcz_ .note {
         font-style: italic;
       }
-      .wjizog40i .no-class {
+      .wckdzjcz_ .no-class {
         margin: 0;
       }
-      .wjizog40i .topics li + li {
+      .wckdzjcz_ .topics li + li {
         margin-block-start: 0.3em;
       }
-      .wjizog40i .for-class {
+      .wckdzjcz_ .for-class {
         display: grid;
         gap: 0.8em;
         font-size: max(var(--base-font-size), 0.94em);
@@ -202,18 +202,18 @@
           min-block-size: var(--target-min);
         }
       }
-      .wjizog40i .check {
+      .wckdzjcz_ .check {
         display: block;
       }
-      .wjizog40i .arrow {
+      .wckdzjcz_ .arrow {
         color: var(--color-accent-text);
         text-decoration: none;
         font-weight: var(--font-weight--medium);
-        .wjizog40i &:is(:hover, :focus-visible) {
+        .wckdzjcz_ &:is(:hover, :focus-visible) {
           text-decoration: underline;
         }
       }
-      .wjizog40i .week-resources {
+      .wckdzjcz_ .week-resources {
         padding: 0.8em 1em;
         border-block-start: var(--thin-border-width) solid var(--color-border);
         background-color: var(--color-surface);
@@ -231,46 +231,14 @@
           min-block-size: var(--target-min);
         }
       }
-      .wjizog40i .schedule-tools {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-        gap: calc(var(--gutter) * 2) var(--content-space);
-        .wjizog40i &[hidden] {
-          display: none;
-        }
-      }
-      .wjizog40i .schedule-status {
-        margin: 0;
-        color: var(--color-text-muted);
-      }
-      .wjizog40i .hide-past {
-        min-block-size: var(--target-min);
-        min-inline-size: var(--target-min);
-        padding-inline: 1.1em;
-        border: var(--thin-border-width) solid var(--color-border-strong);
-        border-radius: var(--radius-pill);
-        background: transparent;
-        color: var(--color-text);
-        font: inherit;
-        font-weight: var(--font-weight--semi-bold);
-        cursor: pointer;
-        .wjizog40i &[aria-pressed="true"] {
-          border-color: var(--color-accent-secondary);
-          background-color: var(--color-accent-secondary);
-          color: var(--color-on-accent-secondary);
-          --color-focus-ring: var(--color-on-accent-secondary);
-        }
-      }
-      .wjizog40i .this-week {
+      .wckdzjcz_ .this-week {
         display: grid;
         gap: var(--content-space);
         padding: calc(var(--content-space) * 1.4);
         border: var(--border-width) solid var(--color-accent-secondary);
         border-radius: calc(var(--standard-border-radius) * 4);
         background-color: var(--color-surface-accent-secondary);
-        .wjizog40i &[hidden] {
+        .wckdzjcz_ &[hidden] {
           display: none;
         }
         h3 {
@@ -285,13 +253,20 @@
         .week-of {
           font-weight: var(--font-weight);
         }
+
+        /* The week's own link is an operable target: 44px tall (WCAG 2.5.5). */
+        h3 a {
+          display: inline-flex;
+          align-items: center;
+          min-block-size: var(--target-min);
+        }
       }
-      .wjizog40i .this-days {
+      .wckdzjcz_ .this-days {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(min(100%, 16em), 1fr));
         gap: var(--content-space);
       }
-      .wjizog40i .this-day {
+      .wckdzjcz_ .this-day {
         display: flex;
         flex-direction: column;
         gap: 0.5em;
@@ -320,7 +295,7 @@
           font-weight: var(--font-weight--semi-bold);
         }
       }
-      .wjizog40i .day-flag {
+      .wckdzjcz_ .day-flag {
         padding: 0.05em 0.65em;
         border-radius: var(--radius-pill);
         background-color: var(--color-accent-secondary);
@@ -328,44 +303,50 @@
         font-size: max(var(--base-font-size), 0.85em);
         font-weight: var(--font-weight--semi-bold);
       }
-      .wjizog40i .this-groups {
+      .wckdzjcz_ .this-groups {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(min(100%, 16em), 1fr));
         gap: var(--content-space);
         padding-block-start: var(--content-space);
         border-block-start: var(--thin-border-width) solid var(--color-border-strong);
-        .wjizog40i &[hidden],
-        .wjizog40i [hidden] {
+        .wckdzjcz_ &[hidden],
+        .wckdzjcz_ [hidden] {
           display: none;
         }
         li + li {
           margin-block-start: 0.4em;
         }
+
+        /* A link that heads its item is a 44px target; the chip and the check line sit beside it. */
+        li > a {
+          display: inline-flex;
+          align-items: center;
+          min-block-size: var(--target-min);
+        }
       }
-      .wjizog40i .week[data-current] {
+      .wckdzjcz_ .week[data-current] {
         border-color: var(--color-accent-secondary);
         box-shadow: inset var(--border-width) 0 0 var(--color-accent-secondary);
       }
-      .wjizog40i .week-flag {
+      .wckdzjcz_ .week-flag {
         padding: 0.1em 0.65em;
         border-radius: var(--radius-pill);
         font-size: max(var(--base-font-size), 0.85em);
         font-weight: var(--font-weight--semi-bold);
-        .wjizog40i &.now {
+        .wckdzjcz_ &.now {
           background-color: var(--color-accent-secondary);
           color: var(--color-on-accent-secondary);
         }
-        .wjizog40i &.done {
+        .wckdzjcz_ &.done {
           color: var(--color-text-muted);
         }
-        .wjizog40i &.done::before {
+        .wckdzjcz_ &.done::before {
           content: "✓ "/"";
         }
       }
       @media print {
-        .wjizog40i .this-week,
-        .wjizog40i .schedule-tools,
-        .wjizog40i .week-cols {
+        .wckdzjcz_ .this-week,
+        .wckdzjcz_ .week-cols {
           display: none;
         }
       }
@@ -378,11 +359,7 @@
       <p style="margin: 0 0 1rem; padding: 0.5rem 0.75rem; border-inline-start: 3px solid var(--color-accent); font-size: 0.9em" class="story-note">Built from the starter course and today's date: once the starter's three weeks are over, every week reads Done.</p>
       <h2>Page</h2>
 
-      <div data-today-host="meetings" class="schedule-weeks wjizog40i">
-        <div data-schedule-tools="" hidden="" class="schedule-tools screen-only">
-          <p data-schedule-status="" role="status" class="schedule-status"></p>
-          <button type="button" data-hide-past="" aria-pressed="false" class="hide-past">Hide past weeks</button>
-        </div>
+      <div data-today-host="meetings" class="schedule-weeks wckdzjcz_">
         <section data-this-week="" aria-labelledby="this-week-heading" hidden="" class="this-week screen-only">
           <header class="this-head">
             <p data-this-label="" class="label">This week</p>
@@ -401,7 +378,8 @@
           </div>
         </section>
         <ul aria-label="Key to due items" role="list" class="due-key">
-          <li><span data-kind="test" class="due-chip">Test</span> <span>graded</span></li>
+          <li><span data-kind="test" class="due-chip">Test</span></li>
+          <li><span data-kind="reading" class="due-chip">Reading check</span></li>
         </ul>
         <section id="week-1" aria-labelledby="week-1-heading" data-week-dates="2026-08-25 2026-08-27" class="week">
           <header class="week-head">
@@ -487,9 +465,10 @@
           <footer class="week-resources">
             <p class="label">This week’s resources</p>
             <ul role="list">
-              <li data-reading="">
+              <li data-reading="" class="due-item" data-kind="reading">
+                <span data-kind="reading" class="due-chip">Reading check</span>
                 <a href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics">MDN: HTML basics</a>
-                <span class="check">3 questions, due by the next class</span>
+                <span class="check">3 questions, due by the next class, due Thu, Sep 3</span>
               </li>
             </ul>
           </footer>
@@ -631,7 +610,6 @@
           "hint": "Space reveals · arrows move",
           "defShown": "Definition shown for {term}",
           "symbols": "Symbols",
-          "glossary": "Glossary",
           "courseGlossary": "Course glossary",
           "slidesOnly": "Slides only",
           "finalExam": "Final exam",
@@ -692,7 +670,6 @@
           "noClass": "No class — {reason}",
           "substitution": "Runs a {weekday} schedule",
           "dueKeyLabel": "Key to due items",
-          "graded": "graded",
           "notGraded": "not graded",
           "dueKindTest": "Test",
           "dueKindGraded": "Graded",
@@ -883,8 +860,9 @@
           const campusToday = () => new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone });
           const { t } = window.ckCopy;
           const root = document.querySelector(".schedule-weeks");
-          const tools = root?.querySelector("[data-schedule-tools]");
-          if (!root || !tools) return;
+          if (!root) return;
+          // The hide-past toggle is in <schedule-overview>'s row, above the weeks; with no overview there is no toggle.
+          const tools = document.querySelector("[data-schedule-tools]");
           const today = campusToday();
           const weeks = [...root.querySelectorAll(".week[data-week-dates]")].map((el) => ({ el, dates: el.dataset.weekDates.split(/\s+/).filter(Boolean).sort() })).filter(({ dates }) => dates.length);
           const make = (tag, className, text) => {
@@ -961,15 +939,15 @@
           }
 
           // One label, "Hide past weeks"; the state is aria-pressed. Not saved: every visit starts with all weeks shown.
-          const button = tools.querySelector("[data-hide-past]");
-          const status = tools.querySelector("[data-schedule-status]");
+          const button = tools?.querySelector("[data-hide-past]");
+          const status = tools?.querySelector("[data-schedule-status]");
           const past = weeks.filter(({ el }) => el.hasAttribute("data-past"));
           const apply = (hide) => {
             button.setAttribute("aria-pressed", String(hide));
             for (const { el } of past) el.hidden = hide;
             status.textContent = hide ? t("schedule", "pastHidden", { count: past.length }) : t("schedule", "weeksDone", { done: past.length, total: weeks.length });
           };
-          if (past.length) {
+          if (button && status && past.length) {
             apply(false);
             button.addEventListener("click", () => apply(button.getAttribute("aria-pressed") !== "true"));
             tools.hidden = false;
