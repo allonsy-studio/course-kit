@@ -3,9 +3,11 @@
 // `yarn docs:test` builds `_a11y` and serves it before Cypress starts (`scripts/browser-run.js`); this file only reads it.
 
 import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { join, sep } from "node:path";
+import { join } from "node:path";
 
 import { defineConfig } from "cypress";
+
+import { selectPages } from "./lib/affected-pages.js";
 
 const PORT = Number(process.env.BROWSER_PORT || 8080);
 const BUILD_DIR = join(import.meta.dirname, "_a11y");
@@ -29,8 +31,6 @@ const parseShard = (value) => {
 	return { index, count };
 };
 
-const toUrl = (file) => `/${file.split(sep).join("/").replace(/(^|\/)index\.html$/, "$1")}`;
-
 export default defineConfig({
 	// Cypress's bundled Electron: Chromium, so media emulation works, and its version moves only with Cypress, not with the runner image.
 	defaultBrowser: "electron",
@@ -50,13 +50,14 @@ export default defineConfig({
 			);
 			if (!up) throw new Error(`Nothing is serving the audit build at ${config.baseUrl}; ${hint}.`);
 
-			// Every built page, or with BROWSER_SHARD every count-th one from the index-th, so pages of one kind spread across the shards.
+			// Every built page, or on a pull request only the affected ones (the workflow supplies the base build and the changed
+			// files); with BROWSER_SHARD every count-th of those from the index-th, so pages of one kind spread across the shards.
 			const { index, count } = parseShard(process.env.BROWSER_SHARD);
-			config.env.pages = readdirSync(BUILD_DIR, { recursive: true })
-				.filter((f) => f.endsWith(".html"))
-				.map(toUrl)
-				.sort()
-				.filter((_, i) => i % count === index - 1);
+			const selected = selectPages({ headDir: BUILD_DIR, env: process.env });
+			config.env.pages = selected.pages.filter((_, i) => i % count === index - 1);
+			const summary = `Browser pages: ${selected.reason}; shard ${index}/${count} tests ${config.env.pages.length}.`;
+			console.log(`\n${summary}\n`);
+			if (process.env.GITHUB_ACTIONS) console.log(`::notice title=Browser (${index}/${count})::${summary.replace(/%/g, "%25").replace(/\r/g, "%0D").replace(/\n/g, "%0A")}`);
 			if (index > 1) config.specPattern = PAGE_SPECS.map((file) => `cypress/e2e/${file}`);
 
 			on("task", {

@@ -2,7 +2,8 @@ name: Test
 
 # Lint and unit tests on each supported Node version, and the browser tests (`yarn docs:test`: the accessibility
 # audit and the layout, state and print checks). The browser tests run in four shards of about a quarter of the
-# pages each; the first also runs the specs that do not read the page list. Pages publishes without waiting for them.
+# pages each; the first also runs the specs that do not read the page list. On a pull request the page list holds only
+# the pages the change affects (docs/accessibility.md). Pages publishes without waiting for them.
 
 on:
     pull_request:
@@ -62,8 +63,66 @@ jobs:
             - name: Test
               run: yarn test
 
+    # Decides what the shards test, in a job that checks out and runs no project code, so the shards need no pull request
+    # scope. The label is read when the job runs, not taken from the event, so a rerun after adding it sees it. If the read
+    # fails, it counts as set: a failed read tests more, never fewer, pages. The filter counts the changed files outside the
+    # content paths (the only place they are listed), from the pull request's file list. If it fails, the count is empty and
+    # every page is tested.
+    scope:
+        name: Scope
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        permissions:
+            pull-requests: read
+        outputs:
+            full: ${{ steps.read.outputs.full }}
+            outside: ${{ steps.filter.outputs.outside }}
+            outside_count: ${{ steps.filter.outputs.outside_count }}
+        steps:
+            - name: Read the full-audit label
+              id: read
+              env:
+                  GH_TOKEN: ${{ github.token }}
+                  PR: ${{ github.event.pull_request.number }}
+                  EVENT: ${{ github.event_name }}
+              run: |
+                  full=0
+                  if [ "$EVENT" = pull_request ]; then
+                      labels=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR/labels" --jq '.[].name') || labels='full-audit'
+                      if grep -qx full-audit <<<"$labels"; then
+                          full=1
+                      fi
+                  fi
+                  echo "full=$full" >> "$GITHUB_OUTPUT"
+                  echo "full-audit: $full"
+
+            # Content paths: what the built pages show and nothing else, so comparing builds finds every page they change.
+            # The docs, changesets, README and changelog are not read by either build. Any other change tests every page.
+            - name: Count the changed files outside the content paths
+              id: filter
+              if: github.event_name == 'pull_request'
+              continue-on-error: true
+              uses: dorny/paths-filter@f3360c560367c9daf72b88c0e6164162034c5721 # v4
+              with:
+                  predicate-quantifier: some-with-excludes
+                  filters: |
+                      outside:
+                          - '**'
+                          - '!website/content/**'
+                          - '!website/_data/**'
+                          - '!preview/content/**'
+                          - '!preview/stories/**'
+                          - '!preview/_slides/**'
+                          - '!preview/_data/**'
+                          - '!examples/starter/_data/**'
+                          - '!docs/**'
+                          - '!.changeset/**'
+                          - '!README.md'
+                          - '!CHANGELOG.md'
+
     browser-shard:
         name: Browser (${{ matrix.shard }}/4)
+        needs: scope
         runs-on: ubuntu-latest
         timeout-minutes: 30
         strategy:
@@ -72,10 +131,12 @@ jobs:
                 shard: [1, 2, 3, 4]
 
         steps:
+            # Two commits: a pull request's merge commit and its base (HEAD^1), to compare their builds.
             - name: Check out code
               uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
               with:
                   persist-credentials: false
+                  fetch-depth: 2
 
             - name: Enable Corepack
               run: corepack enable
@@ -90,10 +151,26 @@ jobs:
             - name: Install dependencies
               run: yarn install --immutable
 
+            # Only when every changed file is content and the full-audit label is not set: the base's audit site, built the
+            # way the head's is. A failure here tests every page (`website/lib/affected-pages.js`).
+            - name: Build the base
+              if: needs.scope.outputs.outside == 'false' && needs.scope.outputs.full != '1'
+              continue-on-error: true
+              run: |
+                  git worktree add --detach "$RUNNER_TEMP/base" HEAD^1
+                  ln -s "$PWD/node_modules" "$RUNNER_TEMP/base/node_modules"
+                  cd "$RUNNER_TEMP/base"
+                  node scripts/site.js audit
+
             - name: Run the browser tests
               run: yarn docs:test
               env:
                   BROWSER_SHARD: ${{ matrix.shard }}/4
+                  # 1 when the pull request has the full-audit label.
+                  AUDIT_ALL_PAGES: ${{ needs.scope.outputs.full }}
+                  # Pull requests only: test the pages that differ from the base's build. Pushes and the merge queue test every page.
+                  AUDIT_OUTSIDE_COUNT: ${{ needs.scope.outputs.outside_count }}
+                  AUDIT_BASE_DIR: ${{ github.event_name == 'pull_request' && format('{0}/base/website/_a11y', runner.temp) || '' }}
 
             - name: Save the failure screenshots
               if: failure()

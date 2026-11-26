@@ -31,6 +31,7 @@ Every component in the kit meets **WCAG 2.2 AAA**, or a stricter standard where 
 In CI they are the Browser jobs of the Test workflow (`.github/workflows/test.yml`), on every pull request, push to `main` and merge-queue run:
 
 - **Four shards**, Browser (1/4) to (4/4), each with about a quarter of the pages; about 4 minutes in all.
+- **A pull request tests only the pages it changes**, when it changes only content; see [Pull requests test only the pages they change](#pull-requests-test-only-the-pages-they-change).
 - **One check to require**, "Test / Browser", which passes only when all four shards do. A run cancelled by a newer push fails it rather than skipping it, since a skipped job would count as passing.
 - **Apart from Pages**, so a preview publishes in about a minute. A preview can be up before its tests have passed; the check is what to read.
 - **A new push to a pull request cancels its older run.** Runs on `main` and in the merge queue are never cancelled.
@@ -48,6 +49,53 @@ BROWSER_SHARD=1/4 yarn docs:test --no-build
 # terminal 2
 BROWSER_SHARD=2/4 BROWSER_PORT=8081 yarn docs:test --no-build
 ```
+
+### Pull requests test only the pages they change
+
+On a pull request that changes only content, the page list holds just the pages the change affects. Pushes to `main` and merge-queue runs always test every page.
+
+To test every page on a pull request anyway, add the `full-audit` label and rerun the jobs. The Scope job reads the label when it runs, so a rerun sees it. If it cannot read the labels, it counts the label as set. A local run tests every page unless you build a base and compare ([Compare with a base locally](#compare-with-a-base-locally)); `AUDIT_ALL_PAGES=1` forces every page there too.
+
+The pages are picked in this order:
+
+1. **Every page**, unless the pull request changes only content. The Scope job (`.github/workflows/test.yml`) counts the changed files outside the content paths, using [`dorny/paths-filter`](https://github.com/dorny/paths-filter) on the pull request's file list. The content paths are the filter's globs: the site's and the preview's content, data and stories, plus `docs/`, `.changeset/`, `README.md` and `CHANGELOG.md`, which neither build reads. A change to `components/`, `assets/`, `lib/`, `layouts/`, `glue/`, the preview's own code, any config, `package.json`, `yarn.lock`, `website/cypress/` or a workflow tests every page, with no extra build.
+2. **Otherwise**, each shard compares two builds:
+    - **The base build.** The shard builds the base, the commit the pull request targets (`HEAD^1` of its merge commit), in a second checkout in a temporary folder (a git worktree). It uses the command that builds the head, `node scripts/site.js audit`.
+    - **An affected page** is one whose HTML differs. A file of any other kind that is changed, added or removed (a stylesheet, script, image or font) affects every page of its site: the landing site, or the component preview under `/components/`. `website/lib/affected-pages.js` does the comparison. A change to the preview's own stylesheet or script therefore tests every preview page, and a change to the landing page's stylesheet tests only the landing site.
+    - **Why not HTML alone:** it would miss a shared stylesheet change, whose pages are byte-identical.
+    - **What is ignored:** inline source maps, and the random ids WebC adds to markup (`webc-` and five characters) when a page defines them in an `id`.
+3. **Every page** if the filter fails, the base does not build, or the comparison fails.
+
+Only the page list shrinks. The specs that do not read it (states, schedule bar, print and the rest) still run in full in the first shard, and a shard left with no pages still passes, so "Test / Browser" still means everything that should run passed.
+
+Each shard logs which mode ran and why at the top of its Cypress output, and as a notice on the run's summary: `Browser pages: every page (168): 3 changed files are outside the content paths; shard 2/4 tests 42.` or `Browser pages: 2 affected pages of 168; shard 1/4 tests 1.`
+
+The base build costs about 20 seconds a shard, paid only on a content-only pull request. A page costs about 4 seconds to test, so the build pays for itself once it leaves out about 5 pages a shard.
+
+#### Compare with a base locally
+
+The workflow does these steps for you. To do them by hand, when every change is content (the globs in the Scope job list what counts):
+
+1. Build the base, in a second checkout:
+
+    ```sh
+    BASE=$(git merge-base origin/main HEAD)
+    git worktree add --detach /tmp/audit-base "$BASE"
+    ln -s "$PWD/node_modules" /tmp/audit-base/node_modules
+    (cd /tmp/audit-base && node scripts/site.js audit)
+    ```
+
+2. Run the tests with the base's folder and a count of zero changed files outside the content paths:
+
+    ```sh
+    AUDIT_OUTSIDE_COUNT=0 AUDIT_BASE_DIR=/tmp/audit-base/website/_a11y BROWSER_SHARD=1/4 yarn docs:test
+    ```
+
+3. Remove the second checkout: `git worktree remove --force /tmp/audit-base`.
+
+Without `AUDIT_BASE_DIR`, or with any count but `0`, the run tests every page.
+
+### What each run checks
 
 With the site built and served, the run:
 
