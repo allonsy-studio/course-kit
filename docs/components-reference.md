@@ -184,7 +184,7 @@ The "Additional resources" list: the entries of `course.documents`, each a link 
 
 ### `<course-now>`
 
-The home page's opening band: this week's topics, the next class, what is due soon (date first) and the week-by-week progress, side by side as space allows. Hidden until its script has judged "today" in the campus zone. Wording comes from `copy.home` and `copy.schedule`.
+The home page's opening band: the next class with a link to its week, what is due soon (date first) and the week-by-week progress, side by side as space allows. Hidden until its script has judged "today" in the campus zone. Wording comes from `copy.home` and `copy.schedule`.
 
 | Prop | Type | |
 |---|---|---|

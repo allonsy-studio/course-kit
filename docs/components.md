@@ -46,7 +46,7 @@ A component that lists meetings renders `<today-marker>` once, puts `data-today-
 
 ### The home band and the schedule
 
-`<course-now>` is the home page's opening band: the next class (labelled "Today's class", "Next class" or, before the term, "First class"), what is due soon with a chip for each item's kind, and one bar per week. It builds its weeks from the page (`:@weeks` and `scheduleUrl` are optional), carries its data as JSON in the page, and stays hidden until its script has judged "today" in the campus zone. The deadlines come from the `courseDeadlines` filter: every dated item of a meeting, every dated reading, every `Test n` meeting and the final exam.
+`<course-now>` is the home page's opening band: the next class (labelled "Today's class", "Next class" or, before the term, "First class") with a "See the week" link to its week on the schedule, what is due soon (date first), and one bar per week. It builds its weeks from the page (`:@weeks` and `scheduleUrl` are optional), carries its data as JSON in the page, and stays hidden until its script has judged "today" in the campus zone. The deadlines come from the `courseDeadlines` filter: every dated item of a meeting, every dated reading, every `Test n` meeting and the final exam.
 
 `<schedule-weeks>` renders every week as `section.week`, one `li.meeting` per class, a "This week" card, a key to the chips above the first week and one "Hide past weeks" button, drawn as a switch (`aria-pressed` carries the state; it is not saved). Chips are `.due-chip[data-kind]` (`test`, `graded`, `reading`, `practice`), styled once in the base stylesheet.
 

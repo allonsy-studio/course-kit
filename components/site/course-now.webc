@@ -1,6 +1,6 @@
 <script webc:setup>
     /**
-     * The home page's opening band: this week's topics, the next class, what
+     * The home page's opening band: the next class with a link to its week, what
      * is due soon (date first) and the week-by-week progress, side by side as space allows. Hidden until its script has judged "today" in the
      * campus zone. Wording comes from `copy.home` and `copy.schedule`.
      * @prop {object[]} [weeks] `scheduleWeeks` output; built from the page's lessons, schedule, decks and demos when left out
@@ -20,37 +20,22 @@
                     weekday: meeting.weekday,
                     date: meeting.date,
                     title: firstTopic(meeting),
-                    slides: meeting.slides ?? "",
                 })),
         );
-    /** Each week that holds class: its number, its topics as plain text, and its first and last class day. */
-    const weekSummaries = (weeks) =>
-        (weeks ?? []).flatMap((week) => {
-            const held = (week.meetings ?? []).filter((meeting) => !meeting.noClass && meeting.iso);
-            if (!held.length) return [];
-            const topics = [...new Set(held.flatMap((meeting) => meeting.topics ?? []).map((topic) => String(topic).replace(/<[^>]+>/g, "").trim()))].filter(Boolean);
-            return [{ week: week.week, topics, from: held[0].iso, to: held.at(-1).iso, fromDate: held[0].date, toDate: held.at(-1).date }];
-        });
-    /** The script's data: meetings, weeks and deadlines, safe inside a <script> element. */
+    /** The script's data: meetings and deadlines, safe inside a <script> element. */
     const nowData = (weeks, schedule, copy) =>
-        JSON.stringify({ meetings: flatMeetings(weeks), weeks: weekSummaries(weeks), deadlines: courseDeadlines(weeks, schedule, copy) }).replaceAll("<", "\\u003c");
+        JSON.stringify({ meetings: flatMeetings(weeks), deadlines: courseDeadlines(weeks, schedule, copy) }).replaceAll("<", "\\u003c");
     /** Every class date in a week, for the progress track. */
     const datesOf = (week) => (week?.meetings ?? []).map((meeting) => meeting.iso).filter(Boolean).join(" ");
 </script>
 <section webc:root="override" class="course-now screen-only" aria-labelledby="course-now-heading" data-course-now webc:if="(weeks ?? defaultWeeks)?.length" hidden>
     <h2 id="course-now-heading" class="sr-only" @text="$data.copy.home.heading"></h2>
-    <div class="this-week" data-this-week hidden>
-        <h2 data-week-label></h2>
-        <p class="when" data-week-when></p>
-        <ul role="list" data-week-topics></ul>
-        <p><a data-week-link><span @text="$data.copy.home.seeWeek"></span> <span aria-hidden="true">→</span></a></p>
-    </div>
     <div class="now-card on-accent" data-now-card hidden>
         <p class="label" data-now-label></p>
         <p class="when" data-now-when></p>
         <p class="topic" data-now-title></p>
         <p class="actions">
-            <a class="primary" data-now-slides hidden><span @text="$data.copy.home.openSlides"></span> <span aria-hidden="true">→</span></a>
+            <a class="primary" :href="scheduleUrl ?? '/schedule/'" data-now-week><span @text="$data.copy.home.seeWeek"></span> <span aria-hidden="true">→</span></a>
         </p>
     </div>
     <div class="coming-up" data-coming-up>
@@ -90,7 +75,7 @@
             const campusToday = () => new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone });
                         const { t } = window.ckCopy;
             const today = campusToday();
-            const { meetings, weeks: weekList, deadlines } = JSON.parse(root.querySelector("[data-course-now-data]").textContent);
+            const { meetings, deadlines } = JSON.parse(root.querySelector("[data-course-now-data]").textContent);
             const DAY_MS = 86_400_000;
             const day = (iso) => Date.parse(`${iso}T00:00:00Z`);
             const inDays = (iso) => Math.round((day(iso) - day(today)) / DAY_MS);
@@ -103,31 +88,10 @@
                 root.querySelector("[data-now-label]").textContent = t("home", label);
                 root.querySelector("[data-now-when]").textContent = t("home", "when", { week: next.week, weekday: next.weekday, date: next.date });
                 root.querySelector("[data-now-title]").textContent = next.title;
-                const slides = root.querySelector("[data-now-slides]");
-                if (next.slides) {
-                    slides.href = next.slides;
-                    slides.hidden = false;
-                }
+                // The rendered href carries any path prefix; only the week's anchor is added here.
+                const week = root.querySelector("[data-now-week]");
+                week.href = `${week.getAttribute("href").split("#")[0]}#week-${next.week}`;
                 card.hidden = false;
-            }
-
-            // This week: the week whose classes are not over yet. It is "this week" from the
-            // Monday of its first class, "next week" before that, and the first week before the term.
-            const current = weekList.find((week) => week.to >= today);
-            if (current) {
-                const monday = day(current.from) - ((new Date(day(current.from)).getUTCDay() + 6) % 7) * DAY_MS;
-                const label = day(today) >= monday ? "weekThis" : weekList[0] === current ? "weekFirst" : "weekNext";
-                root.querySelector("[data-week-label]").textContent = t("home", label);
-                root.querySelector("[data-week-when]").textContent =
-                    current.from === current.to ? t("home", "weekWhenDay", { week: current.week, date: current.fromDate }) : t("home", "weekWhen", { week: current.week, from: current.fromDate, to: current.toDate });
-                const topics = root.querySelector("[data-week-topics]");
-                for (const topic of current.topics) {
-                    const row = document.createElement("li");
-                    row.textContent = topic;
-                    topics.append(row);
-                }
-                root.querySelector("[data-week-link]").href = `/schedule/#week-${current.week}`;
-                root.querySelector("[data-this-week]").hidden = false;
             }
 
             // Coming up: a week ahead, at least three, and always the next test.
@@ -200,9 +164,9 @@
         display: none;
     }
 
-    /* This week, the next class and what is coming up share a row while they
-       fit, and wrap one at a time as the page narrows; a panel alone on a
-       row fills it. The progress track always has a row of its own. */
+    /* The next class and what is coming up share a row while they fit, and
+       wrap as the page narrows; a panel alone on a row fills it. The progress
+       track always has a row of its own. */
     :host {
         display: flex;
         flex-wrap: wrap;
@@ -215,51 +179,12 @@
         }
     }
 
-    .this-week,
     .coming-up {
         flex: 1 1 16rem;
     }
 
     .now-card {
         flex: 1.5 1 20rem;
-    }
-
-    .this-week {
-        display: grid;
-        gap: calc(var(--gutter) * 3);
-        align-content: start;
-        padding: calc(var(--content-space) * 1.4);
-        border: var(--thin-border-width) solid var(--color-border);
-        border-radius: calc(var(--standard-border-radius) * 4);
-
-        &[hidden] {
-            display: none;
-        }
-
-        p {
-            margin: 0;
-        }
-
-        .when {
-            color: var(--color-text-muted);
-            font-size: max(var(--base-font-size), 0.875em);
-        }
-
-        ul {
-            display: grid;
-            gap: calc(var(--gutter) * 2);
-            margin: 0;
-            padding: 0;
-            list-style: none;
-            font-weight: var(--font-weight--semi-bold);
-        }
-
-        p > a {
-            display: inline-flex;
-            align-items: center;
-            min-block-size: var(--target-min);
-            font-weight: var(--font-weight--semi-bold);
-        }
     }
 
     .now-card {
