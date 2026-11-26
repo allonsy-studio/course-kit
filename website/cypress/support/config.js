@@ -16,6 +16,14 @@ export const VIEWPORTS = {
 	mobile: [390, 844],
 };
 
+/**
+ * Each width and mode the axe audit runs a page in. Forced colors runs at the desktop width only: contrast is skipped
+ * there, and the light and dark runs already check the mobile layout's structure.
+ */
+export const A11Y_RUNS = Object.keys(VIEWPORTS).flatMap((viewport) =>
+	A11Y_MODES.filter((mode) => mode !== "forced-colors" || viewport === "desktop").map((mode) => [viewport, mode]),
+);
+
 /** WCAG 2.2 AAA rule sets: the A and AA rules, the AAA ones (7:1 contrast among them), & axe's best practices. */
 export const A11Y_TAGS = ["wcag2a", "wcag2aa", "wcag2aaa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"];
 

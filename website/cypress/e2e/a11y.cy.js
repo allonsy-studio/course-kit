@@ -1,20 +1,18 @@
 import { KNOWN_REFLOW } from "../support/known.js";
-import { A11Y_MODES, MODES, REFLOW_WIDTH, VIEWPORTS } from "../support/config.js";
+import { A11Y_RUNS, MODES, REFLOW_WIDTH, VIEWPORTS } from "../support/config.js";
 
-/** axe-core (WCAG 2.2 AAA plus best practices) against every built page, in light, dark & forced-colors, at the desktop and mobile widths. */
+/** axe-core (WCAG 2.2 AAA plus best practices) against every built page: light and dark at the desktop and mobile widths, forced colors at desktop. */
 const pages = Cypress.env("pages") || [];
 
 describe("accessibility", () => {
 	pages.forEach((url) => {
 		describe(url, () => {
-			Object.entries(VIEWPORTS).forEach(([name, [width, height]]) => {
-				A11Y_MODES.forEach((mode) => {
-					it(`${name}, ${mode}`, () => {
-						cy.viewport(width, height);
-						cy.emulateMedia(MODES[mode]);
-						cy.visit(url);
-						cy.checkPageA11y({ contrast: mode !== "forced-colors" });
-					});
+			A11Y_RUNS.forEach(([name, mode]) => {
+				it(`${name}, ${mode}`, () => {
+					cy.viewport(...VIEWPORTS[name]);
+					cy.emulateMedia(MODES[mode]);
+					cy.visit(url);
+					cy.checkPageA11y({ contrast: mode !== "forced-colors" });
 				});
 			});
 

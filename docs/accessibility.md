@@ -22,21 +22,33 @@ Every component in the kit meets **WCAG 2.2 AAA**, or a stricter standard where 
 
 ## What is automated
 
-`yarn docs:test` (Cypress with `cypress-axe`) runs in the Pages workflow on every pull request, not in the unit-test workflow: it needs a browser and takes about 12 minutes. It builds the landing page and the component preview and then:
+`yarn docs:test` runs the browser tests: Cypress with `cypress-axe`, in Cypress's bundled Electron. Electron is Chromium, so the media emulation below works, and its version changes only when Cypress does, not when a CI runner's Chrome updates.
 
-- runs **axe** with the `wcag2a`, `wcag2aa`, `wcag2aaa`, `wcag21a`, `wcag21aa`, `wcag22aa` and `best-practice` tags on **every built page**, in **light, dark and forced colors**, at the **desktop (1280 x 800) and mobile (390 x 844)** widths. Contrast is skipped in forced colors, where axe measures the emulation and not what a reader sees.
+In CI they are the Browser jobs of the Test workflow (`.github/workflows/test.yml`), on every pull request, push to `main` and merge-queue run:
+
+- **Four shards**, Browser (1/4) to (4/4), each with about a quarter of the pages; about 4 minutes in all.
+- **One check to require**, "Test / Browser", which passes only when all four shards do. A run cancelled by a newer push fails it rather than skipping it, since a skipped job would count as passing.
+- **Apart from Pages**, so a preview publishes in about a minute. A preview can be up before its tests have passed; the check is what to read.
+- **A new push to a pull request cancels its older run.** Runs on `main` and in the merge queue are never cancelled.
+- **Failure screenshots**: a failing shard uploads Cypress's screenshots as `browser-screenshots-pr-<number>-<shard>` (or `run-<id>` outside a pull request), kept 7 days. A later clean run of the same pull request, or a clean rerun, deletes them (not from a fork, whose token cannot delete artifacts), and so does `.github/workflows/cleanup.yml` when the pull request closes, merged or not.
+
+To run one shard locally, set `BROWSER_SHARD`: `BROWSER_SHARD=2/4 yarn docs:test` tests every fourth page from the second. The specs that read the page list (any spec with `Cypress.env("pages")`: today `a11y`, `icons`, `lists`, `targets` and `visible`) run in every shard; the others run only in the first.
+
+The run builds the landing page and the component preview and then:
+
+- runs **axe** with the `wcag2a`, `wcag2aa`, `wcag2aaa`, `wcag21a`, `wcag21aa`, `wcag22aa` and `best-practice` tags on **every built page**, in **light and dark** at the **desktop (1280 x 800) and mobile (390 x 844)** widths, and in **forced colors** at the desktop width. Contrast is skipped in forced colors, where axe measures the emulation and not what a reader sees, so the mobile layout's structure is left to the light and dark runs.
 - checks **reflow**: no page scrolls sideways at 320px.
 - scans the components that **change after load**, in the state a reader leaves them in: a worksheet after See results and after an answer is restored, the glossary with a filter applied, each Group by option and the Flashcards tab, the schedule with Hide past weeks pressed, a code block with its copy button, and the preview canvas's segmented controls.
 - runs a **keyboard check** on those components: Tab reaches every control, and each focused control shows an indicator of 2px or more.
 - runs a **reduced-motion pass**: with `prefers-reduced-motion: reduce`, no element transitions or animates for longer than 0.01ms.
-- runs a **target-size check** on every component story: every button, link, input and summary is at least 44 x 44px. A link inside running text is exempt (WCAG's inline exception). The preview canvas's segmented controls are measured too: each option is a 44px square with its icon centered.
+- runs a **target-size check** on every component story: every button, link, input and summary is at least 44 x 44px. A link inside running text is exempt (WCAG's inline exception), and so is a target that is not rendered, such as a link in a closed `<details>`. The preview canvas's segmented controls are measured too: each option is a 44px square with its icon centered.
 - runs a **print check**: with the print media type emulated, every control that needs a pointer or a script (the copy buttons, the worksheet's Check, Clear and Try buttons, Hide past weeks, the Today link, the home band) is hidden.
 
 `yarn test` covers the contrast of every token pair and the copy layer's keys.
 
 ### Known violations
 
-Findings that need a design decision, or that come from a story showing a component alone, are listed in `website/cypress/support/known.js`: the rule, a pattern for the element, and the reason. The audit skips exactly those, so a new violation fails the build and an old one cannot be forgotten. Removing an entry is how a fix is confirmed. Today they are:
+Findings that need a design decision, or that come from a story showing a component alone, are listed in `website/cypress/support/known.js`: the rule, a pattern for the element, and the reason. The audit skips exactly those, so a new violation fails the Browser check and an old one cannot be forgotten. Removing an entry is how a fix is confirmed. Today they are:
 
 - **Not the kit's** (the preview shell and the landing page use the Norn design system): Norn's table header text, current-page link and card text sit at 6.3 to 6.5:1.
 - **Stories**: a story renders a component alone, so `glossary-entry` and `demo-weeks` show `<dt>` and `<dd>` with no `<dl>`, `meeting-card` an `<li>` with no list, and several components a heading with no heading above it.

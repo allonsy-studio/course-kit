@@ -60,7 +60,7 @@ The preview is not part of the published package: `package.json`'s `files` leave
 
 ## Published preview
 
-`.github/workflows/pages.yml` calls the organization's reusable Pages workflow, as the other Allons-y Studio projects do. `yarn pages:build` (`scripts/site.js`) writes the project's landing site (`website/`) at the root and this preview under `components/`, and `yarn docs:test` audits the landing site before anything is published to the `gh-pages` branch:
+`.github/workflows/pages.yml` calls the organization's reusable Pages workflow, as the other Allons-y Studio projects do. `yarn pages:build` (`scripts/site.js`) writes the project's landing site (`website/`) at the root and this preview under `components/`, and the workflow publishes them to the `gh-pages` branch. The browser tests (`yarn docs:test`, the accessibility audit among them) are not part of it: the Browser jobs in `.github/workflows/test.yml` run them, so a preview is up in about a minute and the tests report beside it.
 
 - Each push to `main` publishes at the site root: the landing site at <https://allonsy-studio.github.io/course-kit/> and the preview at <https://allonsy-studio.github.io/course-kit/components/>.
 - Each pull request from this repository publishes the same two to `preview/<number>/`, gets a comment with the URL, and loses its preview when it closes.
