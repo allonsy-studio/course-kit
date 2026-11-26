@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.5.0
+
+📅 _Released 26 November 2026_
+
+### Minor Changes
+
+- ✨ Give the home page band a This week panel, put the booking link in the header, group menu pages under a parent, and drop the rule above section headings. (📝 [#50](https://github.com/allonsy-studio/course-kit/pull/50))
+
+  - `<course-now>` shows This week, the next class and Coming up, side by side as space allows. Coming up leads with each date and has no kind chips. The words under the progress bars are for a screen reader only.
+  - With `instructor.booking` set, the header carries the booking link on every page and the top menu leaves Contact to the footer.
+  - A page named as another page's `eleventyNavigation.parent` is a menu group: a label with its children under it.
+  - An `h2` in the page body opens with space alone: no hairline, no accent bar.
+  - Selected text is visible: `::selection` is a wash of the accent, not the page color.
+  - `<schedule-overview>` puts more space between "Jump to" and the month links: 1.5 times the content space beside them, and 0.5rem above them when the row wraps. Hide past weeks is a switch: a small track and a muted label, so it no longer outweighs the month links.
+  - `<schedule-weeks>` mutes a past week instead of marking it "Done" (the word stays for a screen reader), puts each week's dates and each item's badge at the end of the row, lines the column heads up with their columns, and labels the footer "Resources". The copy key `schedule.weekResources` is renamed `schedule.resources`.
+  - `<assigned-list>` puts each chip after its title, at the end of the row, as the schedule weeks do, and every title row is 44px tall, linked or not, so the items are spaced alike.
+  - The `.separators` dot is drawn in CSS, not the `⏺` character, which Safari showed as a blue emoji button and screen readers read aloud. The deck's copy of the rule matches.
+  - The "Send me a message" icon is a centered speech bubble.
+
+  **To upgrade:** See [Migrating to 0.5.0](docs/migrating/0.5.0.md). Nothing is required; a course that overrides `course-now.webc`, `masthead.webc` or `nav-links.webc` re-merges its copy.
+
+### Patch Changes
+
+- 🐛 Give a code block its own top and bottom padding and sideways scrolling, and line its text up with the title bar. (📝 [#50](https://github.com/allonsy-studio/course-kit/pull/50))
+
+  - The block's `pre` sets its own padding and `overflow-x: auto`, so a page whose reset clears the base `pre` rule no longer shows lines touching the borders or cut off at the edge.
+  - The lines are set at a line height of 1.2, up from 1 (`--code-line-height`, still settable per block). Code outside a code block, such as a slide's, keeps 1.
+  - Numbered and unnumbered blocks start their text at the same edge as the title bar's label. The number column is as wide as the last line's number (`--line-digits`, written by the Markdown renderer), so a seven-line block no longer leaves an empty column before its numbers.
+
+- ✨ Build a slide figure in steps. In a deck's inline SVG, a `<g class="step">` stays hidden until the next-slide key, in the same sequence as `::: answer` blocks, and a `<path>` or `<line>` marked `draw`, with `pathLength="1"`, inside it draws on from its start, with its `marker-end` arrowhead arriving last. `<g class="answer">` and `.pop` work as before, and `.pop` now works inside a step too. Motion runs only under `prefers-reduced-motion: no-preference`; print shows every step. The starter's deck ends with a figure that uses all three. See "SVG reveals" in [docs/slides.md](https://github.com/allonsy-studio/course-kit/blob/main/docs/slides.md). (📝 [#49](https://github.com/allonsy-studio/course-kit/pull/49))
+
 ## 0.4.3
 
 📅 _Released 19 November 2026_
