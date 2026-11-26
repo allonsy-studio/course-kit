@@ -26,4 +26,3 @@ Categorical color tokens for course content. CS230's labs hard-code two category
 The known findings that need a design decision are in `website/cypress/support/known.js`, each with its reason; [Accessibility](accessibility.md) says how the audit uses them.
 
 - **Test only the pages a pull request touches**: deferred, [#53](https://github.com/allonsy-studio/course-kit/issues/53). Most changes are shared CSS, which touches every page, and the four browser-test shards take about 4 minutes.
-- **Start the Eleventy server before Cypress, not inside it**: [#54](https://github.com/allonsy-studio/course-kit/issues/54). `cypress.config.js` builds and serves the site from `setupNodeEvents`, so each shard builds both sites and a build error reads as a plugin error.

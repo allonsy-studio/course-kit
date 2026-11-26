@@ -1,14 +1,13 @@
 // Named .js in "type": "module" projects; .mjs loads as ESM elsewhere.
 
-import { spawnSync } from "node:child_process";
+// `yarn docs:test` builds `_a11y` and serves it before Cypress starts (`scripts/browser-run.js`); this file only reads it.
+
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, sep } from "node:path";
 
-import Eleventy from "@11ty/eleventy";
 import { defineConfig } from "cypress";
 
-const PORT = 8080;
-const ROOT = join(import.meta.dirname, "..");
+const PORT = Number(process.env.BROWSER_PORT || 8080);
 const BUILD_DIR = join(import.meta.dirname, "_a11y");
 const SPEC_DIR = join(import.meta.dirname, "cypress/e2e");
 
@@ -43,33 +42,13 @@ export default defineConfig({
 		screenshotOnRunFailure: true,
 		defaultCommandTimeout: 8000,
 		async setupNodeEvents(on, config) {
-			// Unprefixed build, served by Eleventy: a local server serves from `/`.
-			// The output folder comes from the site config (`SITE_OUTPUT`), not an Eleventy option: the bundle plugin writes
-			// the component CSS to the config's folder, so an option that moved the pages alone would leave them unstyled.
-			process.env.PATH_PREFIX = "/";
-			process.env.SITE_OUTPUT = "_a11y";
-			const eleventy = new Eleventy(undefined, undefined, {
-				configPath: join(import.meta.dirname, "eleventy.config.js"),
-				runMode: "serve",
-				quietMode: true,
-			});
-			await eleventy.init();
-			await eleventy.write();
-			// Without the project styles the accent is lost & axe fails opaquely.
-			if (!existsSync(join(BUILD_DIR, "assets/styles/project.css"))) {
-				throw new Error("The project styles were not copied to the audit build; check the passthrough copy.");
-			}
-			await eleventy.serve(PORT);
-			on("after:run", () => eleventy.stopWatch());
-
-			// The component preview, built beside the landing page under /components/: every component and story frame is audited too.
-			const built = spawnSync(process.execPath, [join(ROOT, "node_modules/@11ty/eleventy/cmd.cjs"), "--config=preview/eleventy.config.js", "--quiet"], {
-				cwd: ROOT,
-				stdio: "inherit",
-				// The preview is built minified, as a course that opts in would ship it, so a change that a minifier breaks fails the audit (MINIFY=0 turns it off).
-				env: { ...process.env, PATH_PREFIX: "/components/", PREVIEW_OUTPUT: "website/_a11y/components", MINIFY: process.env.MINIFY ?? "1" },
-			});
-			if (built.status !== 0) throw new Error("The component preview did not build for the audit.");
+			const hint = "run `yarn docs:test`, which builds and serves it (`--no-build` serves an existing build)";
+			if (!existsSync(BUILD_DIR)) throw new Error(`No audit build in website/_a11y; ${hint}.`);
+			const up = await fetch(config.baseUrl, { signal: AbortSignal.timeout(3000) }).then(
+				(res) => res.ok,
+				() => false,
+			);
+			if (!up) throw new Error(`Nothing is serving the audit build at ${config.baseUrl}; ${hint}.`);
 
 			// Every built page, or with BROWSER_SHARD every count-th one from the index-th, so pages of one kind spread across the shards.
 			const { index, count } = parseShard(process.env.BROWSER_SHARD);
