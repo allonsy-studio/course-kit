@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="/course-kit/components/styles/prism-dark.css" media="(prefers-color-scheme: dark)" data-prism-theme="dark" />
     <link rel="stylesheet" href="/course-kit/components/styles/base.css" />
     <style>
-      .wrqxv4ajc:not(:has(li)) {
+      .wvf4elq3a:not(:has(li)) {
         display: none;
       }
-      .wrqxv4ajc {
+      .wvf4elq3a {
         display: flex;
         gap: calc(var(--container-space) * 3.5);
         ul {
@@ -74,7 +74,7 @@
           }
         }
       }
-      .wrqxv4ajc[stacked] ul {
+      .wvf4elq3a[stacked] ul {
         display: flex;
         flex-wrap: wrap;
         justify-content: start;
@@ -82,11 +82,11 @@
         column-gap: calc(var(--content-space) * 2);
         row-gap: calc(var(--content-space) * 0.35);
       }
-      .wrqxv4ajc[column] {
+      .wvf4elq3a[column] {
         padding: 0;
         line-height: inherit;
       }
-      .wrqxv4ajc[column] ul {
+      .wvf4elq3a[column] ul {
         display: flex;
         flex-direction: column;
         align-items: start;
@@ -101,22 +101,55 @@
           row-gap: calc(var(--content-space) * 0.25);
         }
       }
-      .wrqxv4ajc[column] li {
+      .wvf4elq3a[column] li {
         display: block;
       }
       @media screen and (width > 768px) {
-        .wrqxv4ajc[column][two-column] ul {
+        .wvf4elq3a[column][two-column] ul {
           display: block;
           columns: 2;
           column-gap: calc(var(--content-space) * 2);
         }
-        .wrqxv4ajc[column][two-column] li {
+        .wvf4elq3a[column][two-column] li {
           break-inside: avoid;
           margin-block-end: calc(var(--content-space) * 0.35);
         }
       }
-      .wrqxv4ajc[column] a,
-      .wrqxv4ajc[column] a:visited {
+      .wvf4elq3a li.group > a[href] {
+        font-size: max(var(--base-font-size), 0.875em);
+        font-weight: var(--font-weight--semi-bold);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+      }
+      .wvf4elq3a[column] li.group > ul {
+        margin-block-start: calc(var(--content-space) * 0.35);
+      }
+      @media screen and (width > 768px) {
+        .wvf4elq3a[column][two-column] li.group {
+          break-before: column;
+        }
+        .wvf4elq3a[column][two-column] li.group > ul {
+          display: block;
+          columns: auto;
+          margin-block-start: calc(var(--content-space) * 0.35);
+        }
+      }
+      @media screen and (width <= 768px) {
+        .wvf4elq3a[column] li.group {
+          display: flex;
+          flex-wrap: wrap;
+          flex-basis: 100%;
+          align-items: baseline;
+          column-gap: calc(var(--content-space) * 1.25);
+        }
+        .wvf4elq3a[column] li.group > ul {
+          inline-size: auto;
+          margin-block-start: 0;
+        }
+      }
+      .wvf4elq3a[column] a,
+      .wvf4elq3a[column] a:visited {
         margin: 0;
         padding-inline: var(--link-pad, 0);
         border: none;
@@ -124,30 +157,30 @@
         line-height: inherit;
         font-size: max(var(--base-font-size), 1em);
         color: inherit;
-        .wrqxv4ajc &[aria-current="page"] {
+        .wvf4elq3a &[aria-current="page"] {
           padding-inline: var(--link-pad, 0);
           background: none;
           color: var(--color-accent-text);
         }
       }
-      .wrqxv4ajc[data-context="hero"][column] {
+      .wvf4elq3a[data-context="hero"][column] {
         --link-pad: 0.85em;
       }
-      .wrqxv4ajc[data-context="hero"][column] a[href] {
+      .wvf4elq3a[data-context="hero"][column] a[href] {
         border-radius: var(--radius-pill);
       }
-      .wrqxv4ajc[data-context="hero"][column] a[href][aria-current="page"] {
+      .wvf4elq3a[data-context="hero"][column] a[href][aria-current="page"] {
         background-color: var(--color-accent-secondary);
         color: var(--color-on-accent-secondary);
         text-decoration: none;
         font-weight: var(--font-weight--semi-bold);
         --color-focus-ring: var(--color-on-accent-secondary);
       }
-      .wrqxv4ajc[data-context="hero"][column] a[href]:not([aria-current="page"]):hover {
+      .wvf4elq3a[data-context="hero"][column] a[href]:not([aria-current="page"]):hover {
         background-color: color-mix(in oklab, var(--color-accent-secondary) 10%, transparent);
       }
       @media (forced-colors: active) {
-        .wrqxv4ajc[data-context="hero"][column] a[href][aria-current="page"] {
+        .wvf4elq3a[data-context="hero"][column] a[href][aria-current="page"] {
           forced-color-adjust: none;
           background: SelectedItem;
           color: SelectedItemText;
@@ -160,7 +193,7 @@
     <main id="main-content" tabindex="-1" style="margin: 0; padding: 1rem; min-block-size: 0">
       <h1 class="sr-only">nav-links: Links in the slot</h1>
 
-      <nav class="wrqxv4ajc">
+      <nav class="wvf4elq3a">
         <ul>
           <li><a href="#">Home</a></li>
           <li><a href="#">Schedule</a></li>
@@ -272,6 +305,11 @@
           "firstLabel": "First class",
           "when": "Week {week} · {weekday}, {date}",
           "openSlides": "Open the slides",
+          "weekThis": "This week",
+          "weekNext": "Next week",
+          "weekFirst": "First week",
+          "weekWhen": "Week {week} · {from} to {to}",
+          "weekWhenDay": "Week {week} · {date}",
           "seeWeek": "See the week",
           "comingUp": "Coming up",
           "fullSchedule": "Full schedule",
@@ -310,7 +348,7 @@
           "materials": "Materials",
           "slides": "Slides",
           "addendum": "Addendum",
-          "weekResources": "This week’s resources",
+          "resources": "Resources",
           "noClass": "No class — {reason}",
           "substitution": "Runs a {weekday} schedule",
           "dueKeyLabel": "Key to due items",

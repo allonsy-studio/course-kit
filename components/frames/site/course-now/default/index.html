@@ -11,24 +11,63 @@
     <link rel="stylesheet" href="/course-kit/components/styles/prism-dark.css" media="(prefers-color-scheme: dark)" data-prism-theme="dark" />
     <link rel="stylesheet" href="/course-kit/components/styles/base.css" />
     <style>
-      .wnddksxbb[hidden],
-      .wnddksxbb .course-now[hidden] {
+      .wj8dra5o1[hidden],
+      .wj8dra5o1 .course-now[hidden] {
         display: none;
       }
-      .wnddksxbb {
-        display: grid;
-        grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
+      .wj8dra5o1 {
+        display: flex;
+        flex-wrap: wrap;
         gap: var(--content-space);
         margin-block-end: var(--section-space);
-        @media (width <= 768px) {
-          grid-template-columns: minmax(0, 1fr);
-        }
         h2:not(.sr-only) {
           margin: 0;
           font-size: var(--font-size-4);
         }
       }
-      .wnddksxbb .now-card {
+      .wj8dra5o1 .this-week,
+      .wj8dra5o1 .coming-up {
+        flex: 1 1 16rem;
+      }
+      .wj8dra5o1 .now-card {
+        flex: 1.5 1 20rem;
+      }
+      .wj8dra5o1 .this-week {
+        display: grid;
+        gap: calc(var(--gutter) * 3);
+        align-content: start;
+        padding: calc(var(--content-space) * 1.4);
+        border: var(--thin-border-width) solid var(--color-border);
+        border-radius: calc(var(--standard-border-radius) * 4);
+        .wj8dra5o1 &[hidden] {
+          display: none;
+        }
+        p {
+          margin: 0;
+        }
+
+        .when {
+          color: var(--color-text-muted);
+          font-size: max(var(--base-font-size), 0.875em);
+        }
+
+        ul {
+          display: grid;
+          gap: calc(var(--gutter) * 2);
+          margin: 0;
+          padding: 0;
+          list-style: none;
+          font-weight: var(--font-weight--semi-bold);
+        }
+
+        p > a {
+          display: inline-flex;
+          align-items: center;
+          min-block-size: var(--target-min);
+          font-weight: var(--font-weight--semi-bold);
+        }
+      }
+      .wj8dra5o1 .now-card {
         display: flex;
         flex-direction: column;
         gap: calc(var(--gutter) * 2);
@@ -36,7 +75,7 @@
         border-radius: calc(var(--standard-border-radius) * 4);
         background-color: var(--color-accent);
         color: var(--color-on-accent);
-        .wnddksxbb &[hidden] {
+        .wj8dra5o1 &[hidden] {
           display: none;
         }
         p {
@@ -92,12 +131,12 @@
           }
         }
       }
-      .wnddksxbb .coming-up p > a {
+      .wj8dra5o1 .coming-up p > a {
         display: inline-flex;
         align-items: center;
         min-block-size: var(--target-min);
       }
-      .wnddksxbb .coming-up {
+      .wj8dra5o1 .coming-up {
         display: grid;
         gap: calc(var(--gutter) * 3);
         align-content: start;
@@ -105,7 +144,7 @@
         border: var(--thin-border-width) solid var(--color-border);
         border-radius: calc(var(--standard-border-radius) * 4);
         background-color: var(--color-surface);
-        .wnddksxbb &[hidden] {
+        .wj8dra5o1 &[hidden] {
           display: none;
         }
         ul {
@@ -116,16 +155,21 @@
           list-style: none;
         }
 
+        /* The date is the line that is read first; the title sits under it. */
         li {
-          display: flex;
-          flex-wrap: wrap;
-          align-items: baseline;
-          gap: 0.25em 0.6em;
-          padding: 0.6em 0.8em;
+          display: grid;
+          justify-items: start;
         }
 
-        .what {
-          font-weight: var(--font-weight--semi-bold);
+        .due {
+          color: var(--color-text-muted);
+          font-size: max(var(--base-font-size), 0.875em);
+
+          strong {
+            color: var(--color-text);
+            font-size: var(--font-size-4);
+            font-weight: var(--font-weight--semi-bold);
+          }
         }
 
         /* A link is an operable target: 44px tall (WCAG 2.5.5). */
@@ -133,12 +177,6 @@
           display: inline-flex;
           align-items: center;
           min-block-size: var(--target-min);
-        }
-
-        .due {
-          flex-basis: 100%;
-          color: var(--color-text-muted);
-          font-size: max(var(--base-font-size), 0.875em);
         }
 
         p {
@@ -155,9 +193,9 @@
           font-weight: var(--font-weight);
         }
       }
-      .wnddksxbb .progress {
+      .wj8dra5o1 .progress {
         display: grid;
-        grid-column: 1/-1;
+        flex: 1 1 100%;
         grid-template-columns: 1fr auto;
         gap: calc(var(--gutter) * 3) var(--content-space);
         align-items: baseline;
@@ -184,9 +222,12 @@
           flex: 1 0 5.5rem;
         }
 
+        /* A 44px target (WCAG 2.5.5), now that the state is not a visible third line. */
         a {
           display: grid;
+          align-content: start;
           gap: 0.35em;
+          min-block-size: var(--target-min);
           padding-block: 0.25em;
           color: var(--color-text);
           font-size: max(var(--base-font-size), 0.875em);
@@ -203,11 +244,6 @@
           font-weight: var(--font-weight--semi-bold);
         }
 
-        .state {
-          min-block-size: 1.5em;
-          color: var(--color-text-muted);
-        }
-
         [data-state="done"] .bar {
           background-color: var(--color-text);
         }
@@ -219,16 +255,16 @@
         }
       }
       @media (forced-colors: active) {
-        .wnddksxbb .progress [data-state="now"] .bar {
+        .wj8dra5o1 .progress [data-state="now"] .bar {
           background: Highlight;
         }
-        .wnddksxbb .progress [data-state="done"] .bar {
+        .wj8dra5o1 .progress [data-state="done"] .bar {
           background: CanvasText;
         }
       }
       @media print {
-        .wnddksxbb,
-        .wnddksxbb .course-now {
+        .wj8dra5o1,
+        .wj8dra5o1 .course-now {
           display: none;
         }
       }
@@ -240,15 +276,22 @@
       <h1 class="sr-only">course-now: Default</h1>
       <p style="margin: 0 0 1rem; padding: 0.5rem 0.75rem; border-inline-start: 3px solid var(--color-accent); font-size: 0.9em" class="story-note">Built from the starter course and today's date: once the starter's three weeks are over, every week reads Done.</p>
 
-      <section aria-labelledby="course-now-heading" data-course-now="" hidden="" class="course-now screen-only wnddksxbb">
+      <section aria-labelledby="course-now-heading" data-course-now="" hidden="" class="course-now screen-only wj8dra5o1">
         <h2 id="course-now-heading" class="sr-only">Where the course is</h2>
+        <div data-this-week="" hidden="" class="this-week">
+          <h2 data-week-label=""></h2>
+          <p data-week-when="" class="when"></p>
+          <ul role="list" data-week-topics=""></ul>
+          <p>
+            <a data-week-link=""><span>See the week</span> <span aria-hidden="true">→</span></a>
+          </p>
+        </div>
         <div data-now-card="" hidden="" class="now-card on-accent">
           <p data-now-label="" class="label"></p>
           <p data-now-when="" class="when"></p>
           <p data-now-title="" class="topic"></p>
           <p class="actions">
             <a data-now-slides="" hidden="" class="primary"><span>Open the slides</span> <span aria-hidden="true">→</span></a>
-            <a data-now-week="" class="secondary">See the week</a>
           </p>
         </div>
         <div data-coming-up="" class="coming-up">
@@ -267,21 +310,21 @@
               <a href="/course-kit/components/schedule/#week-1">
                 <span aria-hidden="true" class="bar"></span>
                 <span class="name">Week 1</span>
-                <span data-state="" class="state"></span>
+                <span data-state="" class="state sr-only"></span>
               </a>
             </li>
             <li data-week-dates="2026-09-01 2026-09-03">
               <a href="/course-kit/components/schedule/#week-2">
                 <span aria-hidden="true" class="bar"></span>
                 <span class="name">Week 2</span>
-                <span data-state="" class="state"></span>
+                <span data-state="" class="state sr-only"></span>
               </a>
             </li>
             <li data-week-dates="2026-09-08 2026-09-10">
               <a href="/course-kit/components/schedule/#week-3">
                 <span aria-hidden="true" class="bar"></span>
                 <span class="name">Week 3</span>
-                <span data-state="" class="state"></span>
+                <span data-state="" class="state sr-only"></span>
               </a>
             </li>
           </ol>
@@ -295,6 +338,11 @@
               { "iso": "2026-09-03", "week": 2, "weekday": "Thursday", "date": "Sep 3", "title": "Writing HTML", "slides": "" },
               { "iso": "2026-09-08", "week": 3, "weekday": "Tuesday", "date": "Sep 8", "title": "Styling with CSS", "slides": "" },
               { "iso": "2026-09-10", "week": 3, "weekday": "Thursday", "date": "Sep 10", "title": "Test 1", "slides": "" }
+            ],
+            "weeks": [
+              { "week": 1, "topics": ["Welcome and how the course runs", "How the web works"], "from": "2026-08-25", "to": "2026-08-27", "fromDate": "Aug 25", "toDate": "Aug 27" },
+              { "week": 2, "topics": ["Writing HTML", "Headings, lists and links"], "from": "2026-09-01", "to": "2026-09-03", "fromDate": "Sep 1", "toDate": "Sep 3" },
+              { "week": 3, "topics": ["Styling with CSS", "Test 1"], "from": "2026-09-08", "to": "2026-09-10", "fromDate": "Sep 8", "toDate": "Sep 10" }
             ],
             "deadlines": [
               { "iso": "2026-09-03", "sort": "2026-09-03T23:59", "title": "MDN: HTML basics", "href": "https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics", "kind": "reading", "label": "Thu, Sep 3", "week": 2 },
@@ -409,6 +457,11 @@
           "firstLabel": "First class",
           "when": "Week {week} · {weekday}, {date}",
           "openSlides": "Open the slides",
+          "weekThis": "This week",
+          "weekNext": "Next week",
+          "weekFirst": "First week",
+          "weekWhen": "Week {week} · {from} to {to}",
+          "weekWhenDay": "Week {week} · {date}",
           "seeWeek": "See the week",
           "comingUp": "Coming up",
           "fullSchedule": "Full schedule",
@@ -447,7 +500,7 @@
           "materials": "Materials",
           "slides": "Slides",
           "addendum": "Addendum",
-          "weekResources": "This week’s resources",
+          "resources": "Resources",
           "noClass": "No class — {reason}",
           "substitution": "Runs a {weekday} schedule",
           "dueKeyLabel": "Key to due items",
@@ -585,7 +638,7 @@
           const campusToday = () => new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone });
           const { t } = window.ckCopy;
           const today = campusToday();
-          const { meetings, deadlines } = JSON.parse(root.querySelector("[data-course-now-data]").textContent);
+          const { meetings, weeks: weekList, deadlines } = JSON.parse(root.querySelector("[data-course-now-data]").textContent);
           const DAY_MS = 86_400_000;
           const day = (iso) => Date.parse(`${iso}T00:00:00Z`);
           const inDays = (iso) => Math.round((day(iso) - day(today)) / DAY_MS);
@@ -598,13 +651,30 @@
             root.querySelector("[data-now-label]").textContent = t("home", label);
             root.querySelector("[data-now-when]").textContent = t("home", "when", { week: next.week, weekday: next.weekday, date: next.date });
             root.querySelector("[data-now-title]").textContent = next.title;
-            root.querySelector("[data-now-week]").href = `/schedule/#week-${next.week}`;
             const slides = root.querySelector("[data-now-slides]");
             if (next.slides) {
               slides.href = next.slides;
               slides.hidden = false;
             }
             card.hidden = false;
+          }
+
+          // This week: the week whose classes are not over yet. It is "this week" from the
+          // Monday of its first class, "next week" before that, and the first week before the term.
+          const current = weekList.find((week) => week.to >= today);
+          if (current) {
+            const monday = day(current.from) - ((new Date(day(current.from)).getUTCDay() + 6) % 7) * DAY_MS;
+            const label = day(today) >= monday ? "weekThis" : weekList[0] === current ? "weekFirst" : "weekNext";
+            root.querySelector("[data-week-label]").textContent = t("home", label);
+            root.querySelector("[data-week-when]").textContent = current.from === current.to ? t("home", "weekWhenDay", { week: current.week, date: current.fromDate }) : t("home", "weekWhen", { week: current.week, from: current.fromDate, to: current.toDate });
+            const topics = root.querySelector("[data-week-topics]");
+            for (const topic of current.topics) {
+              const row = document.createElement("li");
+              row.textContent = topic;
+              topics.append(row);
+            }
+            root.querySelector("[data-week-link]").href = `/schedule/#week-${current.week}`;
+            root.querySelector("[data-this-week]").hidden = false;
           }
 
           // Coming up: a week ahead, at least three, and always the next test.
@@ -618,27 +688,30 @@
           }
           const list = root.querySelector("[data-coming-list]");
           for (const item of shown) {
+            // The date leads: it is what the card is for. The title follows, and there is no kind chip.
             const row = document.createElement("li");
             row.dataset.kind = item.kind;
-            const chip = document.createElement("span");
-            chip.className = "due-chip";
-            chip.dataset.kind = item.kind;
-            chip.textContent = t("schedule", `dueKind${item.kind.charAt(0).toUpperCase()}${item.kind.slice(1)}`);
-            const name = document.createElement(item.href ? "a" : "span");
-            if (item.href) name.href = item.href;
-            name.className = "what";
-            name.textContent = item.title;
             const days = inDays(item.iso);
             const relative = days <= 0 ? t("home", "dueToday") : days === 1 ? t("home", "dueTomorrow") : t("home", "dueInDays", { count: days });
             const when = document.createElement("span");
             when.className = "due";
-            when.textContent = `${item.label}${t("common", "sep")}${relative}`;
-            row.append(chip, " ", name, " ", when);
+            const date = document.createElement("strong");
+            date.textContent = item.label;
+            const soon = document.createElement("span");
+            soon.className = "relative";
+            soon.textContent = relative;
+            when.append(date, t("common", "sep"), soon);
+            const name = document.createElement(item.href ? "a" : "span");
+            if (item.href) name.href = item.href;
+            name.className = "what";
+            name.textContent = item.title;
+            row.append(when, " ", name);
             list.append(row);
           }
           root.querySelector("[data-coming-empty]").hidden = shown.length > 0;
 
-          // Progress: one bar per week, from each week's class dates.
+          // Progress: one bar per week, from each week's class dates. The state is in the bar's
+          // look, and in text for a screen reader only.
           const weeks = [...root.querySelectorAll("[data-progress] li")];
           let done = 0;
           for (const week of weeks) {

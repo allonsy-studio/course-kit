@@ -695,8 +695,8 @@
         <a rel="home" href="../">course-kit</a>
         <details>
           <summary>Menu</summary>
-          <nav aria-labelledby="norn-header-webc-9dK7P">
-            <span data-label="" id="norn-header-webc-9dK7P">Primary</span>
+          <nav aria-labelledby="norn-header-webc-ZXScB">
+            <span data-label="" id="norn-header-webc-ZXScB">Primary</span>
 
             <a href="../#quick-start">Quick start</a>
             <a href="../#features">Features</a>
@@ -718,8 +718,8 @@
         <details open="true">
           <summary>Building blocks</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-UmzlN">
-              <span data-label="" id="norn-side-nav-webc-UmzlN"><span>Building blocks</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-VjdRT">
+              <span data-label="" id="norn-side-nav-webc-VjdRT"><span>Building blocks</span></span>
 
               <ul>
                 <li>
@@ -774,8 +774,8 @@
         <details open="true">
           <summary>Site sections</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-jhbeE">
-              <span data-label="" id="norn-side-nav-webc-jhbeE"><span>Site sections</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-Vi51i">
+              <span data-label="" id="norn-side-nav-webc-Vi51i"><span>Site sections</span></span>
 
               <ul>
                 <li>
@@ -845,8 +845,8 @@
         <details open="true">
           <summary>Practice worksheets</summary>
           <norn-side-nav
-            ><nav aria-labelledby="norn-side-nav-webc-D9DSv">
-              <span data-label="" id="norn-side-nav-webc-D9DSv"><span>Practice worksheets</span></span>
+            ><nav aria-labelledby="norn-side-nav-webc-G9Jce">
+              <span data-label="" id="norn-side-nav-webc-G9Jce"><span>Practice worksheets</span></span>
 
               <ul>
                 <li>
@@ -973,8 +973,8 @@
             <li>
               <a href="/course-kit/components/components/ui/assigned-list/"><code>assigned-list</code></a>
               <span
-                >A labelled list of readings or deadlines. Renders nothing when empty. Give it the <code>items</code> array, or write the list as a <code>&lt;dl&gt;</code> in the default slot: each <code>&lt;dt&gt;</code> holds the title or its link (give it <code>data-kind</code> and, before the title, <code>&lt;span class="due-chip" data-kind="test"&gt;Test&lt;/span&gt;</code> for a chip), each <code>&lt;dd&gt;</code> only the check or due detail. The array wins when it has items; when it is missing or
-                empty the slot is rendered instead, so the list still shows if the data does not load.</span
+                >A labelled list of readings or deadlines. Renders nothing when empty. Give it the <code>items</code> array, or write the list as a <code>&lt;dl&gt;</code> in the default slot: each <code>&lt;dt&gt;</code> holds the title or its link (give it <code>data-kind</code> and, after the title, <code>&lt;span class="due-chip" data-kind="test"&gt;Test&lt;/span&gt;</code> for a chip, shown at the end of the row), each <code>&lt;dd&gt;</code> only the check or due detail. The array wins when it has
+                items; when it is missing or empty the slot is rendered instead, so the list still shows if the data does not load.</span
               >
             </li>
             <li>
@@ -1055,7 +1055,7 @@
             </li>
             <li>
               <a href="/course-kit/components/components/site/course-now/"><code>course-now</code></a>
-              <span>The home page's opening band: the next class, what is due soon and the week-by-week progress. Hidden until its script has judged "today" in the campus zone. Wording comes from <code>copy.home</code> and <code>copy.schedule</code>.</span>
+              <span>The home page's opening band: this week's topics, the next class, what is due soon (date first) and the week-by-week progress, side by side as space allows. Hidden until its script has judged "today" in the campus zone. Wording comes from <code>copy.home</code> and <code>copy.schedule</code>.</span>
             </li>
             <li>
               <a href="/course-kit/components/components/site/course-summary/"><code>course-summary</code></a>
@@ -1087,11 +1087,14 @@
             </li>
             <li>
               <a href="/course-kit/components/components/site/masthead/"><code>masthead</code></a>
-              <span>The page header: institution, term, course title and the navigation. Reads <code>site</code>, <code>term</code> and <code>course</code>. The menu is Home, Syllabus, then every page of the site menu that has not set <code>menu: false</code>.</span>
+              <span
+                >The page header: institution, term, course title and the navigation. Reads <code>site</code>, <code>term</code> and <code>course</code>. The menu is Home, Syllabus, then every page of the site menu that has not set <code>menu: false</code>. A page other pages name as their <code>eleventyNavigation.parent</code> is a group: its link, then theirs. When the instructor has a <code>booking</code> link, it is shown under the meeting line on every page, and the menu leaves Contact to the
+                footer.</span
+              >
             </li>
             <li>
               <a href="/course-kit/components/components/site/nav-links/"><code>nav-links</code></a>
-              <span>The site navigation as a list of links, marking the current page. Give it the <code>navigation</code> array, or write the links in the default slot as a <code>&lt;ul&gt;</code> of <code>&lt;li&gt;&lt;a&gt;</code>; the array wins when it has items, and when it is missing or empty the slot is rendered instead.</span>
+              <span>The site navigation as a list of links, marking the current page. Give it the <code>navigation</code> array, or write the links in the default slot as a <code>&lt;ul&gt;</code> of <code>&lt;li&gt;&lt;a&gt;</code>; the array wins when it has items, and when it is missing or empty the slot is rendered instead. A page with <code>children</code> (pages whose <code>eleventyNavigation.parent</code> is its key) is a group: its own link, then its children in a nested list.</span>
             </li>
             <li>
               <a href="/course-kit/components/components/site/policies/"><code>policies</code></a>
