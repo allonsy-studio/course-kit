@@ -19,7 +19,7 @@ anchors: true
 			<li><norn-link-button :@href="$data.norn.repo" @variant="secondary"><norn-icon @name="github"></norn-icon><span webc:nokeep>View on GitHub</span></norn-link-button></li>
 		</ul>
 	</nav>
-	<norn-fact-list @gap="l">
+	<norn-fact-list>
 		<li><norn-icon @name="check"></norn-icon><span>Free &amp; open source</span></li>
 		<li><norn-icon @name="check"></norn-icon><span @text="'License: ' + $data.norn.license"></span></li>
 		<li><norn-icon @name="check"></norn-icon><span>Node 24+</span></li>

@@ -1,7 +1,7 @@
 <script webc:setup>
     /**
-     * The home page's opening band: the next class, what is due soon and the
-     * week-by-week progress. Hidden until its script has judged "today" in the
+     * The home page's opening band: this week's topics, the next class, what
+     * is due soon (date first) and the week-by-week progress, side by side as space allows. Hidden until its script has judged "today" in the
      * campus zone. Wording comes from `copy.home` and `copy.schedule`.
      * @prop {object[]} [weeks] `scheduleWeeks` output; built from the page's lessons, schedule, decks and demos when left out
      * @prop {string} [scheduleUrl] where the schedule lives, default `/schedule/`
@@ -23,21 +23,34 @@
                     slides: meeting.slides ?? "",
                 })),
         );
-    /** The script's data: meetings and deadlines, safe inside a <script> element. */
+    /** Each week that holds class: its number, its topics as plain text, and its first and last class day. */
+    const weekSummaries = (weeks) =>
+        (weeks ?? []).flatMap((week) => {
+            const held = (week.meetings ?? []).filter((meeting) => !meeting.noClass && meeting.iso);
+            if (!held.length) return [];
+            const topics = [...new Set(held.flatMap((meeting) => meeting.topics ?? []).map((topic) => String(topic).replace(/<[^>]+>/g, "").trim()))].filter(Boolean);
+            return [{ week: week.week, topics, from: held[0].iso, to: held.at(-1).iso, fromDate: held[0].date, toDate: held.at(-1).date }];
+        });
+    /** The script's data: meetings, weeks and deadlines, safe inside a <script> element. */
     const nowData = (weeks, schedule, copy) =>
-        JSON.stringify({ meetings: flatMeetings(weeks), deadlines: courseDeadlines(weeks, schedule, copy) }).replaceAll("<", "\\u003c");
+        JSON.stringify({ meetings: flatMeetings(weeks), weeks: weekSummaries(weeks), deadlines: courseDeadlines(weeks, schedule, copy) }).replaceAll("<", "\\u003c");
     /** Every class date in a week, for the progress track. */
     const datesOf = (week) => (week?.meetings ?? []).map((meeting) => meeting.iso).filter(Boolean).join(" ");
 </script>
 <section webc:root="override" class="course-now screen-only" aria-labelledby="course-now-heading" data-course-now webc:if="(weeks ?? defaultWeeks)?.length" hidden>
     <h2 id="course-now-heading" class="sr-only" @text="$data.copy.home.heading"></h2>
+    <div class="this-week" data-this-week hidden>
+        <h2 data-week-label></h2>
+        <p class="when" data-week-when></p>
+        <ul role="list" data-week-topics></ul>
+        <p><a data-week-link><span @text="$data.copy.home.seeWeek"></span> <span aria-hidden="true">→</span></a></p>
+    </div>
     <div class="now-card on-accent" data-now-card hidden>
         <p class="label" data-now-label></p>
         <p class="when" data-now-when></p>
         <p class="topic" data-now-title></p>
         <p class="actions">
             <a class="primary" data-now-slides hidden><span @text="$data.copy.home.openSlides"></span> <span aria-hidden="true">→</span></a>
-            <a class="secondary" data-now-week @text="$data.copy.home.seeWeek"></a>
         </p>
     </div>
     <div class="coming-up" data-coming-up>
@@ -54,7 +67,7 @@
                 <a :href="`/schedule/#week-${week.week}`">
                     <span class="bar" aria-hidden="true"></span>
                     <span class="name" @text="fill($data.copy.home.week, { week: week.week })"></span>
-                    <span class="state" data-state></span>
+                    <span class="state sr-only" data-state></span>
                 </a>
             </li>
         </ol>
@@ -77,7 +90,7 @@
             const campusToday = () => new Date().toLocaleDateString("en-CA", { timeZone: document.documentElement.dataset.timezone });
                         const { t } = window.ckCopy;
             const today = campusToday();
-            const { meetings, deadlines } = JSON.parse(root.querySelector("[data-course-now-data]").textContent);
+            const { meetings, weeks: weekList, deadlines } = JSON.parse(root.querySelector("[data-course-now-data]").textContent);
             const DAY_MS = 86_400_000;
             const day = (iso) => Date.parse(`${iso}T00:00:00Z`);
             const inDays = (iso) => Math.round((day(iso) - day(today)) / DAY_MS);
@@ -90,13 +103,31 @@
                 root.querySelector("[data-now-label]").textContent = t("home", label);
                 root.querySelector("[data-now-when]").textContent = t("home", "when", { week: next.week, weekday: next.weekday, date: next.date });
                 root.querySelector("[data-now-title]").textContent = next.title;
-                root.querySelector("[data-now-week]").href = `/schedule/#week-${next.week}`;
                 const slides = root.querySelector("[data-now-slides]");
                 if (next.slides) {
                     slides.href = next.slides;
                     slides.hidden = false;
                 }
                 card.hidden = false;
+            }
+
+            // This week: the week whose classes are not over yet. It is "this week" from the
+            // Monday of its first class, "next week" before that, and the first week before the term.
+            const current = weekList.find((week) => week.to >= today);
+            if (current) {
+                const monday = day(current.from) - ((new Date(day(current.from)).getUTCDay() + 6) % 7) * DAY_MS;
+                const label = day(today) >= monday ? "weekThis" : weekList[0] === current ? "weekFirst" : "weekNext";
+                root.querySelector("[data-week-label]").textContent = t("home", label);
+                root.querySelector("[data-week-when]").textContent =
+                    current.from === current.to ? t("home", "weekWhenDay", { week: current.week, date: current.fromDate }) : t("home", "weekWhen", { week: current.week, from: current.fromDate, to: current.toDate });
+                const topics = root.querySelector("[data-week-topics]");
+                for (const topic of current.topics) {
+                    const row = document.createElement("li");
+                    row.textContent = topic;
+                    topics.append(row);
+                }
+                root.querySelector("[data-week-link]").href = `/schedule/#week-${current.week}`;
+                root.querySelector("[data-this-week]").hidden = false;
             }
 
             // Coming up: a week ahead, at least three, and always the next test.
@@ -110,27 +141,30 @@
             }
             const list = root.querySelector("[data-coming-list]");
             for (const item of shown) {
+                // The date leads: it is what the card is for. The title follows, and there is no kind chip.
                 const row = document.createElement("li");
                 row.dataset.kind = item.kind;
-                const chip = document.createElement("span");
-                chip.className = "due-chip";
-                chip.dataset.kind = item.kind;
-                chip.textContent = t("schedule", `dueKind${item.kind.charAt(0).toUpperCase()}${item.kind.slice(1)}`);
-                const name = document.createElement(item.href ? "a" : "span");
-                if (item.href) name.href = item.href;
-                name.className = "what";
-                name.textContent = item.title;
                 const days = inDays(item.iso);
                 const relative = days <= 0 ? t("home", "dueToday") : days === 1 ? t("home", "dueTomorrow") : t("home", "dueInDays", { count: days });
                 const when = document.createElement("span");
                 when.className = "due";
-                when.textContent = `${item.label}${t("common", "sep")}${relative}`;
-                row.append(chip, " ", name, " ", when);
+                const date = document.createElement("strong");
+                date.textContent = item.label;
+                const soon = document.createElement("span");
+                soon.className = "relative";
+                soon.textContent = relative;
+                when.append(date, t("common", "sep"), soon);
+                const name = document.createElement(item.href ? "a" : "span");
+                if (item.href) name.href = item.href;
+                name.className = "what";
+                name.textContent = item.title;
+                row.append(when, " ", name);
                 list.append(row);
             }
             root.querySelector("[data-coming-empty]").hidden = shown.length > 0;
 
-            // Progress: one bar per week, from each week's class dates.
+            // Progress: one bar per week, from each week's class dates. The state is in the bar's
+            // look, and in text for a screen reader only.
             const weeks = [...root.querySelectorAll("[data-progress] li")];
             let done = 0;
             for (const week of weeks) {
@@ -166,19 +200,65 @@
         display: none;
     }
 
+    /* This week, the next class and what is coming up share a row while they
+       fit, and wrap one at a time as the page narrows; a panel alone on a
+       row fills it. The progress track always has a row of its own. */
     :host {
-        display: grid;
-        grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
+        display: flex;
+        flex-wrap: wrap;
         gap: var(--content-space);
         margin-block-end: var(--section-space);
-
-        @media (width <= 768px) {
-            grid-template-columns: minmax(0, 1fr);
-        }
 
         h2:not(.sr-only) {
             margin: 0;
             font-size: var(--font-size-4);
+        }
+    }
+
+    .this-week,
+    .coming-up {
+        flex: 1 1 16rem;
+    }
+
+    .now-card {
+        flex: 1.5 1 20rem;
+    }
+
+    .this-week {
+        display: grid;
+        gap: calc(var(--gutter) * 3);
+        align-content: start;
+        padding: calc(var(--content-space) * 1.4);
+        border: var(--thin-border-width) solid var(--color-border);
+        border-radius: calc(var(--standard-border-radius) * 4);
+
+        &[hidden] {
+            display: none;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .when {
+            color: var(--color-text-muted);
+            font-size: max(var(--base-font-size), 0.875em);
+        }
+
+        ul {
+            display: grid;
+            gap: calc(var(--gutter) * 2);
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            font-weight: var(--font-weight--semi-bold);
+        }
+
+        p > a {
+            display: inline-flex;
+            align-items: center;
+            min-block-size: var(--target-min);
+            font-weight: var(--font-weight--semi-bold);
         }
     }
 
@@ -276,16 +356,21 @@
             list-style: none;
         }
 
+        /* The date is the line that is read first; the title sits under it. */
         li {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: baseline;
-            gap: 0.25em 0.6em;
-            padding: 0.6em 0.8em;
+            display: grid;
+            justify-items: start;
         }
 
-        .what {
-            font-weight: var(--font-weight--semi-bold);
+        .due {
+            color: var(--color-text-muted);
+            font-size: max(var(--base-font-size), 0.875em);
+
+            strong {
+                color: var(--color-text);
+                font-size: var(--font-size-4);
+                font-weight: var(--font-weight--semi-bold);
+            }
         }
 
         /* A link is an operable target: 44px tall (WCAG 2.5.5). */
@@ -293,12 +378,6 @@
             display: inline-flex;
             align-items: center;
             min-block-size: var(--target-min);
-        }
-
-        .due {
-            flex-basis: 100%;
-            color: var(--color-text-muted);
-            font-size: max(var(--base-font-size), 0.875em);
         }
 
         p {
@@ -318,7 +397,7 @@
 
     .progress {
         display: grid;
-        grid-column: 1 / -1;
+        flex: 1 1 100%;
         grid-template-columns: 1fr auto;
         gap: calc(var(--gutter) * 3) var(--content-space);
         align-items: baseline;
@@ -346,9 +425,12 @@
             flex: 1 0 5.5rem;
         }
 
+        /* A 44px target (WCAG 2.5.5), now that the state is not a visible third line. */
         a {
             display: grid;
+            align-content: start;
             gap: 0.35em;
+            min-block-size: var(--target-min);
             padding-block: 0.25em;
             color: var(--color-text);
             font-size: max(var(--base-font-size), 0.875em);
@@ -363,11 +445,6 @@
 
         .name {
             font-weight: var(--font-weight--semi-bold);
-        }
-
-        .state {
-            min-block-size: 1.5em;
-            color: var(--color-text-muted);
         }
 
         [data-state="done"] .bar {

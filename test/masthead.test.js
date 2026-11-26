@@ -70,3 +70,34 @@ test("both layouts list every link", async () => {
 		assert.match(html, />Syllabus<\/a>/);
 	}
 });
+
+test("a booking link shows in the header and takes Contact out of the menu", async () => {
+	const instructor = { contact: "/contact/", booking: { url: "https://calendar.example.edu/sam", label: "Book a time" } };
+	const html = await render({}, "", { count: 2, instructor });
+	assert.match(html, /<p class="booking[^"]*"[^>]*>\s*<a href="https:\/\/calendar\.example\.edu\/sam">Book a time<\/a>/);
+	assert.doesNotMatch(html, />Contact<\/a>/);
+	assert.doesNotMatch(menu(html), /two-column/, "Contact no longer counts toward the 3");
+	const fallback = await render({}, "", { count: 2, instructor: { booking: { url: "https://calendar.example.edu/sam" } } });
+	assert.match(fallback, />Book an appointment<\/a>/, "the copy key labels it when the data has no label");
+});
+
+test("without a booking link the header has none, and the menu keeps Contact", async () => {
+	const html = await render({}, "", { count: 2, instructor: { contact: "/contact/" } });
+	assert.doesNotMatch(html, /class="booking/);
+	assert.match(html, />Contact<\/a>/);
+});
+
+test("a page with children is a group: its link, then theirs in a nested list", async () => {
+	const page = new WebC();
+	const site = path.join(packageRoot, "components", "site");
+	page.defineComponents([path.join(site, "masthead.webc"), path.join(site, "nav-links.webc"), path.join(packageRoot, "components", "ui", "eyebrow.webc")]);
+	const study = { url: "/study/", title: "Study tools", children: [{ url: "/practice/", title: "Practice" }, { url: "/glossary/", title: "Glossary" }, { url: "/hidden/", title: "Hidden", menu: false }] };
+	page.setHelper("eleventyNavigation", () => [{ url: "/", title: "Home" }, study]);
+	page.setContent("<masthead></masthead>");
+	const data = { site: { institution: "Example College" }, term: { label: "Fall 2026" }, course: { code: "CS101", name: "Intro" }, schedule: {}, page: { url: "/glossary/" }, collections: { all: [] }, copy: resolveCopy() };
+	const html = (await page.compile({ data })).html;
+	assert.match(html, /<li class="group">\s*<a href="\/study\/">Study tools<\/a>\s*<ul role="list">/);
+	assert.match(html, /<a href="\/glossary\/" aria-current="page">Glossary<\/a>/, "a child marks the current page");
+	assert.doesNotMatch(html, />Hidden<\/a>/, "a child with menu: false stays out");
+	assert.match(menu(html), /two-column/, "Home, Syllabus, the group and its two children make five links");
+});

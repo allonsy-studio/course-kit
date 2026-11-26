@@ -65,6 +65,7 @@ test("assigned-list renders the items array, falls back to its slot's <dl> when 
 	const withItems = await render(`<assigned-list @label="Due" ${items} @chips>${dl}</assigned-list>`);
 	assert.match(withItems, /<li/);
 	assert.match(withItems, /due-chip/);
+	assert.ok(withItems.indexOf("Test 1") < withItems.indexOf("due-chip"), "the title comes before its chip, so a screen reader hears it first");
 	assert.doesNotMatch(withItems, /From the slot/, "the array wins when it has items");
 	const empty = await render(`<assigned-list @label="Due" :@items="[]">${dl}</assigned-list>`);
 	assert.match(empty, /From the slot/);

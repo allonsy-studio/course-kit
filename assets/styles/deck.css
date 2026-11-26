@@ -148,10 +148,16 @@ base.css/masthead. The class names below are the deck dialect's vocabulary
   flex-wrap: wrap;
   gap: 0.8em;
 
+  /* A CSS dot, as in base.css: never an emoji, never read aloud, visible in forced colors. */
   > *:not(:last-child)::after {
-    content: "⏺";
-    padding-inline-start: 0.8em;
-    font-size: 50%;
+    content: "";
+    display: inline-block;
+    box-sizing: border-box;
+    inline-size: 0.3em;
+    block-size: 0.3em;
+    margin-inline-start: 0.8em;
+    border: 0.15em solid currentColor;
+    border-radius: 50%;
     vertical-align: middle;
   }
   }

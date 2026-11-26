@@ -21,14 +21,14 @@ A link with a trailing arrow. The label is the slot; `href` and any other attrib
 
 ### `<assigned-list>`
 
-A labelled list of readings or deadlines. Renders nothing when empty. Give it the `items` array, or write the list as a `<dl>` in the default slot: each `<dt>` holds the title or its link (give it `data-kind` and, before the title, `<span class="due-chip" data-kind="test">Test</span>` for a chip), each `<dd>` only the check or due detail. The array wins when it has items; when it is missing or empty the slot is rendered instead, so the list still shows if the data does not load.
+A labelled list of readings or deadlines. Renders nothing when empty. Give it the `items` array, or write the list as a `<dl>` in the default slot: each `<dt>` holds the title or its link (give it `data-kind` and, after the title, `<span class="due-chip" data-kind="test">Test</span>` for a chip, shown at the end of the row), each `<dd>` only the check or due detail. The array wins when it has items; when it is missing or empty the slot is rendered instead, so the list still shows if the data does not load.
 
 | Prop | Type | |
 |---|---|---|
 | `label` | `string` | the heading above the list |
 | `items` | `{ title: string, href?: string, check?: string, dueLabel?: string, kind?: string }[]` | the readings or deadlines to list |
 | `[dueOn]` | `string` | how a due date reads after the check, with `{when}`: `copy.schedule.dueOn` ("due {when}"); without it the date stands alone |
-| `[chips]` | `boolean` | put a `.due-chip` for the item's `kind` before its title; a bare `@chips` turns them on |
+| `[chips]` | `boolean` | put a `.due-chip` for the item's `kind` after its title, at the end of the row; a bare `@chips` turns them on |
 | `[kinds]` | `Record<string, string>` | the chip words by kind, from `copy.schedule.dueKind*`; needed with `chips` |
 
 ### `<callout>`
@@ -184,7 +184,7 @@ The "Additional resources" list: the entries of `course.documents`, each a link 
 
 ### `<course-now>`
 
-The home page's opening band: the next class, what is due soon and the week-by-week progress. Hidden until its script has judged "today" in the campus zone. Wording comes from `copy.home` and `copy.schedule`.
+The home page's opening band: this week's topics, the next class, what is due soon (date first) and the week-by-week progress, side by side as space allows. Hidden until its script has judged "today" in the campus zone. Wording comes from `copy.home` and `copy.schedule`.
 
 | Prop | Type | |
 |---|---|---|
@@ -242,7 +242,7 @@ The instructor's details: photo, office, contact and hours, then the booking but
 
 ### `<masthead>`
 
-The page header: institution, term, course title and the navigation. Reads `site`, `term` and `course`. The menu is Home, Syllabus, then every page of the site menu that has not set `menu: false`.
+The page header: institution, term, course title and the navigation. Reads `site`, `term` and `course`. The menu is Home, Syllabus, then every page of the site menu that has not set `menu: false`. A page other pages name as their `eleventyNavigation.parent` is a group: its link, then theirs. When the instructor has a `booking` link, it is shown under the meeting line on every page, and the menu leaves Contact to the footer.
 
 | Prop | Type | |
 |---|---|---|
@@ -250,12 +250,12 @@ The page header: institution, term, course title and the navigation. Reads `site
 
 ### `<nav-links>`
 
-The site navigation as a list of links, marking the current page. Give it the `navigation` array, or write the links in the default slot as a `<ul>` of `<li><a>`; the array wins when it has items, and when it is missing or empty the slot is rendered instead.
+The site navigation as a list of links, marking the current page. Give it the `navigation` array, or write the links in the default slot as a `<ul>` of `<li><a>`; the array wins when it has items, and when it is missing or empty the slot is rendered instead. A page with `children` (pages whose `eleventyNavigation.parent` is its key) is a group: its own link, then its children in a nested list.
 
 | Prop | Type | |
 |---|---|---|
-| `navigation` | `{ url: string, title: string }[]` | pages from `eleventyNavigation` |
-| `[context]` | `'footer' \| 'hero'` | adds the instructor's contact link in the footer and the hero |
+| `navigation` | `{ url: string, title: string, children?: { url: string, title: string }[] }[]` | pages from `eleventyNavigation` |
+| `[context]` | `'footer' \| 'hero'` | adds the instructor's contact link in the footer, and in the hero unless the header shows the booking link |
 
 ### `<policies>`
 

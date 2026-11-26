@@ -2,16 +2,22 @@
 	/**
 	 * The site navigation as a list of links, marking the current page. Give it the `navigation` array, or write the links in the default slot
 	 * as a `<ul>` of `<li><a>`; the array wins when it has items, and when it is missing or empty the slot is rendered instead.
-	 * @prop {{ url: string, title: string }[]} navigation pages from `eleventyNavigation`
-	 * @prop {'footer' | 'hero'} [context] adds the instructor's contact link in the footer and the hero
+	 * A page with `children` (pages whose `eleventyNavigation.parent` is its key) is a group: its own link, then its children in a nested list.
+	 * @prop {{ url: string, title: string, children?: { url: string, title: string }[] }[]} navigation pages from `eleventyNavigation`
+	 * @prop {'footer' | 'hero'} [context] adds the instructor's contact link in the footer, and in the hero unless the header shows the booking link
 	 */
 </script>
 <nav webc:root="override" :data-context="context">
     <ul role="list" webc:if="navigation?.length">
-        <li webc:for="item of navigation">
+        <li webc:for="item of navigation" @attributes="({ class: item?.children?.length ? 'group' : undefined })">
             <a :href="item?.url" @attributes="({ 'aria-current': item?.url === $data?.page?.url ? 'page' : undefined })" @text="item?.title"></a>
+            <ul role="list" webc:if="item?.children?.length">
+                <li webc:for="child of item.children">
+                    <a :href="child?.url" @attributes="({ 'aria-current': child?.url === $data?.page?.url ? 'page' : undefined })" @text="child?.title"></a>
+                </li>
+            </ul>
         </li>
-        <li webc:if="$data.instructor?.contact && (context === 'footer' || context === 'hero')"><a :href="$data.instructor.contact" @text="$data.copy.nav.contact"></a></li>
+        <li webc:if="$data.instructor?.contact && (context === 'footer' || (context === 'hero' && !$data.instructor?.booking?.url))"><a :href="$data.instructor.contact" @text="$data.copy.nav.contact"></a></li>
     </ul>
     <slot webc:if="!navigation?.length"></slot>
 </nav>
@@ -136,6 +142,49 @@
     :host([column][two-column]) li {
         break-inside: avoid;
         margin-block-end: calc(var(--content-space) * 0.35);
+    }
+}
+
+/* A group: the parent page's link as a small label, its children under it.
+   In the two-column hero it takes the second column to itself. */
+:host li.group > a[href] {
+    font-size: max(var(--base-font-size), 0.875em);
+    font-weight: var(--font-weight--semi-bold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+
+:host([column]) li.group > ul {
+    margin-block-start: calc(var(--content-space) * 0.35);
+}
+
+@media screen and (width > 768px) {
+    :host([column][two-column]) li.group {
+        break-before: column;
+    }
+
+    /* The children are spaced by their own margins, as the first column's links are. */
+    :host([column][two-column]) li.group > ul {
+        display: block;
+        columns: auto;
+        margin-block-start: calc(var(--content-space) * 0.35);
+    }
+}
+
+/* On a narrow screen the menu is a wrapped row: a group takes a row of its own, label first. */
+@media screen and (width <= 768px) {
+    :host([column]) li.group {
+        display: flex;
+        flex-wrap: wrap;
+        flex-basis: 100%;
+        align-items: baseline;
+        column-gap: calc(var(--content-space) * 1.25);
+    }
+
+    :host([column]) li.group > ul {
+        inline-size: auto;
+        margin-block-start: 0;
     }
 }
 

@@ -123,7 +123,9 @@ Set `booking` to add a button that links to your appointment page:
 
 `url` is required; `label` is optional and defaults to "Book an appointment" (the `instructor.bookAnAppointment` [copy key](copy.md#instructor)). With no `booking` nothing is added, and no page changes.
 
-The button is a plain link, so it works without JavaScript and stays clickable in the syllabus PDF. It is the last line of the instructor panel, after the note and the icon links, in the default panel and the card alike, and it is a text button whichever way `contactLinks` is set: a booking link is the panel's one call to action and needs its words. In print it is an underlined link with the address after it, like the other links. A page that wants the button somewhere else, such as a contact page, writes `<book-appointment></book-appointment>`; it reads the same `booking` data. To restyle or reword it, put your own `book-appointment.webc` in `_includes`.
+The button is a plain link, so it works without JavaScript and stays clickable in the syllabus PDF. It is the last line of the instructor panel, after the note and the icon links, in the default panel and the card alike, and it is a text button whichever way `contactLinks` is set: a booking link is the panel's one call to action and needs its words. In print it is an underlined link with the address after it, like the other links. A page that wants the button somewhere else, such as a contact page, writes `<book-appointment></book-appointment>`; it reads the same `booking` data.
+
+With `booking` set, the header of every page also carries the link, as an outlined pill under the meeting line, and the top menu leaves Contact to the footer. To restyle or reword it, put your own `book-appointment.webc` in `_includes`.
 
 ## `grading.json` and `scale.json`
 

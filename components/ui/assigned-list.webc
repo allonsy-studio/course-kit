@@ -2,12 +2,12 @@
 	/**
 	 * A labelled list of readings or deadlines. Renders nothing when empty.
 	 * Give it the `items` array, or write the list as a `<dl>` in the default slot: each `<dt>` holds the title or its link (give it `data-kind` and,
-	 * before the title, `<span class="due-chip" data-kind="test">Test</span>` for a chip), each `<dd>` only the check or due detail. The array wins when
+	 * after the title, `<span class="due-chip" data-kind="test">Test</span>` for a chip, shown at the end of the row), each `<dd>` only the check or due detail. The array wins when
 	 * it has items; when it is missing or empty the slot is rendered instead, so the list still shows if the data does not load.
 	 * @prop {string} label the heading above the list
 	 * @prop {{ title: string, href?: string, check?: string, dueLabel?: string, kind?: string }[]} items the readings or deadlines to list
 	 * @prop {string} [dueOn] how a due date reads after the check, with `{when}`: `copy.schedule.dueOn` ("due {when}"); without it the date stands alone
-	 * @prop {boolean} [chips] put a `.due-chip` for the item's `kind` before its title; a bare `@chips` turns them on
+	 * @prop {boolean} [chips] put a `.due-chip` for the item's `kind` after its title, at the end of the row; a bare `@chips` turns them on
 	 * @prop {Record<string, string>} [kinds] the chip words by kind, from `copy.schedule.dueKind*`; needed with `chips`
 	 */
 
@@ -22,9 +22,9 @@
 	<slot webc:if="!items?.length"></slot>
 	<ul role="list" webc:if="items?.length">
 		<li webc:for="item of items" @attributes="on(chips) && item.kind ? { class: 'due-item', 'data-kind': item.kind } : {}">
-			<span class="due-chip" webc:if="on(chips) && item.kind" :data-kind="item.kind" @text="kinds?.[item.kind]"></span>
 			<a webc:if="item.href" :href="item.href" @text="item.title"></a>
 			<span webc:if="!item.href" @text="item.title"></span>
+			<span class="due-chip" webc:if="on(chips) && item.kind" :data-kind="item.kind" @text="kinds?.[item.kind]"></span>
 			<span class="check" webc:if="detail(item, dueOn)" @text="detail(item, dueOn)"></span>
 		</li>
 	</ul>
@@ -48,13 +48,33 @@
 			padding: 0;
 		}
 
-		/* A chip and its title share a row that wraps, so a long title never runs under the chip. */
+		/*
+		 * The title, then its chip at the end of the row, then the detail under both. A long title wraps beside the chip, never under it.
+		 * The title row is a target tall whether or not the title is a link, so every item is spaced alike. The chip is placed by column,
+		 * so a slot's `<dt>` shows it at the end in either source order.
+		 */
 		li,
 		dt {
-			display: flex;
-			flex-wrap: wrap;
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) auto;
+			grid-template-rows: minmax(var(--target-min), auto);
 			align-items: center;
-			gap: 0 0.5em;
+			column-gap: 0.75em;
+
+			> .due-chip {
+				grid-column: 2;
+				grid-row: 1;
+				justify-self: end;
+			}
+
+			> :not(.due-chip, .check) {
+				grid-column: 1;
+				grid-row: 1;
+			}
+
+			> .check {
+				grid-column: 1 / -1;
+			}
 		}
 
 		/* A link is an operable target: 44px tall (WCAG 2.5.5). */
@@ -93,7 +113,6 @@
 	}
 
 	.check {
-		flex-basis: 100%;
 		line-height: var(--font-height);
 		color: var(--color-text-muted);
 		font-size: max(var(--base-font-size), 0.9em);
