@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="/course-kit/preview/50/components/styles/prism-dark.css" media="(prefers-color-scheme: dark)" data-prism-theme="dark" />
     <link rel="stylesheet" href="/course-kit/preview/50/components/styles/base.css" />
     <style>
-      .wfwhm0lnx {
-        .wfwhm0lnx &:not(:has(li, dt)) {
+      .wym08opc- {
+        .wym08opc- &:not(:has(li, dt)) {
           display: none;
         }
         ul,
@@ -25,13 +25,33 @@
           padding: 0;
         }
 
-        /* A chip and its title share a row that wraps, so a long title never runs under the chip. */
+        /*
+		 * The title, then its chip at the end of the row, then the detail under both. A long title wraps beside the chip, never under it.
+		 * The title row is a target tall whether or not the title is a link, so every item is spaced alike. The chip is placed by column,
+		 * so a slot's `<dt>` shows it at the end in either source order.
+		 */
         li,
         dt {
-          display: flex;
-          flex-wrap: wrap;
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) auto;
+          grid-template-rows: minmax(var(--target-min), auto);
           align-items: center;
-          gap: 0 0.5em;
+          column-gap: 0.75em;
+
+          > .due-chip {
+            grid-column: 2;
+            grid-row: 1;
+            justify-self: end;
+          }
+
+          > :not(.due-chip, .check) {
+            grid-column: 1;
+            grid-row: 1;
+          }
+
+          > .check {
+            grid-column: 1 / -1;
+          }
         }
 
         /* A link is an operable target: 44px tall (WCAG 2.5.5). */
@@ -60,15 +80,14 @@
           line-height: var(--font-height);
         }
       }
-      .wfwhm0lnx .label {
+      .wym08opc- .label {
         margin: 0 0 calc(var(--content-space) * 0.5);
         color: var(--color-text-muted);
         text-transform: uppercase;
         letter-spacing: 0.05em;
         font-size: var(--font-size-6);
       }
-      .wfwhm0lnx .check {
-        flex-basis: 100%;
+      .wym08opc- .check {
         line-height: var(--font-height);
         color: var(--color-text-muted);
         font-size: max(var(--base-font-size), 0.9em);
@@ -80,7 +99,7 @@
     <main id="main-content" tabindex="-1" style="margin: 0; padding: 1rem; min-block-size: 0">
       <h1 class="sr-only">assigned-list: Empty items falls back to the slot</h1>
 
-      <div class="assigned wfwhm0lnx">
+      <div class="assigned wym08opc-">
         <p class="label">Due</p>
 
         <dl>
