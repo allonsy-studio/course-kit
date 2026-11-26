@@ -1,5 +1,9 @@
 name: Test
 
+# Lint and unit tests on each supported Node version, and the browser tests (`yarn docs:test`: the accessibility
+# audit and the layout, state and print checks). The browser tests run in four shards of about a quarter of the
+# pages each; the first also runs the specs that do not read the page list. Pages publishes without waiting for them.
+
 on:
     pull_request:
         types: [opened, synchronize, reopened]
@@ -8,10 +12,25 @@ on:
             - main
     merge_group:
 
+permissions:
+    contents: read
+
+# A pull request's runs share a group, so a new push cancels the superseded run. Every other run has a group of its own,
+# so no push to main or merge-queue run is ever cancelled or left pending.
+concurrency:
+    group: test-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.run_id }}
+    cancel-in-progress: true
+
+env:
+    # Failure screenshots, one artifact per shard: `<name>-<shard>`. Deleted by a clean run of the same pull request (or a
+    # clean rerun), and by `cleanup.yml` when the pull request closes; otherwise they expire after 7 days.
+    SCREENSHOTS: browser-screenshots-${{ github.event.pull_request.number && format('pr-{0}', github.event.pull_request.number) || format('run-{0}', github.run_id) }}
+
 jobs:
     test:
         name: CI (node${{ matrix.node }})
         runs-on: ubuntu-latest
+        timeout-minutes: 15
         strategy:
             fail-fast: false
             matrix:
@@ -20,6 +39,8 @@ jobs:
         steps:
             - name: Check out code
               uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+              with:
+                  persist-credentials: false
 
             - name: Enable Corepack
               run: corepack enable
@@ -33,8 +54,85 @@ jobs:
             - name: Install dependencies
               run: yarn install --immutable --mode=skip-build
 
+            # Lint output does not depend on the Node version, so it runs once.
             - name: Lint
+              if: matrix.node == 26
               run: yarn lint
 
             - name: Test
               run: yarn test
+
+    browser-shard:
+        name: Browser (${{ matrix.shard }}/4)
+        runs-on: ubuntu-latest
+        timeout-minutes: 30
+        strategy:
+            fail-fast: false
+            matrix:
+                shard: [1, 2, 3, 4]
+
+        steps:
+            - name: Check out code
+              uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+              with:
+                  persist-credentials: false
+
+            - name: Enable Corepack
+              run: corepack enable
+
+            - name: Use Node LTS version
+              uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+              with:
+                  cache: yarn
+                  node-version-file: .nvmrc
+
+            # Scripts run: Cypress downloads its binary in a postinstall step.
+            - name: Install dependencies
+              run: yarn install --immutable
+
+            - name: Run the browser tests
+              run: yarn docs:test
+              env:
+                  BROWSER_SHARD: ${{ matrix.shard }}/4
+
+            - name: Save the failure screenshots
+              if: failure()
+              uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+              with:
+                  name: ${{ env.SCREENSHOTS }}-${{ matrix.shard }}
+                  path: website/cypress/screenshots
+                  retention-days: 7
+                  if-no-files-found: ignore
+                  overwrite: true
+
+    # One check to require, whatever the shard count. It always runs: a skipped job counts as passing a required check, so
+    # a cancelled run must fail here, not skip. It runs no project code, so it can hold the token that deletes artifacts.
+    browser:
+        name: Browser
+        needs: browser-shard
+        if: always()
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        permissions:
+            actions: write # delete the failure screenshots of earlier runs
+        steps:
+            - name: Every shard passed
+              env:
+                  RESULT: ${{ needs.browser-shard.result }}
+              run: |
+                  echo "Shards: $RESULT"
+                  test "$RESULT" = "success"
+
+            # A fork's token cannot delete artifacts; its screenshots expire instead.
+            - name: Delete earlier failure screenshots
+              if: ${{ !github.event.pull_request.head.repo.fork }}
+              env:
+                  GH_TOKEN: ${{ github.token }}
+              run: |
+                  for shard in 1 2 3 4; do
+                      gh api --paginate "repos/$GITHUB_REPOSITORY/actions/artifacts?name=$SCREENSHOTS-$shard&per_page=100" --jq '.artifacts[].id' |
+                          while read -r id; do
+                              echo "Deleting artifact $id ($SCREENSHOTS-$shard)"
+                              gh api -X DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/$id"
+                          done
+                  done

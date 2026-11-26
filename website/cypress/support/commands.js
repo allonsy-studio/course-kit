@@ -149,9 +149,10 @@ Cypress.Commands.add("checkTargetSize", (min, scope = "body", url = "") => {
 				// A radio or checkbox is operated through its label.
 				const box = (el.type === "radio" || el.type === "checkbox") && el.closest("label") ? el.closest("label") : el;
 				const { width, height } = box.getBoundingClientRect();
-				return { el: box, width, height };
+				// Content of a closed <details> can still report a size, depending on the Chrome build; it is not rendered.
+				return { el: box, width, height, rendered: box.checkVisibility({ visibilityProperty: true }) };
 			})
-			.filter(({ width, height }) => width > 0 && height > 0 && (width < min - 0.5 || height < min - 0.5))
+			.filter(({ width, height, rendered }) => rendered && width > 0 && height > 0 && (width < min - 0.5 || height < min - 0.5))
 			.map(({ el, width, height }) => `${el.tagName.toLowerCase()}${el.className && typeof el.className === "string" ? `.${el.className.split(" ")[0]}` : ""} ${Math.round(width)}x${Math.round(height)}: ${el.textContent.trim().slice(0, 30)}`)
 			.filter((entry) => !isKnownTarget(url, entry));
 		expect(small, `targets under ${min}x${min}`).to.deep.equal([]);
